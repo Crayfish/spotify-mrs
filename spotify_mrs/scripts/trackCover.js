@@ -12,18 +12,18 @@ require([
    
 	//get the container for the covers and set width
     var covercontainer = document.getElementById('albumCoverContainer');
-	covercontainer.setAttribute('style', 'width: 840px;');
+	covercontainer.setAttribute('style', 'width: 645px;');
 
 	//load track from id
 	var id = trackID.replace('-WW','');
     var track = models.Track.fromURI(id);
 
 	//load image for the track
-    var image = Image.forTrack(track, {width: 200, height: 200, player: true});
+    var image = Image.forTrack(track, {width: 150, height: 150, player: true});
 
 	//create a div container for the image
 	var target1 = document.createElement('div');
-	target1.setAttribute('style', 'width: 200px; height: 200px; display: inline-block; margin: 5px;');
+	target1.setAttribute('style', 'width: 150px; height: 150px; display: inline-block; margin: 5px;');
 	target1.className = 'target';
     
 	//add the current image to the container
