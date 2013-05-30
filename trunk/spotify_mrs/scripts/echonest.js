@@ -1,7 +1,8 @@
 require([
   '$api/models',
-  'scripts/trackCover'
-], function(models, trackCover) {
+  'scripts/trackCover',
+  '$views/throbber#Throbber'
+], function(models, trackCover, Throbber) {
   'use strict';
 
   var fetchPlaylist = function() {
@@ -22,6 +23,8 @@ require([
 
   function getPlaylist(artist, size) {
 	    info('Getting playlist for ' + artist.name);
+	    var cover = document.getElementById('albumCoverContainer');
+        var throbber = Throbber.forElement(cover);
 	    var artist_id = artist.uri.replace('spotify', 'spotify-WW');
 	    var url = 'http://developer.echonest.com/api/v4/playlist/static?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks';
 	    
@@ -52,12 +55,14 @@ require([
 	        if (checkResponse(data)) {
 	            info("");
 	            $("#albumCoverContainer").empty();
+	           
 	            for (var i = 0; i < data.response.songs.length; i++) {
 	                //console.log('Song ID: '+data.response.songs[i].id +' SongName: '+data.response.songs[i].title);
 	                //console.log('Track ID: '+JSON.stringify(data.response.songs[i].tracks[2].foreign_id));
 	                var id = data.response.songs[i].tracks[0].foreign_id;
 	                trackCover.getTrackCover(id);
 	            }
+	            throbber.hide();
 
 	            
 	        } else {
