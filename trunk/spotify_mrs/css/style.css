@@ -4,15 +4,15 @@ html {
 
 .target{ 
    position: relative; 
-	width : 100%;
-   
+	/*width : 100%;*/ 
 }
 
+/*cover caption*/
 h2 { 
    position: absolute; 
    top: 0px; 
    left: 0; 
-   width: 100%; 
+   /*width: 100%;*/ 
 	z-index:100;
 }
 
@@ -30,12 +30,37 @@ h2 span.spacer {
    opacity: 0;
 }
 
+/*cover caption invisible on default*/
 .description{
 visibility: hidden;
  opacity: 0;
 }
 
+/*cover caption on hover*/
 .target:hover .description {
   visibility: visible;
   opacity: 1;
 }
+
+.albumCoverContainer{
+	overflow: hidden;
+	/*border: 1px solid #a1a1a1;*/
+	float:left;
+	
+}
+
+.rulerContainer{
+	display: inline-block;
+	float:right;
+	border: 1px solid #a1a1a1;
+	border-radius:12px;
+	background:#dddddd;
+	width:200px;
+	height : 600px;
+}
+
+.main{
+	overflow: hidden;
+	
+}
+	
