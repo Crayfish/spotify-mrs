@@ -146,6 +146,7 @@ require([
 	                //<input type="checkbox" name="incr" value="salami" style="-webkit-appearance: checkbox !important;" />hip hop</br>    
 	                 $('<input />', { type: 'checkbox', id: 'cb'+id, value:name, style:'-webkit-appearance: checkbox !important;'  }).appendTo(container);
 	                 $('<label />', { 'for': 'cb'+id, text: name }).appendTo(container);
+	                 $('<br/>').appendTo(container);
 	                 }
 	            	}    
 	        }});
