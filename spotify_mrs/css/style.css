@@ -79,6 +79,10 @@ visibility: hidden;
 	padding : 0px;
 }
 
+.rulerContent{
+	padding : 13px;	
+}
+
 .main{
 	overflow: hidden;
 	
