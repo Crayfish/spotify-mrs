@@ -18,6 +18,11 @@ require([
 	var id = trackID.replace('-WW','');
     var track = models.Track.fromURI(id);
 
+    //if track not playable --> no cover download
+    
+    track.load('playable').done(function(track) {
+    	if(!track.playable){console.log('TRACK NOT PLAYABLE')};
+		if(track.playable){
 	//load image for the track
     var image = Image.forTrack(track, {width: 150, height: 150, player: true});
 
@@ -69,11 +74,14 @@ require([
 			target1.appendChild(h2);
 	
 			target1.setAttribute('data-tooltip', toolTipString);
+			
+			//add image container to the main cover container
+		    covercontainer.appendChild(target1);
 	    });
 	  });
+}});
 	
-	//add image container to the main cover container
-    covercontainer.appendChild(target1);
+	
   };
 
 	//mouseover function
