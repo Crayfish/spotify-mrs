@@ -41,10 +41,10 @@ require([
 	//load the track informations
 	track.load('name','artists').done(function(track) {
 	    
-	    console.log('Trackname: ' + track.name);
+	    //console.log('Trackname: ' + track.name);
 	    var artist = models.Artist.fromURI(track.artists[0]);
 	    artist.load('name').done(function(artist){
-	    	console.log('Artistname: ' + artist.name.decodeForText());	
+	    	//console.log('Artistname: ' + artist.name.decodeForText());	
 	    	var toolTipString = track.name.decodeForHtml()+' by '+artist.name.decodeForHtml();
 	    	var trackname = track.name.decodeForHtml();
 			var artist = ' by '+artist.name.decodeForHtml();
