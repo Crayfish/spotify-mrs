@@ -28,7 +28,13 @@ require([
 		
 		$( "#pop" ).val(  $( "#slider-pop" ).slider( "values", 0 ) +
 		" - " + $( "#slider-pop" ).slider( "values", 1 ) );
-	}
+	};
+  
+  var updatePopularitySliderValues = function(){
+	  console.log("Popularity Slider Update");
+	  
+	  
+  };
   
   
   var setUpHotslider = function setUpHotSlider(){
@@ -52,10 +58,11 @@ require([
 		
 		$( "#hot" ).val(  $( "#slider-hot" ).slider( "values", 0 ) +
 		" - " + $( "#slider-hot" ).slider( "values", 1 ) );
-	}
+	};
   
   
   exports.setUpHotSlider = setUpHotslider;
   exports.setUpPopSlider = setUpPopSlider;
+  exports.updatePopularitySliderValues = updatePopularitySliderValues;
  
 });

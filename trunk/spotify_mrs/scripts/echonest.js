@@ -1,17 +1,29 @@
+
+
 require([
   '$api/models',
+  '$views/throbber#Throbber',
   'scripts/trackCover',
-  '$views/throbber#Throbber'
-], function(models, trackCover, Throbber) {
+  '$views/buttons',
+  'scripts/setupSlider'
+
+  
+], function(models,  Throbber,  trackCover, buttons, setupSlider) {
   'use strict';
 
+
+ 
   var fetchPlaylist = function() {
 	  console.log("Pressed GeneratePlaylistButton");
 	  
+	
+
 	  
-	  var track = models.player.track;
+	  var track = models.player.load('track');
+	  //console.log('TRACK= '+track);
 	    if (track == null) {
 	    	info('Start playing something and I ll make a playlist of good songs based on that song');
+	    	
 	    } else {
 	    	info('Request sent to Echonest');
 	    	getPlaylist(models.player.track.artists[0],20);
@@ -25,6 +37,7 @@ require([
 	    info('Getting playlist for ' + artist.name);
 	    var cover = document.getElementById('albumCoverContainer');
 	    var throbber = Throbber.forElement(cover);
+	    throbber.setSize('normal');
 	    var artist_id = artist.uri.replace('spotify', 'spotify-WW');
 	    var url = 'http://developer.echonest.com/api/v4/playlist/static?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks';
 	    
@@ -63,8 +76,9 @@ require([
 	                var id = data.response.songs[i].tracks[0].foreign_id;
 	                trackCover.getTrackCover(id);
 	                
-	                console.log('ECHONEST artist_id: '+ data.response.songs[i].artist_id);
+	               // console.log('ECHONEST artist_id: '+ data.response.songs[i].artist_id);
 	                getArtistGenre(data.response.songs[i].artist_id);
+	                getArtistPopularity(data.response.songs[i].artist_id);
 	            }
 				 throbber.hide();
 
@@ -88,6 +102,13 @@ require([
 	    var uri = song.tracks[0].id;
 	    return uri.replace('spotify-WW', 'spotify');
 	}
+  
+  function getArtistPopularity(artist_id){
+	  console.log('Artist ID for Popularity Query: '+artist_id)
+	  //setupSlider.updatePopularitySliderValues();
+	  
+	  
+  }
   
   
   function getArtistGenre(artistID){
@@ -116,7 +137,7 @@ require([
 	            	if (checkResponse(dataGenre)) {
 	            	for (var i = 0; i < dataGenre.response.terms.length; i++) {
 	                   
-	                 console.log( 'Genre Query Output: '+ dataGenre.response.terms[i].name);
+	                // console.log( 'Genre Query Output: '+ dataGenre.response.terms[i].name);
 	                 
 	                /* var li1 = $("<li>");
 	                 li1.append(dataGenre.response.terms[i].name);
@@ -130,7 +151,7 @@ require([
 	              
 	                var boxShouldBeAdded = true;
 	                $( '[type=checkbox]' ).each(function( index ) {
-	                	console.log( index + ": " + $(this).attr('value') );
+	                	//console.log( index + ": " + $(this).attr('value') );
 	                	if($(this).attr('value')==name){
 	                		boxShouldBeAdded=false;
 	                		return false;
