@@ -5,10 +5,10 @@ require([
   '$views/throbber#Throbber',
   'scripts/trackCover',
   '$views/buttons',
-  'scripts/setupSlider'
+  //'scripts/setupSlider'
 
   
-], function(models,  Throbber,  trackCover, buttons, setupSlider) {
+], function(models,  Throbber,  trackCover, buttons) {
   'use strict';
 
 
