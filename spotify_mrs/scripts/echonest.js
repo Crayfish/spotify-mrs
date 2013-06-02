@@ -4,11 +4,11 @@ require([
   '$api/models',
   '$views/throbber#Throbber',
   'scripts/trackCover',
-  '$views/buttons',
-  //'scripts/setupSlider'
+  
+ 
 
   
-], function(models,  Throbber,  trackCover, buttons) {
+], function(models,  Throbber,  trackCover) {
   'use strict';
 
 
@@ -26,6 +26,7 @@ require([
 	    	
 	    } else {
 	    	info('Request sent to Echonest');
+	    	
 	    	getPlaylist(models.player.track.artists[0],20);
 	        
 	    	
@@ -123,7 +124,7 @@ require([
 		//var artist_id3 = artist2.uri.replace('spotify', 'spotify-WW');
 		//console.log(artist_id3);
 		
-		var url1 = 'http://developer.echonest.com/api/v4/artist/terms?api_key=BNV9970E1PHXZ9RQW&format=json&type=style'
+		var url1 = 'http://developer.echonest.com/api/v4/artist/terms?api_key=BNV9970E1PHXZ9RQW&format=json&type=style&'
 		//console.log(url1);
 		
 		
@@ -148,6 +149,9 @@ require([
 	                 var container = $('#cblist');
 	                 
 	                 var name= dataGenre.response.terms[i].name;
+	                 var weight = dataGenre.response.terms[i].weight.toString();
+	                 weight = weight.substring(0,4);
+	                 console.log("Gekürztes Terms Gewicht: "+weight);
 	              
 	                var boxShouldBeAdded = true;
 	                $( '[type=checkbox]' ).each(function( index ) {
@@ -166,7 +170,7 @@ require([
 	                 
 	                //<input type="checkbox" name="incr" value="salami" style="-webkit-appearance: checkbox !important;" />hip hop</br>    
 	                 $('<input />', { type: 'checkbox', id: 'cb'+id, value:name, style:'-webkit-appearance: checkbox !important;'  }).appendTo(container);
-	                 $('<label />', { 'for': 'cb'+id, text: name }).appendTo(container);
+	                 $('<label />', { 'for': 'cb'+id, text: name+" W:"+weight }).appendTo(container);
 	                 $('<br/>').appendTo(container);
 	                 }
 	            	}    
