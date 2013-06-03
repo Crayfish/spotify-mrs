@@ -15,12 +15,16 @@ require([
   
  
   
-  heading.writeHeading();
-  generatePlaylistButton.setUpGeneratePlaylistButton();
-  setupSlider.setUpPopSlider();
-  setupSlider.setUpHotSlider();
   
   
+  $(document).ready(function(){
+
+	  heading.writeHeading();
+	  generatePlaylistButton.setUpGeneratePlaylistButton();
+	  setupSlider.setUpPopSlider();
+	  setupSlider.setUpHotSlider();
+
+	}); 
 
 
 });

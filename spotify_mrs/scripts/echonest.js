@@ -4,6 +4,7 @@ require([
   '$api/models',
   '$views/throbber#Throbber',
   'scripts/trackCover',
+  //'scripts/setupSlider'
   
  
 
@@ -37,8 +38,10 @@ require([
   function getPlaylist(artist, size) {
 	    info('Getting playlist for ' + artist.name);
 	    var cover = document.getElementById('albumCoverContainer');
+	   // var cover = $(".albumCoverContainer") ;
 	    var throbber = Throbber.forElement(cover);
 	    throbber.setSize('normal');
+	   
 	    var artist_id = artist.uri.replace('spotify', 'spotify-WW');
 	    var url = 'http://developer.echonest.com/api/v4/playlist/static?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks';
 	    
@@ -81,7 +84,7 @@ require([
 	                getArtistGenre(data.response.songs[i].artist_id);
 	                getArtistPopularity(data.response.songs[i].artist_id);
 	            }
-				 throbber.hide();
+				// throbber.hide();
 
 	            
 	        } else {
