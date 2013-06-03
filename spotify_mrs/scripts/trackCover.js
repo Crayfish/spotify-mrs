@@ -84,21 +84,24 @@ require([
 	
   };
 
-	//mouseover function
-	function showPopup() {
-	   	
-	
-		popup.setText(this.getAttribute('data-tooltip'));
 
-		
-		popup.showFor(this);
-	  }
-		
-	//mouseout function
-	  function hidePopup() {
-	    popup.hide();
-	//this.innerHTML = "";
-	  }
 
   exports.getTrackCover = getTrackCover;
 });
+
+
+//mouseover function
+function showPopup() {
+   	
+
+	popup.setText(this.getAttribute('data-tooltip'));
+
+	
+	popup.showFor(this);
+  }
+	
+//mouseout function
+  function hidePopup() {
+    popup.hide();
+//this.innerHTML = "";
+  }

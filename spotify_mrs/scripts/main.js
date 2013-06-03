@@ -8,9 +8,10 @@ require([
   'scripts/setupSlider'
   
   
+  
 
   // generatePlaylistButton,
-], function(models, heading,  generatePlaylistButton, setupSlider) {
+], function(models, heading,   generatePlaylistButton, setupSlider) {
   'use strict';
   
  
@@ -23,6 +24,7 @@ require([
 	  generatePlaylistButton.setUpGeneratePlaylistButton();
 	  setupSlider.setUpPopSlider();
 	  setupSlider.setUpHotSlider();
+	 
 
 	}); 
 

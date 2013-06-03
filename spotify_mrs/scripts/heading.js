@@ -1,8 +1,8 @@
 require([
   '$api/models',
-  '/strings/main.lang',
-  'scripts/setupSlider'
-], function(models, mainStrings, setupSlider) {
+  '/strings/main.lang'
+ 
+], function(models, mainStrings) {
   'use strict';
 
   //Setup a short-hand to get translation
@@ -10,7 +10,7 @@ require([
 
   var writeHeading = function() {
     document.querySelector('h1').innerHTML = _('Hier ensteht ein transparenter Music Recommender');
-    setupSlider.updatePopularitySliderValues();
+ 
   };
 
   exports.writeHeading = writeHeading;
