@@ -68,7 +68,9 @@ function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate
     
     //console.log('minHotness: '+minHotness.toString());
     
-    //var songName = song.artist_name;
+    var artistIdsForPopularity = new Array();
+    
+    
 
     //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
     $.getJSON(url, 
@@ -84,6 +86,9 @@ function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate
         if (checkResponse(data)) {
             info("");
             $("#albumCoverContainer").empty();
+            
+           
+            
             for (var i = 0; i < data.response.songs.length; i++) {
                 //console.log('Song ID: '+data.response.songs[i].id +' SongName: '+data.response.songs[i].title);
                 //console.log('Track ID: '+JSON.stringify(data.response.songs[i].tracks[2].foreign_id));
@@ -93,10 +98,11 @@ function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate
                // console.log('ECHONEST artist_id: '+ data.response.songs[i].artist_id);
                 getArtistGenre(data.response.songs[i].artist_id);
                 
-               getArtistPopularity(data.response.songs[i].artist_id, sliderUpdate1);
+                artistIdsForPopularity[i]= data.response.songs[i].artist_id
+               //getArtistHotness(data.response.songs[i].artist_id, sliderUpdate1);
             }
 			// throbber.hide();
-
+            getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
             
         } else {
             info("trouble getting results");
@@ -188,9 +194,96 @@ function getSpotifyID(song) {
 	    return uri.replace('spotify-WW', 'spotify');
 	}
 
-function getArtistPopularity(artist_id, sliderUpdate2){
-	  console.log('Artist ID for Popularity Query: '+artist_id)
-	  sliderUpdate2.updatePopSlider();
+
+
+
+function getArtistPopularity(artistArray,  sliderUpdate2){
+	  
+	  
+	var popularityArray= new Array();
+	
+	
+	
+	 var popularityQueryUrl = 'http://developer.echonest.com/api/v4/artist/familiarity?api_key=BNV9970E1PHXZ9RQW&format=json';
+	  
+	 for (var i = 0; i < artistArray.length; i++) {
+		 console.log('Artist ID for Popularity Query '+i+': '+artistArray[i])
+         
+         var artistId = artistArray[i];
+         
+		  $.getJSON(popularityQueryUrl,
+				{
+				'id':artistId
+					//artist_id3,
+				//'artist':artist_id3
+	            },
+	            function(dataArtistPopularity) {
+	            	if (checkResponse(dataArtistPopularity)) {
+	            	
+	                   
+	                
+	                
+	                 
+	                 var artistName= dataArtistPopularity.response.artist.name;
+	                 var artistPopulartityValue =dataArtistPopularity.response.artist.familiarity;
+	                
+	                console.log(" Get Artist Popularity Query: "+artistName +" PopValue:"+artistPopulartityValue);
+	                 
+	                	
+	               // return artistPopulartityValue;
+	                popularityArray.push(artistPopulartityValue);
+	                console.log('popularityArray nach push'+i+ ': '+  popularityArray);
+	                
+	                sliderUpdate2.updatePopSlider(popularityArray);	
+	                 
+	                
+	            	   
+	            	}
+	            });
+        
+     }
+	 
+	//console.log('popularityArray vor updateSlider() Aufruf: '+ popularityArray);
+	//sliderUpdate2.updatePopSlider(popularityArray);	
+}
+
+
+function getArtistHotness(artist_id, sliderUpdate2){
+	  //console.log('Artist ID for Hotness Query: '+artist_id)
+	  
+	  var hotnessQueryUrl = 'http://developer.echonest.com/api/v4/artist/hotttnesss?api_key=BNV9970E1PHXZ9RQW&format=json';
+	  
+	  
+		
+		$.getJSON(hotnessQueryUrl,
+				{
+				'id':artist_id
+					//artist_id3,
+				//'artist':artist_id3
+	            },
+	            function(dataArtistHotness) {
+	            	if (checkResponse(dataArtistHotness)) {
+	            	
+	                   
+	                
+	                
+	                 
+	                 var artistName= dataArtistHotness.response.artist.name;
+	                 var artistHotnessValue =dataArtistHotness.response.artist.hotttnesss;
+	                
+	                 //console.log("Artist Hotness Query: "+artistName +" HotValue:"+artistHotnessValue);
+	                 
+	                 sliderUpdate2.updateHotSlider(artistHotnessValue);
+	                
+	                
+	                
+	                 
+	                
+	            	   
+	        }});
+	  
+	  
+	 
 	  
 	  
 }
