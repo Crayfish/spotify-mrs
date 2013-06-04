@@ -7,16 +7,16 @@ require([
   'use strict';
 
 	
-  var setUpPopSlider = function setUpPopSlider(){
-	  setUpPopSlider1();
+  var setUpPopSlider = function setUpPopSlider(echonest){
+	  setUpPopSlider1(echonest);
 	
 	};
   
  
   
   
-  var setUpHotslider = function setUpHotSlider(){
-	  setUpHotSlider1();
+  var setUpHotslider = function setUpHotSlider(echonest){
+	  setUpHotSlider1(echonest);
 	  
 	};
   
@@ -27,7 +27,7 @@ require([
  
 });
 
-function setUpPopSlider1(){
+function setUpPopSlider1(echonest){
 	  console.log('SetUpPopSlider() betreten');
 		//jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
 		$( "#slider-pop" ).slider({
@@ -36,10 +36,12 @@ function setUpPopSlider1(){
 		min: 0,
 		max: 100,
 		values: [0, 100 ],
+	
 		slide: function( event, ui ) {
 		$( "#pop" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 		},
 		stop: function ( event, ui ) {
+			console.log("Pop slider Stop");
 			echonest.fetchPlaylist();
 		}	
 		
@@ -49,7 +51,7 @@ function setUpPopSlider1(){
 		" - " + $( "#slider-pop" ).slider( "values", 1 ) );
 }
 
-function setUpHotSlider1(){
+function setUpHotSlider1(echonest){
 	console.log('SetUpHotSlider() betreten');
 	//jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
 	$( "#slider-hot" ).slider({
@@ -62,6 +64,7 @@ function setUpHotSlider1(){
 	$( "#hot" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 	},
 	stop: function ( event, ui ) {
+		console.log('Hot slider Stop');
 		echonest.fetchPlaylist();
 	}	
 	
