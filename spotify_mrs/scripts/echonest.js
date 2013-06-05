@@ -102,6 +102,7 @@ function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate
                //getArtistHotness(data.response.songs[i].artist_id, sliderUpdate1);
             }
 			// throbber.hide();
+            console.log('artistIdsForPopularity: '+ artistIdsForPopularity);
             getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
             
         } else {
@@ -202,13 +203,17 @@ function getArtistPopularity(artistArray,  sliderUpdate2){
 	  
 	var popularityArray= new Array();
 	
-	
+	console.log('artistIdsForPopularity in getArtistPopularity():'+artistArray);
 	
 	 var popularityQueryUrl = 'http://developer.echonest.com/api/v4/artist/familiarity?api_key=BNV9970E1PHXZ9RQW&format=json';
-	  
+	 
+	 
+	 
 	 for (var i = 0; i < artistArray.length; i++) {
-		 console.log('Artist ID for Popularity Query '+i+': '+artistArray[i])
-         
+		 //console.log('Artist ID for Popularity Query '+i+': '+artistArray[i])
+		 
+		 
+		 
          var artistId = artistArray[i];
          
 		  $.getJSON(popularityQueryUrl,
@@ -234,8 +239,10 @@ function getArtistPopularity(artistArray,  sliderUpdate2){
 	                popularityArray.push(artistPopulartityValue);
 	                console.log('popularityArray nach push'+i+ ': '+  popularityArray);
 	                
-	                sliderUpdate2.updatePopSlider(popularityArray);	
-	                 
+	                /*if(artistArray.lenght == i){
+	                	console.log("Vor Aufruf updatePopSlider()");
+	                	sliderUpdate2.updatePopSlider(popularityArray);	
+	                } */
 	                
 	            	   
 	            	}
