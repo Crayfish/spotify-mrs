@@ -22,16 +22,18 @@ require([
 
 
 function updatePopSlider1(popularityArray){
-	console.log("Updating Popularity Slider with Values: "+ popularityArray[0]);
+	//console.log("Updating Popularity Slider with Values: "+ popularityArray[0]);
 	
-	
+	console.log('popularityArray for updatePopSlider(): '+popularityArray);
 	
 	popularityArray.sort(function(a,b){return b-a});
 	
-	console.log('popularityArray: '+popularityArray);
+	
 	
 	var lowestPopValue = popularityArray[popularityArray.length - 1];
 	var highestPopValue = popularityArray[0];
+	
+	
 	
 	console.log(' lowestPopValue: '+ lowestPopValue);
 	console.log(' highestPopValue: '+ highestPopValue);
