@@ -36,9 +36,10 @@ require([
 	    }
   };
 
-
+//var numberOfTracks = 20;
   
   exports.fetchPlaylist = fetchPlaylist;
+  //exports.numberOfTracks =numberOfTracks;
  
 })//end of require()
 
@@ -66,7 +67,8 @@ function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate
     var minPopularity = $( "#slider-pop" ).slider( "values", 0 )/100;
     var maxPopularity = $( "#slider-pop" ).slider( "values", 1 )/100;
     
-    //console.log('minHotness: '+minHotness.toString());
+    //console.log('minPopularity getPlaylist(): '+minPopularity);
+   // console.log('maxPopularity getPlaylist(): '+maxPopularity);
     
     var artistIdsForPopularity = new Array();
     
@@ -102,8 +104,9 @@ function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate
                //getArtistHotness(data.response.songs[i].artist_id, sliderUpdate1);
             }
 			// throbber.hide();
-            console.log('artistIdsForPopularity: '+ artistIdsForPopularity);
+           // console.log('artistIdsForPopularity: '+ artistIdsForPopularity);
             getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
+            getArtistHotness(artistIdsForPopularity, sliderUpdate1);
             
         } else {
             info("trouble getting results");
@@ -203,7 +206,7 @@ function getArtistPopularity(artistArray,  sliderUpdate2){
 	  
 	var popularityArray= new Array();
 	
-	console.log('artistIdsForPopularity in getArtistPopularity():'+artistArray);
+	//console.log('artistIdsForPopularity in getArtistPopularity():'+artistArray);
 	
 	 var popularityQueryUrl = 'http://developer.echonest.com/api/v4/artist/familiarity?api_key=BNV9970E1PHXZ9RQW&format=json';
 	 
@@ -232,12 +235,13 @@ function getArtistPopularity(artistArray,  sliderUpdate2){
 	                 var artistName= dataArtistPopularity.response.artist.name;
 	                 var artistPopulartityValue =dataArtistPopularity.response.artist.familiarity;
 	                
-	                console.log(" Get Artist Popularity Query: "+artistName +" PopValue:"+artistPopulartityValue);
+	               // console.log(" Get Artist Popularity Query: "+artistName +" PopValue:"+artistPopulartityValue);
 	                 
 	                	
 	               // return artistPopulartityValue;
 	                popularityArray.push(artistPopulartityValue);
-	                console.log('popularityArray nach push'+i+ ': '+  popularityArray);
+	                //console.log('popularityArray nach push'+i+ ': '+  popularityArray);
+	                sliderUpdate2.updatePopSlider(popularityArray);	
 	                
 	                /*if(artistArray.lenght == i){
 	                	console.log("Vor Aufruf updatePopSlider()");
@@ -250,44 +254,62 @@ function getArtistPopularity(artistArray,  sliderUpdate2){
         
      }
 	 
-	//console.log('popularityArray vor updateSlider() Aufruf: '+ popularityArray);
-	//sliderUpdate2.updatePopSlider(popularityArray);	
+	
 }
 
 
-function getArtistHotness(artist_id, sliderUpdate2){
+function getArtistHotness(artistArray, sliderUpdate2){
 	  //console.log('Artist ID for Hotness Query: '+artist_id)
 	  
 	  var hotnessQueryUrl = 'http://developer.echonest.com/api/v4/artist/hotttnesss?api_key=BNV9970E1PHXZ9RQW&format=json';
 	  
 	  
+	  var hotnessArray= new Array();
 		
-		$.getJSON(hotnessQueryUrl,
-				{
-				'id':artist_id
-					//artist_id3,
-				//'artist':artist_id3
-	            },
-	            function(dataArtistHotness) {
-	            	if (checkResponse(dataArtistHotness)) {
-	            	
-	                   
-	                
-	                
-	                 
-	                 var artistName= dataArtistHotness.response.artist.name;
-	                 var artistHotnessValue =dataArtistHotness.response.artist.hotttnesss;
-	                
-	                 //console.log("Artist Hotness Query: "+artistName +" HotValue:"+artistHotnessValue);
-	                 
-	                 sliderUpdate2.updateHotSlider(artistHotnessValue);
-	                
-	                
-	                
-	                 
-	                
-	            	   
-	        }});
+		console.log('artistIdsForHotness in getArtistHotness():'+artistArray);
+		
+		
+		 
+		 
+		 
+		 for (var i = 0; i < artistArray.length; i++) {
+			 //console.log('Artist ID for Popularity Query '+i+': '+artistArray[i])
+			 
+			 
+			 
+	         var artistId = artistArray[i];
+	         
+			  $.getJSON(hotnessQueryUrl,
+					{
+					'id':artistId
+						//artist_id3,
+					//'artist':artist_id3
+		            },
+		            function(dataArtistHotness) {
+		            	if (checkResponse(dataArtistHotness)) {
+		            	
+		                   
+		                
+		                
+		                 
+		                 var artistName= dataArtistHotness.response.artist.name;
+		                 var artistHotnessValue =dataArtistHotness.response.artist.hotttnesss;
+		                
+		                console.log(" Get Artist Hotness Query: "+artistName +" HotValue:"+artistHotnessValue);
+		                 
+		                	
+		               // return artistPopulartityValue;
+		               hotnessArray.push(artistHotnessValue);
+		                //console.log('popularityArray nach push'+i+ ': '+  popularityArray);
+		                sliderUpdate2.updateHotSlider(hotnessArray);	
+		                
+		               
+		                
+		            	   
+		            	}
+		            });
+	        
+	     }
 	  
 	  
 	 

@@ -27,6 +27,8 @@ require([
  
 });
 
+
+
 function setUpPopSlider1(echonest){
 	  console.log('SetUpPopSlider() betreten');
 		//jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
@@ -39,13 +41,31 @@ function setUpPopSlider1(echonest){
 	
 		slide: function( event, ui ) {
 		$( "#pop" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+		
+	
+		
+		if( ui.values[ 0 ] == ui.values[ 1 ]){
+			console.log('Slider slide() betreten');
+			$( "#slider-pop" ).slider( "values", 1,ui.values[ 0 ]+10  );
+		}
+		if( ui.values[ 1 ] == ui.values[ 0 ]){
+			console.log('Slider slide() betreten');
+			$( "#slider-pop" ).slider( "values", 0,ui.values[ 1 ]-10  );
+		}
 		},
+		
 		stop: function ( event, ui ) {
-			console.log("Pop slider Stop");
+			//console.log("Pop slider Stop");
 			echonest.fetchPlaylist();
-		}	
+		},
+		
+		/*change: function( event, ui ) {
+			console.log('Slider Change Event');
+		}*/
 		
 		});
+		
+	
 		
 		$( "#pop" ).val(  $( "#slider-pop" ).slider( "values", 0 ) +
 		" - " + $( "#slider-pop" ).slider( "values", 1 ) );
@@ -62,6 +82,14 @@ function setUpHotSlider1(echonest){
 	values: [0, 100 ],
 	slide: function( event, ui ) {
 	$( "#hot" ).val(  ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+	if( ui.values[ 0 ] == ui.values[ 1 ]){
+		//console.log('Slider slide() betreten');
+		$( "#slider-hot" ).slider( "values", 1,ui.values[ 0 ]+10  );
+	}
+	if( ui.values[ 1 ] == ui.values[ 0 ]){
+		//console.log('Slider slide() betreten');
+		$( "#slider-hot" ).slider( "values", 0,ui.values[ 1 ]-10  );
+	}
 	},
 	stop: function ( event, ui ) {
 		console.log('Hot slider Stop');
