@@ -15,51 +15,71 @@ require([
 
 
  
-  var fetchPlaylist = function() {
-	  console.log("Pressed GeneratePlaylistButton");
-	  
-	
-
-	  
-	  var track = models.player.load('track');
-	  //console.log('TRACK= '+track);
-	    if (track == null) {
-	    	info('Start playing something and I ll make a playlist of good songs based on that song');
-	    	
-	    } else {
-	    	info('Request sent to Echonest');
-	    	
-	    	getPlaylist(models.player.track.artists[0],20, throbber, models, trackCover, sliderUpdate);
-	    	//setupSlider.updatePopularitySliderValues();
-	    	//sliderUpdate.updatePopSlider();
-	    	
-	    }
+  var getPlaylistSongSimilarity = function() {
+	getPlaylistSongSimilarity1(models, 20, throbber,  trackCover, sliderUpdate);
+  
   };
 
-//var numberOfTracks = 20;
+
+  var getPlaylistArtistSimilarity = function(){
+	  getPlaylistArtistSimilarity1(models, 20, throbber,  trackCover, sliderUpdate);
+  };
   
-  exports.fetchPlaylist = fetchPlaylist;
-  //exports.numberOfTracks =numberOfTracks;
+  exports.getPlaylistSongSimilarity = getPlaylistSongSimilarity;
+  exports.getPlaylistArtistSimilarity =getPlaylistArtistSimilarity;
  
 })//end of require()
 
 
 
 
-function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate1) {
-    info('Getting playlist for ' + artist.name);
+function getPlaylistSongSimilarity1(models1, size, throbber1,  trackCover1, sliderUpdate1) {
+
+	console.log('getPlaylistSongSimilarity() was called');
+	 var track = models1.player.load('track');
+     /*console.log('TRACK= '+track);
+     var artist = models1.player.track.artists[0];
+     console.log('ARTIST: '+artist);*/
+	
+	
+	    if (track == null) {
+	    	info('Start playing something and I ll make a playlist of good songs based on that song');
+	    	
+	    } else {
+	
+	
+	
+	
+	
+    
+    
     var cover = document.getElementById('albumCoverContainer');
    // var cover = $(".albumCoverContainer") ;
     var pictureThrobber = throbber1.forElement(cover);
     pictureThrobber.setSize('normal');
    
-    var artist_id = artist.uri.replace('spotify', 'spotify-WW');
+    //getAllEchonestGenres();
+    
+   // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+    
+    var artistName = models1.player.track.artists[0].name;
+    
+    var trackName =  models1.player.track.name;
+  
+    
+    
+    info('Getting Songs like "'+trackName+'" by '+ artistName);
+    
+    
     var url = 'http://developer.echonest.com/api/v4/playlist/static?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks';
     
-    var song_id=models1.player.track.uri;
+    //var song_id=models1.player.track.uri;
     //console.log('Spotify Song ID: '+song_id);
     var replacedSongID= models1.player.track.uri.replace('spotify', 'spotify-WW');
     //console.log('Replaced ID: '+replacedSongID);
+    
+   // info('Getting similar Songs for Artist: '+artistName);
+    
     
    //Setzen der Werte für die Query
     var minHotness = $( "#slider-hot" ).slider( "values", 0 )/100;
@@ -98,7 +118,7 @@ function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate
                 trackCover1.getTrackCover(id);
                 
                // console.log('ECHONEST artist_id: '+ data.response.songs[i].artist_id);
-                getArtistGenre(data.response.songs[i].artist_id);
+                getArtistTerms(data.response.songs[i].artist_id);
                 
                 artistIdsForPopularity[i]= data.response.songs[i].artist_id
                //getArtistHotness(data.response.songs[i].artist_id, sliderUpdate1);
@@ -113,12 +133,106 @@ function getPlaylist(artist, size, throbber1, models1, trackCover1, sliderUpdate
         }
     });
     
-   
+	    }   
     
 }
 
 
-function getArtistGenre(artistID){
+function getPlaylistArtistSimilarity1(models1, size, throbber1,  trackCover1, sliderUpdate1){
+	console.log('getPlaylistArtistSimilarity() was called');
+	
+	 var track = models1.player.load('track');
+    
+	    if (track == null) {
+	    	info('Start playing something and I ll make a playlist of good songs based on that song');
+	    	
+	    } else {
+	
+	
+    
+    var cover = document.getElementById('albumCoverContainer');
+  
+    var pictureThrobber = throbber1.forElement(cover);
+    pictureThrobber.setSize('normal');
+   
+    //getAllEchonestGenres();
+    
+   // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+    
+    var artistName = models1.player.track.artists[0].name;
+    
+    var trackName =  models1.player.track.name;
+  
+    
+    
+    info('Getting Songs like Artist: '+ artistName);
+    
+    
+    var url = 'http://developer.echonest.com/api/v4/playlist/static?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks';
+    
+  
+    var replacedArtistID= models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+   
+    
+   
+    
+    
+   //Setzen der Werte für die Query
+    var minHotness = $( "#slider-hot" ).slider( "values", 0 )/100;
+    var maxHotness = $( "#slider-hot" ).slider( "values", 1 )/100;
+    var minPopularity = $( "#slider-pop" ).slider( "values", 0 )/100;
+    var maxPopularity = $( "#slider-pop" ).slider( "values", 1 )/100;
+    
+    //console.log('minPopularity getPlaylist(): '+minPopularity);
+   // console.log('maxPopularity getPlaylist(): '+maxPopularity);
+    
+    var artistIdsForPopularity = new Array();
+    
+    
+
+    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+    $.getJSON(url, 
+    		{ //'artist_id': artist_id,//
+    	'artist_id': replacedArtistID, 
+    	'format':'jsonp', limit: true,
+            'results': size, 'type':'artist-radio', 
+            'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
+            'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+            //bucket : ['id:spotify-WW', 'tracks'],
+            },
+            function(data) {
+        if (checkResponse(data)) {
+            info("");
+            $("#albumCoverContainer").empty();
+            
+           
+            
+            for (var i = 0; i < data.response.songs.length; i++) {
+                //console.log('Song ID: '+data.response.songs[i].id +' SongName: '+data.response.songs[i].title);
+                //console.log('Track ID: '+JSON.stringify(data.response.songs[i].tracks[2].foreign_id));
+                var id = data.response.songs[i].tracks[0].foreign_id;
+                trackCover1.getTrackCover(id);
+                
+               // console.log('ECHONEST artist_id: '+ data.response.songs[i].artist_id);
+                getArtistTerms(data.response.songs[i].artist_id);
+                
+                artistIdsForPopularity[i]= data.response.songs[i].artist_id
+               //getArtistHotness(data.response.songs[i].artist_id, sliderUpdate1);
+            }
+			// throbber.hide();
+           // console.log('artistIdsForPopularity: '+ artistIdsForPopularity);
+            getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
+            getArtistHotness(artistIdsForPopularity, sliderUpdate1);
+            
+        } else {
+            info("trouble getting results");
+        }
+    });
+    
+	    }   
+}
+
+function getArtistTerms(artistID){
 	
 	$("#styleresults").empty();
 	$('#cblist').empty();
@@ -266,7 +380,7 @@ function getArtistHotness(artistArray, sliderUpdate2){
 	  
 	  var hotnessArray= new Array();
 		
-		console.log('artistIdsForHotness in getArtistHotness():'+artistArray);
+		//console.log('artistIdsForHotness in getArtistHotness():'+artistArray);
 		
 		
 		 
@@ -295,7 +409,7 @@ function getArtistHotness(artistArray, sliderUpdate2){
 		                 var artistName= dataArtistHotness.response.artist.name;
 		                 var artistHotnessValue =dataArtistHotness.response.artist.hotttnesss;
 		                
-		                console.log(" Get Artist Hotness Query: "+artistName +" HotValue:"+artistHotnessValue);
+		               // console.log(" Get Artist Hotness Query: "+artistName +" HotValue:"+artistHotnessValue);
 		                 
 		                	
 		               // return artistPopulartityValue;
@@ -315,6 +429,41 @@ function getArtistHotness(artistArray, sliderUpdate2){
 	 
 	  
 	  
+}
+
+
+function getAllEchonestGenres(){
+	
+	var genreQueryUrl ='http://developer.echonest.com/api/v4/artist/list_genres?api_key=BNV9970E1PHXZ9RQW&format=json';
+	
+	var genreArray = new Array();
+	
+	  $.getJSON(genreQueryUrl,
+				{
+				//'id':artistId
+					//artist_id3,
+				//'artist':artist_id3
+	            },
+	            function(genreData) {
+	            	if (checkResponse(genreData)) {
+	            	
+	            		for (var i = 0; i < genreData.response.genres.length; i++) {
+	            			genreArray.push(genreData.response.genres[i].name);
+	                
+	            		}
+	                
+	                console.log('Echonest Genre List: '+genreArray);
+	                 
+	                	
+	              
+	                
+	               
+	                
+	            	   
+	            	}
+	            });
+	
+	
 }
 
 function checkResponse(data) {

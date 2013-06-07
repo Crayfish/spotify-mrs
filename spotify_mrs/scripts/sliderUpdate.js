@@ -46,51 +46,7 @@ function updatePopSlider1(popularityArray){
 	
 	}
 }
-	/*var currentLowerPopValue =$( "#slider-pop" ).slider( "values", 0 );
-	var currentHigherPopValue=$( "#slider-pop" ).slider( "values", 1 );
-	 currentLowerPopValue =  currentLowerPopValue.toFixed(2);
-	 currentHigherPopValue =currentHigherPopValue.toFixed(2);+
-	 console.log('currentHigherPopValue: '+ currentHigherPopValue);
 	
-	console.log("Current Popularity SliderValues: "+ currentLowerPopValue+"/"+currentHigherPopValue);
-	
-	// var lowerPopNumber =+currentLowerPopValue;
-	 //var higherPopNumber =+;
-	// var lowerPopInt =parseInt(currentLowerPopValue);
-	
-	 
-	 
-	
-	if(popValue1 >  currentLowerPopValue && popValue1 < currentHigherPopValue){
-		//console.log('if von updatePopSlider() betreten');
-		highestPopValue
-		$( "#slider-pop" ).slider( "values", 0,popValue1.toFixed(2)*100  );
-	}
-	
-	
-	if(popValue1 <  currentLowerPopValue && popValue1 < currentHigherPopValue){
-		//console.log('if von updatePopSlider() betreten');
-		$( "#pop" ).val(popValue1.toFixed(2) +" - " + currentHigherPopValue);
-		$( "#slider-pop" ).slider( "values", 0,popValue1.toFixed(2)*100  );
-	}
-	
-	if( popValue1 > currentHigherPopValue){
-		//console.log('if von updatePopSlider() betreten');
-		$( "#pop" ).val(currentLowerPopValue +" - " + popValue1.toFixed(2));
-		$( "#slider-pop" ).slider( "values", 1,popValue1.toFixed(2)*100  );
-	}
-	
-	else{
-		if(popValue1 < currentHigherPopValue ){
-			//console.log('if von updatePopSlider() betreten');
-			$( "#pop" ).val(popValue1.toFixed(2) +" - " + popValue1.toFixed());
-			$( "#slider-pop" ).slider( "values", 0,popValue1.toFixed(2)*100  );
-		}else{
-			$( "#pop" ).val(currentLowerPopValue +" - " + popValue1.toFixed());
-			$( "#slider-pop" ).slider( "values", 0,popValue1.toFixed(2)*100  );
-		}
-	}
-	*/
 	
 	
 	
@@ -108,7 +64,7 @@ function updateHotSlider1(hotnessArray){
 	
 	
 	hotnessArray.sort(function(a,b){return b-a});
-	console.log('hotnessArray for updateHotSlider(): '+hotnessArray);
+	//console.log('hotnessArray for updateHotSlider(): '+hotnessArray);
 	
 	
 	var lowestHotValue = hotnessArray[hotnessArray.length - 1];
@@ -116,8 +72,8 @@ function updateHotSlider1(hotnessArray){
 	
 	
 	
-	console.log(' lowestHotValue: '+ lowestHotValue.toFixed(2));
-	console.log(' highestHotValue: '+ highestHotValue.toFixed(2));
+	//console.log(' lowestHotValue: '+ lowestHotValue.toFixed(2));
+	//console.log(' highestHotValue: '+ highestHotValue.toFixed(2));
 	
 	$( "#slider-hot" ).slider( "values", 0,lowestHotValue.toFixed(2)*100  );
 	$( "#slider-hot" ).slider( "values", 1,highestHotValue.toFixed(2)*100  );

@@ -6,13 +6,14 @@ require([
   'scripts/heading',
   'scripts/generatePlaylistButton',
   'scripts/setupSlider',
-  'scripts/echonest'
+  'scripts/echonest',
+  'scripts/setupSimilarityRadioButtons'
   
   
   
 
   // generatePlaylistButton,
-], function(models, heading,   generatePlaylistButton, setupSlider, echonest) {
+], function(models, heading,   generatePlaylistButton, setupSlider, echonest, setupSimilarityRadioButtons) {
   'use strict';
   
  
@@ -23,6 +24,7 @@ require([
 
 	  heading.writeHeading();
 	  generatePlaylistButton.setUpGeneratePlaylistButton();
+	  setupSimilarityRadioButtons.setupSimilarityButtons();
 	  setupSlider.setUpPopSlider(echonest);
 	  setupSlider.setUpHotSlider(echonest);
 	 

@@ -32,7 +32,11 @@
     <div id="info"> </div>
     <button id="generatePlaylistButton"> Generate Playlist </button>
     
-    <!--Slider f�r Familiarity/ Popularity-->     
+    
+    
+    
+    
+       
 
  
  
@@ -43,6 +47,15 @@
     	<p class ="rulerheader">Rulers</p>
 		
 		<div class="rulerContent">
+		
+<form action="input_radio.htm">
+  <p>Similarity based on:</p>
+  <p>
+    <input type="radio" id = 'song' name="similarity" value="song" checked="checked"> Song <input type="radio" id ='artist' name="similarity" value="artist" >Artist<br>
+  </p>
+</form>
+		
+		
 		<!-- Popularity Slider -->
 		<p>
 		<label for="pop">Popularity range:</label>
@@ -64,9 +77,9 @@
 		</p>
 
 
-		<!--Artist Style und Genre Information--> 
+		<!--Artist Terms Information--> 
 		<p>
-		<label>Artist Style / Artist Genre:</label>
+		<label>Artist Terms:</label>
 		</p>
 
 		<p>  
