@@ -15,7 +15,7 @@ require([
 	    generateNextSongsButton.onclick=function(){
 	    	console.log("Pressed NextSongs Button");
 	    	
-	    echonestDynamic.getNextSong();
+	    echonestDynamic.getNextXXSong();
 	  }
   };
 
