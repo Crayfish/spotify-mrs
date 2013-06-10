@@ -33,7 +33,13 @@ require([
 	 
   };
   
+  var getNextXXSong = function(){
+		 // console.log("New session is started");
+		  getNextXXSong1(trackCover);
+		 
+	  };
   
+  exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
   exports.startNewSession = startNewSession;
  
@@ -45,8 +51,11 @@ require([
 
 var session_id ='';
 
+var numberOfSongs = 20;
+
 function startNewSession1(models1, throbber1, trackCover1){
 	 console.log("New session is started");
+	 numberOfSongs=20;
 	 
 	 var track = models1.player.load('track');
      //console.log('TRACK= '+track);
@@ -59,11 +68,6 @@ function startNewSession1(models1, throbber1, trackCover1){
 	    	
 	    } else {
 	
-	
-	
-	
-	
-    
     
     var cover = document.getElementById('albumCoverContainer');
    // var cover = $(".albumCoverContainer") ;
@@ -146,8 +150,13 @@ function startNewSession1(models1, throbber1, trackCover1){
             console.log('session_id: '+session_id);
             
        	 //for (var i = 0; i <20; i++){
-            getNextXXSong1(trackCover1, 10);
-       	// }  
+            //var i =0;
+            //while(i<20){
+            getNextSong1(trackCover1);
+            //setTimeout(function() {info("Timeout");},1000);
+            //i++;
+            //console.log("Timeout ended");
+           //}  
           // getSongsSchleife(trackCover1);
             
             
@@ -193,6 +202,7 @@ function getNextSong1(trackCover1){
 	       // 'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
 	       // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
 	            //bucket : ['id:spotify-WW', 'tracks'],
+	    	//'callback': console.log('Calllback executed');
 	            },
 	            function(data) {
 	        if (checkResponse(data)) {
@@ -260,8 +270,11 @@ function getNextSong1(trackCover1){
 
 
 
-function getNextXXSong1(trackCover1, numberOfSongs){
+function getNextXXSong1(trackCover1){
 	console.log('getNextXXSong() was called');
+	numberOfSongs=20;
+	
+	
 	
 	var randomNumber =  Math.floor(Math.random()*100);
 	 var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/next?api_key=BNV9970E1PHXZ9RQW&format=json&results=5&lookahead=5&session_id='+session_id+'&_='+randomNumber;
@@ -284,12 +297,18 @@ function getNextXXSong1(trackCover1, numberOfSongs){
 	            },
 	            function(data) {
 	        if (checkResponse(data)) {
-	           // info("");
-	           // $("#albumCoverContainer").empty();
+	          
 	            
+	        	
+	        	 info("");
+	             $("#albumCoverContainer").empty();
+	              
+	             
+	           
+	              getNextSong1(trackCover1);
 	           
 	           // session_id = data.response.session_id;
-	        	 for (var i = 0; i < data.response.songs.length; i++){
+	        	/* for (var i = 0; i < data.response.songs.length; i++){
 	            console.log('Next song:' +data.response.songs[i].title+' by '+data.response.songs[i].artist_name);
 	            
 	            var id = data.response.songs[i].tracks[0].foreign_id;
@@ -297,7 +316,7 @@ function getNextXXSong1(trackCover1, numberOfSongs){
                 
                
 	            
-	        	 }
+	        	 }*/
 	        	 
 	        	/* for (var i = 0; i < data.response.lookahead.length; i++){
 	 	            console.log('Next song:' +data.response.lookahead[i].title+' by '+data.response.lookahead[i].artist_name);
@@ -363,11 +382,13 @@ function banSongFeedBack(trackCover1, echnonestTrackId){
 	          	        	 
 	        	console.log('banSong() was called with echonest ID: '+echnonestTrackId);
 	        	
-	        	 //setTimeout(function(){getNextSong1(trackCover1)},3000);
+	        	 //setTimeout(function(){getNextSong1(trackCover1)},1000);
 	        	
 	        	//getPlaylistInfo(); 
-	        	//getSongsSchleife(trackCover1); 
-	        	 
+	        	if(numberOfSongs !=0){
+	        	getNextSong1(trackCover1); 
+	        	numberOfSongs = numberOfSongs-1;
+	        	}
 	         
 	            
 	        } else {
@@ -404,9 +425,12 @@ $.getJSON(infoUrl,
 }
 
 
+
+
 function info(s) {
 	  var info =document.getElementById('info');
 	  info.innerHTML=(s);
+	 
 	}
 
 
