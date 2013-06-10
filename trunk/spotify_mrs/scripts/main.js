@@ -2,18 +2,19 @@ jQuery.ajaxSettings.traditional = true;
 
 
 require([
-  '$api/models',
+  //'$api/models',
   'scripts/heading',
   'scripts/generatePlaylistButton',
   'scripts/setupSlider',
-  'scripts/echonest',
-  'scripts/setupSimilarityRadioButtons'
+
+  'scripts/echonestDynamic',
+  'scripts/echonest'
   
   
   
 
   // generatePlaylistButton,
-], function(models, heading,   generatePlaylistButton, setupSlider, echonest, setupSimilarityRadioButtons) {
+], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest) {
   'use strict';
   
  
@@ -21,12 +22,26 @@ require([
   
   
   $(document).ready(function(){
+	  
+	  console.log('Main() executed');
 
-	  heading.writeHeading();
-	  generatePlaylistButton.setUpGeneratePlaylistButton();
-	  setupSimilarityRadioButtons.setupSimilarityButtons();
-	  setupSlider.setUpPopSlider(echonest);
-	  setupSlider.setUpHotSlider(echonest);
+	 heading.writeHeading();
+	  
+	  generatePlaylistButton.setUpNewSeedButton();
+	  generatePlaylistButton.setUpNextSongsButton();
+	  
+	 setupSlider.setUpPopSlider(echonest);
+	 setupSlider.setUpHotSlider(echonest);
+	  
+	 echonestDynamic.startNewSession();
+	  
+	 // generatePlaylistButton.setUpNewSeedButton();
+	 // generatePlaylistButton.setUpGeneratePlaylistButton();
+	  
+	 // setupSimilarityRadioButtons.setupSimilarityButtons();
+	  
+	  //setupSlider.setUpPopSlider(echonest);
+	 // setupSlider.setUpHotSlider(echonest);
 	 
 
 	}); 

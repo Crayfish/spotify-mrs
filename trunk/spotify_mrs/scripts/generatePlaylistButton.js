@@ -3,27 +3,33 @@
 require([
   '$api/models',
   '$views/buttons',
-  'scripts/echonest',
+  //'scripts/echonest',
+  'scripts/echonestDynamic',
   'scripts/setupSimilarityRadioButtons'
-], function(models, buttons, echonest, setupSimilarityRadioButtons ) {
+], function(models, buttons, echonestDynamic, setupSimilarityRadioButtons ) {
   'use strict';
 
 
-  var setUpGeneratePlaylistButton = function() {
-	    var generatePlaylistButton = document.getElementById('generatePlaylistButton');
-	    generatePlaylistButton.onclick=function(){
-	    	console.log("Pressed GeneratePlaylistButton");
+  var setUpNextSongsButton = function() {
+	    var generateNextSongsButton = document.getElementById('nextSongsButton');
+	    generateNextSongsButton.onclick=function(){
+	    	console.log("Pressed NextSongs Button");
 	    	
-	    	if(setupSimilarityRadioButtons.returnSimilarityMode()=='song'){
-				echonest.getPlaylistSongSimilarity();
-			}else{
-				//if(setupSimilarityRadioButtons.returnSimilarityMode()=='artist'){
-				echonest.getPlaylistArtistSimilarity();	
-				//}
-				}
+	    echonestDynamic.getNextSong();
 	  }
   };
 
+  
+  var setUpNewSeedButton = function() {
+	    var newSeedButton = document.getElementById('newSeed');
+	    newSeedButton.onclick=function(){
+	    	console.log("Pressed New Seed Button");
+	    	
+	    	echonestDynamic.startNewSession();
+	  }
+};
+  
 
-  exports.setUpGeneratePlaylistButton = setUpGeneratePlaylistButton;
+  exports.setUpNextSongsButton = setUpNextSongsButton;
+  exports.setUpNewSeedButton = setUpNewSeedButton;
 });

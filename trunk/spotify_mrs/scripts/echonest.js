@@ -71,15 +71,17 @@ function getPlaylistSongSimilarity1(models1, size, throbber1,  trackCover1, slid
     info('Getting Songs like "'+trackName+'" by '+ artistName);
     
     
-    var url = 'http://developer.echonest.com/api/v4/playlist/static?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks';
+   
     
-    //var song_id=models1.player.track.uri;
-    //console.log('Spotify Song ID: '+song_id);
+    var song_id=models1.player.track.uri.decodeForText();
+    console.log('Spotify Song ID: '+song_id);
     var replacedSongID= models1.player.track.uri.replace('spotify', 'spotify-WW');
-    //console.log('Replaced ID: '+replacedSongID);
-    
-   // info('Getting similar Songs for Artist: '+artistName);
-    
+    //var replacedSongID= song_id.replace('spotify', 'spotify-WW');
+    console.log('Replaced ID: '+replacedSongID);
+    //Format:  spotify-WW:track:3L7BcXHCG8uT92viO6Tikl
+   // replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
+   
+    var url = 'http://developer.echonest.com/api/v4/playlist/static?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks';
     
    //Setzen der Werte für die Query
     var minHotness = $( "#slider-hot" ).slider( "values", 0 )/100;
@@ -97,8 +99,8 @@ function getPlaylistSongSimilarity1(models1, size, throbber1,  trackCover1, slid
     //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
     $.getJSON(url, 
     		{ //'artist_id': artist_id,//
-    	'track_id': replacedSongID, 
-    	'format':'jsonp', limit: true,
+    	'track_id':replacedSongID, 
+    	'format':'jsonp', limit : true,
             'results': size, 'type':'song-radio', 
             'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
             'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
@@ -125,8 +127,9 @@ function getPlaylistSongSimilarity1(models1, size, throbber1,  trackCover1, slid
             }
 			// throbber.hide();
            // console.log('artistIdsForPopularity: '+ artistIdsForPopularity);
-            getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
-            getArtistHotness(artistIdsForPopularity, sliderUpdate1);
+            
+           getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
+           getArtistHotness(artistIdsForPopularity, sliderUpdate1);
             
         } else {
             info("trouble getting results");
@@ -171,7 +174,8 @@ function getPlaylistArtistSimilarity1(models1, size, throbber1,  trackCover1, sl
     var url = 'http://developer.echonest.com/api/v4/playlist/static?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks';
     
   
-    var replacedArtistID= models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+    var replacedArtistID= models1.player.track.artists[0].uri.decodeForText().replace('spotify', 'spotify-WW');
+    console.log('replacedArtistID: '+replacedArtistID);
    
     
    
