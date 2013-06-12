@@ -38,11 +38,28 @@ require([
 		  getNextXXSong1(trackCover);
 		 
 	  };
+	  
+	var changeArtistPopularity = function(){
+		 changeArtistPopularity1();
+	};  
+	
+	
+	var changeArtistHotness = function(){
+		changeArtistHotness1();
+	}; 
+	
+	
+	var changeSongHotness = function(){
+		changeSongHotness1();
+	};
+	
   
   exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
   exports.startNewSession = startNewSession;
- 
+  exports.changeArtistPopularity =  changeArtistPopularity;
+  exports.changeArtistHotness = changeArtistHotness;
+  exports.changeSongHotness =changeSongHotness;
 });//end of require()
 
 
@@ -53,9 +70,161 @@ var session_id ='';
 
 var numberOfSongs = 20;
 
+var songsAlreadyUsed = new Array();
+
+
+function  changeArtistPopularity1(){
+	console.log("changeArtistPopularity() was called");
+	
+		//getConstraintsInfo();
+	
+	   //Setzen der Werte für die Query
+		
+	    var minPopularity = $( "#slider-pop" ).slider( "values", 0 )/100;
+	    var maxPopularity = $( "#slider-pop" ).slider( "values", 1 )/100;
+	    
+	    console.log('maxPopularity changeArtistPopularity1(): '+maxPopularity);
+	    console.log('minPopularity changeArtistPopularity1(): '+minPopularity);
+	    
+	    
+	    var randomNumber =  Math.floor(Math.random()*100);
+	    
+	    
+	   // var artistIdsForPopularity = new Array();
+	    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
+	    	
+
+	    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+	    $.getJSON(url, 
+	    		{// 'artist_id':replacedArtistID ,
+	    	//'track_id': replacedSongID, 
+	    	'format':'jsonp',
+	    	//limit : true,
+	        //'type':'artist-radio', 
+	    	// 'target_artist_familiarity': maxPopularity
+	    	'max_artist_familiarity':maxPopularity,  'min_artist_familiarity':minPopularity 
+	        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+	            //bucket : ['id:spotify-WW', 'tracks'],
+	            },
+	            function(data) {
+	        if (checkResponse(data)) {
+	            
+	        	//console.log('Changed Popularity Values');
+	        	getConstraintsInfo();
+	           
+	       
+	        } else {
+	            info("trouble getting results");
+	        }
+	    });
+	
+	
+	
+}
+
+function  changeArtistHotness1(){
+	console.log("changeArtistHotness() was called");
+	
+		//getConstraintsInfo();
+	
+	   //Setzen der Werte für die Query
+		var minHotness = $( "#slider-hot" ).slider( "values", 0 )/100;
+		var maxHotness = $( "#slider-hot" ).slider( "values", 1 )/100;
+	   
+		console.log('maxArtistHotness changeArtistHotness1(): '+maxHotness);
+	    console.log('minArtistHotness changeArtistHotness1(): '+minHotness);
+	   
+	    
+	    var randomNumber =  Math.floor(Math.random()*100);
+	    
+	    
+	    //var artistIdsForPopularity = new Array();
+	    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
+	    	
+
+	    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+	    $.getJSON(url, 
+	    		{// 'artist_id':replacedArtistID ,
+	    	//'track_id': replacedSongID, 
+	    	'format':'jsonp',
+	    	//limit : true,
+	        //'type':'artist-radio', 
+	    	'max_artist_hotttnesss':maxHotness,
+	    	 'min_artist_hotttnesss':minHotness 
+	        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+	            //bucket : ['id:spotify-WW', 'tracks'],
+	            },
+	            function(data) {
+	        if (checkResponse(data)) {
+	            
+	        	//console.log('Changed Hotness Values');
+	        	getConstraintsInfo();
+	           
+	       
+	        } else {
+	            info("trouble getting results");
+	        }
+	    });
+	
+	
+	
+}
+
+
+function  changeSongHotness1(){
+	console.log("changeSongHotness() was called");
+	
+		//getConstraintsInfo();
+	
+	   //Setzen der Werte für die Query
+		var minSongHotness = $( "#slider-songHot" ).slider( "values", 0 )/100;
+		var maxSongHotness = $( "#slider-songHot" ).slider( "values", 1 )/100;
+	   
+		console.log('maxSongHotness changeSongHotness1(): '+maxSongHotness);
+	    console.log('minSongHotness changeSongHotness1(): '+minSongHotness);
+	   
+	    
+	    var randomNumber =  Math.floor(Math.random()*100);
+	    
+	    
+	    //var artistIdsForPopularity = new Array();
+	    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
+	    	
+
+	    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+	    $.getJSON(url, 
+	    		{// 'artist_id':replacedArtistID ,
+	    	//'track_id': replacedSongID, 
+	    	'format':'jsonp',
+	    	//limit : true,
+	        //'type':'artist-radio', 
+	    	'max_song_hotttnesss':maxSongHotness,
+	    	 'min_song_hotttnesss':minSongHotness 
+	        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+	            //bucket : ['id:spotify-WW', 'tracks'],
+	            },
+	            function(data) {
+	        if (checkResponse(data)) {
+	            
+	        	//console.log('Changed Hotness Values');
+	        	getConstraintsInfo();
+	           
+	       
+	        } else {
+	            info("trouble getting results");
+	        }
+	    });
+	
+	
+	
+}
+
+
 function startNewSession1(models1, throbber1, trackCover1){
 	 console.log("New session is started");
+	 
 	 numberOfSongs=20;
+	 songsAlreadyUsed = new Array();
 	 
 	 var track = models1.player.load('track');
      //console.log('TRACK= '+track);
@@ -88,19 +257,19 @@ function startNewSession1(models1, throbber1, trackCover1){
     
     
     var artist_id=  models1.player.track.artists[0].toString();
-    console.log('artist_id: '+artist_id);
+   // console.log('artist_id: '+artist_id);
     
     var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
-    console.log('Replaced Artist ID: '+replacedArtistID);
+    //console.log('Replaced Artist ID: '+replacedArtistID);
    
     //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
     
     var song_id=models1.player.track.uri.toString();
     //.decodeForText();
-    console.log('Spotify Song ID: '+song_id);
+   // console.log('Spotify Song ID: '+song_id);
     //var replacedSongID= models1.player.track.uri.decodeForText().replace('spotify', 'spotify-WW');
     var replacedSongID= song_id.replace('spotify', 'spotify-WW');
-    console.log('Replaced ID: '+replacedSongID);
+    //console.log('Replaced ID: '+replacedSongID);
     //replacedSongID = '"'+replacedSongID+'"';
    //console.log('Replaced ID mit " "': '+replacedSongID);
     //Format:  spotify-WW:track:3L7BcXHCG8uT92viO6Tikl
@@ -111,14 +280,7 @@ function startNewSession1(models1, throbber1, trackCover1){
    
     
     
-   //Setzen der Werte für die Query
-    var minHotness = $( "#slider-hot" ).slider( "values", 0 )/100;
-    var maxHotness = $( "#slider-hot" ).slider( "values", 1 )/100;
-    var minPopularity = $( "#slider-pop" ).slider( "values", 0 )/100;
-    var maxPopularity = $( "#slider-pop" ).slider( "values", 1 )/100;
-    
-    //console.log('minPopularity getPlaylist(): '+minPopularity);
-   // console.log('maxPopularity getPlaylist(): '+maxPopularity);
+
     
     var randomNumber =  Math.floor(Math.random()*100);
     
@@ -136,8 +298,8 @@ function startNewSession1(models1, throbber1, trackCover1){
     	'format':'jsonp',
     	limit : true,
         'type':'artist-radio', 
-        'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
-        'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+        //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
+       // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
             //bucket : ['id:spotify-WW', 'tracks'],
             },
             function(data) {
@@ -147,7 +309,7 @@ function startNewSession1(models1, throbber1, trackCover1){
             
            
             session_id = data.response.session_id;
-            console.log('session_id: '+session_id);
+           // console.log('session_id: '+session_id);
             
        	 //for (var i = 0; i <20; i++){
             //var i =0;
@@ -180,13 +342,13 @@ function startNewSession1(models1, throbber1, trackCover1){
 
 
 function getNextSong1(trackCover1){
-	console.log('getNextSong() was called');
+	//console.log('getNextSong() was called');
 	
 	var randomNumber =  Math.floor(Math.random()*100);
 	 var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/next?api_key=BNV9970E1PHXZ9RQW&format=json&results=1&session_id='+session_id+'&_='+randomNumber;
 	    //&session_id=3c717a4465dc4a2ba871747a2044f441';
 	    //var session_id ='';
-	    var numberOfSongs = 1;
+	    //var numberOfSongs = 1;
 
 	    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
 	   
@@ -206,35 +368,43 @@ function getNextSong1(trackCover1){
 	            },
 	            function(data) {
 	        if (checkResponse(data)) {
-	           // info("");
-	           // $("#albumCoverContainer").empty();
-	            
-	           
-	           // session_id = data.response.session_id;
-	        	
-	           // console.log('Next song:' +data.response.songs[0].title+' by '+data.response.songs[0].artist_name);
-	            
-	            //var id = data.response.songs[0].tracks[0].foreign_id;
-                //trackCover1.getTrackCover(id);
+	        
                 
                 
            	// for (var i = 0; i < data.response.songs.length; i++){
- 	            console.log('Next song:' +data.response.songs[0].title+' by '+data.response.songs[0].artist_name);
+ 	            console.log('Next song no ' +numberOfSongs+': ' +data.response.songs[0].title+' by '+data.response.songs[0].artist_name);
  	            
- 	            var echnonestTrackId = data.response.songs[0].id;
+ 	            var echonestTrackId = data.response.songs[0].id;
  	           // console.log('echnonestTrackId: '+echnonestTrackId);
  	            
+ 	            
+ 	           if($.inArray(echonestTrackId,  songsAlreadyUsed) > -1){
+ 	 	            console.log('Song bereits verwendet');
+ 	 	            numberOfSongs = numberOfSongs+1;
+ 	 	            banSongFeedBack(trackCover1, echonestTrackId); 
+ 	 	          }else{
+ 	 	        	songsAlreadyUsed.push(echonestTrackId);
+ 	 	        	var id = data.response.songs[0].tracks[0].foreign_id;
+ 	 	            trackCover1.getTrackCover(id);
+ 	 	            banSongFeedBack(trackCover1, echonestTrackId);
+ 	 	          }
+ 	            
+ 	            
+ 	         /*  
+ 	          if($.inArray(echonestTrackId,  songsAlreadyUsed) == -1){
+ 	            songsAlreadyUsed.push(echonestTrackId);
+ 	          }
  	          
+ 	         // console.log('IN ARRAY with INDEX: '+ $.inArray(echonestTrackId,  songsAlreadyUsed));
  	            
  	           
- 	          
- 	            
- 	           
+ 	          if( $.inArray(echonestTrackId,  songsAlreadyUsed) > -1){
+ 	        	  //console.log('TRACK ALREADY USED');
  	            var id = data.response.songs[0].tracks[0].foreign_id;
  	            trackCover1.getTrackCover(id);
-               
+ 	          }
                 
- 	            banSongFeedBack(trackCover1, echnonestTrackId);
+ 	           banSongFeedBack(trackCover1, echonestTrackId);*/
  	            
  	        	
               
@@ -272,6 +442,8 @@ function getNextSong1(trackCover1){
 
 function getNextXXSong1(trackCover1){
 	console.log('getNextXXSong() was called');
+	
+	
 	numberOfSongs=20;
 	
 	
@@ -384,13 +556,26 @@ function banSongFeedBack(trackCover1, echnonestTrackId){
 	        	
 	        	 //setTimeout(function(){getNextSong1(trackCover1)},1000);
 	        	
-	        	//getPlaylistInfo(); 
+	        	
+	        	/*if(numberOfSongs == 0){
+	        		
+	        		console.log('Number of fetched songs: '+songsAlreadyUsed.length);
+	        		 for(var j =0; j< songsAlreadyUsed.length;j++){
+	        			 console.log('Song Already Used no '+j+': '+songsAlreadyUsed[j]);
+	        		 }
+	        		 getBanedSongsInfo();
+	        		
+	        	}*/
+	        
 	        	if(numberOfSongs !=0){
-	        	getNextSong1(trackCover1); 
+	        	
 	        	numberOfSongs = numberOfSongs-1;
+	        	getNextSong1(trackCover1); 
 	        	}
+	        	
+	        	
 	         
-	            
+	        	//getPlaylistInfo(); 
 	        } else {
 	            info("trouble getting results");
 	        }
@@ -399,7 +584,56 @@ function banSongFeedBack(trackCover1, echnonestTrackId){
 	
 }
 
+function getBanedSongsInfo(){
+	console.log('getBanedSongsInfo() was called');
+	
+	var randomNumber= Math.floor(Math.random()*100);	
+	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key=BNV9970E1PHXZ9RQW&session_id='+session_id+'&_='+randomNumber;
+	$.getJSON(infoUrl, 
+			{
+	        },
+	        function(data) {
+	    if (checkResponse(data)) {
+	      	        	 
+	    	//console.log('Playlist Info'+JSON.stringify(data));
+	    	 
+	    	for(var i=0;i<data.response.banned_song_ids.length;i++){
+	    	
+	    		console.log('Banned Song Number '+i+' with ID: '+data.response.banned_song_ids[i]);
+	    	 
+	    	}
+	        
+	    } else {
+	        info("trouble getting results");
+	    }
+	});
+}
 
+function getConstraintsInfo(){
+console.log('getConstraintsInfo() was called');
+	
+	var randomNumber= Math.floor(Math.random()*100);	
+	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key=BNV9970E1PHXZ9RQW&session_id='+session_id+'&_='+randomNumber;
+	$.getJSON(infoUrl, 
+			{
+	        },
+	        function(data) {
+	    if (checkResponse(data)) {
+	      	        	 
+	    	//console.log('Playlist Info'+JSON.stringify(data));
+	    	 
+	    	//for(var i=0;i<data.response.banned_song_ids.length;i++){
+	    	
+	    		console.log('Constraints: '+JSON.stringify(data.response.constraints));
+	    	 
+	    	//}
+	        
+	    } else {
+	        info("trouble getting results");
+	    }
+	});
+	
+}
 
 function getPlaylistInfo(){
 	

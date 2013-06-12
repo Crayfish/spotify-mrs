@@ -23,15 +23,16 @@ require([
   
   $(document).ready(function(){
 	  
-	  console.log('Main() executed');
+	  //console.log('Main() executed');
 
 	 heading.writeHeading();
 	  
 	  generatePlaylistButton.setUpNewSeedButton();
 	  generatePlaylistButton.setUpNextSongsButton();
 	  
-	 setupSlider.setUpPopSlider(echonest);
-	 setupSlider.setUpHotSlider(echonest);
+	 setupSlider.setUpPopSlider(echonestDynamic);
+	 setupSlider.setUpHotSlider(echonestDynamic);
+	 setupSlider.setUpSongHotSlider(echonestDynamic);
 	  
 	 echonestDynamic.startNewSession();
 	  
