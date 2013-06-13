@@ -8,13 +8,14 @@ require([
   'scripts/setupSlider',
 
   'scripts/echonestDynamic',
-  'scripts/echonest'
+  'scripts/echonest',
+  'scripts/setupGenreFilter'
   
   
   
 
   // generatePlaylistButton,
-], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest) {
+], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter) {
   'use strict';
   
  
@@ -35,6 +36,8 @@ require([
 	 setupSlider.setUpSongHotSlider(echonestDynamic);
 	  
 	 echonestDynamic.startNewSession();
+	 
+	 setupGenreFilter.setupGenreFilter(echonestDynamic);
 	  
 	 // generatePlaylistButton.setUpNewSeedButton();
 	 // generatePlaylistButton.setUpGeneratePlaylistButton();

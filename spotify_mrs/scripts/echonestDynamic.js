@@ -53,6 +53,10 @@ require([
 		changeSongHotness1();
 	};
 	
+	var startGenreRadio = function(genreName){
+		startGenreRadio1(genreName);
+	};
+	
   
   exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
@@ -60,6 +64,7 @@ require([
   exports.changeArtistPopularity =  changeArtistPopularity;
   exports.changeArtistHotness = changeArtistHotness;
   exports.changeSongHotness =changeSongHotness;
+  exports.startGenreRadio =  startGenreRadio;
 });//end of require()
 
 
@@ -220,8 +225,39 @@ function  changeSongHotness1(){
 }
 
 
+function startGenreRadio1(genreName){
+	//console.log('startGenreRadio1() was called with genre: '+genreName);
+	var randomNumber =  Math.floor(Math.random()*100);
+	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?api_key=BNV9970E1PHXZ9RQW&type=genre-radio&bucket=id:spotify-WW&bucket=tracks&callback=?&session_id='+session_id+'&_='+randomNumber;
+	$.getJSON(genreUrl, 
+    		{// 'artist_id':replacedArtistID ,
+    	//'track_id': replacedSongID, 
+    	'format':'jsonp',
+    	'genre':genreName
+    	//limit : true,
+        //'type':'artist-radio', 
+    	//'max_song_hotttnesss':maxSongHotness,
+    	// 'min_song_hotttnesss':minSongHotness 
+        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+            //bucket : ['id:spotify-WW', 'tracks'],
+            },
+            function(data) {
+        if (checkResponse(data)) {
+            
+        console.log('Canged to Genre Radio: '+genreName);
+        
+           
+       
+        } else {
+            info("trouble getting results");
+        }
+    });
+
+}
+
+
 function startNewSession1(models1, throbber1, trackCover1){
-	 console.log("New session is started");
+	 //console.log("New session is started");
 	 
 	 numberOfSongs=20;
 	 songsAlreadyUsed = new Array();
@@ -310,7 +346,7 @@ function startNewSession1(models1, throbber1, trackCover1){
            
             session_id = data.response.session_id;
            // console.log('session_id: '+session_id);
-            
+            console.log("New session ID  is used: "+session_id);
        	 //for (var i = 0; i <20; i++){
             //var i =0;
             //while(i<20){
@@ -376,7 +412,12 @@ function getNextSong1(trackCover1){
  	            
  	            var echonestTrackId = data.response.songs[0].id;
  	           // console.log('echnonestTrackId: '+echnonestTrackId);
- 	            
+ 	           
+ 	            //Varainte ohne lokales Array
+ 	         /*  var id = data.response.songs[0].tracks[0].foreign_id; 
+ 	           trackCover1.getTrackCover(id); 
+ 	           banSongFeedBack(trackCover1, echonestTrackId); 
+ 	            */
  	            
  	           if($.inArray(echonestTrackId,  songsAlreadyUsed) > -1){
  	 	            console.log('Song bereits verwendet');
@@ -384,6 +425,7 @@ function getNextSong1(trackCover1){
  	 	            banSongFeedBack(trackCover1, echonestTrackId); 
  	 	          }else{
  	 	        	songsAlreadyUsed.push(echonestTrackId);
+ 	 	        	console.log('getNextsong1() data.response: '+JSON.stringify(data.response));
  	 	        	var id = data.response.songs[0].tracks[0].foreign_id;
  	 	            trackCover1.getTrackCover(id);
  	 	            banSongFeedBack(trackCover1, echonestTrackId);
