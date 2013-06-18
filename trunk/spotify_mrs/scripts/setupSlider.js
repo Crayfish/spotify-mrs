@@ -26,16 +26,82 @@ require([
            
           };
         
-        
+         var setUpArtistVarietySlider = function setUpArtistVarietySlider(echonestDynamic){
+        	  setUpArtistVarietySlider1(echonestDynamic);
+             
+            };  
+            
+            var setUpAdventurousnessSlider = function setUpAdventurousnessSlider(echonestDynamic){
+            	setUpAdventurousnessSlider1(echonestDynamic);
+               
+             };    
  
  
   exports.setUpHotSlider = setUpHotslider;
   exports.setUpPopSlider = setUpPopSlider;
   exports.setUpSongHotSlider=setUpSongHotSlider;
+  exports.setUpArtistVarietySlider =setUpArtistVarietySlider;
+  exports.setUpAdventurousnessSlider = setUpAdventurousnessSlider;
  
 });
 
 
+
+function setUpAdventurousnessSlider1(echonestDynamic){
+	console.log('setUpAdventurousnessSlider was called');
+	
+    $( "#adventurousnessSlider" ).slider({
+        //setzen der Slider Attributte  
+        //range: true,
+       min: 0,
+       max: 100,
+       value: 20 ,
+
+        slide: function( event, ui ) {
+      
+        },
+       
+        stop: function ( event, ui ) {
+        	// console.log("Adventurousness Slider Stop");
+        	echonestDynamic.changeAdventurousness();
+              
+        	
+        },
+       
+      
+       
+        });
+	
+}
+
+function setUpArtistVarietySlider1(echonestDynamic){
+	console.log('setUpArtistVarietySlider was called');
+	
+	 $( "#artistVarietySlider" ).slider({
+	        //setzen der Slider Attributte  
+	        //range: true,
+	       min: 0,
+	       max: 100,
+	       value: 50 ,
+
+	        slide: function( event, ui ) {
+	      
+	        },
+	       
+	        stop: function ( event, ui ) {
+	        	 console.log("Artist Variety Slider Stop");
+	        	echonestDynamic.changeArtistVariety();
+	              
+	        	
+	        },
+	       
+	      
+	       
+	        });
+	
+	
+	
+}
 
 function setUpPopSlider1(echonestDynamic){
           console.log('SetUpPopSlider() betreten');

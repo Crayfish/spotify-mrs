@@ -34,6 +34,8 @@ require([
 	 setupSlider.setUpPopSlider(echonestDynamic);
 	 setupSlider.setUpHotSlider(echonestDynamic);
 	 setupSlider.setUpSongHotSlider(echonestDynamic);
+	 setupSlider.setUpArtistVarietySlider(echonestDynamic);
+	 setupSlider.setUpAdventurousnessSlider(echonestDynamic);
 	  
 	 echonestDynamic.startNewSession();
 	 

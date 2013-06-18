@@ -57,6 +57,14 @@ require([
 		startGenreRadio1(genreName);
 	};
 	
+	var changeArtistVariety = function(){
+		changeArtistVariety1();
+	};
+	
+	var changeAdventurousness = function(){
+		changeAdventurousness1();
+	};
+	
   
   exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
@@ -65,6 +73,8 @@ require([
   exports.changeArtistHotness = changeArtistHotness;
   exports.changeSongHotness =changeSongHotness;
   exports.startGenreRadio =  startGenreRadio;
+  exports.changeArtistVariety = changeArtistVariety;
+  exports.changeAdventurousness= changeAdventurousness;
 });//end of require()
 
 
@@ -79,6 +89,84 @@ var songsAlreadyUsed = new Array();
 
 var styleTermObjects = new Array();
 var styleTermNames = new Array();
+
+
+function changeAdventurousness1(){
+	console.log('EchonestDynamic changeAdventurousness() was called');
+	
+	var adventurousnessSliderValue = $( "#adventurousnessSlider" ).slider( "value" )/100;
+	console.log('adventurousnessSliderValue:'+adventurousnessSliderValue);
+    var randomNumber =  Math.floor(Math.random()*100);
+    
+    
+    //var artistIdsForPopularity = new Array();
+    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
+    	
+
+    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+    $.getJSON(url, 
+    		{// 'artist_id':replacedArtistID ,
+    	//'track_id': replacedSongID, 
+    	'format':'jsonp',
+    	//limit : true,
+        //'type':'artist-radio', 
+    	//'max_artist_hotttnesss':maxHotness,
+    	 'adventurousness':adventurousnessSliderValue 
+        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+            //bucket : ['id:spotify-WW', 'tracks'],
+            },
+            function(data) {
+        if (checkResponse(data)) {
+            
+        	//console.log('Changed Hotness Values');
+        	getPlaylistInfo();
+           
+       
+        } else {
+            info("trouble getting results");
+        }
+    });
+	
+}
+
+function changeArtistVariety1(){
+	console.log('EchonestDynamic changeArtistVariety() was called');
+	
+	//slider Value
+    
+	var changeArtistVarietySliderValue = $( "#artistVarietySlider" ).slider( "value" )/100;
+	console.log('changeArtistVarietySliderValue:'+changeArtistVarietySliderValue);
+    var randomNumber =  Math.floor(Math.random()*100);
+    
+    
+    //var artistIdsForPopularity = new Array();
+    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
+    	
+
+    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+    $.getJSON(url, 
+    		{// 'artist_id':replacedArtistID ,
+    	//'track_id': replacedSongID, 
+    	'format':'jsonp',
+    	//limit : true,
+        //'type':'artist-radio', 
+    	//'max_artist_hotttnesss':maxHotness,
+    	 'variety':changeArtistVarietySliderValue 
+        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+            //bucket : ['id:spotify-WW', 'tracks'],
+            },
+            function(data) {
+        if (checkResponse(data)) {
+            
+        	//console.log('Changed Hotness Values');
+        	getPlaylistInfo();
+           
+       
+        } else {
+            info("trouble getting results");
+        }
+    });
+}
 
 
 function  changeArtistPopularity1(){
