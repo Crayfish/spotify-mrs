@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>TEST</title>
+
+    <meta charset="ISO-8859-1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="generator" content="Webocton - Scriptly (www.scriptly.de)">
+
+    <!-- <link href="style.css" type="text/css" rel="stylesheet"> -->
+	<style type="text/css">
+		#tagCloud {
+			width:50%; height:50%; background: #efefef; border: 1px solid #ddd; border-radius:4px; padding: 10px; font: 75% Arial, "MS Trebuchet", sans-serif;
+		}
+ .tagcloudlink {
+   text-decoration: none;
+  }
+  .tagcloudlink:hover {
+   text-decoration: underline;
+  }
+	</style>
+		
+		
+		
+	<!-- </style> -->
+	<script src="jquery-latest.js" type="text/javascript" charset="utf-8"></script>
+	<script src="jquery.tagcloud-2.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript" charset="utf-8">
+	
+		$(document).ready(function() {
+			var tags = [{tag: "Techno", count: 0.2}, {tag: "Jazz" , count :0.9}, {tag: "Classic" , count :0.7}, {tag: "Deep" , count :0.4}, {tag: "Punk" , count :0.76}, {tag: "Rock" , count :0.22}];
+			
+			$("#tagCloud").tagCloud(tags);
+		});
+
+   
+	</script>
+	
+	
+</head>
+
+<body>
+
+	<div id="tagCloud">
+		test
+	</div>
+
+</body>
+</html>

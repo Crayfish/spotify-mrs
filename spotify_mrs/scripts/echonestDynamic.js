@@ -77,6 +77,9 @@ var numberOfSongs = 20;
 
 var songsAlreadyUsed = new Array();
 
+var styleTermObjects = new Array();
+var styleTermNames = new Array();
+
 
 function  changeArtistPopularity1(){
 	console.log("changeArtistPopularity() was called");
@@ -257,15 +260,15 @@ function startGenreRadio1(genreName){
 
 
 function startNewSession1(models1, throbber1, trackCover1){
-	 //console.log("New session is started");
+	 console.log("New session is started");
 	 
 	 numberOfSongs=20;
 	 songsAlreadyUsed = new Array();
 	 
 	 var track = models1.player.load('track');
-     //console.log('TRACK= '+track);
+     console.log('TRACK= '+track);
      var artist = models1.player.track.artists[0];
-     //console.log('ARTIST: '+artist);
+     console.log('ARTIST: '+artist);
 	
 	
 	    if (track == null) {
@@ -334,6 +337,8 @@ function startNewSession1(models1, throbber1, trackCover1){
     	'format':'jsonp',
     	limit : true,
         'type':'artist-radio', 
+        'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
+       
         //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
        // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
             //bucket : ['id:spotify-WW', 'tracks'],
@@ -342,6 +347,9 @@ function startNewSession1(models1, throbber1, trackCover1){
         if (checkResponse(data)) {
             info("");
            $("#albumCoverContainer").empty();
+           styleTermNames = new Array();
+           styleTermObjects = new Array();
+           $("#tagCloud").tagCloud(styleTermObjects); 
             
            
             session_id = data.response.session_id;
@@ -399,7 +407,8 @@ function getNextSong1(trackCover1){
 	        //'type':'song-radio', 
 	       // 'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
 	       // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-	            //bucket : ['id:spotify-WW', 'tracks'],
+	          // bucket : ['id:spotify-WW', 'tracks'],
+	          
 	    	//'callback': console.log('Calllback executed');
 	            },
 	            function(data) {
@@ -425,10 +434,13 @@ function getNextSong1(trackCover1){
  	 	            banSongFeedBack(trackCover1, echonestTrackId); 
  	 	          }else{
  	 	        	songsAlreadyUsed.push(echonestTrackId);
- 	 	        	console.log('getNextsong1() data.response: '+JSON.stringify(data.response));
+ 	 	        	//console.log('getNextsong1() data.response: '+JSON.stringify(data.response));
  	 	        	var id = data.response.songs[0].tracks[0].foreign_id;
+ 	 	        	var echonestArtistId =  data.response.songs[0].artist_id;
  	 	            trackCover1.getTrackCover(id);
+ 	 	            getArtistTerms(echonestArtistId);
  	 	            banSongFeedBack(trackCover1, echonestTrackId);
+ 	 	           
  	 	          }
  	            
  	            
@@ -558,6 +570,97 @@ function getNextXXSong1(trackCover1){
 	
 }
 
+
+
+function getArtistTerms(artistID){
+	
+	//$("#styleresults").empty();
+	//$('#cblist').empty();
+	
+	//var artist2=	models.player.track.artists[0]	
+	//console.log('Das ist der Artist für die Genre Query: '+artist2);
+		
+	//Spotify artists - Example: spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb
+	//var artist_id3 = artist2.uri.replace('spotify', 'spotify-WW');
+	//console.log(artist_id3);
+	
+	var randomNumber= Math.floor(Math.random()*100);	
+	var url1 = 'http://developer.echonest.com/api/v4/artist/terms?api_key=BNV9970E1PHXZ9RQW&format=json&type=style&'+'&_='+randomNumber;
+	//console.log(url1);
+	
+	
+	$.getJSON(url1,
+			{
+			'id':artistID
+				//artist_id3,
+			//'artist':artist_id3
+            },
+            function(dataGenre) {
+            	if (checkResponse(dataGenre)) {
+            	for (var i = 0; i < dataGenre.response.terms.length; i++) {
+                   
+                // console.log( 'Genre Query Output: '+ dataGenre.response.terms[i].name);
+                 
+                /* var li1 = $("<li>");
+                 li1.append(dataGenre.response.terms[i].name);
+                 $("#styleresults").append(li1);*/
+                 
+                 //Falls Genre oder Style des Artists noch nicht als Checkbox dargestellt-->neue Checkbox hinzufügen
+                 
+                // var container = $('#cblist');
+                 
+                 var name= dataGenre.response.terms[i].name;
+                 var weight = dataGenre.response.terms[i].weight.toString();
+                 weight = weight.substring(0,4);
+                 //console.log("Gekürztes Terms Gewicht: "+weight);
+                 
+                 var termAndWeight ={tag: name, count: weight};
+                 
+                 //check ob style term bereits vorhanden: 
+                 
+                 //var styleNameAlreadyThere = $.inArray(styleTermNames, name);
+                 //console.log('styleNameAlreadyThere: '+styleNameAlreadyThere);
+                 
+                 
+                 
+                 if($.inArray(name,styleTermNames) == -1){
+  	 	            console.log('Style Term  not alreday used');
+  	 	            styleTermNames.push(name);
+  	 	            styleTermObjects.push(termAndWeight);
+  	 	            
+  	 	           
+  	 	            
+  	 	          }
+                 
+                 /*if($.inArray(styleTermNames, name) >= -1){
+  	 	        	//styleTermNames.push(name);
+  	 	        	console.log('styleTermNames Array: '+styleTermNames);
+  	 	            styleTermObjects.push(termAndWeight);
+  	 	            $("#tagCloud").tagCloud(styleTermObjects);
+  	 	          }*/
+                 
+                 //var styleTermObjects = new Array();
+                 //var styleTermNames = new Array();
+               
+                 
+                 //var tags = [{tag: "Techno", count: 0.2}, {tag: "Jazz" , count :0.9}, {tag: "Classic" , count :0.7}, {tag: "Deep" , count :0.4}, {tag: "Punk" , count :0.76}, {tag: "Rock" , count :0.22}];
+                 
+                 
+              
+              
+                 
+                 
+            
+            	}
+            	//console.log('styleTermNames Array: '+styleTermNames);
+            	//$("#tagCloud").empty();
+            	$("#tagCloud").tagCloud(styleTermObjects);
+        }});
+           
+}
+
+
+
 function steerPlaylist(trackCover1){
 	
 	var tempo = Math.floor(Math.random()*100);
@@ -614,6 +717,13 @@ function banSongFeedBack(trackCover1, echnonestTrackId){
 	        	numberOfSongs = numberOfSongs-1;
 	        	getNextSong1(trackCover1); 
 	        	}
+	        	
+	       /* 	else{
+	        	$("#tagCloud").empty();
+	            	$("#tagCloud").tagCloud(styleTermObjects);
+	        	}
+	        	*/
+	        	
 	        	
 	        	
 	         
