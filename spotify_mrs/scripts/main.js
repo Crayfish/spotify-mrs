@@ -9,13 +9,14 @@ require([
 
   'scripts/echonestDynamic',
   'scripts/echonest',
-  'scripts/setupGenreFilter'
+  'scripts/setupGenreFilter',
+  'scripts/setupTagCloud'
   
   
   
 
   // generatePlaylistButton,
-], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter) {
+], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud) {
   'use strict';
   
  
@@ -36,6 +37,8 @@ require([
 	 setupSlider.setUpSongHotSlider(echonestDynamic);
 	 setupSlider.setUpArtistVarietySlider(echonestDynamic);
 	 setupSlider.setUpAdventurousnessSlider(echonestDynamic);
+	 
+	 setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 	  
 	 echonestDynamic.startNewSession();
 	 
