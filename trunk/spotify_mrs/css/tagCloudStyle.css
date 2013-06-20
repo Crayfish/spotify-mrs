@@ -10,3 +10,6 @@
   .tagcloudlink:hover {
    text-decoration: underline;
   }
+   .tagcloudlink:focus{
+   color: #FF0000
+   }

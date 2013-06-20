@@ -83,7 +83,7 @@ require([
 
 var session_id ='';
 
-var numberOfSongs = 20;
+var numberOfSongs = 30;
 
 var songsAlreadyUsed = new Array();
 
@@ -800,7 +800,7 @@ function banSongFeedBack(trackCover1, echnonestTrackId){
 	        		
 	        	}*/
 	        
-	        	if(numberOfSongs !=0){
+	        	if(numberOfSongs !=1){
 	        	
 	        	numberOfSongs = numberOfSongs-1;
 	        	getNextSong1(trackCover1); 
