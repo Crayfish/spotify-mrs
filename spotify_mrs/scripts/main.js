@@ -38,7 +38,7 @@ require([
 	 setupSlider.setUpArtistVarietySlider(echonestDynamic);
 	 setupSlider.setUpAdventurousnessSlider(echonestDynamic);
 	 
-	 setupTagCloud.addTagCloudEventHandler(echonestDynamic);
+	 //setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 	  
 	 echonestDynamic.startNewSession();
 	 
