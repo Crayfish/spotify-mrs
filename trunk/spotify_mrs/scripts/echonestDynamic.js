@@ -69,6 +69,14 @@ require([
 		setTermFilter1(term);
 	};
 	
+	var changeToSongSimilarity = function(){
+		changeToSongSimilarity1(models, throbber, trackCover);
+	};
+	
+	var changeToArtistSimilarity = function(){
+		changeToArtistSimilarity1(models, throbber, trackCover);
+	};
+	
   
   exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
@@ -80,6 +88,8 @@ require([
   exports.changeArtistVariety = changeArtistVariety;
   exports.changeAdventurousness= changeAdventurousness;
   exports.setTermFilter = setTermFilter;
+  exports.changeToSongSimilarity = changeToSongSimilarity;
+  exports.changeToArtistSimilarity = changeToArtistSimilarity;
 });//end of require()
 
 
@@ -87,6 +97,11 @@ require([
 
 
 var session_id ='';
+
+var artist_id= '';
+
+var song_id ='';
+
 
 var numberOfSongs = 30;
 
@@ -366,6 +381,7 @@ function startGenreRadio1(genreName){
     		{// 'artist_id':replacedArtistID ,
     	//'track_id': replacedSongID, 
     	'format':'jsonp',
+    	limit : true,
     	'genre':genreName
     	//limit : true,
         //'type':'artist-radio', 
@@ -377,7 +393,7 @@ function startGenreRadio1(genreName){
             function(data) {
         if (checkResponse(data)) {
             
-        console.log('Canged to Genre Radio: '+genreName);
+        console.log('Changed to Genre Radio: '+genreName);
         
            
        
@@ -392,7 +408,7 @@ function startGenreRadio1(genreName){
 function startNewSession1(models1, throbber1, trackCover1){
 	 console.log("New session is started");
 	 
-	 numberOfSongs=20;
+	 numberOfSongs=30;
 	 songsAlreadyUsed = new Array();
 	 
 	 var track = models1.player.load('track');
@@ -421,11 +437,11 @@ function startNewSession1(models1, throbber1, trackCover1){
     var trackName =  models1.player.track.name;
   
     
+    $( "#artistSimilarityInfo").text(artistName);
+    //info('Getting Songs like "'+trackName+'" by '+ artistName);
     
-    info('Getting Songs like "'+trackName+'" by '+ artistName);
     
-    
-    var artist_id=  models1.player.track.artists[0].toString();
+    artist_id=  models1.player.track.artists[0].toString();
    // console.log('artist_id: '+artist_id);
     
     var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
@@ -433,7 +449,7 @@ function startNewSession1(models1, throbber1, trackCover1){
    
     //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
     
-    var song_id=models1.player.track.uri.toString();
+     song_id=models1.player.track.uri.toString();
     //.decodeForText();
    // console.log('Spotify Song ID: '+song_id);
     //var replacedSongID= models1.player.track.uri.decodeForText().replace('spotify', 'spotify-WW');
@@ -514,6 +530,257 @@ function startNewSession1(models1, throbber1, trackCover1){
 }
 
 
+function changeToArtistSimilarity1(models1, throbber1, trackCover1){
+	 console.log("New session is started");
+	 
+	 numberOfSongs=30;
+	 songsAlreadyUsed = new Array();
+	 
+	 var track = models1.player.load('track');
+    console.log('TRACK= '+track);
+    var artist = models1.player.track.artists[0];
+    console.log('ARTIST: '+artist);
+	
+	
+	    if (track == null) {
+	    	info('Start playing something and I ll make a playlist of good songs based on that song');
+	    	
+	    } else {
+	
+   
+   var cover = document.getElementById('albumCoverContainer');
+  // var cover = $(".albumCoverContainer") ;
+   //var pictureThrobber = throbber1.forElement(cover);
+   //pictureThrobber.setSize('normal');
+  
+   //getAllEchonestGenres();
+   
+  // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+   
+   var artistName = models1.player.track.artists[0].name;
+   
+   var trackName =  models1.player.track.name;
+ 
+   
+   $( "#artistSimilarityInfo").text(artistName);
+   //info('Getting Songs like "'+trackName+'" by '+ artistName);
+   
+   
+   var artist_id=  models1.player.track.artists[0].toString();
+  // console.log('artist_id: '+artist_id);
+   
+   var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
+   //console.log('Replaced Artist ID: '+replacedArtistID);
+  
+   //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
+   
+   var song_id=models1.player.track.uri.toString();
+   //.decodeForText();
+  // console.log('Spotify Song ID: '+song_id);
+   //var replacedSongID= models1.player.track.uri.decodeForText().replace('spotify', 'spotify-WW');
+   var replacedSongID= song_id.replace('spotify', 'spotify-WW');
+   //console.log('Replaced ID: '+replacedSongID);
+   //replacedSongID = '"'+replacedSongID+'"';
+  //console.log('Replaced ID mit " "': '+replacedSongID);
+   //Format:  spotify-WW:track:3L7BcXHCG8uT92viO6Tikl
+ // replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
+ // console.log('Replaced ID: '+replacedSongID);
+  
+  
+  
+   
+   
+
+   
+   var randomNumber =  Math.floor(Math.random()*100);
+   
+   
+   var artistIdsForPopularity = new Array();
+   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+replacedArtistID+'&_='+randomNumber;
+   	//&track_id='+replacedSongID;
+   	//&track_id='+replacedSongID;
+   //var session_id ='';
+
+   //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+   $.getJSON(url, 
+   		{// 'artist_id':replacedArtistID ,
+   	//'track_id': replacedSongID, 
+   	'format':'jsonp',
+   	limit : true,
+       'type':'artist-radio', 
+       'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
+      
+       //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
+      // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+           //bucket : ['id:spotify-WW', 'tracks'],
+           },
+           function(data) {
+       if (checkResponse(data)) {
+           info("");
+          $("#albumCoverContainer").empty();
+          styleTermNames = new Array();
+          styleTermObjects = new Array();
+          $("#tagCloud").tagCloud(styleTermObjects); 
+           
+          
+           session_id = data.response.session_id;
+          // console.log('session_id: '+session_id);
+           console.log("New session ID  is used: "+session_id);
+      	 //for (var i = 0; i <20; i++){
+           //var i =0;
+           //while(i<20){
+           getNextSong1(trackCover1);
+           //setTimeout(function() {info("Timeout");},1000);
+           //i++;
+           //console.log("Timeout ended");
+          //}  
+         // getSongsSchleife(trackCover1);
+           
+           
+           //getPlaylistSongSimilarity(models1, size, throbber1,  trackCover1, sliderUpdate1);
+           
+         // getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
+          //getArtistHotness(artistIdsForPopularity, sliderUpdate1);
+           
+       } else {
+           info("trouble getting results");
+       }
+   });
+   
+	   }   
+   
+	 
+	 
+	 
+}
+
+
+
+function changeToSongSimilarity1(models1, throbber1, trackCover1){
+	 console.log("changeToSongSimilarity1() was called");
+	 
+	 numberOfSongs=30;
+	 //songsAlreadyUsed = new Array();
+	 
+	 var track = models1.player.load('track');
+    console.log('TRACK= '+track);
+    var artist = models1.player.track.artists[0];
+    console.log('ARTIST: '+artist);
+	
+	
+	    if (track == null) {
+	    	info('Start playing something and I ll make a playlist of good songs based on that song');
+	    	
+	    } else {
+	
+   
+   var cover = document.getElementById('albumCoverContainer');
+  // var cover = $(".albumCoverContainer") ;
+   //var pictureThrobber = throbber1.forElement(cover);
+   //pictureThrobber.setSize('normal');
+  
+   //getAllEchonestGenres();
+   
+  // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+   
+   var artistName = models1.player.track.artists[0].name;
+   
+   var trackName =  models1.player.track.name;
+ 
+   
+   $( "#songSimilarityInfo").text('"'+trackName+'" by '+ artistName);
+   //info('Getting Songs like "'+trackName+'" by '+ artistName);
+   
+   
+   var artist_id=  models1.player.track.artists[0].toString();
+  // console.log('artist_id: '+artist_id);
+   
+   var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
+   //console.log('Replaced Artist ID: '+replacedArtistID);
+  
+   //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
+   
+   var song_id=models1.player.track.uri.toString();
+   //.decodeForText();
+  // console.log('Spotify Song ID: '+song_id);
+   //var replacedSongID= models1.player.track.uri.decodeForText().replace('spotify', 'spotify-WW');
+   var replacedSongID= song_id.replace('spotify', 'spotify-WW');
+   //console.log('Replaced ID: '+replacedSongID);
+   //replacedSongID = '"'+replacedSongID+'"';
+  //console.log('Replaced ID mit " "': '+replacedSongID);
+   //Format:  spotify-WW:track:3L7BcXHCG8uT92viO6Tikl
+ // replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
+ // console.log('Replaced ID: '+replacedSongID);
+  
+  
+  
+   
+   
+
+   
+   var randomNumber =  Math.floor(Math.random()*100);
+   
+   
+   var artistIdsForPopularity = new Array();
+   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&song_id='+replacedSongID+'&_='+randomNumber;
+   	//&track_id='+replacedSongID;
+   	//&track_id='+replacedSongID;
+   //var session_id ='';
+
+   //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+   $.getJSON(url, 
+   		{// 'artist_id':replacedArtistID ,
+   	//'track_id': replacedSongID, 
+   	'format':'jsonp',
+   	limit : true,
+       'type':'song-radio', 
+       'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
+      
+       //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
+      // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+           //bucket : ['id:spotify-WW', 'tracks'],
+           },
+           function(data) {
+       if (checkResponse(data)) {
+           info("");
+          $("#albumCoverContainer").empty();
+          styleTermNames = new Array();
+          styleTermObjects = new Array();
+          $("#tagCloud").tagCloud(styleTermObjects); 
+           
+          
+           session_id = data.response.session_id;
+          // console.log('session_id: '+session_id);
+           console.log("New session ID  is used: "+session_id);
+      	 //for (var i = 0; i <20; i++){
+           //var i =0;
+           //while(i<20){
+           getNextSong1(trackCover1);
+           //setTimeout(function() {info("Timeout");},1000);
+           //i++;
+           //console.log("Timeout ended");
+          //}  
+         // getSongsSchleife(trackCover1);
+           
+           
+           //getPlaylistSongSimilarity(models1, size, throbber1,  trackCover1, sliderUpdate1);
+           
+         // getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
+          //getArtistHotness(artistIdsForPopularity, sliderUpdate1);
+           
+       } else {
+           info("trouble getting results");
+       }
+   });
+   
+	   }   
+   
+	 
+	 
+	 
+}
+
+
 
 function getNextSong1(trackCover1){
 	//console.log('getNextSong() was called');
@@ -537,7 +804,7 @@ function getNextSong1(trackCover1){
 	        //'type':'song-radio', 
 	       // 'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
 	       // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-	          // bucket : ['id:spotify-WW', 'tracks'],
+	         //bucket : ['id:spotify-WW', 'tracks'],
 	          
 	    	//'callback': console.log('Calllback executed');
 	            },
@@ -754,7 +1021,7 @@ function getArtistTerms(artistID){
                  
                  
                  if($.inArray(name,styleTermNames) == -1){
-  	 	            console.log('Style Term  not alreday used');
+  	 	            //console.log('Style Term  not alreday used');
   	 	            styleTermNames.push(name);
   	 	            styleTermObjects.push(termAndWeight);
   	 	            
@@ -827,7 +1094,7 @@ function banSongFeedBack(trackCover1, echnonestTrackId){
 	            function(data) {
 	        if (checkResponse(data)) {
 	          	        	 
-	        	console.log('banSong() was called with echonest ID: '+echnonestTrackId);
+	        	//console.log('banSong() was called with echonest ID: '+echnonestTrackId);
 	        	
 	        	 //setTimeout(function(){getNextSong1(trackCover1)},1000);
 	        	

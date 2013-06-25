@@ -25,12 +25,15 @@
 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 	 
+
+	 
+	 
 	<link rel="stylesheet" href="css/tagCloudStyle.css">
 	<script src="scripts/jquery.tagcloud-2.js" type="text/javascript" charset="utf-8"></script>
 	
 
 
-
+	
 	
 
 	
@@ -63,13 +66,69 @@
     	<p class ="rulerheader">Rulers</p>
 		
 		<div class="rulerContent">
-		
-<form action="input_radio.htm">
-  <p>Similarity based on:</p>
-  <p>
-    <input type="radio" id = 'song' name="similarity" value="song" checked="checked"> Song <input type="radio" id ='artist' name="similarity" value="artist" >Artist<br>
-  </p>
-</form>
+	
+	
+ <p>Similarity based on:</p>
+	<div id="accordion">
+	
+
+
+<h3>Artist</h3>
+<div>
+<p>
+Now recommended songs are  played by  artists  similar to:
+ <div id="artistSimilarityInfo"> </div>
+</p>
+</div>
+
+	
+	
+<h3>Song</h3>
+<div>
+<p>
+ <p>Now Songs are recommended because they are similar to:</p>
+ <div id="songSimilarityInfo"> </div>
+
+</p>
+</div>
+
+
+
+
+
+
+
+<h3>Genre</h3>
+<div>
+<p>
+		<!-- Genre Filter -->
+	<div class="ui-widget">
+	<label for="tags">Genre Filter: </label>
+	<input id="tags" />
+	</div>
+</p>
+
+</div>
+<h3>Playlist</h3>
+<div>
+<p>
+Cras dictum. Pellentesque habitant morbi tristique senectus et netus
+et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
+faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
+mauris vel est.
+</p>
+<p>
+Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
+Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+inceptos himenaeos.
+</p>
+</div>
+</div>
+	
+	
+	
+	
+
 
 
 
@@ -124,11 +183,7 @@
 		<div id="slider-pop"></div>
 		</p>
 
-		<!-- Genre Filter -->
-	<div class="ui-widget">
-	<label for="tags">Genre Filter: </label>
-	<input id="tags" />
-	</div>
+
 		
 
 
@@ -154,6 +209,13 @@
 
     </div>
     
+    
+<!-- <form action="input_radio.htm">
+ 
+  <p>
+    <input type="radio" id = 'song' name="similarity" value="song" checked="checked"> Song <input type="radio" id ='artist' name="similarity" value="artist" >Artist<br>
+  </p>
+</form>   -->  
     
 <!--    <div id="buttonContainer"> </div> -->
     
