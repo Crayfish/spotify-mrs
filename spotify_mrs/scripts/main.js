@@ -10,13 +10,14 @@ require([
   'scripts/echonestDynamic',
   'scripts/echonest',
   'scripts/setupGenreFilter',
-  'scripts/setupTagCloud'
+  'scripts/setupTagCloud',
+  'scripts/setUpSimilarityAccordion'
   
   
   
 
   // generatePlaylistButton,
-], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud) {
+], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud, setUpSimilarityAccordion) {
   'use strict';
   
  
@@ -38,9 +39,14 @@ require([
 	 setupSlider.setUpArtistVarietySlider(echonestDynamic);
 	 setupSlider.setUpAdventurousnessSlider(echonestDynamic);
 	 
+	 echonestDynamic.startNewSession();
+	 
+	 
+	 setUpSimilarityAccordion.setupAccordion();
+	 
 	 //setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 	  
-	 echonestDynamic.startNewSession();
+	
 	 
 	 setupGenreFilter.setupGenreFilter(echonestDynamic);
 	  
