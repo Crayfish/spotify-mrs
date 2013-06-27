@@ -53,12 +53,22 @@ function getAllEchonestGenres(echonestDynamic){
 	                	
 	                $( "#tags" ).autocomplete({
 	           		 source: genreArray,
-	           		 change: function( event, ui){echonestDynamic.startGenreRadio( ui.item.label)}
+	           		
+	           		 select: function( event, ui){
+	           			
+	           			 console.log('EventHandler Genre List sent event');
+	           			 echonestDynamic.changeToGenreSimilarity( ui.item.label);
+	           			 
+	           			$(this).val(''); return false;
+	           			 
+	           		 }
+	                
+	               
 	           		 //{console.log("A genre was choossen: "+  ui.item.label)}
 	           		 //select: function( event, ui ) {console.log("A genre was choossen: "+  $(this).attr('name') )}
 	           		 });
 	                
-	               
+	               // $( "#tags" ).on( "autocompletechange", function( event, ui ) {console.log('EventHandler Genre List sent event CHANGE')} );
 	                
 	            	   
 	            	}
