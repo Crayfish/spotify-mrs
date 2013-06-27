@@ -16,9 +16,9 @@
     
     <script type="text/javascript" src="scripts/jquery.min.js"></script>
     
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+    <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
 	
 	 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -68,6 +68,8 @@
 		<div class="rulerContent">
 	
 	
+	
+	
  <p>Similarity based on:</p>
 	<div id="accordion">
 	
@@ -78,7 +80,9 @@
 <p>
 Now recommended songs are  played by  artists  similar to:
  <div id="artistSimilarityInfo"> </div>
-</p>
+ </p>
+ <button id="changeSeedArtist">Make playing artist new seed artist</button>
+
 </div>
 
 	
@@ -88,8 +92,10 @@ Now recommended songs are  played by  artists  similar to:
 <p>
  <p>Now Songs are recommended because they are similar to:</p>
  <div id="songSimilarityInfo"> </div>
+ </p>
+  <button id = changeSeedSong>Make playing song new seed song</button>
 
-</p>
+
 </div>
 
 
@@ -102,8 +108,11 @@ Now recommended songs are  played by  artists  similar to:
 <div>
 <p>
 		<!-- Genre Filter -->
+		<p>
+	 <div id="genreSimilarityInfo">There is no genre selected. </div>	
+	 </p>
 	<div class="ui-widget">
-	<label for="tags">Genre Filter: </label>
+	<label for="tags">Select a Genre: </label>
 	<input id="tags" />
 	</div>
 </p>
@@ -111,12 +120,7 @@ Now recommended songs are  played by  artists  similar to:
 </div>
 <h3>Playlist</h3>
 <div>
-<p>
-Cras dictum. Pellentesque habitant morbi tristique senectus et netus
-et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
-faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
-mauris vel est.
-</p>
+
 <p>
 Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
 Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
