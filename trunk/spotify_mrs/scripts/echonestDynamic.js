@@ -4,38 +4,30 @@ require([
 	  
   '$api/models',
   '$views/throbber#Throbber',
-  'scripts/trackCover'
- 
-  
- 
+  'scripts/trackCover',
+  'scripts/customplaylist'
 
-  
-], function(models, throbber, trackCover) {
+  ], function(models, throbber, trackCover, customplaylist) {
  
 	  'use strict';
 
- 
-
-
- 
-  
   
   var startNewSession = function(){
 	 // console.log("New session is started");
-	  startNewSession1(models, throbber, trackCover);
+	  startNewSession1(models, throbber, trackCover, customplaylist);
 	 
   };
   
   
   var getNextSong = function(){
 	 // console.log("New session is started");
-	  getNextSong1(trackCover);
+	  getNextSong1(trackCover, customplaylist);
 	 
   };
   
   var getNextXXSong = function(){
 		 // console.log("New session is started");
-		  getNextXXSong1(trackCover);
+		  getNextXXSong1(trackCover, customplaylist);
 		 
 	  };
 	  
@@ -54,7 +46,7 @@ require([
 	};
 	
 	var changeToGenreSimilarity = function(genreName){
-		changeToGenreSimilarity1(genreName, trackCover);
+		changeToGenreSimilarity1(genreName, trackCover, customplaylist);
 	};
 	
 	var changeArtistVariety = function(){
@@ -70,19 +62,19 @@ require([
 	};
 	
 	var changeToSongSimilarity = function(){
-		changeToSongSimilarity1(models, throbber, trackCover);
+		changeToSongSimilarity1(models, throbber, trackCover, customplaylist);
 	};
 	
 	var changeToArtistSimilarity = function(){
-		changeToArtistSimilarity1(models, throbber, trackCover);
+		changeToArtistSimilarity1(models, throbber, trackCover, customplaylist);
 	};
 	
 	var changeSeedSongSimilarity = function(){
-		changeSeedSongSimilarity1(models, throbber, trackCover);
+		changeSeedSongSimilarity1(models, throbber, trackCover, customplaylist);
 	};
 	
 	var changeSeedArtistSimilarity = function(){
-		changeSeedArtistSimilarity1(models, throbber, trackCover);
+		changeSeedArtistSimilarity1(models, throbber, trackCover, customplaylist);
 	};
 	
 	
@@ -443,7 +435,7 @@ function changeToGenreSimilarity1(genreName, trackCover1){
 }
 
 
-function startNewSession1(models1, throbber1, trackCover1){
+function startNewSession1(models1, throbber1, trackCover1, customplaylist1){
 	 console.log("New session is started");
 	 
 	 numberOfSongs=10;
@@ -542,7 +534,7 @@ function startNewSession1(models1, throbber1, trackCover1){
        	 //for (var i = 0; i <20; i++){
             //var i =0;
             //while(i<20){
-            getNextSong1(trackCover1);
+            getNextSong1(trackCover1, customplaylist1);
             //setTimeout(function() {info("Timeout");},1000);
             //i++;
             //console.log("Timeout ended");
@@ -568,7 +560,7 @@ function startNewSession1(models1, throbber1, trackCover1){
 }
 
 
-function changeSeedArtistSimilarity1(models1, throbber1, trackCover1){
+function changeSeedArtistSimilarity1(models1, throbber1, trackCover1, customplaylist1){
 	console.log('echonestDynamic changeSeedArtistSimilarity1() was called');
 	
 	
@@ -668,7 +660,7 @@ function changeSeedArtistSimilarity1(models1, throbber1, trackCover1){
       	 //for (var i = 0; i <20; i++){
            //var i =0;
            //while(i<20){
-           getNextSong1(trackCover1);
+           getNextSong1(trackCover1, customplaylist1);
            //setTimeout(function() {info("Timeout");},1000);
            //i++;
            //console.log("Timeout ended");
@@ -692,7 +684,7 @@ function changeSeedArtistSimilarity1(models1, throbber1, trackCover1){
 }
 
 
-function changeSeedSongSimilarity1(models1, throbber1, trackCover1){
+function changeSeedSongSimilarity1(models1, throbber1, trackCover1, customplaylist1){
 	console.log('echonestDynamic changeSeedSongSimilarity1() was called');
 	
 	numberOfSongs=10;
@@ -791,7 +783,7 @@ function changeSeedSongSimilarity1(models1, throbber1, trackCover1){
      	 //for (var i = 0; i <20; i++){
           //var i =0;
           //while(i<20){
-          getNextSong1(trackCover1);
+          getNextSong1(trackCover1, customplaylist1);
           //setTimeout(function() {info("Timeout");},1000);
           //i++;
           //console.log("Timeout ended");
@@ -816,7 +808,7 @@ function changeSeedSongSimilarity1(models1, throbber1, trackCover1){
 }
 
 
-function changeToArtistSimilarity1(models1, throbber1, trackCover1){
+function changeToArtistSimilarity1(models1, throbber1, trackCover1, customplaylist1){
 	// console.log("New session is started");
 	 
 	 numberOfSongs=10;
@@ -916,7 +908,7 @@ function changeToArtistSimilarity1(models1, throbber1, trackCover1){
           //for (var i = 0; i <20; i++){
            //var i =0;
            //while(i<20){
-           getNextSong1(trackCover1);
+           getNextSong1(trackCover1, customplaylist1);
            //setTimeout(function() {info("Timeout");},1000);
            //i++;
            //console.log("Timeout ended");
@@ -943,7 +935,7 @@ function changeToArtistSimilarity1(models1, throbber1, trackCover1){
 
 
 
-function changeToSongSimilarity1(models1, throbber1, trackCover1){
+function changeToSongSimilarity1(models1, throbber1, trackCover1, customplaylist1){
 	 console.log(" echonest changeToSongSimilarity1() was called");
 	 
 	 numberOfSongs=10;
@@ -1044,7 +1036,7 @@ function changeToSongSimilarity1(models1, throbber1, trackCover1){
           //for (var i = 0; i <20; i++){
            //var i =0;
            //while(i<20){
-           getNextSong1(trackCover1);
+           getNextSong1(trackCover1, customplaylist1);
            //setTimeout(function() {info("Timeout");},1000);
            //i++;
            //console.log("Timeout ended");
@@ -1071,7 +1063,7 @@ function changeToSongSimilarity1(models1, throbber1, trackCover1){
 
 
 
-function getNextSong1(trackCover1){
+function getNextSong1(trackCover1, customplaylist1){
 	//console.log('getNextSong() was called');
 	
 	var randomNumber =  Math.floor(Math.random()*100);
@@ -1117,16 +1109,22 @@ function getNextSong1(trackCover1){
  	           if($.inArray(echonestTrackId,  songsAlreadyUsed) > -1){
  	 	            console.log('Song bereits verwendet');
  	 	            numberOfSongs = numberOfSongs+1;
- 	 	            banSongFeedBack(trackCover1, echonestTrackId); 
+ 	 	            banSongFeedBack(trackCover1, echonestTrackId, customplaylist1); 
  	 	          }else{
  	 	        	songsAlreadyUsed.push(echonestTrackId);
  	 	        	//console.log('getNextsong1() data.response: '+JSON.stringify(data.response));
  	 	        	var id = data.response.songs[0].tracks[0].foreign_id;
+ 	 	        	
  	 	        	var echonestArtistId =  data.response.songs[0].artist_id;
- 	 	            trackCover1.getTrackCover(id);
+ 	 	        	
+ 	 	        	trackCover1.getTrackCover(id);
+ 	 	        	customplaylist1.addTrackToPLaylist(id);
+ 	 	        	console.log("playlist: "+customplaylist1);
+ 	 	        	
  	 	            getArtistTerms(echonestArtistId);
- 	 	            banSongFeedBack(trackCover1, echonestTrackId);
- 	 	           
+ 	 	          
+ 	 	            banSongFeedBack(trackCover1, echonestTrackId, customplaylist1);
+ 	 	          
  	 	          }
  	            
  	            
@@ -1180,7 +1178,7 @@ function getNextSong1(trackCover1){
 
 
 
-function getNextXXSong1(trackCover1){
+function getNextXXSong1(trackCover1, customplaylist1){
 	console.log('getNextXXSong() was called');
 	
 	
@@ -1217,7 +1215,7 @@ function getNextXXSong1(trackCover1){
 	              
 	             
 	           
-	              getNextSong1(trackCover1);
+	              getNextSong1(trackCover1, customplaylist1);
 	           
 	           // session_id = data.response.session_id;
 	        	/* for (var i = 0; i < data.response.songs.length; i++){
@@ -1372,7 +1370,7 @@ function steerPlaylist(trackCover1){
 }
 
 
-function banSongFeedBack(trackCover1, echnonestTrackId){
+function banSongFeedBack(trackCover1, echnonestTrackId, customplaylist1){
 	
 	var randomNumber= Math.floor(Math.random()*100);
 	var skipUrl ='http://developer.echonest.com/api/v4/playlist/dynamic/feedback?api_key=BNV9970E1PHXZ9RQW&format=json&session_id='+session_id+'&_='+randomNumber;
@@ -1401,7 +1399,7 @@ function banSongFeedBack(trackCover1, echnonestTrackId){
 	        	if(numberOfSongs !=1){
 	        	
 	        	numberOfSongs = numberOfSongs-1;
-	        	getNextSong1(trackCover1); 
+	        	getNextSong1(trackCover1, customplaylist1); 
 	        	}else{
 	        		//getPlaylistInfo(); 
 	        	}

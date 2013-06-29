@@ -1,15 +1,23 @@
 @charset "utf-8";
 /* CSS Document */
+#tagCloud {
+	width: 100%;
+	height: 50%;
+	background: #efefef;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	/*padding: 10px;*/
+	font: 75% Arial, "MS Trebuchet", sans-serif;
+}
 
-		#tagCloud {
-			width:50%; height:50%; background: #efefef; border: 1px solid #ddd; border-radius:4px; padding: 10px; font: 75% Arial, "MS Trebuchet", sans-serif;
-		}
- .tagcloudlink {
-   text-decoration: none;
-  }
-  .tagcloudlink:hover {
-   text-decoration: underline;
-  }
-   .tagcloudlink:focus{
-   color: #FF0000
-   }
+.tagcloudlink {
+	text-decoration: none;
+}
+
+.tagcloudlink:hover {
+	text-decoration: underline;
+}
+
+.tagcloudlink:focus {
+	color: #FF0000
+}
