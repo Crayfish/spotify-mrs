@@ -42,10 +42,17 @@ visibility: hidden;
   opacity: 1;
 }
 
-.albumCoverContainer{
+.flip{
 	overflow: hidden;
 	/*border: 1px solid #a1a1a1;*/
 	float:left;
+	width:645px
+	}
+
+.albumCoverContainer{
+	overflow: hidden;
+	/*border: 1px solid #a1a1a1;*/
+	/*float:left;*/
 	width:645px;
 	/*height:645px;*/
 	
@@ -74,7 +81,7 @@ visibility: hidden;
 	border-radius:5px;
 	background:#dddddd;
 	width:200px;
-	height : 645px;
+	height : 100%;
 	spacing : 0px;
 	padding : 0px;
 }

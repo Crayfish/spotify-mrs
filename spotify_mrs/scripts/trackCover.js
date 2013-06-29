@@ -1,8 +1,9 @@
 require([
   '$api/models',
+  '$api/search',
   '$views/image#Image',
   '$views/popup#Popup'
-], function(models, Image, Popup) {
+], function(models,search, Image, Popup) {
   'use strict';
 
        
@@ -15,6 +16,7 @@ require([
         covercontainer.setAttribute('style', 'width: 645px;');
 
         //load track from id
+      
         var id = trackID.replace('-WW','');
     var track = models.Track.fromURI(id);
 
@@ -40,9 +42,33 @@ require([
 */
         //load the track informations
         track.load('name','artists').done(function(track) {
+        	
+        	//get year
+            var album = models.Album.fromURI(track.album);
+            
+            album.load('name').done(function(album){
+            	console.log('album: '+album.name);
+//            	var mysearch = search.Search.search("album:"+album.name);
+//            	console.log(mysearch.albums[0]);   
+            });	
+//            
+//            	    for(var i in mysearch.albums) {
+//            	        var a = models.Album.fromURI(search.albums[i].uri, function(album) {
+//            	          console.log(album.year);
+//            	        });
+//            	    }
+//            	
+            	
            
-            //console.log('Trackname: ' + track.name);
+            
+            
+           
+            
+            
+        	
+        	//console.log('Trackname: ' + track.name);
             var artist = models.Artist.fromURI(track.artists[0]);
+            
             artist.load('name').done(function(artist){
                 //console.log('Artistname: ' + artist.name.decodeForText());    
                 var toolTipString = track.name.decodeForHtml()+' by '+artist.name.decodeForHtml();
