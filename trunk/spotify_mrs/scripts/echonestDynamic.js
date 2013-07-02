@@ -440,7 +440,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1){
 	 
 	 numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
-	 
+	 customplaylist1.doPlaylistForAlbum();
 	 var track = models1.player.load('track');
      //console.log('TRACK= '+track);
      var artist = models1.player.track.artists[0];
@@ -1119,7 +1119,6 @@ function getNextSong1(trackCover1, customplaylist1){
  	 	        	
  	 	        	trackCover1.getTrackCover(id);
  	 	        	customplaylist1.addTrackToPLaylist(id);
- 	 	        	console.log("playlist: "+customplaylist1);
  	 	        	
  	 	            getArtistTerms(echonestArtistId);
  	 	          

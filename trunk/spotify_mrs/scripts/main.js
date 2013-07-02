@@ -19,7 +19,7 @@ require([
   
 
   // generatePlaylistButton,
-], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud, setUpSimilarityAccordion, echonestTasteProfile, customPlaylist) {
+], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud, setUpSimilarityAccordion, echonestTasteProfile, customplaylist) {
   'use strict';
   
  
@@ -53,7 +53,7 @@ require([
 	 
 	 setUpSimilarityAccordion.setupChangeSeedSongButton();
 	 
-	 customPlaylist.doPlaylistForAlbum();
+	customplaylist.setupFlipButton();
 	
 	 
 	 //setupTagCloud.addTagCloudEventHandler(echonestDynamic);
