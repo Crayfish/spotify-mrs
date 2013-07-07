@@ -13,13 +13,14 @@ require([
   'scripts/setupTagCloud',
   'scripts/setUpSimilarityAccordion',
   'scripts/echonestTasteProfile', 
-  'scripts/customplaylist'
+  'scripts/customplaylist',
+  'scripts/jPagesSetup'
   
   
   
 
   // generatePlaylistButton,
-], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud, setUpSimilarityAccordion, echonestTasteProfile, customplaylist) {
+], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud, setUpSimilarityAccordion, echonestTasteProfile, customplaylist, jPagesSetup) {
   'use strict';
   
  
@@ -30,10 +31,11 @@ require([
 	  
 	  //console.log('Main() executed');
 
-	 heading.writeHeading();
+	// heading.writeHeading();
 	  
+	
 	 
-	 echonestTasteProfile.createTasteProfile();
+	 //echonestTasteProfile.createTasteProfile();
 	 
 	  generatePlaylistButton.setUpNewSeedButton();
 	  generatePlaylistButton.setUpNextSongsButton();
@@ -43,6 +45,8 @@ require([
 	 setupSlider.setUpSongHotSlider(echonestDynamic);
 	 setupSlider.setUpArtistVarietySlider(echonestDynamic);
 	 setupSlider.setUpAdventurousnessSlider(echonestDynamic);
+	 
+	 jPagesSetup.setupPages();
 	 
 	 echonestDynamic.startNewSession();
 	 

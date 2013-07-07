@@ -4,8 +4,9 @@ require([
 	  
   '$api/models',
   '$views/throbber#Throbber',
-  'scripts/trackCover',
-  'scripts/customplaylist'
+  'scripts/jPagesTrackCover',
+  'scripts/customplaylist',
+  //'scripts/playableCheck'
 
   ], function(models, throbber, trackCover, customplaylist) {
  
@@ -21,13 +22,15 @@ require([
   
   var getNextSong = function(){
 	 // console.log("New session is started");
-	  getNextSong1(trackCover, customplaylist);
+	  
+	
+	  getNextSong1( );
 	 
   };
   
   var getNextXXSong = function(){
 		 // console.log("New session is started");
-		  getNextXXSong1(trackCover, customplaylist);
+		  getNextXXSong1( );
 		 
 	  };
 	  
@@ -46,7 +49,7 @@ require([
 	};
 	
 	var changeToGenreSimilarity = function(genreName){
-		changeToGenreSimilarity1(genreName, trackCover, customplaylist);
+		changeToGenreSimilarity1(genreName);
 	};
 	
 	var changeArtistVariety = function(){
@@ -62,23 +65,23 @@ require([
 	};
 	
 	var changeToSongSimilarity = function(){
-		changeToSongSimilarity1(models, throbber, trackCover, customplaylist);
+		changeToSongSimilarity1();
 	};
 	
 	var changeToArtistSimilarity = function(){
-		changeToArtistSimilarity1(models, throbber, trackCover, customplaylist);
+		changeToArtistSimilarity1();
 	};
 	
 	var changeSeedSongSimilarity = function(){
-		changeSeedSongSimilarity1(models, throbber, trackCover, customplaylist);
+		changeSeedSongSimilarity1( );
 	};
 	
 	var changeSeedArtistSimilarity = function(){
-		changeSeedArtistSimilarity1(models, throbber, trackCover, customplaylist);
+		changeSeedArtistSimilarity1();
 	};
 	
 	
-	
+
   
   exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
@@ -94,6 +97,8 @@ require([
   exports.changeToArtistSimilarity = changeToArtistSimilarity;
   exports.changeSeedSongSimilarity = changeSeedSongSimilarity;
   exports.changeSeedArtistSimilarity = changeSeedArtistSimilarity;
+
+
 
 });//end of require()
 
@@ -112,12 +117,24 @@ var artistName = '';
 var trackName = '';
 
 
-var numberOfSongs = 10;
+//var numberOfSongs = 10;
 
 var songsAlreadyUsed = new Array();
 
 var styleTermObjects = new Array();
 var styleTermNames = new Array();
+
+var continueFetchSongsLoop = true;
+
+var throbber= null;
+
+var trackCoverScript = null;
+
+var customPlaylistScript = null;
+
+var models = null;
+
+var trackCurrentlyPlaying = null;
 
 
 
@@ -386,7 +403,7 @@ function  changeSongHotness1(){
 }
 
 
-function changeToGenreSimilarity1(genreName, trackCover1){
+function changeToGenreSimilarity1(genreName){
 	console.log('changeToGenreSimilarity1() was called with genre: '+genreName);
 	
 	
@@ -415,7 +432,7 @@ function changeToGenreSimilarity1(genreName, trackCover1){
        // $("#accordion" ).accordion( "refresh" );
        
         info("");
-        $("#albumCoverContainer").empty();
+       // $("#albumCoverContainer").empty();
         styleTermNames = new Array();
         styleTermObjects = new Array();
         $("#tagCloud").tagCloud(styleTermObjects); 
@@ -424,7 +441,7 @@ function changeToGenreSimilarity1(genreName, trackCover1){
         
         console.log("New session ID  is used: "+session_id);
        
-        getNextXXSong1(trackCover1);
+        getNextXXSong1();
         
         
         } else {
@@ -435,43 +452,94 @@ function changeToGenreSimilarity1(genreName, trackCover1){
 }
 
 
-function startNewSession1(models1, throbber1, trackCover1, customplaylist1){
+function startNewSession1(models1, throbber1, trackCover1, customplaylist1 ){
 	 console.log("New session is started");
+	
 	 
-	 numberOfSongs=10;
+	 models = models1;
+	 
+	 //models.player.playTrack(models.Track.fromURI('spotify:track:3P6p25MvU3qnvWa8L7i5Lr'));
+	 
+	 customPlaylistScript =  customplaylist1;
+	 
+	 trackCoverScript = trackCover1;
+	 
+	
+	 
+	// numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
-	 customplaylist1.doPlaylistForAlbum();
-	 var track = models1.player.load('track');
-     //console.log('TRACK= '+track);
-     var artist = models1.player.track.artists[0];
+	 
+	 //customPlaylistScript.doPlaylistForAlbum();
+	 
+/*	 models.player.track.load('name', 'duration').done(function(){
+		 console.log('Loaded track name and duration');
+	 });
+	 */
+	 
+	// trackCurrentlyPlaying = models.player.load('track');
+	 
+	 trackCurrentlyPlaying = models.player.load('track');
+	 
+	 
+/*	 
+	 models.player.load('track').done(function(track) {
+		 //console.log('The track '+trackCurrentlyPlaying.name+'  is ' + trackCurrentlyPlaying.duration + ' ms long.');
+		 track.load('name').done(function(track){
+			 
+		 });
+		 
+		 trackCurrentlyPlaying = track;
+		 
+		 trackCurrentlyPlaying.load('artists', 'name');
+	 });*/
+    
+	 
+	 //console.log('TRACK= '+trackCurrentlyPlaying);
+     
+     //var artist = models.player.track.artists[0];
      //console.log('ARTIST: '+artist);
 	
 	
-	    if (track == null) {
+	    if (trackCurrentlyPlaying == null) {
 	    	info('Start playing something and I ll make a playlist of good songs based on that song');
 	    	
 	    } else {
 	
     
-    var cover = document.getElementById('albumCoverContainer');
-   // var cover = $(".albumCoverContainer") ;
-    //var pictureThrobber = throbber1.forElement(cover);
-    //pictureThrobber.setSize('normal');
+    //var cover = document.getElementById('albumCoverContainer');
+    //var cover = document.getElementById('albumCoverContainer');
+    $("#albumCoverContainer").hide();
+    //cover.hide();
+    
+	    	var throbberContainer = document.getElementById('throbberContainer');
+	    	throbber = throbber1.forElement( throbberContainer);  	
+	    	throbber.setPosition( 'center',  'center');
+	    	
+	    	
+	    	
+	    	 
+	    	
+	    	 
+	    	
+  //var throbberContainer = $("#throbberContainer") ;
+  // var pictureThrobber = throbber1.forElement(throbberContainer);
+   // pictureThrobber.setSize('normal');
    
     //getAllEchonestGenres();
     
    // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
     
-    artistName = models1.player.track.artists[0].name;
-    
-    trackName =  models1.player.track.name;
+	 //models.player.   	
+    artistName = models.player.track.artists[0].name;
+    //models.player
+    trackName = models.player.track.name;
   
     
     $( "#artistSimilarityInfo").text(artistName);
     //info('Getting Songs like "'+trackName+'" by '+ artistName);
     
     
-    artist_id=  models1.player.track.artists[0].toString();
+    artist_id=  models.player.track.artists[0].toString();
    // console.log('artist_id: '+artist_id);
     
     var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
@@ -479,7 +547,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1){
    
     //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
     
-     song_id=models1.player.track.uri.toString();
+     song_id=models.player.track.uri.toString();
     //.decodeForText();
    // console.log('Spotify Song ID: '+song_id);
     //var replacedSongID= models1.player.track.uri.decodeForText().replace('spotify', 'spotify-WW');
@@ -522,7 +590,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1){
             function(data) {
         if (checkResponse(data)) {
             info("");
-           $("#albumCoverContainer").empty();
+          // $("#albumCoverContainer").empty();
            styleTermNames = new Array();
            styleTermObjects = new Array();
            $("#tagCloud").tagCloud(styleTermObjects); 
@@ -534,7 +602,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1){
        	 //for (var i = 0; i <20; i++){
             //var i =0;
             //while(i<20){
-            getNextSong1(trackCover1, customplaylist1);
+            getNextSong1( );
             //setTimeout(function() {info("Timeout");},1000);
             //i++;
             //console.log("Timeout ended");
@@ -560,16 +628,16 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1){
 }
 
 
-function changeSeedArtistSimilarity1(models1, throbber1, trackCover1, customplaylist1){
+function changeSeedArtistSimilarity1(){
 	console.log('echonestDynamic changeSeedArtistSimilarity1() was called');
 	
 	
-	 numberOfSongs=10;
+	 //numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
 	 
-	 var track = models1.player.load('track');
+	 var track = models.player.load('track');
     console.log('TRACK= '+track);
-    var artist = models1.player.track.artists[0];
+    var artist = models.player.track.artists[0];
     console.log('ARTIST: '+artist);
 	
 	
@@ -588,16 +656,16 @@ function changeSeedArtistSimilarity1(models1, throbber1, trackCover1, customplay
    
   // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
    
-    artistName = models1.player.track.artists[0].name;
+    artistName = models.player.track.artists[0].name;
    
-    trackName =  models1.player.track.name;
+    trackName =  models.player.track.name;
  
    
    $( "#artistSimilarityInfo").text(artistName);
    //info('Getting Songs like "'+trackName+'" by '+ artistName);
    
    
-   artist_id=  models1.player.track.artists[0].toString();
+   artist_id=  models.player.track.artists[0].toString();
   // console.log('artist_id: '+artist_id);
    
    var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
@@ -605,7 +673,7 @@ function changeSeedArtistSimilarity1(models1, throbber1, trackCover1, customplay
   
    //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
    
-   song_id=models1.player.track.uri.toString();
+   song_id=models.player.track.uri.toString();
    //.decodeForText();
   // console.log('Spotify Song ID: '+song_id);
    //var replacedSongID= models1.player.track.uri.decodeForText().replace('spotify', 'spotify-WW');
@@ -648,7 +716,7 @@ function changeSeedArtistSimilarity1(models1, throbber1, trackCover1, customplay
            function(data) {
        if (checkResponse(data)) {
            info("");
-          $("#albumCoverContainer").empty();
+         // $("#albumCoverContainer").empty();
           styleTermNames = new Array();
           styleTermObjects = new Array();
           $("#tagCloud").tagCloud(styleTermObjects); 
@@ -660,7 +728,7 @@ function changeSeedArtistSimilarity1(models1, throbber1, trackCover1, customplay
       	 //for (var i = 0; i <20; i++){
            //var i =0;
            //while(i<20){
-           getNextSong1(trackCover1, customplaylist1);
+           getNextSong1( );
            //setTimeout(function() {info("Timeout");},1000);
            //i++;
            //console.log("Timeout ended");
@@ -684,15 +752,15 @@ function changeSeedArtistSimilarity1(models1, throbber1, trackCover1, customplay
 }
 
 
-function changeSeedSongSimilarity1(models1, throbber1, trackCover1, customplaylist1){
+function changeSeedSongSimilarity1(){
 	console.log('echonestDynamic changeSeedSongSimilarity1() was called');
 	
-	numberOfSongs=10;
+	//numberOfSongs=10;
 	 //songsAlreadyUsed = new Array();
 	 
-	 var track = models1.player.load('track');
+	 var track = models.player.load('track');
    console.log('TRACK= '+track);
-   var artist = models1.player.track.artists[0];
+   var artist = models.player.track.artists[0];
    console.log('ARTIST: '+artist);
 	
 	
@@ -711,16 +779,16 @@ function changeSeedSongSimilarity1(models1, throbber1, trackCover1, customplayli
   
  // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
   
-  artistName = models1.player.track.artists[0].name;
+  artistName = models.player.track.artists[0].name;
   
-  trackName =  models1.player.track.name;
+  trackName =  models.player.track.name;
 
   
   $( "#songSimilarityInfo").text('"'+trackName+'" by '+ artistName);
   //info('Getting Songs like "'+trackName+'" by '+ artistName);
   
   
-   artist_id=  models1.player.track.artists[0].toString();
+   artist_id=  models.player.track.artists[0].toString();
  // console.log('artist_id: '+artist_id);
   
   var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
@@ -728,7 +796,7 @@ function changeSeedSongSimilarity1(models1, throbber1, trackCover1, customplayli
  
   //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
   
-   song_id=models1.player.track.uri.toString();
+   song_id=models.player.track.uri.toString();
   //.decodeForText();
  // console.log('Spotify Song ID: '+song_id);
   //var replacedSongID= models1.player.track.uri.decodeForText().replace('spotify', 'spotify-WW');
@@ -771,7 +839,7 @@ function changeSeedSongSimilarity1(models1, throbber1, trackCover1, customplayli
           function(data) {
       if (checkResponse(data)) {
           info("");
-         $("#albumCoverContainer").empty();
+        // $("#albumCoverContainer").empty();
          styleTermNames = new Array();
          styleTermObjects = new Array();
          $("#tagCloud").tagCloud(styleTermObjects); 
@@ -783,7 +851,7 @@ function changeSeedSongSimilarity1(models1, throbber1, trackCover1, customplayli
      	 //for (var i = 0; i <20; i++){
           //var i =0;
           //while(i<20){
-          getNextSong1(trackCover1, customplaylist1);
+          getNextSong1( );
           //setTimeout(function() {info("Timeout");},1000);
           //i++;
           //console.log("Timeout ended");
@@ -808,10 +876,10 @@ function changeSeedSongSimilarity1(models1, throbber1, trackCover1, customplayli
 }
 
 
-function changeToArtistSimilarity1(models1, throbber1, trackCover1, customplaylist1){
+function changeToArtistSimilarity1(){
 	// console.log("New session is started");
 	 
-	 numberOfSongs=10;
+	 //numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
 	 
 	/* var track = models1.player.load('track');
@@ -895,7 +963,7 @@ function changeToArtistSimilarity1(models1, throbber1, trackCover1, customplayli
            function(data) {
        if (checkResponse(data)) {
            info("");
-          $("#albumCoverContainer").empty();
+         // $("#albumCoverContainer").empty();
           styleTermNames = new Array();
           styleTermObjects = new Array();
           $("#tagCloud").tagCloud(styleTermObjects); 
@@ -908,7 +976,7 @@ function changeToArtistSimilarity1(models1, throbber1, trackCover1, customplayli
           //for (var i = 0; i <20; i++){
            //var i =0;
            //while(i<20){
-           getNextSong1(trackCover1, customplaylist1);
+           getNextSong1( );
            //setTimeout(function() {info("Timeout");},1000);
            //i++;
            //console.log("Timeout ended");
@@ -935,10 +1003,10 @@ function changeToArtistSimilarity1(models1, throbber1, trackCover1, customplayli
 
 
 
-function changeToSongSimilarity1(models1, throbber1, trackCover1, customplaylist1){
+function changeToSongSimilarity1(){
 	 console.log(" echonest changeToSongSimilarity1() was called");
 	 
-	 numberOfSongs=10;
+	 //numberOfSongs=10;
 	 //songsAlreadyUsed = new Array();
 	 
 	/* var track = models1.player.load('track');
@@ -1022,7 +1090,7 @@ function changeToSongSimilarity1(models1, throbber1, trackCover1, customplaylist
            function(data) {
        if (checkResponse(data)) {
            info("");
-          $("#albumCoverContainer").empty();
+         // $("#albumCoverContainer").empty();
           styleTermNames = new Array();
           styleTermObjects = new Array();
           $("#tagCloud").tagCloud(styleTermObjects); 
@@ -1036,7 +1104,7 @@ function changeToSongSimilarity1(models1, throbber1, trackCover1, customplaylist
           //for (var i = 0; i <20; i++){
            //var i =0;
            //while(i<20){
-           getNextSong1(trackCover1, customplaylist1);
+           getNextSong1( );
            //setTimeout(function() {info("Timeout");},1000);
            //i++;
            //console.log("Timeout ended");
@@ -1063,8 +1131,12 @@ function changeToSongSimilarity1(models1, throbber1, trackCover1, customplaylist
 
 
 
-function getNextSong1(trackCover1, customplaylist1){
+function getNextSong1( ){
 	//console.log('getNextSong() was called');
+	
+	throbber.show();
+	// $("#albumCoverContainer").hide();
+	
 	
 	var randomNumber =  Math.floor(Math.random()*100);
 	 var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/next?api_key=BNV9970E1PHXZ9RQW&format=json&results=1&session_id='+session_id+'&_='+randomNumber;
@@ -1095,7 +1167,7 @@ function getNextSong1(trackCover1, customplaylist1){
                 
                 
            	// for (var i = 0; i < data.response.songs.length; i++){
- 	            console.log('Next song no ' +numberOfSongs+': ' +data.response.songs[0].title+' by '+data.response.songs[0].artist_name);
+ 	            console.log('Next song is: ' +data.response.songs[0].title+' by '+data.response.songs[0].artist_name);
  	            
  	            var echonestTrackId = data.response.songs[0].id;
  	           // console.log('echnonestTrackId: '+echnonestTrackId);
@@ -1108,8 +1180,8 @@ function getNextSong1(trackCover1, customplaylist1){
  	            
  	           if($.inArray(echonestTrackId,  songsAlreadyUsed) > -1){
  	 	            console.log('Song bereits verwendet');
- 	 	            numberOfSongs = numberOfSongs+1;
- 	 	            banSongFeedBack(trackCover1, echonestTrackId, customplaylist1); 
+ 	 	           // numberOfSongs = numberOfSongs+1;
+ 	 	            banSongFeedBack( echonestTrackId); 
  	 	          }else{
  	 	        	songsAlreadyUsed.push(echonestTrackId);
  	 	        	//console.log('getNextsong1() data.response: '+JSON.stringify(data.response));
@@ -1117,14 +1189,28 @@ function getNextSong1(trackCover1, customplaylist1){
  	 	        	
  	 	        	var echonestArtistId =  data.response.songs[0].artist_id;
  	 	        	
- 	 	        	trackCover1.getTrackCover(id);
- 	 	        	customplaylist1.addTrackToPLaylist(id);
+ 	 	        	//var playable = playableCheck.checkIfTrackIsPlayable(id);
+ 	 	        	//console.log('echonestDynamic getNextsong1() return from checkIfTrackIsPlayable(): '+playable);
+ 	 	        	
+ 	 	        	
+ 	 	        	//if(playable){
+ 	 	        	
+ 	 	        	
+ 	 	        	
+ 	 	        	trackCoverScript.getTrackCover(id);
+ 	 	        	//customplaylist1.addTrackToPLaylist(id);
  	 	        	
  	 	            getArtistTerms(echonestArtistId);
  	 	          
- 	 	            banSongFeedBack(trackCover1, echonestTrackId, customplaylist1);
- 	 	          
- 	 	          }
+ 	 	            banSongFeedBack( echonestTrackId);
+ 	 	            
+ 	 	        	//}else{
+ 	 	        		//if(!playable){
+ 	 	        		// numberOfSongs = numberOfSongs+1;
+ 	 	        		// banSongFeedBack(trackCover1, echonestTrackId, customplaylist1, playableCheck);
+ 	 	        		//}
+ 	 	        	//}
+ 	 	          };
  	            
  	            
  	         /*  
@@ -1177,11 +1263,11 @@ function getNextSong1(trackCover1, customplaylist1){
 
 
 
-function getNextXXSong1(trackCover1, customplaylist1){
+function getNextXXSong1( ){
 	console.log('getNextXXSong() was called');
 	
 	
-	numberOfSongs=10;
+	//numberOfSongs=10;
 	
 	
 	
@@ -1210,11 +1296,11 @@ function getNextXXSong1(trackCover1, customplaylist1){
 	            
 	        	
 	        	 info("");
-	             $("#albumCoverContainer").empty();
+	            // $("#albumCoverContainer").empty();
 	              
 	             
 	           
-	              getNextSong1(trackCover1, customplaylist1);
+	              getNextSong1( );
 	           
 	           // session_id = data.response.session_id;
 	        	/* for (var i = 0; i < data.response.songs.length; i++){
@@ -1369,7 +1455,7 @@ function steerPlaylist(trackCover1){
 }
 
 
-function banSongFeedBack(trackCover1, echnonestTrackId, customplaylist1){
+function banSongFeedBack( echnonestTrackId){
 	
 	var randomNumber= Math.floor(Math.random()*100);
 	var skipUrl ='http://developer.echonest.com/api/v4/playlist/dynamic/feedback?api_key=BNV9970E1PHXZ9RQW&format=json&session_id='+session_id+'&_='+randomNumber;
@@ -1394,15 +1480,50 @@ function banSongFeedBack(trackCover1, echnonestTrackId, customplaylist1){
 	        		 getBanedSongsInfo();
 	        		
 	        	}*/
-	        
-	        	if(numberOfSongs !=1){
 	        	
-	        	numberOfSongs = numberOfSongs-1;
-	        	getNextSong1(trackCover1, customplaylist1); 
-	        	}else{
-	        		//getPlaylistInfo(); 
+	        	var continueLoop = trackCoverScript.checkLoopContinue();
+	        	
+	        	console.log('bansongFeddback() result of checkLoopContinue(): '+continueLoop);
+	        
+	        	if(continueLoop){
+	        	
+	        	//numberOfSongs = numberOfSongs-1;
+	        	getNextSong1( ); 
 	        	}
 	        	
+	        	if(!continueLoop){
+	        		throbber.hide();
+	        		trackCoverScript.setLoopContinueToTrue();
+	        	}
+	        	
+	        	/*else{
+	        		
+	        	
+	        		
+	        		
+	        		
+	        		   $("div.holder").jPages("destroy").jPages({
+	                        containerID   : "albumCoverContainer",
+	                        perPage       :10,
+	                        first       : "first",
+	                        previous    : "previous",
+	                        next        : "next",
+	                        last        : "last",
+	                         animation   : "fadeInLeftBig"
+	                        callback    : function( pages, items ){
+	                                   pageCount =  pages.count;
+	                               
+	                        },
+	        		   
+	        		   		//startPage: pageCount 
+	        		   	
+	                    });
+	        		   
+	        		   $("div.holder").jPages( pageCount );
+	        		   pageCount= pageCount+1;
+	        		   
+	        	}//end of else
+*/	        	
 	       /* 	else{
 	        	$("#tagCloud").empty();
 	            	$("#tagCloud").tagCloud(styleTermObjects);
@@ -1422,6 +1543,8 @@ function banSongFeedBack(trackCover1, echnonestTrackId, customplaylist1){
 	
 	
 }
+
+
 
 function getBanedSongsInfo(){
 	console.log('getBanedSongsInfo() was called');

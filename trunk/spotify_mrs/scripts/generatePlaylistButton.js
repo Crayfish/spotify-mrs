@@ -15,8 +15,8 @@ require([
 	    generateNextSongsButton.onclick=function(){
 	    	console.log("Pressed NextSongs Button");
 	    	
-	    echonestDynamic.getNextXXSong();
-	  }
+	    echonestDynamic.getNextSong();
+	  };
   };
 
   
@@ -26,7 +26,7 @@ require([
 	    	console.log("Pressed New Seed Button");
 	    	
 	    	echonestDynamic.startNewSession();
-	  }
+	  };
 };
   
 

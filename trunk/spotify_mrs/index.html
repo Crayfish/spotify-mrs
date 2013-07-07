@@ -17,9 +17,6 @@
 
 <script type="text/javascript" src="scripts/jquery.min.js"></script>
 
-<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
-	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script> -->
 
 <link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
@@ -30,27 +27,83 @@
 <script src="scripts/jquery.tagcloud-2.js" type="text/javascript" charset="utf-8"></script>
 
 
+<!-- JPages -->
+<link rel="stylesheet" href="css/jPages.css">
+<!-- <script src="jPages-master/js/jquery-1.8.2.min.js"></script> -->
+<script src="scripts/jPages.js"></script>
+
+
 
 </head>
+
+
+
+
+
+
+
 <body>
 
 	<h1></h1>
 	<div id="info"></div>
-	<button id="newSeed">New Session</button>
-	<button id="nextSongsButton">Next Songs</button>
-	<button id="flipbutton">show playlist</button>
+	
+	
+	
+	
+
+	
+	
+	
 
 	<div class="main">
 		
 		<div class="flip">
+		
+		
+
+
+<!-- Item container (doesn't need to be an UL) -->
+<!--  <ul id="itemContainer"></ul> -->
+
+
+
+
+
+		
+		
+		
 		<div id="albumCoverContainer" class="albumCoverContainer"></div>
+		<div id="throbberContainer" class="throbberContainer"></div>
+		
+		
+						<!-- Future navigation panel -->
+<div class="holder"> </div>	
+		
+		
+		
+
+		
+		
 		<div id="playlistContainer" class="playlistContainer"></div>
 		</div>
+		
+		
+		
+
+		
+		
 		
 		<div id="rulerContainer" class="rulerContainer">
 			<p class="rulerheader">Rulers</p>
 
 			<div class="rulerContent">
+			
+			
+			
+	<button id="nextSongsButton">Load More Songs</button>
+	<button id="newSeed">New Session</button>
+	<button id="flipbutton">show playlist</button>
+	
 
 				<p>Similarity based on:</p>
 				<div id="accordion">
@@ -94,6 +147,15 @@
 					</div>
 				</div><!-- end accordion -->
 
+
+
+
+
+
+	
+	
+	
+	
 				<p>
 					<label for="artistVarietySlider">Artist Diversity:</label>
 				<div id="artistVarietySlider"></div>
@@ -102,14 +164,7 @@
 				</p>
 
 
-				<label>Novelty:</label>
-
-				<p>
-					<input type="checkbox" name="excludeSeedArtist" value="">exclude
-					seed artist<br> <input type="checkbox" name="noSpotifysongs"
-						value="">no songs from spotify playlists<br>
-
-				</p>
+				
 
 
 				<!--Song Hotness Slider-->
@@ -150,9 +205,17 @@
 				</p>
 
 
+					<label>Novelty:</label>
+
+				<p>
+					<input type="checkbox" name="excludeSeedArtist" value="">exclude
+					seed artist<br> <input type="checkbox" name="noSpotifysongs"
+						value="">no songs from spotify playlists<br>
+
+				</p>
 				<!--Artist Terms Information-->
 				<p>
-					<label>Artist Terms:</label>
+					<label>Artist Terms Filter:</label>
 				</p>
 
 				<p>
