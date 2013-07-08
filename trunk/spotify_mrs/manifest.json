@@ -19,7 +19,7 @@
     "300x300": "images/icons/icon-300x300.png"
   },
   "AppName": {
-    "de": "My Boilerplate App in German",
+    "de": "TransparentRecommender",
     "en": "Transparent Music Recommender",
     "es": "My Boilerplate App in Spanish",
     "es-419": "My Boilerplate App in LA Spanish",
