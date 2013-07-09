@@ -69,6 +69,8 @@ require([
         	//console.log('Trackname: ' + track.name);
             var artist = models.Artist.fromURI(track.artists[0]);
             
+            console.log('trackCover.getTrackCover() artistID: '+artist);
+            
             artist.load('name').done(function(artist){
                 //console.log('Artistname: ' + artist.name.decodeForText());    
                 var toolTipString = track.name.decodeForHtml()+' by '+artist.name.decodeForHtml();

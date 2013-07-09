@@ -6,7 +6,7 @@ require([
   '$views/throbber#Throbber',
   'scripts/jPagesTrackCover',
   'scripts/customplaylist',
-  //'scripts/playableCheck'
+  //'scripts/setupNoveltyCheckBoxes',
 
   ], function(models, throbber, trackCover, customplaylist) {
  
@@ -82,6 +82,13 @@ require([
 	
 	
 
+	
+	
+	var setBanedArtistId = function(setValue){
+		setBanedArtistId1(setValue);
+	};
+	
+
   
   exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
@@ -98,6 +105,8 @@ require([
   exports.changeSeedSongSimilarity = changeSeedSongSimilarity;
   exports.changeSeedArtistSimilarity = changeSeedArtistSimilarity;
 
+  exports.setBanedArtistId = setBanedArtistId;
+
 
 
 });//end of require()
@@ -108,7 +117,7 @@ require([
 
 var session_id ='';
 
-var artist_id= '';
+var seedArtistSpotifyId= '';
 
 var song_id ='';
 
@@ -136,8 +145,26 @@ var models = null;
 
 var trackCurrentlyPlaying = null;
 
+var seedArtistIdforEchonestCalls = null;
+
+var banedSeedArtistId = null;
 
 
+
+
+function setBanedArtistId1(setValue){
+	console.log('echonestDynamic setBanedArtistId1(setValue) was called');
+	if(setValue ){
+		banedSeedArtistId =seedArtistSpotifyId;
+		trackCoverScript.setBannedSeedArtist(banedSeedArtistId);
+		console.log(' banedSeedArtistId was set to : '+banedSeedArtistId);
+	}else{
+		banedSeedArtistId = null;
+		trackCoverScript.setBannedSeedArtist(null);
+		console.log(' banedSeedArtistId was set to: '+banedSeedArtistId);
+	}
+	
+}
 
 
 
@@ -539,10 +566,10 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1 ){
     //info('Getting Songs like "'+trackName+'" by '+ artistName);
     
     
-    artist_id=  models.player.track.artists[0].toString();
+    seedArtistSpotifyId=  models.player.track.artists[0].toString();
    // console.log('artist_id: '+artist_id);
     
-    var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
+     seedArtistIdforEchonestCalls= seedArtistSpotifyId.replace('spotify', 'spotify-WW');
     //console.log('Replaced Artist ID: '+replacedArtistID);
    
     //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
@@ -569,7 +596,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1 ){
     
     
    // var artistIdsForPopularity = new Array();
-    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+replacedArtistID+'&_='+randomNumber;
+    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+seedArtistIdforEchonestCalls+'&_='+randomNumber;
     	//&track_id='+replacedSongID;
     	//&track_id='+replacedSongID;
     //var session_id ='';
@@ -636,9 +663,9 @@ function changeSeedArtistSimilarity1(){
 	 songsAlreadyUsed = new Array();
 	 
 	 var track = models.player.load('track');
-    console.log('TRACK= '+track);
+    //console.log('TRACK= '+track);
     var artist = models.player.track.artists[0];
-    console.log('ARTIST: '+artist);
+    //console.log('ARTIST: '+artist);
 	
 	
 	    if (track == null) {
@@ -665,10 +692,10 @@ function changeSeedArtistSimilarity1(){
    //info('Getting Songs like "'+trackName+'" by '+ artistName);
    
    
-   artist_id=  models.player.track.artists[0].toString();
+   seedArtistSpotifyId=  models.player.track.artists[0].toString();
   // console.log('artist_id: '+artist_id);
    
-   var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
+   seedArtistIdforEchonestCalls= seedArtistSpotifyId.replace('spotify', 'spotify-WW');
    //console.log('Replaced Artist ID: '+replacedArtistID);
   
    //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
@@ -686,16 +713,26 @@ function changeSeedArtistSimilarity1(){
  // console.log('Replaced ID: '+replacedSongID);
   
   
-  
+   
+   if($('#excludeSeedArtistCheckBox').prop('checked')){
+	   
+	   banedSeedArtistId = seedArtistSpotifyId;
+	   trackCoverScript.setBannedSeedArtist( banedSeedArtistId);
+	   
+   };
    
    
+   
+/*  if( $('#excludeSeedArtistCheckBox').prop('checked')){
+	  banArtistFeedback1();
+  }*/
 
    
    var randomNumber =  Math.floor(Math.random()*100);
    
    
-   var artistIdsForPopularity = new Array();
-   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+replacedArtistID+'&session_id='+session_id+'&_='+randomNumber;
+   //var artistIdsForPopularity = new Array();
+   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+ seedArtistIdforEchonestCalls+'&session_id='+session_id+'&_='+randomNumber;
    	//&track_id='+replacedSongID;
    	//&track_id='+replacedSongID;
    //var session_id ='';
@@ -788,10 +825,10 @@ function changeSeedSongSimilarity1(){
   //info('Getting Songs like "'+trackName+'" by '+ artistName);
   
   
-   artist_id=  models.player.track.artists[0].toString();
+   seedArtistSpotifyId=  models.player.track.artists[0].toString();
  // console.log('artist_id: '+artist_id);
   
-  var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
+  var replacedArtistID= seedArtistSpotifyId.replace('spotify', 'spotify-WW');
   //console.log('Replaced Artist ID: '+replacedArtistID);
  
   //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
@@ -810,7 +847,12 @@ function changeSeedSongSimilarity1(){
  
  
  
-  
+  if($('#excludeSeedArtistCheckBox').prop('checked')){
+	   
+	   banedSeedArtistId = seedArtistSpotifyId;
+	   trackCoverScript.setBannedSeedArtist( banedSeedArtistId);
+	   
+  };
   
 
   
@@ -901,7 +943,7 @@ function changeToArtistSimilarity1(){
   
    //getAllEchonestGenres();
    
-  // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+  // var seedArtistSpotifyId = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
    
    //var artistName = models1.player.track.artists[0].name;
    
@@ -915,7 +957,7 @@ function changeToArtistSimilarity1(){
    //var artist_id=  models1.player.track.artists[0].toString();
   // console.log('artist_id: '+artist_id);
    
-   var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
+   var replacedArtistID= seedArtistSpotifyId.replace('spotify', 'spotify-WW');
    //console.log('Replaced Artist ID: '+replacedArtistID);
   
    //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
@@ -1042,7 +1084,7 @@ function changeToSongSimilarity1(){
    //var artist_id=  models1.player.track.artists[0].toString();
   // console.log('artist_id: '+artist_id);
    
-   var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
+  // var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
    //console.log('Replaced Artist ID: '+replacedArtistID);
   
    //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
@@ -1183,9 +1225,14 @@ function getNextSong1( ){
  	 	           // numberOfSongs = numberOfSongs+1;
  	 	            banSongFeedBack( echonestTrackId); 
  	 	          }else{
+ 	 	        	  
+ 	 	        	  //check if it is a song by the baned seed artist
+ 	 	        	  
  	 	        	songsAlreadyUsed.push(echonestTrackId);
  	 	        	//console.log('getNextsong1() data.response: '+JSON.stringify(data.response));
  	 	        	var id = data.response.songs[0].tracks[0].foreign_id;
+ 	 	        	//console.log('getNextSong1() response track id: ' + id);
+ 	 	        	//console.log('getNextSong1() response  information: ' + JSON.stringify(data.response));
  	 	        	
  	 	        	var echonestArtistId =  data.response.songs[0].artist_id;
  	 	        	
@@ -1195,6 +1242,7 @@ function getNextSong1( ){
  	 	        	
  	 	        	//if(playable){
  	 	        	
+ 	 	          //check if it is a song by the baned seed artist
  	 	        	
  	 	        	
  	 	        	trackCoverScript.getTrackCover(id);
@@ -1454,6 +1502,80 @@ function steerPlaylist(trackCover1){
 	
 }
 
+/*function banArtistFeedback1 (){
+	
+	//Spotify artists - Example: spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb
+	
+	console.log('echonestDynamic banArtistFeedback() was called') ;
+	
+	var randomNumber= Math.floor(Math.random()*100);
+	var banArtistUrl ='http://developer.echonest.com/api/v4/playlist/dynamic/feedback?api_key=BNV9970E1PHXZ9RQW&format=json&session_id='+session_id+'&_='+randomNumber;
+	
+	
+	 $.getJSON(banArtistUrl, 
+	    		{'ban_artist':seedArtistIdforEchonestCalls
+	            },
+	            function(data) {
+	        if (checkResponse(data)) {
+	          
+	        	
+	        	
+	        	
+	        console.log("Sucessfully baned Seed Artist");
+	        getBanedArtistInfo();
+	        	
+	        	
+	        	
+	        	
+	        	
+	        	
+	        
+	        	
+	        	
+	        	
+	        } 
+	    });
+	
+	
+}*/
+
+
+/*function unbanArtistFeedback1 (){
+	
+	//Spotify artists - Example: spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb
+	
+	console.log('echonestDynamic banArtistFeedback() was called') ;
+	
+	var randomNumber= Math.floor(Math.random()*100);
+	var banArtistUrl ='http://developer.echonest.com/api/v4/playlist/dynamic/feedback?api_key=BNV9970E1PHXZ9RQW&format=json&session_id='+session_id+'&_='+randomNumber;
+	
+	
+	 $.getJSON(banArtistUrl, 
+	    		{'ban_artist':seedArtistIdforEchonestCalls
+	            },
+	            function(data) {
+	        if (checkResponse(data)) {
+	          	        	 
+	        	
+	        console.log("Sucessfully baned Seed Artist");
+	        	
+	        	
+	        	
+	        	
+	        	
+	        	
+	        
+	        	
+	        	
+	        	
+	        } 
+	    });
+	
+	
+}*/
+
+
+
 
 function banSongFeedBack( echnonestTrackId){
 	
@@ -1483,7 +1605,7 @@ function banSongFeedBack( echnonestTrackId){
 	        	
 	        	var continueLoop = trackCoverScript.checkLoopContinue();
 	        	
-	        	console.log('bansongFeddback() result of checkLoopContinue(): '+continueLoop);
+	        	//console.log('bansongFeddback() result of checkLoopContinue(): '+continueLoop);
 	        
 	        	if(continueLoop){
 	        	
@@ -1571,6 +1693,33 @@ function getBanedSongsInfo(){
 	});
 }
 
+
+function getBanedArtistInfo(){
+	console.log('getBanedArtistInfo() was called');
+	
+	var randomNumber= Math.floor(Math.random()*100);	
+	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key=BNV9970E1PHXZ9RQW&session_id='+session_id+'&_='+randomNumber;
+	$.getJSON(infoUrl, 
+			{
+	        },
+	        function(data) {
+	    if (checkResponse(data)) {
+	      	        	 
+	    	//console.log('Playlist Info'+JSON.stringify(data));
+	    	 
+	    	for(var i=0;i<data.response.banned_artist_ids.length;i++){
+	    	
+	    		console.log('Banned Artist Number '+i+' with ID: '+data.response.banned_artist_ids[i]);
+	    	 
+	    	}
+	        
+	    } else {
+	        info("trouble getting results");
+	    }
+	});
+}
+
+
 function getConstraintsInfo(){
 console.log('getConstraintsInfo() was called');
 	
@@ -1637,6 +1786,8 @@ function getSpotifyID(song) {
 	    var uri = song.tracks[0].id;
 	    return uri.replace('spotify-WW', 'spotify');
 	}
+
+
 
 
 
