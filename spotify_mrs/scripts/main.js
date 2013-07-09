@@ -14,13 +14,14 @@ require([
   'scripts/setUpSimilarityAccordion',
   'scripts/echonestTasteProfile', 
   'scripts/customplaylist',
-  'scripts/jPagesSetup'
+  'scripts/jPagesSetup',
+  'scripts/setupNoveltyCheckBoxes'
   
   
   
 
   // generatePlaylistButton,
-], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud, setUpSimilarityAccordion, echonestTasteProfile, customplaylist, jPagesSetup) {
+], function( heading,generatePlaylistButton,setupSlider, echonestDynamic, echonest, setupGenreFilter,setupTagCloud, setUpSimilarityAccordion, echonestTasteProfile, customplaylist, jPagesSetup, setupNoveltyCheckBoxes) {
   'use strict';
   
  
@@ -36,6 +37,8 @@ require([
 	
 	 
 	 //echonestTasteProfile.createTasteProfile();
+	  
+	  setupNoveltyCheckBoxes.setUpExcludeSeedArtistCheckBox();
 	 
 	  generatePlaylistButton.setUpNewSeedButton();
 	  generatePlaylistButton.setUpNextSongsButton();

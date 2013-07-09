@@ -5,6 +5,8 @@
  var numberOfSongs =12;
  
  var loopContinue = true;
+ 
+ var bannedSeedArtist = null;
 
 require([
   '$api/models',
@@ -12,7 +14,7 @@ require([
 
   '$views/image#Image',
   '$views/popup#Popup',
-  //'scripts/jPagesSetup',
+  //'scripts/echonestDynamic',
 ], function(models,search, Image, Popup) {
   'use strict';
 
@@ -48,11 +50,28 @@ require([
 
     //if track not playable --> no cover download
    
-    track.load('playable').done(function(track) {
+    track.load('playable','name','artists').done(function(track) {
         if(!track.playable){console.log('TRACK NOT PLAYABLE');};
         if(track.playable){
+        	
+        	
+        	   var artist = models.Artist.fromURI(track.artists[0]);
+               
+               console.log('jpagesTrackCover.getTrackCover() artist Id: '+artist);
+               console.log('jpagesTrackCover.getTrackCover()  banned artist Id: '+bannedSeedArtist);
+               
+               if(artist == bannedSeedArtist){
+               	console.log('jpagesTrackCover.getTrackCover() detected song by banned seed artist');
+               };	
+        	
+               if(artist != bannedSeedArtist){
+               
         //load image for the track
-    var image = Image.forTrack(track, {width: 150, height: 150, player: true});
+   
+        	
+        	
+        	
+        var image = Image.forTrack(track, {width: 150, height: 150, player: true});
 
         //create a li container for the image
     
@@ -69,13 +88,13 @@ require([
         target1.addEventListener('mouseout', hidePopup, false);
 */
         //load the track informations
-        track.load('name','artists').done(function(track) {
+        //track.load('name','artists').done(function(track) {
         	
         	//get year
             var album = models.Album.fromURI(track.album);
             
             album.load('name').done(function(album){
-            	console.log('album: '+album.name);
+            	//console.log('album: '+album.name);
 //            	var mysearch = search.Search.search("album:"+album.name);
 //            	console.log(mysearch.albums[0]);   
             });	
@@ -95,7 +114,16 @@ require([
             
         	
         	//console.log('Trackname: ' + track.name);
-            var artist = models.Artist.fromURI(track.artists[0]);
+        /*    var artist = models.Artist.fromURI(track.artists[0]);
+            
+            console.log('jpagesTrackCover.getTrackCover() artist Id: '+artist);
+            console.log('jpagesTrackCover.getTrackCover()  banned artist Id: '+bannedSeedArtist);
+            
+            if(artist == bannedSeedArtist){
+            	console.log('jpagesTrackCover.getTrackCover() detected song by banned seed artist');
+            };
+            */
+           
             
             artist.load('name').done(function(artist){
                 //console.log('Artistname: ' + artist.name.decodeForText());    
@@ -174,8 +202,10 @@ require([
                  
                     
             });
-          });
-}});
+            //}
+          //}
+       // );
+}}});
        
        
   };
@@ -192,10 +222,19 @@ require([
 		   loopContinue = true;
 			 
 		  };  
+		  
+	 var setBannedSeedArtist = function(bannedSeedArtistFromEchonestDynamic){
+				
+			   bannedSeedArtist = bannedSeedArtistFromEchonestDynamic;
+			   
+			   console.log('jpagesTrackCover.setBannedSeedArtist() :' +bannedSeedArtistFromEchonestDynamic);
+				 
+			  };  
 
 	exports.setLoopContinueToTrue=setLoopContinueToTrue;  
 	exports.checkLoopContinue = checkLoopContinue;  
-	  exports.getTrackCover = getTrackCover;
+	exports.getTrackCover = getTrackCover;
+	exports.setBannedSeedArtist = setBannedSeedArtist;
 });
 
 
