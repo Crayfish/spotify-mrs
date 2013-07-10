@@ -15,15 +15,15 @@ require([
   };
   
   
-/*  var getExcludeSeedArtistCheckBoxisChecked = function() {
-	  getExcludeSeedArtistCheckBoxisChecked1();
-  };*/
+  var setUpNoSongsFromSpotifyCollectionCheckBox = function() {
+	  setUpNoSongsFromSpotifyCollectionCheckBox1(echonestDynamic);
+  };
 
 
   
 
   exports.setUpExcludeSeedArtistCheckBox = setUpExcludeSeedArtistCheckBox;
-  //exports.getExcludeSeedArtistCheckBoxisChecked = getExcludeSeedArtistCheckBoxisChecked;
+  exports.setUpNoSongsFromSpotifyCollectionCheckBox = setUpNoSongsFromSpotifyCollectionCheckBox;
   
 });
 
@@ -33,7 +33,32 @@ require([
 
 var echonestDynamicScript = null;
 
+function setUpNoSongsFromSpotifyCollectionCheckBox1(echonestDynamic){
+	 var excludeSpotifyPlaylistSongsCheckBox = document.getElementById('excludeSpotifyPlaylistSongs');
+	 excludeSpotifyPlaylistSongsCheckBox.onclick=function(){
+	    	//console.log("exclude seed artist checkbox was checked");
+	    	
+	    	var isChecked = $('#excludeSpotifyPlaylistSongs').prop('checked');
+	    	if(isChecked){
+	    		console.log('excludeSpotifyPlaylistSongsCheckBox is checked')
+	    		//excludeSeedArtistCheckBoxisChecked = true;
+	    		echonestDynamic.setNoSpotifyPlaylistSongs(true);
+	    	}else{
+	    		if(!isChecked){
+	    			console.log('excludeSpotifyPlaylistSongsCheckBox is not checked');
+	    			echonestDynamic.setNoSpotifyPlaylistSongs(false);
+	    		
+	    			//excludeSeedArtistCheckBoxisChecked= false;
+	    		}
+	    	}
 
+	    	
+	    	
+	    
+	  };
+		
+		
+}
 
 
 function  setUpExcludeSeedArtistCheckBox1(echonestDynamic){
