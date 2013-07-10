@@ -507,9 +507,9 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1, play
 	 
 	 playlistInformationScript = playlistInformation1 ;
 	 
-	// arrayOfTracksInSpotifyPlaylists = playlistInformationScript.getArrayOfAllSongsInSpotifyPlaylists();
+	 arrayOfTracksInSpotifyPlaylists = playlistInformationScript.getArrayOfAllSongsInSpotifyPlaylists();
 	 
-	 //console.log('startNewSession()  arrayOfTracksInSpotifyPlaylists: '+arrayOfTracksInSpotifyPlaylists);
+	 console.log('startNewSession()  arrayOfTracksInSpotifyPlaylists: '+arrayOfTracksInSpotifyPlaylists);
 	 
 	// numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
@@ -1246,23 +1246,39 @@ function getNextSong1( ){
  	 	            banSongFeedBack( echonestTrackId); 
  	 	          }else{
  	 	        	  
- 	 	        	  //check if it is a song by the baned seed artist
+ 	 	        	
  	 	        	  
  	 	        	songsAlreadyUsed.push(echonestTrackId);
  	 	        	//console.log('getNextsong1() data.response: '+JSON.stringify(data.response));
  	 	        	var id = data.response.songs[0].tracks[0].foreign_id;
  	 	        	//console.log('getNextSong1() response track id: ' + id);
- 	 	        	//console.log('getNextSong1() response  information: ' + JSON.stringify(data.response));
+ 	 	        	var replacedTrackId = id.replace('spotify-WW', 'spotify');
+ 	 	        	console.log('getNextSong1() replaced response track id: ' + replacedTrackId);
  	 	        	
+ 	 	        	//console.log('getNextSong1() response  information: ' + JSON.stringify(data.response));
  	 	        	var echonestArtistId =  data.response.songs[0].artist_id;
+ 	 	        	
+ 	 	        	if(noSpotifyPlaylistSongs){
+ 	 	        		console.log('start checking if track is in a spotifyplaylist');
+ 	 	        		if($.inArray(id ,  arrayOfTracksInSpotifyPlaylists) > -1){
+ 	 	 	 	           console.log('DETACTED a song already in your playlist and noSpotifyPlaylistSongs was set to:'+noSpotifyPlaylistSongs);
+ 	 	 	 	            banSongFeedBack( echonestTrackId); 
+ 	 	 	 	          }else{
+ 	 	 	 	        	trackCoverScript.getTrackCover(id);
+ 	 	 	 	        	//customplaylist1.addTrackToPLaylist(id);
+ 	 	 	 	        	
+ 	 	 	 	            getArtistTerms(echonestArtistId);
+ 	 	 	 	          
+ 	 	 	 	            banSongFeedBack( echonestTrackId);
+ 	 	 	 	          }
+ 	 	        	}else{
+ 	 	        	
+ 	 	        	
  	 	        	
  	 	        	//var playable = playableCheck.checkIfTrackIsPlayable(id);
  	 	        	//console.log('echonestDynamic getNextsong1() return from checkIfTrackIsPlayable(): '+playable);
  	 	        	
- 	 	        	
- 	 	        	//if(playable){
- 	 	        	
- 	 	          //check if it is a song by the baned seed artist
+ 	 	        
  	 	        	
  	 	        	
  	 	        	trackCoverScript.getTrackCover(id);
@@ -1271,13 +1287,8 @@ function getNextSong1( ){
  	 	            getArtistTerms(echonestArtistId);
  	 	          
  	 	            banSongFeedBack( echonestTrackId);
- 	 	            
- 	 	        	//}else{
- 	 	        		//if(!playable){
- 	 	        		// numberOfSongs = numberOfSongs+1;
- 	 	        		// banSongFeedBack(trackCover1, echonestTrackId, customplaylist1, playableCheck);
- 	 	        		//}
- 	 	        	//}
+ 	 	        	}
+ 	 	        	
  	 	          };
  	            
  	            

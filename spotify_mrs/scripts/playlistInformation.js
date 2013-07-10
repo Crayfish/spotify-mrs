@@ -15,8 +15,8 @@ require([
   };
   
   
-var getArrayOfAllSongsInSpotifyPlaylists() = function(){
-	getArrayOfAllSongsInSpotifyPlaylists1();
+var getArrayOfAllSongsInSpotifyPlaylists = function(){
+	 return getArrayOfAllSongsInSpotifyPlaylists1();
 };
 
   
@@ -89,7 +89,7 @@ function  setUpPlaylistInformation1(models1, Library){
 			    	  }
 			    	});
 				
-				console.log('arrayOfAllSongsInSpotifyPlaylists: '+arrayOfAllSongsInSpotifyPlaylists);
+				//console.log('arrayOfAllSongsInSpotifyPlaylists: '+arrayOfAllSongsInSpotifyPlaylists);
 				
 			});
 		   
