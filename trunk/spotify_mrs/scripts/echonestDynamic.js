@@ -6,16 +6,17 @@ require([
   '$views/throbber#Throbber',
   'scripts/jPagesTrackCover',
   'scripts/customplaylist',
+  'scripts/playlistInformation',
   //'scripts/setupNoveltyCheckBoxes',
 
-  ], function(models, throbber, trackCover, customplaylist) {
+  ], function(models, throbber, trackCover, customplaylist, playlistInformation) {
  
 	  'use strict';
 
   
   var startNewSession = function(){
 	 // console.log("New session is started");
-	  startNewSession1(models, throbber, trackCover, customplaylist);
+	  startNewSession1(models, throbber, trackCover, customplaylist, playlistInformation);
 	 
   };
   
@@ -89,6 +90,9 @@ require([
 	};
 	
 
+	var setNoSpotifyPlaylistSongs = function(setValue){
+		setNoSpotifyPlaylistSongs1(setValue);
+	};
   
   exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
@@ -106,6 +110,7 @@ require([
   exports.changeSeedArtistSimilarity = changeSeedArtistSimilarity;
 
   exports.setBanedArtistId = setBanedArtistId;
+  exports.setNoSpotifyPlaylistSongs = setNoSpotifyPlaylistSongs;
 
 
 
@@ -149,8 +154,17 @@ var seedArtistIdforEchonestCalls = null;
 
 var banedSeedArtistId = null;
 
+var noSpotifyPlaylistSongs = false;
+
+var playlistInformationScript = null;
+
+var arrayOfTracksInSpotifyPlaylists = new Array();
 
 
+function setNoSpotifyPlaylistSongs1(setValue){
+	noSpotifyPlaylistSongs = setValue;
+	console.log('echonestDynamic noSpotifyPlaylistSongs was set to: '+ noSpotifyPlaylistSongs);
+}
 
 function setBanedArtistId1(setValue){
 	console.log('echonestDynamic setBanedArtistId1(setValue) was called');
@@ -479,7 +493,7 @@ function changeToGenreSimilarity1(genreName){
 }
 
 
-function startNewSession1(models1, throbber1, trackCover1, customplaylist1 ){
+function startNewSession1(models1, throbber1, trackCover1, customplaylist1, playlistInformation1 ){
 	 console.log("New session is started");
 	
 	 
@@ -491,10 +505,16 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1 ){
 	 
 	 trackCoverScript = trackCover1;
 	 
-	
+	 playlistInformationScript = playlistInformation1 ;
+	 
+	// arrayOfTracksInSpotifyPlaylists = playlistInformationScript.getArrayOfAllSongsInSpotifyPlaylists();
+	 
+	 //console.log('startNewSession()  arrayOfTracksInSpotifyPlaylists: '+arrayOfTracksInSpotifyPlaylists);
 	 
 	// numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
+	 
+	 
 	 
 	 //customPlaylistScript.doPlaylistForAlbum();
 	 
