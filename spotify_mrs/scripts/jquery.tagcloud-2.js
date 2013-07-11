@@ -88,8 +88,8 @@ require([
 	      click: function(tag) {},
 	      maxFontSizeEm: 4
 	   }
-	   myArray =  new Array();
-	   check = new Boolean(true);
+	   var myArray =  new Array();
+	   var check = new Boolean(true);
 	   //var echonestDynamicAcess;
 	   
 	   var options = {};
