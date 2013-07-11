@@ -88,7 +88,8 @@ require([
 	      click: function(tag) {},
 	      maxFontSizeEm: 4
 	   }
-
+	   myArray =  new Array();
+	   check = new Boolean(true);
 	   //var echonestDynamicAcess;
 	   
 	   var options = {};
@@ -127,7 +128,32 @@ require([
 	      if (options.click) {
 	         tagEl.click(function(event) {
 	            event.preventDefault();
-				// hier eingefügt:
+				// Array erstellen anfang
+	            
+	            var x = jQuery(event.target).data('tag');
+				
+				if(myArray.length < 1){
+				myArray.push(x);
+				}
+			
+				else{
+				 
+				 for (var j=0; j<myArray.length; j++) {
+					check = true;
+				 
+				 if (myArray[j] ===  x){
+					myArray.splice(j,1);				
+					check = false;
+						
+						}			
+					}
+					if (check == true){
+							 myArray.push(jQuery(event.target).data('tag'));
+					}
+							
+				}
+	            // Arrayname: "myArray"
+	            //Array erstellen ende
 	            
 	            options.click(jQuery(event.target).data('tag'), event);
 				console.log('This Tag was clicked on: '+jQuery(event.target).data('tag'));
