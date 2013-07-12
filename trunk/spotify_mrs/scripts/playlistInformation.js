@@ -11,7 +11,7 @@ require([
 
 
   var setUpPlaylistInformation = function() {
-	  setUpPlaylistInformation1(models, Library);
+	 // setUpPlaylistInformation1(models, Library);
   };
   
   
@@ -64,7 +64,7 @@ function  setUpPlaylistInformation1(models1, Library){
 		    
 		    var playlistI = snapshot.get(i)
 		    
-		    //console.log(playlistI.name);
+//		    console.log(playlistI.name);
 		    
 		    var playlistName = playlistI.name;
 		    

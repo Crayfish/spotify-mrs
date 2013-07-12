@@ -515,8 +515,8 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1, play
 	 songsAlreadyUsed = new Array();
 	 
 	 
-	 
-	 //customPlaylistScript.doPlaylistForAlbum();
+	customPlaylistScript.setupFlipButton();
+	 customPlaylistScript.createNewPlaylist();
 	 
 /*	 models.player.track.load('name', 'duration').done(function(){
 		 console.log('Loaded track name and duration');
@@ -1264,6 +1264,7 @@ function getNextSong1( ){
  	 	 	 	           console.log('DETACTED a song already in your playlist and noSpotifyPlaylistSongs was set to:'+noSpotifyPlaylistSongs);
  	 	 	 	            banSongFeedBack( echonestTrackId); 
  	 	 	 	          }else{
+ 	 	 	 	        	customPlaylistScript.addTrackToPLaylist(id);
  	 	 	 	        	trackCoverScript.getTrackCover(id);
  	 	 	 	        	//customplaylist1.addTrackToPLaylist(id);
  	 	 	 	        	
@@ -1280,9 +1281,8 @@ function getNextSong1( ){
  	 	        	
  	 	        
  	 	        	
- 	 	        	
+ 	 	        	customPlaylistScript.addTrackToPlaylist(id);
  	 	        	trackCoverScript.getTrackCover(id);
- 	 	        	//customplaylist1.addTrackToPLaylist(id);
  	 	        	
  	 	            getArtistTerms(echonestArtistId);
  	 	          
