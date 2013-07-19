@@ -1,0 +1,78 @@
+.flip-container {
+	 -webkit-perspective: 800px;
+         -moz-perspective: 800px;
+           -o-perspective: 800px;
+              perspective: 800px;
+}
+
+.flip-container, .front, .back {
+	width: 645px;
+	height: 645px;
+	position: relative;
+}
+
+.flipper {
+	
+	-webkit-transition-property:all;
+	-webkit-transition-timing-function:linear;
+	
+	-webkit-transform-style: preserve-3d;
+
+	-moz-transform-style: preserve-3d;
+	
+	transform-style: preserve-3d;
+
+	position: relative;
+	
+	overflow:visible;
+	
+	-webkit-transition-duration:0.6s;
+}
+
+
+.front, .back {
+	 display: block;
+
+	-webkit-transition-property:opacity;
+	-webkit-transition-timing-function:linear;
+	
+	-webkit-backface-visibility: hidden;
+			-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+	 -ms-backface-visibility:     hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	-webkit-transition-duration:0.06s;
+	
+}
+
+.front {
+	z-index:2;
+}
+
+.back {
+	-webkit-transform: rotateY(180deg);
+			-moz-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+	opacity:0;
+	
+}
+
+#flip-toggle.flip  .flipper{
+	-webkit-transform: rotateY(180deg);
+				-moz-transform: rotateY(180deg);
+				transform: rotateY(180deg);
+}
+
+#flip-toggle.flip  .flipper .front{
+	opacity:0;
+	-webkit-transition-duration:0.3s;
+	}
+#flip-toggle.flip  .flipper .back{
+	opacity:1;
+	-webkit-transition-duration:0.3s;
+	z-index:2;}
+

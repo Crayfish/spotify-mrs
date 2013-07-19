@@ -64,8 +64,8 @@ require([
 	 
 	 setUpSimilarityAccordion.setupChangeSeedSongButton();
 	 
-	customplaylist.setupFlipButton();
-	
+	 customplaylist.setupFlipButton();
+	 customplaylist.createNewPlaylist();
 	 
 	 //setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 	  
