@@ -8,6 +8,7 @@
 	border-radius: 4px;
 	/*padding: 10px;*/
 	font: 75% Arial, "MS Trebuchet", sans-serif;
+	float:left;
 }
 
 .tagcloudlink {
@@ -20,4 +21,9 @@
 
 .tagcloudlink:focus {
 	color: #FF0000
+}
+
+.tagcloud-wrapper{
+	float:left;
+	overfloaw:hiden;
 }

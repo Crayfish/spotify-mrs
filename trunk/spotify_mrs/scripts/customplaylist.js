@@ -18,6 +18,7 @@ require([
 	  flipbutton.onclick=function(){
 	    console.log("flip button pressed");
 	    showPlaylist();
+	    document.querySelector('#flip-toggle').classList.toggle('flip');
 	  }
   };
   

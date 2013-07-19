@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="$views/css/throbber.css">
 <link rel="stylesheet" href="$views/css/list.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/flip.css">
 <!-- If you are using the preview SDK for webplayer then uncomment the script below -->
 <!--script src="http://d1hza3lyffsoht.cloudfront.net/preview-sdk/bootstrap.js"></script-->
 
@@ -47,33 +48,34 @@
 
 	<div class="main">
 		
-		<div class="flip">
-		
-		<!-- Item container (doesn't need to be an UL) -->
-		<!--  <ul id="itemContainer"></ul> -->
-
-		<div id="albumCoverContainer" class="albumCoverContainer"></div>
-		<div id="throbberContainer" class="throbberContainer"></div>
-		
-		<!-- Future navigation panel -->
-		<div class="holder"> </div>	
-		
-				<!--Artist Terms Information-->
+		<div class="leftside">
+			
+			<div class="flip-container" id="flip-toggle">
+				<div class="flipper">
+					<div class="front">
+						
+						<div id="albumCoverContainer" class="albumCoverContainer"></div>
+						
+						<div class="holder"> </div>	
+						<div id="throbberContainer" class="throbberContainer"></div>
+					</div>
+					<div class="back">
+						<div id="playlistContainer" class="playlistContainer"></div>
+					</div>
+				</div>
+			</div><!-- end flip -->
+			
+			<!--Artist Terms Information-->
+			<div class="tagcloud-wrapper">
 				<p>
 					<label>Artist Terms Filter:</label>
 				</p>
-
+		
 				<p>
-				<div id="tagCloud">Artist Style Terms Tag Cloud</div>
+					<div id="tagCloud">Artist Style Terms Tag Cloud</div>
 				</p>		
-		
-
-		
-		
-		<div id="playlistContainer" class="playlistContainer"></div>
-		</div>
-		
-		
+			</div>
+		</div><!-- end left side -->
 		
 
 		
