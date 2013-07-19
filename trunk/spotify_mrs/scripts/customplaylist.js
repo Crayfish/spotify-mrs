@@ -57,7 +57,7 @@ function createNewPlaylist1(models1, List){
 	//bind the playlist to the list when first created
 	playlist.done(function(playlist){
 		if(list == null){
-			list = List.forPlaylist(playlist);
+			list = List.forPlaylist(playlist, {height:"fixed",style:"rounded"});
 		    document.getElementById('playlistContainer').appendChild(list.node);
 		    list.init();
 		}
