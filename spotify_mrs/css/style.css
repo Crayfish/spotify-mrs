@@ -96,10 +96,7 @@ visibility: hidden;
 	
 }
 
-.playlistContainer{
-	height: 100%;
-	position:relative;	
-}
+
 
 .main .leftside{
 	width:645px;
@@ -117,7 +114,20 @@ visibility: hidden;
 	margin-right:auto;	
 	position:relative;
 	width:100%;
+	text-align:center;
 }
 
-
+.playlistHeader{
+	height:30px;
 	
+	margin:10px;
+}
+
+.playlistHeader button{
+	float:right;
+}
+
+.playlistContainer{
+	height:500px;
+	position:relative;	
+}	
