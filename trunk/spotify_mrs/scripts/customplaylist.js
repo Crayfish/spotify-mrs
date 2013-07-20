@@ -1,12 +1,13 @@
 require([
   '$api/models',
-  '$views/list#List'
-], function(models, List) {
+  '$views/list#List', 
+  '$views/buttons#ShareButton'
+], function(models, List, ShareButton) {
   'use strict';
   
   
   var createNewPlaylist = function() {
-	  createNewPlaylist1(models, List);
+	  createNewPlaylist1(models, List, ShareButton);
   };
   
   var addTrackToPlaylist = function(trackID){
@@ -14,16 +15,24 @@ require([
   };
   
   var setupFlipButton = function(){
+	  var cnt = 0;
 	  var flipbutton = document.getElementById('flipbutton');
 	  flipbutton.onclick=function(){
-	    console.log("flip button pressed");
-	    showPlaylist();
-	    document.querySelector('#flip-toggle').classList.toggle('flip');
+		  if(cnt%2==0){
+			  console.log("playlist is front");
+			  showPlaylist();
+		  }
+		  else{
+			  console.log("covers are front");
+		  }
+		  
+		  document.querySelector('#flip-toggle').classList.toggle('flip');
+		  cnt++;
 	  }
   };
   
   var showPlaylist = function(){
-	  showPlaylist1(List);
+	  showPlaylist1(List, ShareButton);
   };
 
   exports.addTrackToPlaylist = addTrackToPlaylist; 
@@ -38,14 +47,16 @@ require([
 
 var playlist = null;
 var list = null;
+var button =null;
 
 /**
  * Create a new empty playlist.
  * The playlist is created once, the tracks are deleted on new session.
  * @param models1 @see spotify api.models
  * @param List @see spotify views.List
+ * @param List @see spotify views.buttons#ShareButton
  */
-function createNewPlaylist1(models1, List){
+function createNewPlaylist1(models1, List, ShareButton){
 	
 	if (playlist != null) clearPlaylist(models1);
 	
@@ -54,6 +65,12 @@ function createNewPlaylist1(models1, List){
 		console.log("Empty playlist created.");
 	});
 	
+	if(button==null){
+		playlist.done(function(playlist){
+			button = ShareButton.forPlaylist(playlist);
+			document.getElementById('playlistHeader').appendChild(button.node);
+		});
+	}
 	//bind the playlist to the list when first created
 	playlist.done(function(playlist){
 		if(list == null){
@@ -97,12 +114,13 @@ function addTrackToPLaylist1(List, models1, trackID){
  * Adds the content of the playlist to the List.
  * @param List @see spotify views.List
  */
-function showPlaylist1(List){
+function showPlaylist1(List, ShareButton){
 
 	playlist.done(function(playlist){
 		list.clear();
 		list.setItem(playlist);
 		list.init();
+		button = ShareButton.forPlaylist(playlist);
 	});
 	
 }
@@ -119,6 +137,8 @@ function clearPlaylist(models1){
 		list.clear();
 		console.log("playlist deleted");
 	});
+	
+	
 
 }
 
