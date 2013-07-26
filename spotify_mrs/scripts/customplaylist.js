@@ -1,13 +1,13 @@
 require([
   '$api/models',
   '$views/list#List', 
-  '$views/buttons#ShareButton'
-], function(models, List, ShareButton) {
+  '$views/buttons#Button'
+], function(models, List, Button) {
   'use strict';
   
   
   var createNewPlaylist = function() {
-	  createNewPlaylist1(models, List, ShareButton);
+	  createNewPlaylist1(models, List, Button);
   };
   
   var addTrackToPlaylist = function(trackID){
@@ -32,7 +32,7 @@ require([
   };
   
   var showPlaylist = function(){
-	  showPlaylist1(List, ShareButton);
+	  showPlaylist1(List, Button);
   };
 
   exports.addTrackToPlaylist = addTrackToPlaylist; 
@@ -56,7 +56,7 @@ var button =null;
  * @param List @see spotify views.List
  * @param List @see spotify views.buttons#ShareButton
  */
-function createNewPlaylist1(models1, List, ShareButton){
+function createNewPlaylist1(models1, List, Button){
 	
 	if (playlist != null) clearPlaylist(models1);
 	
@@ -68,14 +68,15 @@ function createNewPlaylist1(models1, List, ShareButton){
 	
 	if(button==null){
 		playlist.done(function(playlist){
-			button = ShareButton.forPlaylist(playlist);
+			button = Button.withLabel("+save playlist");
 			document.getElementById('playlistHeader').appendChild(button.node);
+			
 		});
 	}
 	//bind the playlist to the list when first created
 	playlist.done(function(playlist){
 		if(list == null){
-			list = List.forPlaylist(playlist, {height:"fixed",style:"rounded"});
+			list = List.forPlaylist(playlist, {height:"fixed",style:"rounded", fields: ["ordinal","star","share", "track","time", "artist", "album"]});
 		    document.getElementById('playlistContainer').appendChild(list.node);
 		    list.init();
 		}
@@ -115,13 +116,13 @@ function addTrackToPLaylist1(List, models1, trackID){
  * Adds the content of the playlist to the List.
  * @param List @see spotify views.List
  */
-function showPlaylist1(List, ShareButton){
+function showPlaylist1(List, SubscribeButton){
 
 	playlist.done(function(playlist){
 		list.clear();
 		list.setItem(playlist);
 		list.init();
-		button = ShareButton.forPlaylist(playlist);
+		//button = SubscribeButton.forPlaylist(playlist);
 		console.log(playlist);
 	});
 	
