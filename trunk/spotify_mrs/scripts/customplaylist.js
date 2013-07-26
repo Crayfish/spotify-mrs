@@ -62,7 +62,8 @@ function createNewPlaylist1(models1, List, ShareButton){
 	
 	playlist = null;
 	playlist = models1.Playlist.createTemporary("MRS Playlist").done(function(playlist){
-		console.log("Empty playlist created.");
+		playlist.collaborative = true;
+		console.log("Empty playlist created: "+playlist.uri);
 	});
 	
 	if(button==null){
@@ -121,6 +122,7 @@ function showPlaylist1(List, ShareButton){
 		list.setItem(playlist);
 		list.init();
 		button = ShareButton.forPlaylist(playlist);
+		console.log(playlist);
 	});
 	
 }
