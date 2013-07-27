@@ -1,13 +1,12 @@
 require([
   '$api/models',
-  '$views/list#List', 
-  '$views/buttons#Button'
-], function(models, List, Button) {
+  '$views/list#List'
+], function(models, List) {
   'use strict';
   
   
   var createNewPlaylist = function() {
-	  createNewPlaylist1(models, List, Button);
+	  createNewPlaylist1(models, List);
   };
   
   var addTrackToPlaylist = function(trackID){
@@ -29,10 +28,13 @@ require([
 		  document.querySelector('#flip-toggle').classList.toggle('flip');
 		  cnt++;
 	  }
+	  
+	  setupSubscribeButton(models);
+	  
   };
   
   var showPlaylist = function(){
-	  showPlaylist1(List, Button);
+	  showPlaylist1(List);
   };
 
   exports.addTrackToPlaylist = addTrackToPlaylist; 
@@ -47,16 +49,14 @@ require([
 
 var playlist = null;
 var list = null;
-var button =null;
 
 /**
  * Create a new empty playlist.
  * The playlist is created once, the tracks are deleted on new session.
  * @param models1 @see spotify api.models
  * @param List @see spotify views.List
- * @param List @see spotify views.buttons#ShareButton
  */
-function createNewPlaylist1(models1, List, Button){
+function createNewPlaylist1(models1, List){
 	
 	if (playlist != null) clearPlaylist(models1);
 	
@@ -66,13 +66,6 @@ function createNewPlaylist1(models1, List, Button){
 		console.log("Empty playlist created: "+playlist.uri);
 	});
 	
-	if(button==null){
-		playlist.done(function(playlist){
-			button = Button.withLabel("+save playlist");
-			document.getElementById('playlistHeader').appendChild(button.node);
-			
-		});
-	}
 	//bind the playlist to the list when first created
 	playlist.done(function(playlist){
 		if(list == null){
@@ -116,13 +109,12 @@ function addTrackToPLaylist1(List, models1, trackID){
  * Adds the content of the playlist to the List.
  * @param List @see spotify views.List
  */
-function showPlaylist1(List, SubscribeButton){
+function showPlaylist1(List){
 
 	playlist.done(function(playlist){
 		list.clear();
 		list.setItem(playlist);
 		list.init();
-		//button = SubscribeButton.forPlaylist(playlist);
 		console.log(playlist);
 	});
 	
@@ -143,5 +135,21 @@ function clearPlaylist(models1){
 	
 	
 
+}
+
+function setupSubscribeButton(models1){
+	var subscribebutton = document.getElementById('subscribebutton');
+	  subscribebutton.onclick=function(){
+		  var newplaylist = models1.Playlist.create("my recommended playlist").done(function(newplaylist){
+			  playlist.load('tracks').done(function(tracks){
+				  playlist.tracks.snapshot().done(function(snapshot){
+					  newplaylist.tracks.insert(snapshot).done(function(){
+						  console.log("temp playlist added to saved playlist");
+					  });
+				  });
+			  });
+			  
+		  });
+	  }
 }
 
