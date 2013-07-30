@@ -16,13 +16,16 @@ require([
   var setupFlipButton = function(){
 	  var cnt = 0;
 	  var flipbutton = document.getElementById('flipbutton');
+	  var flipimg = document.getElementById('flipbuttonimg');
 	  flipbutton.onclick=function(){
 		  if(cnt%2==0){
 			  console.log("playlist is front");
+			  flipimg.src="img/cover.png";
 			  showPlaylist();
 		  }
 		  else{
 			  console.log("covers are front");
+			  flipimg.src="img/listicon.png";
 		  }
 		  
 		  document.querySelector('#flip-toggle').classList.toggle('flip');
@@ -148,37 +151,16 @@ function clearPlaylist(models1){
 function setupSubscribeButton(models1){
 	var subscribebutton = document.getElementById('subscribebutton');
 	  subscribebutton.onclick=function(){
+		  
 		  //create new playlist
-//		  var newplaylist = models1.Playlist.create("my recommended playlist").done(function(newplaylist){
-//			 playlist.done(function(playlist){
-//			  playlist.load('tracks').done(function(playlist1){
-//				  
-//				  playlist1.tracks.snapshot().done(function(snapshot1){
-//					  console.log(snapshot1);
-//					  newplaylist.done(function(newplaylist1){
-//						  newplaylist1.load('tracks').done(function(newplaylist2){
-//							  newplaylist2.tracks.insert(snapshot1).done(function(){
-//								  console.log("temp playlist added to saved playlist");
-//							  });
-//						  });
-//					  });
-//					  
-//					  
-//				  });
-//			  });
-//			 });
-//			  
-//		  });
-//		  
-//		  
 		  var newplaylist = models1.Playlist.create("my recommended playlist");
 		  
+		  //load tracks from temporary playlist
 		  playlist.done(function(playlist){
 			  playlist.load('tracks').done(function(playlist1){
-				 
 				  playlist1.tracks.snapshot().done(function(snapshot1){
 					  
-					  console.log(snapshot1);
+					  //add tracks to the new playlist
 					  newplaylist.done(function(newplaylist){
 						  newplaylist.load('tracks').done(function(newplaylist){
 							  for (var i = 0; i < snapshot1.length; i++) {
@@ -191,8 +173,6 @@ function setupSubscribeButton(models1){
 				  });
 			  });
 		  });
-		 
-		  
 	  }
 }
 

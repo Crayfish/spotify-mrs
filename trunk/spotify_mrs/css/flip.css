@@ -50,6 +50,10 @@
 	
 }
 
+#flip-toggle.flip  #flipbutton{
+	background:url(../img/cover.png) no-repeat center;
+}
+
 #flip-toggle.flip  .flipper{
 }
 
