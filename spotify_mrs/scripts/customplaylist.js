@@ -53,6 +53,7 @@ var list = null;
 /**
  * Create a new empty playlist.
  * The playlist is created once, the tracks are deleted on new session.
+ * The temporary playlist will be deleted automatically, when the application is closed.
  * @param models1 @see spotify api.models
  * @param List @see spotify views.List
  */
@@ -95,6 +96,7 @@ function addTrackToPLaylist1(List, models1, trackID){
 				if(track.playable){
 					loadedPlaylist.tracks.add(track);
 					console.log("Track added to playlist: "+track.name);
+					list.refresh();
 				}
 			});
 			
@@ -137,19 +139,60 @@ function clearPlaylist(models1){
 
 }
 
+
+/**
+ * Create a new subscribe button, that saves the current playlist for the user. 
+ * Tracks from the temporary playlist are copied to a persistent new playlist.
+ * @param models1 @see spotify api.models
+ */
 function setupSubscribeButton(models1){
 	var subscribebutton = document.getElementById('subscribebutton');
 	  subscribebutton.onclick=function(){
-		  var newplaylist = models1.Playlist.create("my recommended playlist").done(function(newplaylist){
-			  playlist.load('tracks').done(function(tracks){
-				  playlist.tracks.snapshot().done(function(snapshot){
-					  newplaylist.tracks.insert(snapshot).done(function(){
-						  console.log("temp playlist added to saved playlist");
+		  //create new playlist
+//		  var newplaylist = models1.Playlist.create("my recommended playlist").done(function(newplaylist){
+//			 playlist.done(function(playlist){
+//			  playlist.load('tracks').done(function(playlist1){
+//				  
+//				  playlist1.tracks.snapshot().done(function(snapshot1){
+//					  console.log(snapshot1);
+//					  newplaylist.done(function(newplaylist1){
+//						  newplaylist1.load('tracks').done(function(newplaylist2){
+//							  newplaylist2.tracks.insert(snapshot1).done(function(){
+//								  console.log("temp playlist added to saved playlist");
+//							  });
+//						  });
+//					  });
+//					  
+//					  
+//				  });
+//			  });
+//			 });
+//			  
+//		  });
+//		  
+//		  
+		  var newplaylist = models1.Playlist.create("my recommended playlist");
+		  
+		  playlist.done(function(playlist){
+			  playlist.load('tracks').done(function(playlist1){
+				 
+				  playlist1.tracks.snapshot().done(function(snapshot1){
+					  
+					  console.log(snapshot1);
+					  newplaylist.done(function(newplaylist){
+						  newplaylist.load('tracks').done(function(newplaylist){
+							  for (var i = 0; i < snapshot1.length; i++) {
+								  newplaylist.tracks.add(snapshot1.get(i));
+							  }
+							   
+						  });
 					  });
+					  
 				  });
 			  });
-			  
 		  });
+		 
+		  
 	  }
 }
 
