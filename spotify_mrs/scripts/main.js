@@ -22,34 +22,61 @@ require([
 		setUpSimilarityAccordion, echonestTasteProfile, customplaylist, 
 		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation) {
   'use strict';
-  
  
-	  models.session.addEventListener('change', changeOffline);
+  	  /**load a page when the app is started*/
+  	  $(document).ready(loadpage()); 
+  	  
+  	  /**detect when app goes offline*/
+	  models.session.addEventListener('change', loadpage);
 	  
-	  function changeOffline(){
-		  models.session.load('online').done(function(session){
-			  console.log(models.session.online);
-		  });
-	  }
-  
-	  $(document).ready(function(){
-		
+	 
+	  /**
+	   * Check if connected to the internet and if a track is currently playing.
+	   * Load a page according to the state: 
+	   * 	- online : 			pages/main.html
+	   * 	- offline: 			pages/offline.html
+	   * 	- nothing playing: 	pages/intro.html
+	   */
+	  function loadpage(){
 		  models.session.load('online').done(function(session){
 			  var online = models.session.online;
 			  
 			  if(online){
 				  console.log("app is online");
-				  init();
+				  
+				  var playing;
+				  models.player.load('track').done(function(player){
+					  playing = models.player.track;
+				  });
+				  console.log("currently playling: "+playing==null);
+				  
+				  
+				  $('#main').load('pages/main.html',function(){
+					  console.log("main loaded");
+					  init();
+				  });
+				  
+				  if(!playing){
+					  
+					  $('#overlay-wrapper').load('pages/intro.html',function(){
+						  console.log("no tracks playing. showing intro.");
+						  models.player.addEventListener('change', removeoverlay);
+					  });
+				  }
+				  
 			  }
 			  else if(!online){
 				  console.log("app is offline");
+				  $('#main').load('pages/offline.html',function(){
+					  console.log("no internet connection. offline page showing.");
+				  });
 			  }
 		  });
-	
-	  }); 
+	  }
   
-  
-  
+	  /**
+	   * Init the scripts.
+	   */
 	  function init(){
 		// heading.writeHeading();
 		//echonestTasteProfile.createTasteProfile();
@@ -89,6 +116,22 @@ require([
 		//setupSlider.setUpPopSlider(echonest);
 		// setupSlider.setUpHotSlider(echonest);
 		 
+	  }
+	  
+	  function removeoverlay(){
+		  var playing;
+		  models.player.load('track').done(function(player){
+			  playing = models.player.track;
+		  });
+		  if(playing){
+			  $('#intro').remove();
+			  $('#main').load('pages/main.html',function(){
+				  console.log("main loaded");
+				  init();
+				  models.player.removeEventListener('change', removeoverlay);
+			  });
+		  }
+		  
 	  }
 	
 	

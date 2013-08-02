@@ -3,236 +3,58 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>The name of the app</title>
-<!-- Include the stylesheets you need for the Views components -->
-<!-- See https://developer.spotify.com/technologies/apps/docs/preview/views/ -->
+<title>The transparent music recommender system</title>
+
+<!-- load stylesheets -->
 <link rel="stylesheet" href="$views/css/image.css">
-<!-- <link rel="stylesheet" href="$views/css/list.css">  -->
-<!--   <link rel="stylesheet" href="$views/css/buttons.css"> -->
 <link rel="stylesheet" href="$views/css/throbber.css">
 <link rel="stylesheet" href="$views/css/list.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/flip.css">
+<link rel="stylesheet" href="css/intro.css">
+<link rel="stylesheet" href="css/offline.css">
 
+<!-- load JQuery -->
 <script type="text/javascript" src="scripts/jquery.min.js"></script>
-
-
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
+<!-- load tagcloud -->
 <link rel="stylesheet" href="css/tagCloudStyle.css">
 <script src="scripts/jquery.tagcloud-2.js" type="text/javascript" charset="utf-8"></script>
 
-
-<!-- JPages -->
+<!-- load JPages -->
 <link rel="stylesheet" href="css/jPages.css">
-<!-- <script src="jPages-master/js/jquery-1.8.2.min.js"></script> -->
 <script src="scripts/jPages.js"></script>
 
-
+<!-- load main script -->
+<script src="scripts/main.js"></script>
 
 </head>
 
-
-
 <body>
 
-	<h1></h1>
-	<div id="info"></div>
+	<!-- HEADER -->
+	<div class="header" id="header">
+		<h1></h1>
+		<div id="info"></div>
+	</div>
+	<!-- HEADER END -->
+
+
+	<!-- MAIN CONTENT -->
+	<div class="main" id="main">
+		<!-- Main content is loaded dynamically dependent on the session state (online,offline,playling). 
+		Find the content HTML in the pages folder. -->
+	</div>
+	<!-- MAIN END -->
 	
+	<!-- OVERLAY WRAPPER -->
+	<div id="overlay-wrapper">
 	
+	</div>
+	<!-- END OVERLAY WRAPPER -->
 
-	<div class="main">
-		
-		<div class="leftside">
-			
-			<div class="flip-container" id="flip-toggle">
-				<div class="flipper">
-					<div class="front">
-						
-						<div id="albumCoverContainer" class="albumCoverContainer"></div>
-						
-						<div class="holder"> </div>	
-						<div id="throbberContainer" class="throbberContainer"></div>
-					</div>
-					<div class="back">
-						<div id="playlistHeader" class="playlistHeader">
-							<h2>Your custom playlist</h2>
-							<button id="subscribebutton">+ save playlist</button>
-						</div>
-						<div id="playlistContainer" class="playlistContainer"></div>
-					</div>
-				</div>
-			</div><!-- end flip -->
-			
-			<!--Artist Terms Information-->
-			<div class="tagcloud-wrapper">
-				<p>
-					<label>Artist Terms Filter:</label>
-				</p>
-		
-				<p>
-					<div id="tagCloud">Artist Style Terms Tag Cloud</div>
-				</p>		
-			</div>
-		</div><!-- end left side -->
-		
-
-		
-		
-		
-		<div id="rulerContainer" class="rulerContainer">
-			<p class="rulerheader">Rulers</p>
-
-			<div class="rulerContent">
-			
-			
-			
-	
-	<button id="newSeed"><img src="img/refresh.png" alt="new session"></button>
-	<button id="nextSongsButton"><img src="img/more.png" alt="load more songs"></button>
-	<button id="flipbutton"><img id="flipbuttonimg" src="img/listicon.png" alt="show playlist"></button>
-	
-
-				<p>Similarity based on:</p>
-				<div id="accordion">
-
-					<h3>Artist</h3>
-					<div>
-						<p>Now recommended songs are played by artists similar to:
-						<div id="artistSimilarityInfo"></div>
-						</p>
-						<button id="changeSeedArtist">Make playing artist new seed artist</button>
-					</div>
-
-					<h3>Song</h3>
-					<div>
-						<p>
-						<p>Now Songs are recommended because they are similar to:</p>
-						<div id="songSimilarityInfo"></div>
-						</p>
-						<button id=changeSeedSong>Make playing song new seed song</button>
-					</div>
-
-					<h3>Genre</h3>
-					<div>
-						<p>
-							<!-- Genre Filter -->
-						<p>
-						<div id="genreSimilarityInfo">There is no genre selected.</div>
-						</p>
-						<div class="ui-widget">
-							<label for="tags">Select a Genre: </label> <input id="tags" />
-						</div>
-						</p>
-					</div>
-					
-					<h3>Playlist</h3>
-					<div>
-
-						<p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim
-							consequat lectus. Class aptent taciti sociosqu ad litora torquent
-							per conubia nostra, per inceptos himenaeos.</p>
-					</div>
-				</div><!-- end accordion -->
-
-
-
-
-
-
-	
-	
-	
-	
-				<p>
-					<label for="artistVarietySlider">Artist Diversity:</label>
-				<div id="artistVarietySlider"></div>
-				<label for="adventurousnessSlider">Adventurousness:</label>
-				<div id="adventurousnessSlider"></div>
-				</p>
-
-
-				
-
-
-				<!--Song Hotness Slider-->
-				<p>
-					<label for="songHot">Song Hotness:</label> <input type="text"
-						id="songHot"
-						style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" />
-				</p>
-
-				<p>
-				<div id="slider-songHot"></div>
-				</p>
-
-
-				<!--Artist Hotness Slider-->
-				<p>
-					<label for="hot">Artist Hotness:</label> <input type="text"
-						id="hot"
-						style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" />
-				</p>
-
-				<p>
-				<div id="slider-hot"></div>
-				</p>
-
-
-
-
-				<!-- Popularity Slider -->
-				<p>
-					<label for="pop">Artist Familiarity:</label> <input type="text"
-						id="pop"
-						style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" />
-				</p>
-
-				<p>
-				<div id="slider-pop"></div>
-				</p>
-
-
-					<label>Novelty:</label>
-
-				<p>
-					<input type="checkbox" name="excludeSeedArtist" value="" id = 'excludeSeedArtistCheckBox' >exclude seed artist<br>
-					
-					 <input type="checkbox" name="noSpotifysongs" value="" id= 'excludeSpotifyPlaylistSongs'>no songs from spotify playlists<br>
-
-				</p>
-				<!--Artist Terms Information-->
-		<!-- 		<p>
-					<label>Artist Terms Filter:</label>
-				</p>
-
-				<p>
-				<div id="tagCloud">Artist Style Terms Tag Cloud</div>
-				</p>
- -->
-				<!-- <p>  
-		<div id="cblist"></div>
-		</p>
-		</div> -->
-
-		</div><!-- end rulercontent -->
-	</div><!-- end rulercontainer -->
-	</div><!-- end main -->
-
-			<!-- <form action="input_radio.htm">
- 
-  <p>
-    <input type="radio" id = 'song' name="similarity" value="song" checked="checked"> Song <input type="radio" id ='artist' name="similarity" value="artist" >Artist<br>
-  </p>
-</form>   -->
-
-			<!--    <div id="buttonContainer"> </div> -->
-
-			<!--    <div id="playlistContainer"> </div> -->
-
-			<script src="scripts/main.js"></script>
 </body>
 </html>
