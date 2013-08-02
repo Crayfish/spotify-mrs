@@ -7,6 +7,8 @@ require([
 
   var getTrackCover = function(trackID) {
    
+	  
+	  console.log("TrackCover.js is called");
         //get the container for the covers and set width
 	  	var covercontainer = document.getElementById('albumCoverContainer');
 

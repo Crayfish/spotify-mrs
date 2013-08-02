@@ -1,7 +1,8 @@
 require([
   '$api/models',
-  '$views/list#List'
-], function(models, List) {
+  '$views/list#List',
+  'scripts/yearSlider'
+], function(models, List, yearSlider) {
   'use strict';
   
   
@@ -10,7 +11,7 @@ require([
   };
   
   var addTrackToPlaylist = function(trackID){
-	  addTrackToPLaylist1(List, models, trackID);
+	  addTrackToPLaylist1(List, models, trackID, yearSlider);
   };
   
   var setupFlipButton = function(){
@@ -88,7 +89,7 @@ function createNewPlaylist1(models1, List){
  * @param models1 @see spotify api.models
  * @param trackID echonest ID of the track to be added
  */
-function addTrackToPLaylist1(List, models1, trackID){
+function addTrackToPLaylist1(List, models1, trackID, yearSlider){
 	
 	var id = trackID.replace('-WW','');
 	
@@ -100,6 +101,7 @@ function addTrackToPLaylist1(List, models1, trackID){
 					loadedPlaylist.tracks.add(track);
 					console.log("Track added to playlist: "+track.name);
 					list.refresh();
+					yearSlider.addYear(track);
 				}
 			});
 			

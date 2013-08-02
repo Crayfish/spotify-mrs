@@ -15,12 +15,13 @@ require([
   'scripts/customplaylist',
   'scripts/jPagesSetup',
   'scripts/setupNoveltyCheckBoxes',
-  'scripts/playlistInformation'
+  'scripts/playlistInformation',
+  'scripts/yearSlider'
   
 ], function( models, heading,generatePlaylistButton,setupSlider, 
 		echonestDynamic, echonest, setupGenreFilter,setupTagCloud, 
 		setUpSimilarityAccordion, echonestTasteProfile, customplaylist, 
-		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation) {
+		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider) {
   'use strict';
  
   	  /**load a page when the app is started*/
@@ -108,6 +109,8 @@ require([
 
 		customplaylist.setupFlipButton();
 		customplaylist.createNewPlaylist();
+		
+		yearSlider.setupYearSlider();
 
 		//setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 		// generatePlaylistButton.setUpNewSeedButton();
