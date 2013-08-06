@@ -73,12 +73,12 @@ visibility: hidden;
 .flip{
 	overflow: hidden;
 	/*border: 1px solid #a1a1a1;*/
-	float:left;
+	/*float:left;*/
 	width:645px
 }
 
 .albumCoverContainer{
-	overflow: hidden;
+	/*overflow: hidden;*/
 	/*border: 1px solid #a1a1a1;*/
 	/*float:left;*/
 	width:645px;
@@ -104,19 +104,31 @@ visibility: hidden;
 
 .rulerContainer{
 	display: inline-block;
-	float:right;
+	/*float:right;*/
 	border: 1px solid #a1a1a1;
 	border-radius:5px;
 	background:#dddddd;
-	width:200px;
+	width:645px;
 	height : 100%;
 	spacing : 0px;
 	padding : 0px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 10px;
 }
 
 .rulerContent{
-	padding : 13px;	
-	
+	display: inline-block;
+	padding : 10px;	
+	width:300px;
+	overflow:hidden;
+	float:left;
+}
+
+.sliders{
+	float:right;	
+	width:300px;
+	padding : 10px;	
 }
 
 .main{
@@ -128,7 +140,7 @@ visibility: hidden;
 
 .main .leftside{
 	width:645px;
-	float:left;
+	/*float:left;*/
 	
 }
 
@@ -165,4 +177,9 @@ visibility: hidden;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   padding: 4px;	
+}
+
+.leftside{
+	margin-left:auto;
+	margin-right:auto;	
 }
