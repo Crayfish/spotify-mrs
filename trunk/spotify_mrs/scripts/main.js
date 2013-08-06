@@ -49,7 +49,7 @@ require([
 				  models.player.load('track').done(function(player){
 					  playing = models.player.track;
 				  });
-				  console.log("currently playling: "+playing==null);
+				  console.log("currently playling: "+playing);
 				  
 				  
 				  $('#main').load('pages/main.html',function(){
@@ -79,6 +79,8 @@ require([
 	   * Init the scripts.
 	   */
 	  function init(){
+		  
+		  console.log("init scripts");
 		// heading.writeHeading();
 		//echonestTasteProfile.createTasteProfile();
 
