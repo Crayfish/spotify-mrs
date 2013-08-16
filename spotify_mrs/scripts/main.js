@@ -48,22 +48,24 @@ require([
 				  var playing;
 				  models.player.load('track').done(function(player){
 					  playing = models.player.track;
-				  });
-				  console.log("currently playling: "+playing);
-				  
-				  
-				  $('#main').load('pages/main.html',function(){
-					  console.log("main loaded");
-					  init();
-				  });
-				  
-				  if(!playing){
+					  console.log("currently playling: "+playing);
 					  
-					  $('#overlay-wrapper').load('pages/intro.html',function(){
-						  console.log("no tracks playing. showing intro.");
-						  models.player.addEventListener('change', removeoverlay);
+					  
+					  $('#main').load('pages/main.html',function(){
+						  console.log("main loaded");
+						  init();
 					  });
-				  }
+					  
+					  if(!playing){
+						  
+						  $('#overlay-wrapper').load('pages/intro.html',function(){
+							  console.log("no tracks playing. showing intro.");
+							  models.player.addEventListener('change', removeoverlay);
+						  });
+					  }
+					  
+				  });
+				  
 				  
 			  }
 			  else if(!online){
