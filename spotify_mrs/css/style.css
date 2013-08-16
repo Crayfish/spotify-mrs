@@ -112,6 +112,7 @@ visibility: hidden;
 	height : 100%;
 	spacing : 0px;
 	padding : 0px;
+	margin-left:10px;
 }
 
 .rulerContent{
@@ -165,4 +166,15 @@ visibility: hidden;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   padding: 4px;	
+}
+
+
+.main-wrapper{
+	width:860px;
+	height:100%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:20px;
+	padding:10px;
+	
 }
