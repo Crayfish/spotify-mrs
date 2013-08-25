@@ -178,3 +178,23 @@ visibility: hidden;
 	padding:10px;
 	
 }
+
+#minyear{
+	float:left;
+	display:inline-block;
+	color: #f6931f; 
+	font-weight: bold;
+}
+#maxyear{
+	float:right;
+	color: #f6931f; 
+	font-weight: bold;
+	
+}
+#min, #max{
+	
+width: 50px;
+    text-align: center;
+	
+}
+
