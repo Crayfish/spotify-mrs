@@ -31,25 +31,9 @@ require([
 	
 	function setupYearSlider1(){
 		console.log('setting up yearslider');
+		//$("#yearto").val(max);
+		//$("#yearfrom").val(min);
 		
-		slider = $( "#yearSlider" ).slider({
-	       
-			range: true,
-			min: 2012,
-			max: 2013,
-			step:1,
-			
-
-	        slide: function( event, ui ) {
-	        	$( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-	        },
-	       
-	        stop: function ( event, ui ) {
-	        }
-	       
-	    });
-		$( "#amount" ).val( $( "#yearSlider" ).slider( "values", 0 ) +
-			      " - " + $( "#yearSlider" ).slider( "values", 1 ) );
 	}
 
 	function addYear1(models, track){
@@ -57,18 +41,12 @@ require([
 			track.album.load('date').done(function(){
 				var year = track.album.date;
 				console.log("track release year: "+year);
-				if(year > max){
-					max = year;
-					//slider.slider("option", "max", max);
-				}
+				max = Math.max(max,year);
+				min = Math.min(min,year);
 				
-				else if (year < min){
-					min = year;
-					slider.slider("option", "min", min);
-				}
+				//$("#yearto").val(max);
+				//$("#yearfrom").val(min);
 				
-				$( "#amount" ).val(min+" - "+ max);
-				console.log("min year: "+min+" max year: "+max);
 			});
 			
 		});

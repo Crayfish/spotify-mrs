@@ -24,12 +24,13 @@
 	</div>
 	<!-- end flip -->
 
-	
+	<!--  
 	<div id="max"></div>
 	<div id="min"></div>
 	<div id="yearSlider"></div>
 	<div id="minyear"></div>
 	<div id="maxyear"></div>
+	-->
 
 	<!--Artist Terms Information-->
 	<div class="tagcloud-wrapper">
@@ -49,7 +50,7 @@
 
 
 <div id="rulerContainer" class="rulerContainer">
-	<p class="rulerheader">Rulers</p>
+	<!--  <p class="rulerheader">Rulers</p> -->
 
 	<div class="rulerContent">
 
@@ -66,58 +67,26 @@
 			<img id="flipbuttonimg" src="img/listicon.png" alt="show playlist">
 		</button>
 
-
-		<p>Similarity based on:</p>
-		<div id="accordion">
-
-			<h3>Artist</h3>
+		<div class="wrapper">
+			Year range:
 			<div>
-				<p>Now recommended songs are played by artists similar to:
-				<div id="artistSimilarityInfo"></div>
-				</p>
-				<button id="changeSeedArtist">Make playing artist new seed
-					artist</button>
-			</div>
-
-			<h3>Song</h3>
-			<div>
-				<p>
-				<p>Now Songs are recommended because they are similar to:</p>
-				<div id="songSimilarityInfo"></div>
-				</p>
-				<button id=changeSeedSong>Make playing song new seed song</button>
-			</div>
-
-			<h3>Genre</h3>
-			<div>
-				<p>
-					<!-- Genre Filter -->
-				<p>
-				<div id="genreSimilarityInfo">There is no genre selected.</div>
-				</p>
-				<div class="ui-widget">
-					<label for="tags">Select a Genre: </label> <input id="tags" />
-				</div>
-				</p>
-			</div>
-
-			<h3>Playlist</h3>
-			<div>
-
-				<p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim
-					consequat lectus. Class aptent taciti sociosqu ad litora torquent
-					per conubia nostra, per inceptos himenaeos.</p>
+				
+				<label for="yearfrom" id="year_from" title="from year">from</label> 
+				<input type="text" id="yearfrom" style="border: 0; color: #f6931f; font-weight: bold; width: 55px;" />
+				<label for="yearto" id="year_to">to</label> 
+				<input type="text" id="yearto" style="border: 0; color: #f6931f; font-weight: bold; width: 55px; float: right;" />
 			</div>
 		</div>
-		<!-- end accordion -->
 
 
-		<p>
+		<div class="wrapper">
 			<label for="artistVarietySlider">Artist Diversity:</label>
 			<div id="artistVarietySlider"></div>
+		</div>
+		<div class="wrapper">
 			<label for="adventurousnessSlider">Adventurousness:</label>
 			<div id="adventurousnessSlider"></div>
-		</p>
+		</div>
 
 
 		<!--Song Hotness Slider-->
@@ -165,6 +134,50 @@
 			playlists<br>
 
 		</p>
+		
+		<p>Similarity based on:</p>
+		<div id="accordion">
+
+			<h3>Artist</h3>
+			<div>
+				<p>Now recommended songs are played by artists similar to:
+				<div id="artistSimilarityInfo"></div>
+				</p>
+				<button id="changeSeedArtist">Make playing artist new seed
+					artist</button>
+			</div>
+
+			<h3>Song</h3>
+			<div>
+				<p>
+				<p>Now Songs are recommended because they are similar to:</p>
+				<div id="songSimilarityInfo"></div>
+				</p>
+				<button id=changeSeedSong>Make playing song new seed song</button>
+			</div>
+
+			<h3>Genre</h3>
+			<div>
+				<p>
+					<!-- Genre Filter -->
+				<p>
+				<div id="genreSimilarityInfo">There is no genre selected.</div>
+				</p>
+				<div class="ui-widget">
+					<label for="tags">Select a Genre: </label> <input id="tags" />
+				</div>
+				</p>
+			</div>
+
+			<h3>Playlist</h3>
+			<div>
+
+				<p>Suspendisse eu nisl. Nullam ut libero. Integer dignissim
+					consequat lectus. Class aptent taciti sociosqu ad litora torquent
+					per conubia nostra, per inceptos himenaeos.</p>
+			</div>
+		</div>
+		<!-- end accordion -->
 		<!--Artist Terms Information-->
 		<!-- 		<p>
 					<label>Artist Terms Filter:</label>
