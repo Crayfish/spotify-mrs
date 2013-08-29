@@ -30,23 +30,96 @@ function createTasteProfile1(){
     	'api_key':'BNV9970E1PHXZ9RQW',
     	'format':'json',
     	'type':'song',
-    	'name':'TasteProfile'+Math.floor(Math.random()*100),
+    	'name':'TasteProfile'+Math.floor(Math.random()*10000),
     	
-            }).done(function(data) {
+            }).done(function(data) {	
             	console.log(JSON.stringify(data.response));
             	
             	profile_id = data.response.id;
             	
             	console.log('Taste Profile Id: '+profile_id );
+            	
+            	
+            	
+            	//reading JSON Data from a file
+            	
+            	 $.getJSON('sp://cover/TasteProfileJSONS/testProfile.json', function(data)
+                         {
+                             console.log('READ FROM A JSON FILE: ' +JSON.stringify(data));
+                            
+                            
+                         });
+            	
+            	
             	//addSongsToProfile();
+            	
+            	var updateURL = "http://developer.echonest.com/api/v4/catalog/update";
+            	
+        
+          
+            	                    
+            	var jsonDataVariable = [
+            	                        	{
+            	                        		"item":
+            	                        		{
+            	                        			"item_id": "0CF07A178DBF78F7",
+            	                        			 "track_id": "spotify-WW:track:40UKRC2BtRJxHvjgJjs0h1",
+            	                        			
+            	                        		}
+            	                        	},
+            	                        	{
+            	                        		"item":
+            	                        		{
+            	                        			"item_id": "0CF07A178DBF78B9",
+            	                        			 "track_id": "spotify-WW:track:4K8Hy4KiqptXWHO5mDbKne",
+            	                        			
+            	                        		}
+            	                        	},
+            	                        	{
+            	                        		"item":
+            	                        		{
+            	                        			"item_id": "0CF07A178DBF78Z5",
+            	                        			 "track_id": "spotify-WW:track:2iYbAoOny6ua9s74TKSa0B",
+            	                        			
+            	                        		}
+            	                        	}
+ 	                                ];
+  
+            	
+            		$.post(updateURL, 
+            	    		{
+            	    	'api_key':'BNV9970E1PHXZ9RQW',
+            	    	'format':'json',
+            	    	'id': profile_id,
+            	    	'data_type':'json',
+            	    	'data':   JSON.stringify(jsonDataVariable )       	    	
+            	            }).done(function(data) {
+            	            	console.log('tasteProfile update call response: '+JSON.stringify(data.response));
+            	            	
+            	            	
+            	            	
+            	            	
+            	            	
+            	            	
+            	            	
+            	            		
+            	            		
+            	            	
+            	            });	
+            		
             	
             });
 	
-	
+
 	
 	
 	
 }
+
+
+
+
+
 
 
 /*function addSongsToProfile(){
