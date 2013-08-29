@@ -1,0 +1,3 @@
+Taste Profile Id: CAJRDGH140C9967652 
+
+tasteProfile update call response: {"status":{"version":"4.2","code":0,"message":"Success"},"ticket":"CAJRDGH140C9967652FFCCA60558DC47"} 

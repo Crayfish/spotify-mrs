@@ -11,7 +11,7 @@ require([
 
 
   var setUpPlaylistInformation = function() {
-	 // setUpPlaylistInformation1(models, Library);
+	  setUpPlaylistInformation1(models, Library);
   };
   
   

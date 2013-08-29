@@ -81,13 +81,15 @@ function setupAccordion1(echonestDynamic){
 			 case 0:
 				 echonestDynamic.changeToArtistSimilarity();
 				 $('#genreSimilarityInfo').text('There is no genre selected.');
+				 $('#playlistSimilarityInfo').text('There is no playlist selected.');
 			   break;
 			 case 1:
 				 echonestDynamic.changeToSongSimilarity();
 				 $('#genreSimilarityInfo').text('There is no genre selected.');
+				 $('#playlistSimilarityInfo').text('There is no playlist selected.');
 			   break;
 			 case 2:
-			   
+				 $('#playlistSimilarityInfo').text('There is no playlist selected.');
 			   break;
 			 case 3:
 				 $('#genreSimilarityInfo').text('There is no genre selected.');

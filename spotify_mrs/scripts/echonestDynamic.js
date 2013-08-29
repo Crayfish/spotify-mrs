@@ -53,6 +53,10 @@ require([
 		changeToGenreSimilarity1(genreName);
 	};
 	
+	var changeToPlaylistSimilarity = function(tasteProfileID){
+		changeToPlaylistSimilarity1(tasteProfileID);
+	};
+	
 	var changeArtistVariety = function(){
 		changeArtistVariety1();
 	};
@@ -101,6 +105,7 @@ require([
   exports.changeArtistHotness = changeArtistHotness;
   exports.changeSongHotness =changeSongHotness;
   exports.changeToGenreSimilarity =  changeToGenreSimilarity;
+  exports.changeToPlaylistSimilarity = changeToPlaylistSimilarity;
   exports.changeArtistVariety = changeArtistVariety;
   exports.changeAdventurousness= changeAdventurousness;
   exports.setTermFilter = setTermFilter;
@@ -160,6 +165,56 @@ var playlistInformationScript = null;
 
 var arrayOfTracksInSpotifyPlaylists = new Array();
 
+
+function changeToPlaylistSimilarity1(tasteProfileID){
+	
+console.log('changeToPlaylistSimilarity1() was called with tasteProfileID: '+tasteProfileID);
+	
+	
+	
+	var randomNumber =  Math.floor(Math.random()*100);
+	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&type=catalog-radio&bucket=id:spotify-WW&bucket=tracks&callback=?&_='+randomNumber;
+	$.getJSON(genreUrl, 
+    		{// 'artist_id':replacedArtistID ,
+    	//'track_id': replacedSongID, 
+    	'format':'jsonp',
+    	'limit':true,
+    	'seed_catalog':tasteProfileID
+    	//limit : true,
+        //'type':'artist-radio', 
+    	//'max_song_hotttnesss':maxSongHotness,
+    	// 'min_song_hotttnesss':minSongHotness 
+        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
+            //bucket : ['id:spotify-WW', 'tracks'],
+            },
+            function(data) {
+        if (checkResponse(data)) {
+            
+        console.log('Changed to Similarity Radio: '+tasteProfileID);
+        
+        $('#playlistSimilarityInfo').text('Now songs are recommended because the represent the tasteProfileID: ' +tasteProfileID);
+       // $("#accordion" ).accordion( "refresh" );
+       
+        info("");
+       // $("#albumCoverContainer").empty();
+        styleTermNames = new Array();
+        styleTermObjects = new Array();
+        $("#tagCloud").tagCloud(styleTermObjects); 
+         
+        session_id = data.response.session_id;
+        
+        console.log("New session ID  is used: "+session_id);
+       
+        getNextXXSong1();
+        
+        
+        } else {
+            info("trouble getting results");
+        }
+    });
+	
+	
+} 
 
 function setNoSpotifyPlaylistSongs1(setValue){
 	noSpotifyPlaylistSongs = setValue;
