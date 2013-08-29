@@ -19,11 +19,25 @@ require([
 var profile_id ='';
 
 function createTasteProfile1(){
+	
 	console.log('createTasteProfile () was called');
+	
+	var jsonDataVariable;
+	
+	//reading JSON Data from a file
+	
+	 $.getJSON('sp://cover/TasteProfileJSONS/testProfile.json', function(data)
+            {
+                console.log('READ FROM A JSON FILE: ' +JSON.stringify(data));
+               
+                jsonDataVariable = JSON.stringify(data); 
+                
+            });
+	
 	
 	var createURL = "http://developer.echonest.com/api/v4/catalog/create";
 	
-	//curl -F "api_key=BNV9970E1PHXZ9RQW" -F "format=json" -F "type=artist" -F "name=test_artist_catalog"
+
 	
 	$.post(createURL, 
     		{
@@ -41,14 +55,6 @@ function createTasteProfile1(){
             	
             	
             	
-            	//reading JSON Data from a file
-            	
-            	 $.getJSON('sp://cover/TasteProfileJSONS/testProfile.json', function(data)
-                         {
-                             console.log('READ FROM A JSON FILE: ' +JSON.stringify(data));
-                            
-                            
-                         });
             	
             	
             	//addSongsToProfile();
@@ -58,7 +64,7 @@ function createTasteProfile1(){
         
           
             	                    
-            	var jsonDataVariable = [
+          /*  	var jsonDataVariable = [
             	                        	{
             	                        		"item":
             	                        		{
@@ -83,7 +89,7 @@ function createTasteProfile1(){
             	                        			
             	                        		}
             	                        	}
- 	                                ];
+ 	                                ];*/
   
             	
             		$.post(updateURL, 
@@ -92,7 +98,7 @@ function createTasteProfile1(){
             	    	'format':'json',
             	    	'id': profile_id,
             	    	'data_type':'json',
-            	    	'data':   JSON.stringify(jsonDataVariable )       	    	
+            	    	'data':   jsonDataVariable        	    	
             	            }).done(function(data) {
             	            	console.log('tasteProfile update call response: '+JSON.stringify(data.response));
             	            	
