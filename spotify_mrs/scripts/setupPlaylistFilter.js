@@ -19,7 +19,7 @@ var tasteProfileIDsArray = new Array();
 function setupPlaylistFilter1(echonestDynamic){
 	console.log('setupPlaylistFilter1() was called');
 	
-	tasteProfileIDsArray.push('CAJRDGH140C9967652' );
+	tasteProfileIDsArray.push('CAIRFXY140CABA1ECD' );
 	
 	  $( "#tags1" ).autocomplete({
     		 source: tasteProfileIDsArray,

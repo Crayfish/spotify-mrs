@@ -1,14 +1,20 @@
-{
-	"colors": [
-		{
-		"red": "#f00",
-		"green": "#0f0",
-		"blue": "#00f",
-		"cyan": "#0ff",
-		"magenta": "#f0f",
-		"yellow": "#ff0",
-		"black": "#000",
-		"white": "#fff"
-		}
-	]
-}
+[
+    {
+        "item": {
+            "item_id": "0CF07A178DBF78F7",
+            "track_id": "spotify-WW:track:40UKRC2BtRJxHvjgJjs0h1"
+        }
+    },
+    {
+        "item": {
+            "item_id": "0CF07A178DBF78B9",
+            "track_id": "spotify-WW:track:4K8Hy4KiqptXWHO5mDbKne"
+        }
+    },
+    {
+        "item": {
+            "item_id": "0CF07A178DBF78Z5",
+            "track_id": "spotify-WW:track:2iYbAoOny6ua9s74TKSa0B"
+        }
+    }
+]
