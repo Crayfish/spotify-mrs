@@ -87,9 +87,12 @@ require([
 		// heading.writeHeading();
 		  
 		  
-		echonestTasteProfile.createTasteProfile();
+		
 
 		playlistInformation.setUpPlaylistInformation();
+		
+		//echonestTasteProfile.createTasteProfile();
+		
 
 		setupNoveltyCheckBoxes.setUpExcludeSeedArtistCheckBox();
 		setupNoveltyCheckBoxes.setUpNoSongsFromSpotifyCollectionCheckBox();

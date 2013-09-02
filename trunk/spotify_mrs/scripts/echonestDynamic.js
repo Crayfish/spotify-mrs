@@ -564,7 +564,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1, play
 	 
 	 arrayOfTracksInSpotifyPlaylists = playlistInformationScript.getArrayOfAllSongsInSpotifyPlaylists();
 	 
-	 console.log('startNewSession()  arrayOfTracksInSpotifyPlaylists: '+arrayOfTracksInSpotifyPlaylists);
+	 //console.log('startNewSession()  arrayOfTracksInSpotifyPlaylists: '+arrayOfTracksInSpotifyPlaylists);
 	 
 	// numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
