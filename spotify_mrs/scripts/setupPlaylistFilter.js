@@ -10,19 +10,29 @@ require([
    setupPlaylistFilter1(echonestDynamic);
  
   };
+  
+  
+  var setAutoCompleteArray = function(IDandNameObjectArray) {
+	  setAutoCompleteArray1(IDandNameObjectArray);
+	 
+	  };
 
   exports.setupPlaylistFilter = setupPlaylistFilter;
+  exports.setAutoCompleteArray = setAutoCompleteArray;
 });
 
 var tasteProfileIDsArray = new Array();
+var playlistNamesArray = new Array();
+
 
 function setupPlaylistFilter1(echonestDynamic){
 	console.log('setupPlaylistFilter1() was called');
 	
-	tasteProfileIDsArray.push('CAIRFXY140CABA1ECD' );
+	//tasteProfileIDsArray.push('CARHJKV140E8922AA8' );
 	
 	  $( "#tags1" ).autocomplete({
-    		 source: tasteProfileIDsArray,
+    		 source: playlistNamesArray,
+    		 minLength: 0,
     		
     		 select: function( event, ui){
     			
@@ -41,6 +51,23 @@ function setupPlaylistFilter1(echonestDynamic){
 	 
 	
 }
+
+
+
+function setAutoCompleteArray1(IDandNameObjectArray){
+	console.log('setAutoCompleteArray1() was called');
+	 tasteProfileIDsArray = IDandNameObjectArray;
+	 
+ for (var i=0; i<=IDandNameObjectArray.length-1; i++){  
+		 
+		 var playlistName = JSON.stringify(IDandNameObjectArray[i].name);
+		 playlistNamesArray.push(playlistName);
+	
+}
+
+}
+
+
 
 
 

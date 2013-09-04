@@ -66,7 +66,9 @@ function firstLocalStorageOfPlaylists1(){
 		    
 		    var playlistURI = playlistI.uri;
 		    
-		 
+		    
+		    
+		   var arrayforDuplicateIDsCheck = new Array();  
 		    
 		  //create a playlist Object
 		    
@@ -74,6 +76,7 @@ function firstLocalStorageOfPlaylists1(){
 		    
 		    playlistObject.playlistName = playlistName;
 		    playlistObject.playlistURI = playlistURI;
+		    playlistObject.tasteProfileID = '';
 		    playlistObject.itemArray = [];
 		    
 		
@@ -92,15 +95,26 @@ function firstLocalStorageOfPlaylists1(){
 			    	    //console.log(' playlistI tracks snapshot: '+ snapshot1.get(i));
 			    	    
 			    	    
+			    	    var itemObject = {}
+			    	    var innerItem = {};
+			    	    //innerItem.item_id = snapshot1.get(i).uri.replace(/:/g, '');
+			    	    var itemID = snapshot1.get(i).uri.replace('spotify:track:', 'gruber').toUpperCase();
+			    	    innerItem.item_id = itemID;
 			    	    
-			    	    var item = {};
-			    	    item.item_id = snapshot1.get(i).uri;
 			    	    //console.log('ITEM_ID: '+snapshot1.get(i))
 			    	    //var track_id = '';
 			    	    //var track_id = JSON.stringify(snapshot1.get(i));
-			    	    item.track_id = snapshot1.get(i).uri.replace( 'spotify', 'spotify-WW');
 			    	    
-			    	    playlistObject.itemArray.push(item);
+			    	    
+			    	    innerItem.track_id = snapshot1.get(i).uri.replace( 'spotify', 'spotify-WW');
+			    	    
+			    	    itemObject.item = innerItem;
+			    	    
+			    	    //falls kein Duplikat hinzufügen 
+			    	    if($.inArray(itemID,  arrayforDuplicateIDsCheck)== -1){
+			    	    playlistObject.itemArray.push(itemObject);
+			    	    }
+			    	    arrayforDuplicateIDsCheck.push(itemID);
 			    	    
 			    	  }
 			    	});

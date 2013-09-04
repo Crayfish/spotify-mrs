@@ -1,15 +1,16 @@
 require([
   '$api/models',
+  'scripts/setupPlaylistFilter'
   
 
  
-], function(models) {
+], function(models, setupPlaylistFilter) {
   'use strict';
 
  
 
   var createTasteProfile = function() {
-	  createTasteProfile1();
+	  createTasteProfile1(setupPlaylistFilter);
  
   };
 
@@ -17,14 +18,22 @@ require([
 });
 
 
-var profile_id ='';
+var arrayProfileIDsAndPlaylistNames = new Array();
+var arrayPlaylistObjects = new Array();
+var readyToSetAutoComplete = false;
+var numberOfPlaylists = 0;
 
-function createTasteProfile1(){
+
+
+function createTasteProfile1(setupPlaylistFilter){
 	
 	console.log('createTasteProfile () was called');
 	
+	//arrayProfileIDsAndPlaylistNames = new Array();
+	//arrayPlaylistObjects = new Array();
 	
-	//writing to a  file
+	
+	//test local storage
 	
     if (localStorage){
     	console.log('LOCALSTORAGE IS SUPPORTED');
@@ -35,10 +44,12 @@ function createTasteProfile1(){
 	
     //Test mit einer Playlist
     
-    var hipHop = localStorage.getItem('spotify:user:@:playlist:0gOAverzbND0xpwY49uF4q');
+/*    var hipHop = JSON.parse(localStorage.getItem('spotify:user:@:playlist:0gOAverzbND0xpwY49uF4q'));
     
-    console.log('HIPHOP: '+JSON.stringify(JSON.parse( hipHop ) ));
-    //console.log('HIPHOP ITEM ARRAY: '+JSON.stringify( hipHop.itemArray ) );
+   //console.log('HIPHOP: '+JSON.stringify(JSON.parse( hipHop ) ));
+   console.log('HIPHOP: '+JSON.stringify(hipHop ) );
+   
+    console.log('HIPHOP ITEM ARRAY: '+JSON.stringify( hipHop.itemArray ) );
     
     var car = [
                {
@@ -61,45 +72,90 @@ function createTasteProfile1(){
                }
            ];
     
+
+ 
+
     
     
+    
+   
+    
+    
+  
     //localStorage.setItem( 'car', JSON.stringify(car) );
     //console.log( 'LOCAL STORAGE OUTPUT:'+JSON.stringify(JSON.parse( localStorage.getItem( 'car' ) ) ));
     
     
 	
 	
-	var jsonDataVariable;
+	var jsonDataVariable = JSON.stringify( hipHop.itemArray );
+	//var jsonDataVariable = JSON.stringify(car);
+	
+	
 	
 	//reading JSON Data from a file
 	
-	/* $.getJSON('sp://cover/TasteProfileJSONS/testProfile.json', function(data)
+	 $.getJSON('sp://cover/TasteProfileJSONS/testProfile.json', function(data)
             {
                 console.log('READ FROM A JSON FILE: ' +JSON.stringify(data));
                
                 jsonDataVariable = JSON.stringify(data); 
                 
-            });*/
+            });
 	 
 	 //reading the Taste Profile Data from LOCAL HTMl5 Storage
 	 //jsonDataVariable = JSON.stringify(JSON.parse( localStorage.getItem( 'car' ) ) );
-	 jsonDataVariable = JSON.stringify(JSON.parse( car ));
 	
-	var createURL = "http://developer.echonest.com/api/v4/catalog/create";
+	//jsonDataVariable = JSON.stringify(hipHop.itemArray);
+	//jsonDataVariable = JSON.parse(hipHop.itemArray);
+	//jsonDataVariable =  hipHop.itemArray;
 	
-
+	console.log('JSONDATAVARIABLE: '+jsonDataVariable)*/
+    
+    
+    
+    //get all playlist Information from local storage
+    
+  
+        for (var i=0; i<=localStorage.length-1; i++)  
+        {   
+           var  key = localStorage.key(i);  
+           var playlistObject = JSON.parse(localStorage.getItem(key));  
+            
+            console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
+            
+            arrayPlaylistObjects.push( playlistObject);
+        }  
+   
+    
+    
+        numberOfPlaylists = arrayPlaylistObjects.length;
+	
+	
+	
+	//create a tasteProfile for each playlistObject
+	
+        var createURL = "http://developer.echonest.com/api/v4/catalog/create";  
+        
+	 for (var i=0; i<=arrayPlaylistObjects.length-1; i++){  
+		
+		 var tasteProfileName = JSON.stringify(arrayPlaylistObjects[i].playlistName);
+		 var jsonDataVariable = JSON.stringify(arrayPlaylistObjects[i].itemArray );   
+		 
+		 console.log('TASTE PROFILE NAME: '+ tasteProfileName);
 	
 	$.post(createURL, 
     		{
     	'api_key':'BNV9970E1PHXZ9RQW',
     	'format':'json',
     	'type':'song',
-    	'name':'TasteProfile'+Math.floor(Math.random()*10000),
+    	'name': Math.floor(Math.random()*10000)+tasteProfileName
     	
             }).done(function(data) {	
             	console.log(JSON.stringify(data.response));
             	
-            	profile_id = data.response.id;
+            	var profile_id = data.response.id;
+            	var profileName = data.response.name;
             	
             	console.log('Taste Profile Id: '+profile_id );
             	
@@ -113,7 +169,7 @@ function createTasteProfile1(){
             	
         
           
-            	                    
+            	                 
          
   
             	
@@ -123,27 +179,41 @@ function createTasteProfile1(){
             	    	'format':'json',
             	    	'id': profile_id,
             	    	'data_type':'json',
-            	    	'data':   jsonDataVariable        	    	
+            	    	'data':  jsonDataVariable        	    	
             	            }).done(function(data) {
             	            	console.log('tasteProfile update call response: '+JSON.stringify(data.response));
             	            	
             	            	
             	            	
+            	         //add Taste Profile Object {id and name} to array    	
+            	            	
+            	            	var nameAndIdObject = {};
+            	            	
+            	            	var profileName1 = profileName.substring(4);
+            	            	console.log('PROFILE NAME USED FOR IDandNAME OBJECT: '+profileName1);
+            	            	nameAndIdObject.name=  profileName1;
+            	            	nameAndIdObject.tasteProfileID = profile_id;
+            	            	
+            	            	arrayProfileIDsAndPlaylistNames.push(nameAndIdObject);  		
+            	            	console.log('ARRAY TASTE PROFILE OBJECTS: '+JSON.stringify(arrayProfileIDsAndPlaylistNames));
             	            	
             	            	
+            	           //if all playlist have a profile set autocomplete for playlist similarity
             	            	
-            	            	
-            	            		
-            	            		
+            	            	numberOfPlaylists = numberOfPlaylists-1;
+            	            	if(numberOfPlaylists == 0){readyToSetAutoComplete = true}
+            	            	if(readyToSetAutoComplete){
+            	            	setupPlaylistFilter.setAutoCompleteArray(arrayProfileIDsAndPlaylistNames);
+            	            	}
             	            	
             	            });	
             		
             	
             });
 	
-
+	 }
 	
-	
+	 //console.log(' XXXXXXXXXXXXXXXXXXXXXXXXXX ARRAY TASTE PROFILE OBJECTS: '+arrayProfileIDsAndPlaylistNames);
 	
 }
 
