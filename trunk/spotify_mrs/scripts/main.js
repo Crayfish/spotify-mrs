@@ -91,7 +91,7 @@ require([
 
 		playlistInformation.setUpPlaylistInformation();
 		
-		//echonestTasteProfile.createTasteProfile();
+		echonestTasteProfile.createTasteProfile();
 		
 
 		setupNoveltyCheckBoxes.setUpExcludeSeedArtistCheckBox();
