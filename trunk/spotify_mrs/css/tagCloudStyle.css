@@ -27,3 +27,23 @@
 	float:left;
 	overfloaw:hiden;
 }
+
+
+a.tagCloud span
+{
+  display: none;
+}
+
+a.tagCloud:hover span
+{
+ 
+  display: block;
+  border: 1px solid #ddd; border-radius:4px;
+  background: #efefef;
+  font: 75% Arial, "MS Trebuchet", sans-serif;
+  width:10%;
+
+}	
+
+
+
