@@ -36,8 +36,23 @@ function setupPlaylistFilter1(echonestDynamic){
     		
     		 select: function( event, ui){
     			
-    			 console.log('EventHandlerPlaylist List sent event');
-    			 echonestDynamic.changeToPlaylistSimilarity( ui.item.label);
+    			 console.log('EventHandlerPlaylist List sent this playlist name: '+ui.item.label);
+    			 
+    			 for (var i=0; i<=tasteProfileIDsArray.length-1; i++){  
+    				 
+    				if(ui.item.label == tasteProfileIDsArray[i].name){
+    					console.log('TRYING TO CHANGE TO PLAYLIST SIMILARITY WITH ID: '+tasteProfileIDsArray[i].tasteProfileID);
+    					echonestDynamic.changeToPlaylistSimilarity(tasteProfileIDsArray[i].tasteProfileID);
+    					break;
+    				}
+    				
+    			
+    		};
+    			 
+    			 
+    			 
+    			 
+    			 //echonestDynamic.changeToPlaylistSimilarity( ui.item.label);
     			 
     			$(this).val(''); return false;
     			 
@@ -57,10 +72,12 @@ function setupPlaylistFilter1(echonestDynamic){
 function setAutoCompleteArray1(IDandNameObjectArray){
 	console.log('setAutoCompleteArray1() was called');
 	 tasteProfileIDsArray = IDandNameObjectArray;
+	 console.log('ARRAY USED FOR AUTOCOMPLETE PLAYLIST SIMILARITY: '+JSON.stringify(tasteProfileIDsArray));
 	 
  for (var i=0; i<=IDandNameObjectArray.length-1; i++){  
 		 
-		 var playlistName = JSON.stringify(IDandNameObjectArray[i].name);
+		 //var playlistName = JSON.stringify(IDandNameObjectArray[i].name);
+		 var playlistName = IDandNameObjectArray[i].name;
 		 playlistNamesArray.push(playlistName);
 	
 }

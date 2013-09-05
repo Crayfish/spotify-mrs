@@ -76,7 +76,7 @@ function firstLocalStorageOfPlaylists1(){
 		    
 		    playlistObject.playlistName = playlistName;
 		    playlistObject.playlistURI = playlistURI;
-		    playlistObject.tasteProfileID = '';
+		    playlistObject.tasteProfileID = null;
 		    playlistObject.itemArray = [];
 		    
 		
@@ -98,7 +98,7 @@ function firstLocalStorageOfPlaylists1(){
 			    	    var itemObject = {}
 			    	    var innerItem = {};
 			    	    //innerItem.item_id = snapshot1.get(i).uri.replace(/:/g, '');
-			    	    var itemID = snapshot1.get(i).uri.replace('spotify:track:', 'gruber').toUpperCase();
+			    	    var itemID = snapshot1.get(i).uri;//.replace('spotify:track:', 'gruber').toUpperCase();
 			    	    innerItem.item_id = itemID;
 			    	    
 			    	    //console.log('ITEM_ID: '+snapshot1.get(i))
@@ -166,7 +166,7 @@ function  setUpPlaylistInformation1(models1, Library){
 		    
 		    arrayOfPlaylistNames.push(playlistName);
 		    
-		    console.log('arrayOfPlaylistNames ' +i+': '+arrayOfPlaylistNames[i]);
+		    //console.log('arrayOfPlaylistNames ' +i+': '+arrayOfPlaylistNames[i]);
 		    
 		    
 		   var tracks = null;
