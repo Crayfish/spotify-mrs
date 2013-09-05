@@ -180,8 +180,9 @@ console.log('changeToPlaylistSimilarity1() was called with tasteProfileID: '+tas
     	'format':'jsonp',
     	'limit':true,
     	'seed_catalog':tasteProfileID
-    	//limit : true,
-        //'type':'artist-radio', 
+    	//'type':'catalog-radio'
+    	
+        
     	//'max_song_hotttnesss':maxSongHotness,
     	// 'min_song_hotttnesss':minSongHotness 
         //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity

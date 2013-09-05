@@ -13,8 +13,16 @@ require([
 	  createTasteProfile1(setupPlaylistFilter);
  
   };
+  
+  var  getAllTasteProfileIDs = function() {
+	  getAllTasteProfileIDs1();
+ 
+  };
+  
+
 
   exports.createTasteProfile = createTasteProfile;
+  exports.getAllTasteProfileIDs = getAllTasteProfileIDs;
 });
 
 
@@ -31,6 +39,9 @@ function createTasteProfile1(setupPlaylistFilter){
 	
 	//arrayProfileIDsAndPlaylistNames = new Array();
 	//arrayPlaylistObjects = new Array();
+	
+	//list all Taste Profile Ids
+	//getAllTasteProfileIDs();
 	
 	
 	//test local storage
@@ -122,7 +133,7 @@ function createTasteProfile1(setupPlaylistFilter){
            var  key = localStorage.key(i);  
            var playlistObject = JSON.parse(localStorage.getItem(key));  
             
-            console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
+            //console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
             
             arrayPlaylistObjects.push( playlistObject);
         }  
@@ -143,6 +154,7 @@ function createTasteProfile1(setupPlaylistFilter){
 		 var jsonDataVariable = JSON.stringify(arrayPlaylistObjects[i].itemArray );   
 		 
 		 console.log('TASTE PROFILE NAME: '+ tasteProfileName);
+		 //console.log('TASTE PROFILE DATA USED FOR TRANSMISSION TO ECHONEST: '+ JSON.stringify(arrayPlaylistObjects[i].itemArray ));
 	
 	$.post(createURL, 
     		{
@@ -157,7 +169,7 @@ function createTasteProfile1(setupPlaylistFilter){
             	var profile_id = data.response.id;
             	var profileName = data.response.name;
             	
-            	console.log('Taste Profile Id: '+profile_id );
+            	//console.log('Taste Profile Id: '+profile_id );
             	
             	
             	
@@ -189,8 +201,9 @@ function createTasteProfile1(setupPlaylistFilter){
             	            	
             	            	var nameAndIdObject = {};
             	            	
-            	            	var profileName1 = profileName.substring(4);
-            	            	console.log('PROFILE NAME USED FOR IDandNAME OBJECT: '+profileName1);
+            	            	var profileName1 = profileName.substring(4).replace(/"/g , "");
+            	            	//console.log('PROFILE NAME USED FOR IDandNAME OBJECT: '+profileName1);
+            	            	//console.log('UND SO SIEHT EIN STRING AUS: '+"das ist ein String");
             	            	nameAndIdObject.name=  profileName1;
             	            	nameAndIdObject.tasteProfileID = profile_id;
             	            	
@@ -203,7 +216,8 @@ function createTasteProfile1(setupPlaylistFilter){
             	            	numberOfPlaylists = numberOfPlaylists-1;
             	            	if(numberOfPlaylists == 0){readyToSetAutoComplete = true}
             	            	if(readyToSetAutoComplete){
-            	            	setupPlaylistFilter.setAutoCompleteArray(arrayProfileIDsAndPlaylistNames);
+            	            		getAllTasteProfileIDs1();
+            	            		setupPlaylistFilter.setAutoCompleteArray(arrayProfileIDsAndPlaylistNames);
             	            	}
             	            	
             	            });	
@@ -220,7 +234,104 @@ function createTasteProfile1(setupPlaylistFilter){
 
 
 
+function getAllTasteProfileIDs1(){
+	var randomNumber =  Math.floor(Math.random()*100);
+	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key=BNV9970E1PHXZ9RQW&format=json'+'&_='+randomNumber;
+	
+		$.getJSON(listTasteProfileIDsURL, 
+	    		{'results':'100'
+	            },
+	            function(data) {
+	        if (checkResponse(data)) {
+	        	 console.log('LIST OF ALL TASTE PROFILE IDs: '+JSON.stringify(data)); 
+	        	 //console.log('LIST OF ALL TASTE PROFILE IDs NUMBER OF TASTE PROFILES: '+data.response.catalogs.length); 
+	        	 
+	        	 
+	        	 deleteAllTasteProfiles(data);	
+	       
+	        
+	    
+	        
+	        
+	        } else {
+	            info("trouble getting results");
+	        }
+	    });	
+}
 
+
+function deleteAllTasteProfiles(data1){
+	
+
+	
+	
+	var deleteURL = 'http://developer.echonest.com/api/v4/catalog/delete';
+	/*//Test mit einer ID
+	
+	$.post(deleteURL, 
+    		{
+    	'api_key':'BNV9970E1PHXZ9RQW',
+    	'format':'json',
+    	'id':'CACWUDH140E8C6EDEB'
+    	    	    	
+            }).done(function(data) {
+            	console.log('tasteProfile delete ONE ID call response: '+JSON.stringify(data.response));
+            	
+            	
+            	
+         
+            	
+            	
+          
+            	
+            });	*/
+	
+	
+	
+	console.log('NUMBER OF PROFILES TO BE DELETED: '+ data1.response.total);
+	//var arrayAllTasteProfileIDs = JSON.parse(JSON.stringify(data1.response.catalogs));
+	var arrayAllTasteProfileIDs = data1.response.catalogs;
+	
+	console.log('ARRAY FOR DELETING ALL TASTE PROFILES: '+arrayAllTasteProfileIDs);
+	console.log('arrayAllTasteProfileIDs LENGHT: '+arrayAllTasteProfileIDs.length);
+	
+	
+	
+	/*var arrayDeleteIDs = new Array();
+	for(var i=0; i < arrayAllTasteProfileIDs.length; i++){
+		arrayDeleteIDs.push(arrayAllTasteProfileIDs[i]);
+	}
+	
+	console.log('ARRAY DELETE IDS: '+arrayDeleteIDs);*/
+	
+	
+	for(var i= 0; i < arrayAllTasteProfileIDs.length; i++){
+		var IdToBeDeleted = JSON.stringify(arrayAllTasteProfileIDs[i].id).replace(/"/g , "");
+		console.log('ID TO BE DELETED: '+IdToBeDeleted);
+		
+		
+		
+		$.post(deleteURL, 
+	    		{
+	    	'api_key':'BNV9970E1PHXZ9RQW',
+	    	'format':'json',
+	    	'id': IdToBeDeleted,
+	    	    	    	
+	            }).done(function(data) {
+	            	console.log('tasteProfile delete call response: '+JSON.stringify(data.response));
+	            	
+	            	
+	            	
+	         
+	            	
+	            	
+	          
+	            	
+	            });	
+		
+		
+	};
+}
 
 
 /*function addSongsToProfile(){
