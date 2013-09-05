@@ -92,7 +92,7 @@ require([
 		//playlistInformation.setUpPlaylistInformation();
 		
 		//echonestTasteProfile.createTasteProfile();
-		echonestTasteProfile.getAllTasteProfileIDs();
+		echonestTasteProfile.deleteAllTasteProfiles();
 		
 
 		setupNoveltyCheckBoxes.setUpExcludeSeedArtistCheckBox();
