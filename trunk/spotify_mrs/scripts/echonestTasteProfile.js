@@ -19,8 +19,14 @@ require([
  
   };
   
+  
+  var  deleteAllTasteProfiles = function() {
+	  deleteAllTasteProfiles1();
+ 
+  };
+  
 
-
+  exports.deleteAllTasteProfiles = deleteAllTasteProfiles;
   exports.createTasteProfile = createTasteProfile;
   exports.getAllTasteProfileIDs = getAllTasteProfileIDs;
 });
@@ -247,7 +253,7 @@ function getAllTasteProfileIDs1(){
 	        	 //console.log('LIST OF ALL TASTE PROFILE IDs NUMBER OF TASTE PROFILES: '+data.response.catalogs.length); 
 	        	 
 	        	 
-	        	 deleteAllTasteProfiles(data);	
+	        	 //deleteAllTasteProfiles(data);	
 	       
 	        
 	    
@@ -260,12 +266,76 @@ function getAllTasteProfileIDs1(){
 }
 
 
-function deleteAllTasteProfiles(data1){
+function deleteAllTasteProfiles1(){
 	
-
-	
-	
+	var randomNumber =  Math.floor(Math.random()*100);
+	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key=BNV9970E1PHXZ9RQW&format=json'+'&_='+randomNumber;
 	var deleteURL = 'http://developer.echonest.com/api/v4/catalog/delete';
+		
+	$.getJSON(listTasteProfileIDsURL, 
+	    		{'results':'100'
+	            },
+	            function(data) {
+	        if (checkResponse(data)) {
+	        	 console.log('LIST OF ALL TASTE PROFILE IDs: '+JSON.stringify(data)); 
+	        	 //console.log('LIST OF ALL TASTE PROFILE IDs NUMBER OF TASTE PROFILES: '+data.response.catalogs.length); 
+	        	 
+	        	 
+	        	 //delete All Taste Profiles;	
+	       
+	        		console.log('NUMBER OF PROFILES TO BE DELETED: '+ data.response.total);
+	        		//var arrayAllTasteProfileIDs = JSON.parse(JSON.stringify(data1.response.catalogs));
+	        		var arrayAllTasteProfileIDs = data.response.catalogs;
+	        		
+	        		console.log('ARRAY FOR DELETING ALL TASTE PROFILES: '+arrayAllTasteProfileIDs);
+	        		console.log('arrayAllTasteProfileIDs LENGHT: '+arrayAllTasteProfileIDs.length);
+	        		
+	        		
+	        		
+	        		/*var arrayDeleteIDs = new Array();
+	        		for(var i=0; i < arrayAllTasteProfileIDs.length; i++){
+	        			arrayDeleteIDs.push(arrayAllTasteProfileIDs[i]);
+	        		}
+	        		
+	        		console.log('ARRAY DELETE IDS: '+arrayDeleteIDs);*/
+	        		
+	        		
+	        		for(var i= 0; i < arrayAllTasteProfileIDs.length; i++){
+	        			var IdToBeDeleted = JSON.stringify(arrayAllTasteProfileIDs[i].id).replace(/"/g , "");
+	        			console.log('ID TO BE DELETED: '+IdToBeDeleted);
+	        			
+	        			
+	        			
+	        			$.post(deleteURL, 
+	        		    		{
+	        		    	'api_key':'BNV9970E1PHXZ9RQW',
+	        		    	'format':'json',
+	        		    	'id': IdToBeDeleted,
+	        		    	    	    	
+	        		            }).done(function(data) {
+	        		            	console.log('tasteProfile delete call response: '+JSON.stringify(data.response));
+	        		            	
+	        		            	
+	        		            	
+	        		         
+	        		            	
+	        		            	
+	        		          
+	        		            	
+	        		            });	
+	        			
+	        			
+	        		};
+	    
+	        
+	        
+	        } else {
+	            info("trouble getting results");
+	        }
+	    });	
+	
+	
+	
 	/*//Test mit einer ID
 	
 	$.post(deleteURL, 
@@ -288,49 +358,7 @@ function deleteAllTasteProfiles(data1){
 	
 	
 	
-	console.log('NUMBER OF PROFILES TO BE DELETED: '+ data1.response.total);
-	//var arrayAllTasteProfileIDs = JSON.parse(JSON.stringify(data1.response.catalogs));
-	var arrayAllTasteProfileIDs = data1.response.catalogs;
-	
-	console.log('ARRAY FOR DELETING ALL TASTE PROFILES: '+arrayAllTasteProfileIDs);
-	console.log('arrayAllTasteProfileIDs LENGHT: '+arrayAllTasteProfileIDs.length);
-	
-	
-	
-	/*var arrayDeleteIDs = new Array();
-	for(var i=0; i < arrayAllTasteProfileIDs.length; i++){
-		arrayDeleteIDs.push(arrayAllTasteProfileIDs[i]);
-	}
-	
-	console.log('ARRAY DELETE IDS: '+arrayDeleteIDs);*/
-	
-	
-	for(var i= 0; i < arrayAllTasteProfileIDs.length; i++){
-		var IdToBeDeleted = JSON.stringify(arrayAllTasteProfileIDs[i].id).replace(/"/g , "");
-		console.log('ID TO BE DELETED: '+IdToBeDeleted);
-		
-		
-		
-		$.post(deleteURL, 
-	    		{
-	    	'api_key':'BNV9970E1PHXZ9RQW',
-	    	'format':'json',
-	    	'id': IdToBeDeleted,
-	    	    	    	
-	            }).done(function(data) {
-	            	console.log('tasteProfile delete call response: '+JSON.stringify(data.response));
-	            	
-	            	
-	            	
-	         
-	            	
-	            	
-	          
-	            	
-	            });	
-		
-		
-	};
+
 }
 
 
