@@ -42,7 +42,7 @@ function setupPlaylistFilter1(echonestDynamic){
     				 
     				if(ui.item.label == tasteProfileIDsArray[i].name){
     					console.log('TRYING TO CHANGE TO PLAYLIST SIMILARITY WITH ID: '+tasteProfileIDsArray[i].tasteProfileID);
-    					echonestDynamic.changeToPlaylistSimilarity(tasteProfileIDsArray[i].tasteProfileID);
+    					echonestDynamic.changeToPlaylistSimilarity(tasteProfileIDsArray[i]);
     					break;
     				}
     				
@@ -50,7 +50,10 @@ function setupPlaylistFilter1(echonestDynamic){
     		};
     			 
     			 
-    			 
+    		
+    		
+    		
+    		
     			 
     			 //echonestDynamic.changeToPlaylistSimilarity( ui.item.label);
     			 
@@ -60,12 +63,23 @@ function setupPlaylistFilter1(echonestDynamic){
          
         
     		
-    		 });
+    		 }).focus(function(){     
+    		        //Use the below line instead of triggering keydown
+    		        //$(this).data("autocomplete").search($(this).val());
+    		        //$(this).autocomplete("search");
+    			 
+    		        $(this).autocomplete('search', $(this).val());
+    		    });
 	 
 	 
 	 
 	
 }
+
+
+
+
+
 
 
 

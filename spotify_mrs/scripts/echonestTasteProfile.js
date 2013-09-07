@@ -213,9 +213,9 @@ function createTasteProfile1(setupPlaylistFilter){
        
         
 	// for (var i=0; i<=arrayPlaylistObjects.length-1; i++){  
-		var notYetFinishedTransmittingProfileData = true;
-		var readyforNextOne = true;
-		var i =7;
+		//var notYetFinishedTransmittingProfileData = true;
+		//var readyforNextOne = true;
+		//var i =7;
 		
         //while(notYetFinishedTransmittingProfileData){
         	//if(readyforNextOne){
@@ -230,11 +230,12 @@ function createTasteProfile1(setupPlaylistFilter){
 		
 					//readyforNextOne = false;
         		 var tasteProfileName = JSON.stringify(entry.playlistName);
+        		 console.log('TASTE PROFILE NAME: '+ tasteProfileName);
         		 //var jsonDataVariable = JSON.stringify(arrayPlaylistObjects[i].itemArray );  
         		 var jsonDataVariable = entry.itemArray; 
         		 
-        		 console.log('TASTE PROFILE NAME: '+ tasteProfileName);
-        		 console.log('TASTE PROFILE DATA USED FOR TRANSMISSION TO ECHONEST: '+ JSON.stringify(arrayPlaylistObjects[i].itemArray ));
+        		
+        		 //console.log('TASTE PROFILE DATA USED FOR TRANSMISSION TO ECHONEST: '+ JSON.stringify(arrayPlaylistObjects[i].itemArray ));
         	
         	$.post(createURL, 
             		{
@@ -294,9 +295,9 @@ function createTasteProfile1(setupPlaylistFilter){
                     	            	
                     	            	numberOfPlaylists = numberOfPlaylists-1;
                     	            	if(numberOfPlaylists == 0){readyToSetAutoComplete = true;
-                    	            								notYetFinishedTransmittingProfileData = false;
+                    	            								//notYetFinishedTransmittingProfileData = false;
                     	            	}
-                    	            	readyToSetAutoComplete = true;
+                    	            	//readyToSetAutoComplete = true;
                     	            	if(readyToSetAutoComplete){
                     	            		getAllTasteProfileIDs1();
                     	            		setupPlaylistFilter.setAutoCompleteArray(arrayProfileIDsAndPlaylistNames);
@@ -355,7 +356,7 @@ var randomNumber =  Math.floor(Math.random()*100);
 	var deleteURL = 'http://developer.echonest.com/api/v4/catalog/delete';
 		
 	$.getJSON(listTasteProfileIDsURL, 
-	    		{'results':'100'
+	    		{'results':'200'
 	            },
 	            function(data) {
 	        if (checkResponse(data)) {
