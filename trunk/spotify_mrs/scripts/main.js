@@ -89,9 +89,9 @@ require([
 		  
 		
 
-		playlistInformation.setUpPlaylistInformation();
+		//playlistInformation.setUpPlaylistInformation();
 		
-		echonestTasteProfile.createTasteProfile();
+		//echonestTasteProfile.createTasteProfile();
 		//echonestTasteProfile.deleteAllTasteProfiles();
 		//echonestTasteProfile.getBasicInformationOfAllTasteProfiles();
 		
