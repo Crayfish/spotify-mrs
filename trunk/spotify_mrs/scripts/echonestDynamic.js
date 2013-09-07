@@ -166,9 +166,9 @@ var playlistInformationScript = null;
 var arrayOfTracksInSpotifyPlaylists = new Array();
 
 
-function changeToPlaylistSimilarity1(tasteProfileID){
+function changeToPlaylistSimilarity1(tasteProfileIDandNameObject){
 	
-console.log('changeToPlaylistSimilarity1() was called with tasteProfileID: '+tasteProfileID);
+console.log('changeToPlaylistSimilarity1() was called with tasteProfileID: '+tasteProfileIDandNameObject.tasteProfileID);
 	
 	
 	
@@ -179,7 +179,7 @@ console.log('changeToPlaylistSimilarity1() was called with tasteProfileID: '+tas
     	//'track_id': replacedSongID, 
     	'format':'jsonp',
     	'limit':true,
-    	'seed_catalog':tasteProfileID
+    	'seed_catalog':tasteProfileIDandNameObject.tasteProfileID
     	//'type':'catalog-radio'
     	
         
@@ -191,9 +191,10 @@ console.log('changeToPlaylistSimilarity1() was called with tasteProfileID: '+tas
             function(data) {
         if (checkResponse(data)) {
             
-        console.log('Changed to Similarity Radio: '+tasteProfileID);
+        console.log('Changed to Similarity Radio: '+tasteProfileIDandNameObject.tasteProfileID);
+        //console.log('CHANGE TO PLAYLIST SIMILARITY DATA: '+JSON.stringify(data));
         
-        $('#playlistSimilarityInfo').text('Now songs are recommended because the represent the tasteProfileID: ' +tasteProfileID);
+        $('#playlistSimilarityInfo').text('Now songs are recommended because they are simliar to your \"'+tasteProfileIDandNameObject.name +'\" Spotify-playlist');
        // $("#accordion" ).accordion( "refresh" );
        
         info("");
