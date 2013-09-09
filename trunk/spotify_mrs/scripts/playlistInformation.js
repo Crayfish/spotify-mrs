@@ -43,16 +43,36 @@ var arrayOfPlaylistNames = new Array();
 
 var arrayOfAllSongsInSpotifyPlaylists = new Array();
 
+var arrayStoredPlaylistObjects = new Array();
+var currentPlaylistObjectsArray = new Array();
+
+var isFirstLocalStorage = false;
+
 
 function firstLocalStorageOfPlaylists1(){
 	console.log('firstLocalStorageOfPlaylists1() was called');
 	
-	//empty local storage
+	if(localStorage.length ==0){isFirstLocalStorage = true};
 	
-	localStorage.clear();  
+	//get the playlist Information already stored in Local Storage
+	
+	if(!isFirstLocalStorage){
+	 for (var i=0; i<=localStorage.length-1; i++)  
+	    {   
+	       var  key = localStorage.key(i);  
+	       var playlistObject = JSON.parse(localStorage.getItem(key));  
+	        
+	        //console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
+	        
+	        arrayStoredPlaylistObjects.push( playlistObject);
+	    }  
+	}
+	 //console.log('PLAYLIST INFO ALREADY STORED IN LOCAL STORAGE: '+JSON.stringify(arrayStoredPlaylistObjects));
 	
 	
-	//storing playlist information
+	
+	
+	//get current state of playlist Information
 	playlistCollection.snapshot().done(function(snapshot) {
 		
 		  for (var i = 0; i < snapshot.length; i++) {
@@ -95,7 +115,7 @@ function firstLocalStorageOfPlaylists1(){
 			    	    //console.log(' playlistI tracks snapshot: '+ snapshot1.get(i));
 			    	    
 			    	    
-			    	    var itemObject = {}
+			    	    var itemObject = {};
 			    	    var innerItem = {};
 			    	    //innerItem.item_id = snapshot1.get(i).uri.replace(/:/g, '');
 			    	    var itemID = snapshot1.get(i).uri;//.replace('spotify:track:', 'gruber').toUpperCase();
@@ -123,7 +143,8 @@ function firstLocalStorageOfPlaylists1(){
 				
 			});
 		   
-		    localStorage.setItem( playlistURI, JSON.stringify(playlistObject) );
+			currentPlaylistObjectsArray.push(playlistObject);
+		    //localStorage.setItem( playlistURI, JSON.stringify(playlistObject) );
 		    
 		    }
 		
@@ -133,10 +154,194 @@ function firstLocalStorageOfPlaylists1(){
 	});
 	
 	
+	//console.log('CURRENT PLAYLIST OBJECT ARRAY: '+ JSON.stringify(currentPlaylistObjectsArray));
+
+	
+	//check for new playlists
+    
+	if(isFirstLocalStorage){
+		currentPlaylistObjectsArray.forEach(function(entry) {
+	    	
+	    	
+			//console.log(' ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
+	    	
+	    		var playlistURIForFirstStorage = entry.playlistURI;
+	    		  console.log("DETECTED A FIRST LOCAL STORAGE PLAYLIST: "+playlistURIForFirstStorage);
+	    		  //store the new playlist Object
+	    		  localStorage.setItem( playlistURIForFirstStorage, JSON.stringify(entry) );
+	    		  //and store for Creation of
+	    		
+	    
+	    });
+	}else{
+    currentPlaylistObjectsArray.forEach(function(entry) {
+    	
+    	
+		//console.log(' ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
+    	var playlistURIForComparison = entry.playlistURI;
+    	if (localStorage.getItem(playlistURIForComparison) === null) {
+    		  console.log("DETECTED A NEW PLAYLIST: "+playlistURIForComparison);
+    		  //store the new playlist Object
+    		  localStorage.setItem( playlistURIForComparison, JSON.stringify(entry) );
+    		  //and store new playlist info for echonest calls
+    		}
+    
+    });
+    
+    
+    
+    
+    
+}//end of new Playlist Check
 	
 	
 	
-}
+	
+	
+	
+	//check for deleted playlists in order to delete Echonest Taste Profile
+	if(arrayStoredPlaylistObjects.length > currentPlaylistObjectsArray.length){
+		//console.log('DETECTED PLAYLISTS TO BE DELETED' );
+		
+		var arrayStoredIDs = new Array();
+		var arrayCurrentIDs = new Array();
+		
+		arrayStoredPlaylistObjects.forEach(function(entry) {
+			arrayStoredIDs.push(entry.playlistURI);
+		});
+		
+		currentPlaylistObjectsArray.forEach(function(entry) {
+			arrayCurrentIDs.push(entry.playlistURI);
+		});
+		
+		arrayStoredIDs.forEach(function(entry) {
+			if($.inArray(entry,arrayCurrentIDs)==-1){
+				console.log('DETECTED PLAYLISTS TO BE DELETED: '+entry );
+				//remove the playlist from local storage
+				 localStorage.removeItem(entry);
+				//store delete info for echonestcalls
+				
+			}
+		});
+		
+	}//end of deleted playlists check
+	
+	
+	//check if there are  deleted Songs in an existing playlist
+	
+	
+	
+	
+	arrayStoredPlaylistObjects.forEach(function(entry) {
+		var playlistObjectForComparison = null;
+		var storedPlaylistItemArray = new Array();
+		var currentPlaylistItemArray = new Array();
+		var storedPlaylistURI = entry.playlistURI;
+		
+		storedPlaylistItemArray = entry.itemArray;
+		
+		//console.log('STARTED DELETED SONGS DEDECTION FOR :'+entry.playlistName);
+		//console.log('storedPlaylistItemArray :'+JSON.stringify(storedPlaylistItemArray));
+		
+		//das Vergleichsobjekt finden
+		for(var i = 0; i < currentPlaylistObjectsArray.length; i++){
+			
+			var currentPlaylistURI = currentPlaylistObjectsArray[i].playlistURI;
+			if(storedPlaylistURI == currentPlaylistURI){
+				playlistObjectForComparison = currentPlaylistObjectsArray[i];
+				currentPlaylistItemArray = playlistObjectForComparison.itemArray;
+				//console.log('COMPARISION OBJECT: '+playlistObjectForComparison.playlistName);
+				break;
+			}
+		}
+		
+		
+		
+		//comparing the two itemArrays, first detect deleted songs
+		
+		storedPlaylistItemArray.forEach(function (entry1){
+			//console.log('entry1: '+JSON.stringify(entry1) );
+			var storedTrackIDForComparison = entry1.item.track_id;
+			//console.log('storedTrackIDForComparison: '+storedTrackIDForComparison);
+			
+			var currentObjectTrackIdsArray = new Array();
+			
+			currentPlaylistItemArray.forEach(function(entry2){
+				currentObjectTrackIdsArray.push(entry2.item.track_id);
+			});
+			
+			
+			if($.inArray( storedTrackIDForComparison,currentObjectTrackIdsArray )==-1){
+				console.log('DETECTED A DELETED SONG IN CURRENT PLAYLIST: '+playlistObjectForComparison.playlistName);
+				localStorage.setItem(playlistObjectForComparison.playlistURI ,JSON.stringify(playlistObjectForComparison));
+				//echonest Taste Profile update call
+			};
+		});
+		
+		
+		
+		
+		
+		
+	});//end of for each() of deleted songs detection;
+	
+	
+	//dedecting newly added songs
+	
+/*	currentPlaylistObjectsArray.forEach(function(entry) {
+		var playlistObjectForComparison = null;
+		var storedPlaylistItemArray = new Array();
+		var currentPlaylistItemArray = new Array();
+		var currentPlaylistURI = entry.playlistURI;
+		
+		currentPlaylistItemArray = entry.itemArray;
+		
+		//console.log('STARTED NEW SONGS DEDECTION FOR :'+entry.playlistName);
+		//console.log('storedPlaylistItemArray :'+JSON.stringify(storedPlaylistItemArray));
+		
+		//das Vergleichsobjekt finden
+		for(var i = 0; i < arrayStoredPlaylistObjects.length; i++){
+			
+			var storedPlaylistURI = arrayStoredPlaylistObjects[i].playlistURI;
+			if(storedPlaylistURI == currentPlaylistURI){
+				playlistObjectForComparison = arrayStoredPlaylistObjects[i];
+				storedPlaylistItemArray = playlistObjectForComparison.itemArray;
+				//console.log('COMPARISION OBJECT NEW SONGS: '+playlistObjectForComparison.playlistName);
+				break;
+			}
+		}
+		
+		
+		
+		//comparing the two itemArrays, detecting new  songs
+		
+		currentPlaylistItemArray.forEach(function (entry1){
+			//console.log('entry1: '+JSON.stringify(entry1) );
+			var currentTrackIDForComparison = entry1.item.track_id;
+			//console.log('storedTrackIDForComparison: '+storedTrackIDForComparison);
+			
+			var storedObjectTrackIdsArray = new Array();
+			
+			storedPlaylistItemArray.forEach(function(entry2){
+				storedObjectTrackIdsArray.push(entry2.item.track_id);
+			});
+			
+			
+			if($.inArray( currentTrackIDForComparison,storedObjectTrackIdsArray )==-1){
+				console.log('DETECTED A NEW SONG IN STORED PLAYLIST: '+playlistObjectForComparison.playlistName);
+				localStorage.setItem(playlistObjectForComparison.playlistURI ,JSON.stringify(playlistObjectForComparison));
+				//echonest Taste Profile update call
+			};
+		});
+		
+		
+		
+		
+		
+		
+	});*/
+	
+}//end of function
 
 function getArrayOfAllSongsInSpotifyPlaylists1(){
 	return arrayOfAllSongsInSpotifyPlaylists;
@@ -204,7 +409,8 @@ function  setUpPlaylistInformation1(models1, Library){
 	
 
 
-    	
+    //localStorage.clear();	
+    //console.log('CLEARED LOCAL STORAGE');
 	firstLocalStorageOfPlaylists1();  
  
 	
