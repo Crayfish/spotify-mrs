@@ -9,8 +9,8 @@ require([
 
  
 
-  var createTasteProfile = function() {
-	  createTasteProfile1(setupPlaylistFilter);
+  var initialCreateOfAllTasteProfile = function() {
+	  initialCreateOfAllTasteProfile1(setupPlaylistFilter);
  
   };
   
@@ -32,7 +32,7 @@ require([
   
 
   exports.deleteAllTasteProfiles = deleteAllTasteProfiles;
-  exports.createTasteProfile = createTasteProfile;
+  exports.initialCreateOfAllTasteProfile = initialCreateOfAllTasteProfile;
   exports.getAllTasteProfileIDs = getAllTasteProfileIDs;
   exports.getBasicInformationOfAllTasteProfiles = getBasicInformationOfAllTasteProfiles;
 });
@@ -114,7 +114,7 @@ function getBasicInformationOfAllTasteProfiles1(){
 	
 }
 
-function createTasteProfile1(setupPlaylistFilter){
+function initialCreateOfAllTasteProfile1(setupPlaylistFilter){
 	
 	console.log('createTasteProfile () was called');
 	
@@ -128,63 +128,7 @@ function createTasteProfile1(setupPlaylistFilter){
     }  
 	
 	
-    //Test mit einer Playlist
-    
-/*    var hipHop = JSON.parse(localStorage.getItem('spotify:user:@:playlist:0gOAverzbND0xpwY49uF4q'));
-    
-   //console.log('HIPHOP: '+JSON.stringify(JSON.parse( hipHop ) ));
-   console.log('HIPHOP: '+JSON.stringify(hipHop ) );
-   
-    console.log('HIPHOP ITEM ARRAY: '+JSON.stringify( hipHop.itemArray ) );
-   
-    //localStorage.setItem( 'car', JSON.stringify(car) );
-    //console.log( 'LOCAL STORAGE OUTPUT:'+JSON.stringify(JSON.parse( localStorage.getItem( 'car' ) ) ));
-    
-	var jsonDataVariable = JSON.stringify( hipHop.itemArray );
-	//var jsonDataVariable = JSON.stringify(car);
-	
-	
-	
-	//reading JSON Data from a file
-	
-	 $.getJSON('sp://cover/TasteProfileJSONS/testProfile.json', function(data)
-            {
-                console.log('READ FROM A JSON FILE: ' +JSON.stringify(data));
-               
-                jsonDataVariable = JSON.stringify(data); 
-                
-            });
-	 
-	 //reading the Taste Profile Data from LOCAL HTMl5 Storage
-	 //jsonDataVariable = JSON.stringify(JSON.parse( localStorage.getItem( 'car' ) ) );
-	
-	//jsonDataVariable = JSON.stringify(hipHop.itemArray);
-	//jsonDataVariable = JSON.parse(hipHop.itemArray);
-	//jsonDataVariable =  hipHop.itemArray;
-	
-	console.log('JSONDATAVARIABLE: '+jsonDataVariable)*/
-    
-/*    
-    var jsonDataVariable = JSON.stringify([
-                            {
-                                "item": {
-                                    "item_id": "0CF07A178DBF78F7",
-                                    "track_id": "spotify-WW:track:62HPkBnymwKwrMrT9SLbOx"
-                                }
-                            },
-                            {
-                                "item": {
-                                    "item_id": "0CF07A178DBF78B9",
-                                    "track_id": "spotify-WW:track:7v3cWjR0s7OGMwFUKNGxhy"
-                                }
-                            },
-                            {
-                                "item": {
-                                    "item_id": "0CF07A178DBF78Z5",
-                                    "track_id": "spotify-WW:track:43dn0HVATaRnIDqY2ZUEjIB"
-                                }
-                            }
-                        ]);*/
+
                  
     
     
@@ -442,7 +386,68 @@ var randomNumber =  Math.floor(Math.random()*100);
 	
 	
 
-}
+}// end of delete
+
+
+
+
+//Test mit einer Playlist
+
+/*    var hipHop = JSON.parse(localStorage.getItem('spotify:user:@:playlist:0gOAverzbND0xpwY49uF4q'));
+    
+   //console.log('HIPHOP: '+JSON.stringify(JSON.parse( hipHop ) ));
+   console.log('HIPHOP: '+JSON.stringify(hipHop ) );
+   
+    console.log('HIPHOP ITEM ARRAY: '+JSON.stringify( hipHop.itemArray ) );
+   
+    //localStorage.setItem( 'car', JSON.stringify(car) );
+    //console.log( 'LOCAL STORAGE OUTPUT:'+JSON.stringify(JSON.parse( localStorage.getItem( 'car' ) ) ));
+    
+	var jsonDataVariable = JSON.stringify( hipHop.itemArray );
+	//var jsonDataVariable = JSON.stringify(car);
+	
+	
+	
+	//reading JSON Data from a file
+	
+	 $.getJSON('sp://cover/TasteProfileJSONS/testProfile.json', function(data)
+            {
+                console.log('READ FROM A JSON FILE: ' +JSON.stringify(data));
+               
+                jsonDataVariable = JSON.stringify(data); 
+                
+            });
+	 
+	 //reading the Taste Profile Data from LOCAL HTMl5 Storage
+	 //jsonDataVariable = JSON.stringify(JSON.parse( localStorage.getItem( 'car' ) ) );
+	
+	//jsonDataVariable = JSON.stringify(hipHop.itemArray);
+	//jsonDataVariable = JSON.parse(hipHop.itemArray);
+	//jsonDataVariable =  hipHop.itemArray;
+	
+	console.log('JSONDATAVARIABLE: '+jsonDataVariable)*/
+    
+/*    
+    var jsonDataVariable = JSON.stringify([
+                            {
+                                "item": {
+                                    "item_id": "0CF07A178DBF78F7",
+                                    "track_id": "spotify-WW:track:62HPkBnymwKwrMrT9SLbOx"
+                                }
+                            },
+                            {
+                                "item": {
+                                    "item_id": "0CF07A178DBF78B9",
+                                    "track_id": "spotify-WW:track:7v3cWjR0s7OGMwFUKNGxhy"
+                                }
+                            },
+                            {
+                                "item": {
+                                    "item_id": "0CF07A178DBF78Z5",
+                                    "track_id": "spotify-WW:track:43dn0HVATaRnIDqY2ZUEjIB"
+                                }
+                            }
+                        ]);*/
 
 
 /*function addSongsToProfile(){
