@@ -88,6 +88,7 @@ function firstLocalStorageOfPlaylists1(){
 		    
 		    var playlistI = snapshot.get(i)
 		    
+		    if(playlistI!=null){
 //		    console.log(playlistI.name);
 		    
 		    var playlistName = playlistI.name;
@@ -154,6 +155,7 @@ function firstLocalStorageOfPlaylists1(){
 			currentPlaylistObjectsArray.push(playlistObject);
 		    //localStorage.setItem( playlistURI, JSON.stringify(playlistObject) );
 		    
+		  	}
 		    }
 		
 	
@@ -387,6 +389,8 @@ function  setUpPlaylistInformation1(/*tasteProfileScript,*/ models1, Library/* e
 		    //console.log(snapshot.get(i));
 		    
 		    var playlistI = snapshot.get(i)
+		    if(playlistI != null){
+		    	
 		    
 //		    console.log(playlistI.name);
 		    
@@ -418,7 +422,7 @@ function  setUpPlaylistInformation1(/*tasteProfileScript,*/ models1, Library/* e
 			});
 		   
 	
-		    
+		    }
 		    }
 		
 	
