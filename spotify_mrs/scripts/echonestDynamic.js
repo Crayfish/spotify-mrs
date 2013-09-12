@@ -6,17 +6,17 @@ require([
   '$views/throbber#Throbber',
   'scripts/jPagesTrackCover',
   'scripts/customplaylist',
-  'scripts/playlistInformation',
+  //'scripts/playlistInformation',
   //'scripts/setupNoveltyCheckBoxes',
 
-  ], function(models, throbber, trackCover, customplaylist, playlistInformation) {
+  ], function(models, throbber, trackCover, customplaylist/*, playlistInformation*/) {
  
 	  'use strict';
 
   
   var startNewSession = function(){
 	 // console.log("New session is started");
-	  startNewSession1(models, throbber, trackCover, customplaylist, playlistInformation);
+	  startNewSession1(models, throbber, trackCover, customplaylist/*, playlistInformation*/);
 	 
   };
   
@@ -97,6 +97,10 @@ require([
 	var setNoSpotifyPlaylistSongs = function(setValue){
 		setNoSpotifyPlaylistSongs1(setValue);
 	};
+	
+	 var setArrayOfAllSongs = function(array1){
+		 setArrayOfAllSongs1(array1);
+	 }
   
   exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
@@ -116,6 +120,7 @@ require([
 
   exports.setBanedArtistId = setBanedArtistId;
   exports.setNoSpotifyPlaylistSongs = setNoSpotifyPlaylistSongs;
+  exports.setArrayOfAllSongs = setArrayOfAllSongs;
 
 
 
@@ -161,10 +166,14 @@ var banedSeedArtistId = null;
 
 var noSpotifyPlaylistSongs = false;
 
-var playlistInformationScript = null;
+//var playlistInformationScript = null;
 
 var arrayOfTracksInSpotifyPlaylists = new Array();
 
+
+function setArrayOfAllSongs1(array1){
+	arrayOfTracksInSpotifyPlaylists = array1;
+}
 
 function changeToPlaylistSimilarity1(tasteProfileIDandNameObject){
 	
@@ -550,7 +559,7 @@ function changeToGenreSimilarity1(genreName){
 }
 
 
-function startNewSession1(models1, throbber1, trackCover1, customplaylist1, playlistInformation1 ){
+function startNewSession1(models1, throbber1, trackCover1, customplaylist1/*, playlistInformation1*/ ){
 	 console.log("New session is started");
 	
 	 
@@ -562,9 +571,9 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1, play
 	 
 	 trackCoverScript = trackCover1;
 	 
-	 playlistInformationScript = playlistInformation1 ;
+	// playlistInformationScript = playlistInformation1 ;
 	 
-	 arrayOfTracksInSpotifyPlaylists = playlistInformationScript.getArrayOfAllSongsInSpotifyPlaylists();
+	 //arrayOfTracksInSpotifyPlaylists = playlistInformationScript.getArrayOfAllSongsInSpotifyPlaylists();
 	 
 	 //console.log('startNewSession()  arrayOfTracksInSpotifyPlaylists: '+arrayOfTracksInSpotifyPlaylists);
 	 
@@ -1318,10 +1327,10 @@ function getNextSong1( ){
  	 	        	if(noSpotifyPlaylistSongs){
  	 	        		console.log('start checking if track is in a spotifyplaylist');
  	 	        		if($.inArray(id ,  arrayOfTracksInSpotifyPlaylists) > -1){
- 	 	 	 	           console.log('DETACTED a song already in your playlist and noSpotifyPlaylistSongs was set to:'+noSpotifyPlaylistSongs);
+ 	 	 	 	           console.log('DETECTED a song already in your playlist and noSpotifyPlaylistSongs was set to:'+noSpotifyPlaylistSongs);
  	 	 	 	            banSongFeedBack( echonestTrackId); 
  	 	 	 	          }else{
- 	 	 	 	        	customPlaylistScript.addTrackToPLaylist(id);
+ 	 	 	 	        	customPlaylistScript.addTrackToPlaylist(id);
  	 	 	 	        	trackCoverScript.getTrackCover(id);
  	 	 	 	        	//customplaylist1.addTrackToPLaylist(id);
  	 	 	 	        	

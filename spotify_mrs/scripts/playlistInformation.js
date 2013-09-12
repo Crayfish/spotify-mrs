@@ -1,18 +1,18 @@
 
 
 require([
-'scripts/heading',
+'scripts/echonestTasteProfile',
   '$api/models',
   '$api/library#Library',
-   //'scripts/echonestProfile'
+   'scripts/echonestDynamic'
   
 
-], function( echonestTasteProfileManagment, models, Library) {
+], function( echonestTasteProfileManagment, models, Library, echonestDynamic) {
   'use strict';
 
 
   var setUpPlaylistInformation = function() {
-	  setUpPlaylistInformation1(echonestTasteProfileManagment, models, Library/*, echonestTasteProfile*/);
+	  setUpPlaylistInformation1(echonestTasteProfileManagment, models, Library, echonestDynamic);
   };
   
   
@@ -49,7 +49,12 @@ var currentPlaylistObjectsArray = new Array();
 
 var isFirstLocalStorage = false;
 
-//var echonestTasteProfileScript = null;
+var initialTasteProfileCreationNeeded = false;
+var tasteProfilesNeedToBeDeleted = false;
+
+var arrayTasteProfileIdsToBeDeleted = new Array();
+
+var echonestTasteProfileScript = null;
 
 
 function updateArrayStoredPlaylistObjects(){
@@ -65,7 +70,7 @@ function updateArrayStoredPlaylistObjects(){
 }
 
 
-function firstLocalStorageOfPlaylists1(tasteProfileScript){
+function checkIfFirstLocalStorageOfPlaylists1(){
 	console.log('firstLocalStorageOfPlaylists1() was called');
 	
 	if(localStorage.length ==0){isFirstLocalStorage = true};
@@ -182,38 +187,47 @@ function firstLocalStorageOfPlaylists1(tasteProfileScript){
 	    		  localStorage.setItem( playlistURIForFirstStorage, JSON.stringify(entry) );
 	    		  updateArrayStoredPlaylistObjects();
 	    		  //and store for Creation of EchonestTaste Profiles
-	    		  tasteProfileScript.createAllTasteProfiles();
+	    		  initialTasteProfileCreationNeeded = true;
 	    		
 	    
 	    });
 		//else check for new playlists, store new playlists and update arrayStoredPLaylistsobjects
 	}else{
-    currentPlaylistObjectsArray.forEach(function(entry) {
-    	
-    	
-		//console.log(' ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
-    	var playlistURIForComparison = entry.playlistURI;
-    	if (localStorage.getItem(playlistURIForComparison) === null) {
-    		  console.log("DETECTED A NEW PLAYLIST: "+playlistURIForComparison);
-    		  //store the new playlist Object
-    		  localStorage.setItem( playlistURIForComparison, JSON.stringify(entry) );
-    		  updateArrayStoredPlaylistObjects();
-    		  //and store new playlist info for echonest calls
-    		}
-    
-    });
-    
-    
-    
+   
+		checkForDeletedPlaylists();
+		//checkForNewPLaylists();
+		//checkIfDeletedSongsInPLaylists();
+		//checkIfNewSongsInPlaylists();
     
     
 }//end of new Playlist Check
 	
+
 	
 	
 	
 	
-	if(!isFirstLocalStorage){
+	
+	
+	//logic for Taste Profile Calls
+	if(initialTasteProfileCreationNeeded){
+		 echonestTasteProfileScript.initialCreateOfAllTasteProfile();
+	}else{
+	
+		if( tasteProfilesNeedToBeDeleted){
+			 echonestTasteProfileScript.deleteTasteProfiles(arrayTasteProfileIdsToBeDeleted);
+				
+			}
+			
+			
+		}
+	
+	
+	
+	
+}//end of function
+
+function checkForDeletedPlaylists(){
 	//check for deleted playlists in order to delete Echonest Taste Profile
 	if(arrayStoredPlaylistObjects.length > currentPlaylistObjectsArray.length){
 		//console.log('DETECTED PLAYLISTS TO BE DELETED' );
@@ -232,22 +246,43 @@ function firstLocalStorageOfPlaylists1(tasteProfileScript){
 		arrayStoredIDs.forEach(function(entry) {
 			if($.inArray(entry,arrayCurrentIDs)==-1){
 				console.log('DETECTED PLAYLISTS TO BE DELETED: '+entry );
+				tasteProfilesNeedToBeDeleted = true;
 				//remove the playlist from local storage
+				
+				var plyListObject = JSON.parse(localStorage.getItem(entry));
+				console.log('DELETE PLAYLIST OBJECT: '+plyListObject);
+				var deleteTasteProfileID = plyListObject.tasteProfileID;
+				//var deleteTasteProfileID = 'CAHSDET14112611D34';
+				console.log('DELETE ID at PLAYLIST INFORMATION SCRIPT: '+deleteTasteProfileID);
+				arrayTasteProfileIdsToBeDeleted.push(deleteTasteProfileID);
 				 localStorage.removeItem(entry);
 				 updateArrayStoredPlaylistObjects();
-				//store delete info for echonestcalls
+				
+				
 				
 			}
 		});
 		
 	}//end of deleted playlists check
-	
-	//check if there are  deleted Songs in an existing playlist
-	checkIfDeletedSongsInPLaylists();
-	//check if there are new songs in existing playlists
-	checkIfNewSongsInPlaylists();
-	}//end of !isFirstLocalStorageCheck	
-}//end of function
+}
+
+
+function checkForNewPLaylists(){
+	 currentPlaylistObjectsArray.forEach(function(entry) {
+	    	
+	    	
+			//console.log(' ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
+	    	var playlistURIForComparison = entry.playlistURI;
+	    	if (localStorage.getItem(playlistURIForComparison) === null) {
+	    		  console.log("DETECTED A NEW PLAYLIST: "+playlistURIForComparison);
+	    		  //store the new playlist Object
+	    		  localStorage.setItem( playlistURIForComparison, JSON.stringify(entry) );
+	    		  updateArrayStoredPlaylistObjects();
+	    		  //and store new playlist info for echonest calls
+	    		}
+	    
+	    });
+}
 
 function checkIfNewSongsInPlaylists(){
 	console.log('checkIfNewSongsInPlaylists() was called');
@@ -371,7 +406,7 @@ function getArrayOfAllSongsInSpotifyPlaylists1(){
 }
 
 
-function  setUpPlaylistInformation1(tasteProfileScript, models1, Library/* echonestTasteProfile*/){
+function  setUpPlaylistInformation1(tasteProfileScript1, models1, Library, echonestDynamic){
 	
 	//tasteProfileScript.createAllTasteProfiles();
 	console.log('setUpPlaylistInformation1 was called');
@@ -381,7 +416,7 @@ function  setUpPlaylistInformation1(tasteProfileScript, models1, Library/* echon
 	
 	playlistCollection = userLibrary.playlists;
 	
-	//echonestTasteProfileScript = echonestTasteProfileManagment;
+	echonestTasteProfileScript = tasteProfileScript1;
 	
 	
 	playlistCollection.snapshot().done(function(snapshot) {
@@ -415,7 +450,11 @@ function  setUpPlaylistInformation1(tasteProfileScript, models1, Library/* echon
 			    	    //console.log(' playlistI tracks snapshot: '+ snapshot1.get(i));
 			    	    
 			    	    arrayOfAllSongsInSpotifyPlaylists.push(snapshot1.get(i));
+			    	    
 			    	  }
+			    	  
+			    	  echonestDynamic.setArrayOfAllSongs(arrayOfAllSongsInSpotifyPlaylists);
+			    	  
 			    	});
 				
 				//console.log('arrayOfAllSongsInSpotifyPlaylists: '+arrayOfAllSongsInSpotifyPlaylists);
@@ -437,9 +476,9 @@ function  setUpPlaylistInformation1(tasteProfileScript, models1, Library/* echon
 	
 
 
-    localStorage.clear();	
+   // localStorage.clear();	
     //console.log('CLEARED LOCAL STORAGE');
-	firstLocalStorageOfPlaylists1(tasteProfileScript);  
+    checkIfFirstLocalStorageOfPlaylists1();  
  
 	
 	

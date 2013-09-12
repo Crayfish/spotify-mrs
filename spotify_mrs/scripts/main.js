@@ -17,12 +17,12 @@ require([
   'scripts/setupNoveltyCheckBoxes',
   'scripts/playlistInformation',
   'scripts/yearSlider',
-  'scripts/setupPlaylistFilter'
+  //'scripts/setupPlaylistFilter'
   
 ], function( models, /*heading,*/generatePlaylistButton,setupSlider, 
 		echonestDynamic, echonest, setupGenreFilter,setupTagCloud, 
 		setUpSimilarityAccordion, /*echonestTasteProfile,*/ customplaylist, 
-		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupPlaylistFilter) {
+		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider /*setupPlaylistFilter*/) {
   'use strict';
  
   	  /**load a page when the app is started*/
@@ -113,7 +113,7 @@ require([
 		echonestDynamic.startNewSession();
 
 		setupGenreFilter.setupGenreFilter(echonestDynamic);
-		setupPlaylistFilter.setupPlaylistFilter(echonestDynamic);
+		//setupPlaylistFilter.setupPlaylistFilter(echonestDynamic);
 		setUpSimilarityAccordion.setupAccordion();
 
 		setUpSimilarityAccordion.setupChangeSeedArtistButton();
