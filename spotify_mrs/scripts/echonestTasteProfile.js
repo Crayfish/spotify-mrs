@@ -1,16 +1,16 @@
 require([
   '$api/models',
-  'scripts/setupPlaylistFilter'
+ // 'scripts/setupPlaylistFilter'
   
 
  
-], function(models, setupPlaylistFilter) {
+], function(models /*setupPlaylistFilter*/) {
   'use strict';
 
  
 
   var initialCreateOfAllTasteProfile = function() {
-	  initialCreateOfAllTasteProfile1(setupPlaylistFilter);
+	  initialCreateOfAllTasteProfile1(/*setupPlaylistFilter*/);
  
   };
   
@@ -114,7 +114,7 @@ function getBasicInformationOfAllTasteProfiles1(){
 	
 }
 
-function initialCreateOfAllTasteProfile1(setupPlaylistFilter){
+function initialCreateOfAllTasteProfile1(/*setupPlaylistFilter*/){
 	
 	console.log('createTasteProfile () was called');
 	
@@ -244,7 +244,7 @@ function initialCreateOfAllTasteProfile1(setupPlaylistFilter){
                     	            	//readyToSetAutoComplete = true;
                     	            	if(readyToSetAutoComplete){
                     	            		getAllTasteProfileIDs1();
-                    	            		setupPlaylistFilter.setAutoCompleteArray(arrayProfileIDsAndPlaylistNames);
+                    	            		//setupPlaylistFilter.setAutoCompleteArray(arrayProfileIDsAndPlaylistNames);
                     	            	}
                     	            	
                     	            });	

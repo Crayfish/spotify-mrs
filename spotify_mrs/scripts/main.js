@@ -11,7 +11,7 @@ require([
   'scripts/setupGenreFilter',
   'scripts/setupTagCloud',
   'scripts/setUpSimilarityAccordion',
-  'scripts/echonestTasteProfile', 
+  /*'scripts/echonestTasteProfile', */
   'scripts/customplaylist',
   'scripts/jPagesSetup',
   'scripts/setupNoveltyCheckBoxes',
@@ -21,7 +21,7 @@ require([
   
 ], function( models, /*heading,*/generatePlaylistButton,setupSlider, 
 		echonestDynamic, echonest, setupGenreFilter,setupTagCloud, 
-		setUpSimilarityAccordion, echonestTasteProfile, customplaylist, 
+		setUpSimilarityAccordion, /*echonestTasteProfile,*/ customplaylist, 
 		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupPlaylistFilter) {
   'use strict';
  
