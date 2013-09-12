@@ -1,16 +1,16 @@
 require([
   '$api/models',
- // 'scripts/setupPlaylistFilter'
+  'scripts/echonestDynamic'
   
 
  
-], function(models /*setupPlaylistFilter*/) {
+], function(models, echonestDynamic /*setupPlaylistFilter*/) {
   'use strict';
 
- 
+  echonestDynamicScript = echonestDynamic;
 
   var initialCreateOfAllTasteProfile = function() {
-	  initialCreateOfAllTasteProfile1(/*setupPlaylistFilter*/);
+	  initialCreateOfAllTasteProfile1(echonestDynamic);
  
   };
   
@@ -25,6 +25,11 @@ require([
  
   };
   
+  var  deleteTasteProfiles = function(arrayDeleteTasteProfileIDs) {
+	  deleteTasteProfiles1(arrayDeleteTasteProfileIDs);
+ 
+  };
+  
   var  getBasicInformationOfAllTasteProfiles = function() {
 	  getBasicInformationOfAllTasteProfiles1();
  
@@ -35,6 +40,7 @@ require([
   exports.initialCreateOfAllTasteProfile = initialCreateOfAllTasteProfile;
   exports.getAllTasteProfileIDs = getAllTasteProfileIDs;
   exports.getBasicInformationOfAllTasteProfiles = getBasicInformationOfAllTasteProfiles;
+  exports. deleteTasteProfiles =  deleteTasteProfiles;
 });
 
 
@@ -42,6 +48,65 @@ var arrayProfileIDsAndPlaylistNames = new Array();
 var arrayPlaylistObjects = new Array();
 var readyToSetAutoComplete = false;
 var numberOfPlaylists = 0;
+
+var autocompletePlaylistNamesArray = new Array();
+var autocompleTasteProfileIDsAndNamesArray = new Array();
+
+var echonestDynamicScript = null;
+
+
+var arrayStoredPlaylistObjects = new Array();
+
+
+function  deleteTasteProfiles1(arrayDeleteTasteProfileIDs){
+	console.log('deleteTasteProfiles1() was called. Number of profiles to be deleted: '+arrayDeleteTasteProfileIDs.length);
+	
+	var deleteURL = 'http://developer.echonest.com/api/v4/catalog/delete';
+	
+	arrayDeleteTasteProfileIDs.forEach(function(entry){
+		
+		var IdToBeDeleted= entry;
+		
+		console.log('ID TO BE DELETED AT ECHONEST TASTE PROFILE SCRIPT: '+IdToBeDeleted);
+		
+		$.post(deleteURL, 
+	    		{
+	    	'api_key':'BNV9970E1PHXZ9RQW',
+	    	'format':'json',
+	    	'id': IdToBeDeleted,
+	    	    	    	
+	            }).done(function(data) {
+	            	console.log('tasteProfile delete call response: '+JSON.stringify(data.response));
+	            	
+	            	
+	            	for (var i=0; i<=localStorage.length-1; i++)  
+	                {   
+	                   var  key = localStorage.key(i);  
+	                   var playlistObject = JSON.parse(localStorage.getItem(key));  
+	                    
+	                    //console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
+	                    
+	                    arrayStoredPlaylistObjects.push( playlistObject);
+	                }  
+	         
+	            	
+	            	arrayStoredPlaylistObjects.forEach(function(entry){
+	            		var nameAndIdObject = {};
+    	            	
+    	            	
+    	            	nameAndIdObject.name=  entry.playlistName;
+    	            	nameAndIdObject.tasteProfileID = entry.tasteProfileID;
+    	            	
+    	            	arrayProfileIDsAndPlaylistNames.push(nameAndIdObject); 
+	            	});
+	            	
+	            	setupPlaylistSimilarity(arrayProfileIDsAndPlaylistNames);
+	            	
+	            });	
+	});
+	
+}
+
 
 function getBasicInformationOfAllTasteProfiles1(){
 	var randomNumber =  Math.floor(Math.random()*100);
@@ -114,10 +179,12 @@ function getBasicInformationOfAllTasteProfiles1(){
 	
 }
 
-function initialCreateOfAllTasteProfile1(/*setupPlaylistFilter*/){
+function initialCreateOfAllTasteProfile1(echonestDynamic){
 	
 	console.log('createTasteProfile () was called');
 	
+	
+	//echonestDynamicScript = echonestDynamic
 	
 	//test local storage
 	
@@ -197,7 +264,8 @@ function initialCreateOfAllTasteProfile1(/*setupPlaylistFilter*/){
                     	//console.log('Taste Profile Id: '+profile_id );
                     	
                     	
-                    	
+                    	entry.tasteProfileID = profile_id;
+                    	localStorage.setItem( entry.playlistURI,JSON.stringify(entry ));
                     	
                     	
                     	//addSongsToProfile();
@@ -243,8 +311,8 @@ function initialCreateOfAllTasteProfile1(/*setupPlaylistFilter*/){
                     	            	}
                     	            	//readyToSetAutoComplete = true;
                     	            	if(readyToSetAutoComplete){
-                    	            		getAllTasteProfileIDs1();
-                    	            		//setupPlaylistFilter.setAutoCompleteArray(arrayProfileIDsAndPlaylistNames);
+                    	            		//getAllTasteProfileIDs1();
+                    	            		setupPlaylistSimilarity(arrayProfileIDsAndPlaylistNames);
                     	            	}
                     	            	
                     	            });	
@@ -265,7 +333,69 @@ function initialCreateOfAllTasteProfile1(/*setupPlaylistFilter*/){
 }
 
 
+function setupPlaylistSimilarity(IDandNameObjectArray){
 
+	console.log('ECHONEST TASTE PROFILE setupPlaylistSimilarity() was called');
+	
+	//tasteProfileIDsArray.push('CARHJKV140E8922AA8' );
+	
+	autocompleTasteProfileIDsAndNamesArray = IDandNameObjectArray;
+	 console.log('ARRAY USED FOR AUTOCOMPLETE PLAYLIST SIMILARITY: '+JSON.stringify(autocompleTasteProfileIDsAndNamesArray));
+	 
+ for (var i=0; i<=autocompleTasteProfileIDsAndNamesArray.length-1; i++){  
+		 
+		 //var playlistName = JSON.stringify(IDandNameObjectArray[i].name);
+		 var playlistName = autocompleTasteProfileIDsAndNamesArray[i].name;
+		 autocompletePlaylistNamesArray.push(playlistName);
+	
+}
+
+	
+	
+	  $( "#tags1" ).autocomplete({
+    		source: autocompletePlaylistNamesArray,
+    		 minLength: 0,
+    		
+    		 select: function( event, ui){
+    			
+    			 console.log('EventHandlerPlaylist List sent this playlist name: '+ui.item.label);
+    			 
+    			 for (var i=0; i<=autocompleTasteProfileIDsAndNamesArray.length-1; i++){  
+    				 
+    				if(ui.item.label == autocompleTasteProfileIDsAndNamesArray[i].name){
+    					console.log('TRYING TO CHANGE TO PLAYLIST SIMILARITY WITH ID: '+autocompleTasteProfileIDsAndNamesArray[i].tasteProfileID);
+    					echonestDynamicScript.changeToPlaylistSimilarity(autocompleTasteProfileIDsAndNamesArray[i]);
+    					break;
+    				}
+    				
+    			
+    		};
+    			 
+    			 
+    		
+    		
+    		
+    		
+    			 
+    			 //echonestDynamic.changeToPlaylistSimilarity( ui.item.label);
+    			 
+    			$(this).val(''); return false;
+    			 
+    		 }
+         
+        
+    		
+    		 }).focus(function(){     
+    		        //Use the below line instead of triggering keydown
+    		        //$(this).data("autocomplete").search($(this).val());
+    		        //$(this).autocomplete("search");
+    			 
+    		        $(this).autocomplete('search', $(this).val());
+    		    });
+	 
+	 
+	 
+}
 
 function getAllTasteProfileIDs1(){
 	var randomNumber =  Math.floor(Math.random()*100);
@@ -340,7 +470,7 @@ var randomNumber =  Math.floor(Math.random()*100);
 	        		    	'id': IdToBeDeleted,
 	        		    	    	    	
 	        		            }).done(function(data) {
-	        		            	console.log('tasteProfile delete call response: '+JSON.stringify(data.response));
+	        		            	console.log('tasteProfile delete all call response: '+JSON.stringify(data.response));
 	        		            	
 	        		            	
 	        		            	

@@ -31,7 +31,7 @@ function setupPlaylistFilter1(echonestDynamic){
 	//tasteProfileIDsArray.push('CARHJKV140E8922AA8' );
 	
 	  $( "#tags1" ).autocomplete({
-    		 source: playlistNamesArray,
+    		// source: playlistNamesArray,
     		 minLength: 0,
     		
     		 select: function( event, ui){

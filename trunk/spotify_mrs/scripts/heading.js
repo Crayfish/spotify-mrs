@@ -23,10 +23,10 @@ require([
   exports.writeHeading = writeHeading;
 });
 
+var arrayProfileIDsAndPlaylistNames = new Array();
 var arrayPlaylistObjects = new Array();
 var readyToSetAutoComplete = false;
 var numberOfPlaylists = 0;
-
 
 function  createAllTasteProfiles1(){
 	console.log('createAllTasteProfiles1() was called ');
@@ -47,7 +47,8 @@ function  createAllTasteProfiles1(){
     //get all playlist Information from local storage
     
   
-        for (var i=0; i<=localStorage.length-1; i++)  
+        for (var i=0; i<localStorage.length; i++)  
+        	
         {   
            var  key = localStorage.key(i);  
            var playlistObject = JSON.parse(localStorage.getItem(key));  
@@ -68,17 +69,10 @@ function  createAllTasteProfiles1(){
         var createURL = "http://developer.echonest.com/api/v4/catalog/create";  
        
         
-	// for (var i=0; i<=arrayPlaylistObjects.length-1; i++){  
-		//var notYetFinishedTransmittingProfileData = true;
-		//var readyforNextOne = true;
-		//var i =7;
+	
 		
-        //while(notYetFinishedTransmittingProfileData){
-        	//if(readyforNextOne){
-        		//notYetFinishedTransmittingProfileData = false;
-		
-		/*arrayPlaylistObjects.forEach(function(entry) {
-			console.log(' ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
+		arrayPlaylistObjects.forEach(function(entry) {
+			//console.log(' ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
 		
 		
 		
@@ -86,7 +80,7 @@ function  createAllTasteProfiles1(){
 		
 					//readyforNextOne = false;
         		 var tasteProfileName = JSON.stringify(entry.playlistName);
-        		 console.log('TASTE PROFILE NAME: '+ tasteProfileName);
+        		console.log('TASTE PROFILE NAME: '+ tasteProfileName);
         		 //var jsonDataVariable = JSON.stringify(arrayPlaylistObjects[i].itemArray );  
         		 var jsonDataVariable = entry.itemArray; 
         		 
@@ -164,7 +158,7 @@ function  createAllTasteProfiles1(){
                     	
                     });
         	
-		});*/
+		});
 	
 	
 }
