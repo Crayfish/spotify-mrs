@@ -1,17 +1,22 @@
 require([
-         '$api/models',
+         //'$api/models',
         
-         'scripts/setupPlaylistFilter'
+         //'scripts/setupPlaylistFilter'
  
-], function(models, setupPlaylistFilter) {
+], function(/*models,*/ /*setupPlaylistFilter*/) {
   'use strict';
 
   
 
   var initalCreationOfTasteProfiles = function() {
-    console.log('initalCreationOfTasteProfiles() was called');
+	  initalCreationOfTasteProfiles1();
  
   };
 
   exports.initalCreationOfTasteProfiles = initalCreationOfTasteProfiles;
 });
+
+
+function initalCreationOfTasteProfiles1(){
+	 console.log('initalCreationOfTasteProfiles() was called');
+}
