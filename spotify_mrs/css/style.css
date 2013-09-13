@@ -134,6 +134,8 @@ visibility: hidden;
 }
 
 .throbberContainer{
+	height:100%;
+	width:100%;
 	
 	
 }
@@ -200,4 +202,17 @@ width: 50px;
 
 .wrapper{
 	margin-top:15px;
+}
+
+#btnLoadmore{
+	display:block;
+	color:red;
+	margin-left:300px;
+	margin-right:auto;
+	
+	margin-bottom:20px;
+	z-index:11111;
+	text-decoration:none;
+	height:30px;
+}
 
