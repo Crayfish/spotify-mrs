@@ -624,7 +624,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1/*, pl
     $("#albumCoverContainer").hide();
     //cover.hide();
     
-	    	var throbberContainer = document.getElementById('throbberContainer');
+	    	var throbberContainer = document.getElementById('flip-toggle');
 	    	throbber = throbber1.forElement( throbberContainer);  	
 	    	throbber.setPosition( 'center',  'center');
 	    	

@@ -53,6 +53,8 @@ require([
 
 var playlist = null;
 var list = null;
+var playlists = new Array();
+var playlistcnt = 0;
 
 /**
  * Create a new empty playlist.
@@ -68,6 +70,8 @@ function createNewPlaylist1(models1, List){
 	playlist = null;
 	playlist = models1.Playlist.createTemporary("MRS Playlist").done(function(playlist){
 		playlist.collaborative = true;
+		playlists[playlistcnt] = playlist;
+		playlistcnt++;
 		console.log("Empty playlist created: "+playlist.uri);
 	});
 	

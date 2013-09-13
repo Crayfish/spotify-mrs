@@ -10,13 +10,20 @@ require([
   'use strict';
 
 
-  var setUpNextSongsButton = function() {
-	    var generateNextSongsButton = document.getElementById('nextSongsButton');
-	    generateNextSongsButton.onclick=function(){
-	    	console.log("Pressed NextSongs Button");
-	    	
-	    echonestDynamic.getNextSong();
-	  };
+  var setUpNextSongsButton = function(){
+
+		$('#btnLoadmore').click( function(){
+			console.log("Pressed NextSongs Button");
+			echonestDynamic.getNextSong();
+		}); 
+		  
+		  
+//	    var generateNextSongsButton = document.getElementById('nextSongsButton');
+//	    generateNextSongsButton.onclick=function(){
+//	    	console.log("Pressed NextSongs Button");
+//	    	
+//	    echonestDynamic.getNextSong();
+//	  };
   };
 
   
