@@ -35,12 +35,27 @@ require([
  
   };
   
+  var createNewTasteProfiles = function(arrayNewPlaylistObjects){
+	  createNewTasteProfiles1(arrayNewPlaylistObjects);
+  };
+  
+var setupPlaylistSimilarity = function(){
+	  setupPlaylistSimilarity1();
+};
 
+var noNewOrDeletedPlaylists = function(){
+	noNewOrDeletedPlaylists1();
+}
+
+  
   exports.deleteAllTasteProfiles = deleteAllTasteProfiles;
   exports.initialCreateOfAllTasteProfile = initialCreateOfAllTasteProfile;
   exports.getAllTasteProfileIDs = getAllTasteProfileIDs;
   exports.getBasicInformationOfAllTasteProfiles = getBasicInformationOfAllTasteProfiles;
   exports. deleteTasteProfiles =  deleteTasteProfiles;
+  exports.createNewTasteProfiles = createNewTasteProfiles;
+  exports.setupPlaylistSimilarity =  setupPlaylistSimilarity;
+  exports.noNewOrDeletedPlaylists = noNewOrDeletedPlaylists;
 });
 
 
@@ -55,11 +70,213 @@ var autocompleTasteProfileIDsAndNamesArray = new Array();
 var echonestDynamicScript = null;
 
 
-var arrayStoredPlaylistObjects = new Array();
+//var arrayStoredPlaylistObjects = new Array();
 
+var numberOfNewPlaylists = 0;
+
+var arrayNewProfileIDsAndPlaylistNames = new Array();
+
+
+function noNewOrDeletedPlaylists1(){
+	
+	console.log('noNewOrDeletedPlaylists1() was called');
+	//get the info from local storage
+	var arrayStoredPlaylistObjects = new Array();
+
+	for (var i=0; i<=localStorage.length-1; i++)  
+    {   
+       var  key = localStorage.key(i);  
+       var playlistObject = JSON.parse(localStorage.getItem(key));  
+        
+        //console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
+        
+        arrayStoredPlaylistObjects.push( playlistObject);
+    }  
+	
+	//create the autocomplete Objects and add them to array
+	arrayStoredPlaylistObjects.forEach(function(entry){
+		
+		var nameAndIdObject = {};
+    	
+    	
+    	nameAndIdObject.name=  entry.playlistName;
+    	nameAndIdObject.tasteProfileID = entry.tasteProfileID;
+    	
+    	
+    	arrayNewProfileIDsAndPlaylistNames.push(nameAndIdObject); 
+		
+	});
+	
+	addToAutocompleteArray();
+	
+	
+}
+
+function createNewTasteProfiles1(arrayNewPlaylistObjects){
+	console.log('createNewTasteProfiles1() was called');
+	
+	console.log('ECHONEST TASTE PROFILE arrayNewPlaylistObjects: '+arrayNewPlaylistObjects);
+	
+	var arrayStoredPlaylistObjects = new Array();
+	
+	//get already stored playlist Objects
+	
+	for (var i=0; i<=localStorage.length-1; i++)  
+    {   
+       var  key = localStorage.key(i);  
+       var playlistObject = JSON.parse(localStorage.getItem(key));  
+        
+        //console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
+        
+        arrayStoredPlaylistObjects.push( playlistObject);
+        
+    	
+    }  
+	
+	
+	//get already stored objects name and Id, add them to new arrayNewProfileIDsAndPlaylistNames
+	
+	arrayStoredPlaylistObjects.forEach(function(entry){
+		
+		var nameAndIdObject = {};
+    	
+    	var profileName1 = entry.playlistName;
+    	//console.log('PROFILE NAME USED FOR IDandNAME OBJECT: '+profileName1);
+    	//console.log('UND SO SIEHT EIN STRING AUS: '+"das ist ein String");
+    	nameAndIdObject.name=  profileName1;
+    	nameAndIdObject.tasteProfileID = entry.tasteProfileID;
+    	
+    	
+    	var hasToBeAdded = checkIfAutocompleteObjectHasToBeAddedToArray(nameAndIdObject);
+    	console.log('CREATE NEW TASTE PROFILES NAME AND ID OBJECT HAS TO BE ADDED: '+hasToBeAdded);
+    	if(hasToBeAdded){
+        	arrayNewProfileIDsAndPlaylistNames.push(nameAndIdObject); 
+        	}
+		
+	});
+	
+	
+	//for each new playlist
+	arrayNewPlaylistObjects.forEach(function(entry){
+		console.log('NEW PLAYLIST OBJECT FOR ECHONEST TASTE PROFILE CREATION: '+JSON.stringify(entry));
+		
+	 
+	   
+	    
+	    
+	        numberOfNewPlaylists = arrayNewPlaylistObjects.length;
+	        
+	        console.log('NUMBER OF NEW PLAYLISTS TO BE CREATED AT ECHONEST: '+ numberOfNewPlaylists);
+		
+		
+		
+		//create a tasteProfile for each playlistObject
+		
+	        var createURL = "http://developer.echonest.com/api/v4/catalog/create";  
+	       
+	        
+	
+			
+			//arrayNewPlaylistObjects.forEach(function(entry) {
+				//console.log(' ENTRY OF arrayNewPlaylistObjects: '+JSON.stringify(entry));
+			
+			
+			
+				
+			
+						//readyforNextOne = false;
+	        		 var tasteProfileName = entry.playlistName;
+	        		 console.log('TASTE PROFILE NAME: '+ tasteProfileName);
+	        		 //var jsonDataVariable = JSON.stringify(arrayPlaylistObjects[i].itemArray );  
+	        		 var jsonDataVariable = entry.itemArray; 
+	        		 
+	        		
+	        		 //console.log('TASTE PROFILE DATA USED FOR TRANSMISSION TO ECHONEST: '+ JSON.stringify(arrayPlaylistObjects[i].itemArray ));
+	        	
+	        	$.post(createURL, 
+	            		{
+	            	'api_key':'BNV9970E1PHXZ9RQW',
+	            	'format':'json',
+	            	'type':'song',
+	            	'name': Math.floor(Math.random()*10000)+tasteProfileName
+	            	
+	                    }).done(function(data) {	
+	                    	console.log(JSON.stringify(data.response));
+	                    	
+	                    	var profile_id = data.response.id;
+	                    	var profileName = data.response.name;
+	                    	
+	                    	//console.log('Taste Profile Id: '+profile_id );
+	                    	
+	                    	
+	                    	//store the new TasteProfileId in playlist object
+	                    	entry.tasteProfileID = profile_id;
+	                    	localStorage.setItem( entry.playlistURI,JSON.stringify(entry ));
+	                    	
+	                    	//
+	                    	
+	                    	//addSongsToProfile();
+	                    	
+	                    	var updateURL = "http://developer.echonest.com/api/v4/catalog/update";
+	                    	
+	                    	
+	                    		$.post(updateURL, 
+	                    	    		{
+	                    	    	'api_key':'BNV9970E1PHXZ9RQW',
+	                    	    	'format':'json',
+	                    	    	'id': profile_id,
+	                    	    	'data_type':'json',
+	                    	    	'data':  JSON.stringify(jsonDataVariable )       	    	
+	                    	            }).done(function(data) {
+	                    	            	console.log('tasteProfile new Profiles update call response: '+JSON.stringify(data.response));
+	                    	            	
+	                    	            	
+	                    	            	
+	                    	         //add Taste Profile Object {id and name} to array    	
+	                    	            	
+	                    	            	var nameAndIdObject = {};
+	                    	            	
+	                    	            	var profileName1 = profileName.substring(4).replace(/"/g , "");
+	                    	            	//console.log('PROFILE NAME USED FOR IDandNAME OBJECT: '+profileName1);
+	                    	            	//console.log('UND SO SIEHT EIN STRING AUS: '+"das ist ein String");
+	                    	            	nameAndIdObject.name=  profileName1;
+	                    	            	nameAndIdObject.tasteProfileID = profile_id;
+	                    	            	
+	                    	            	arrayNewProfileIDsAndPlaylistNames.push(nameAndIdObject);  		
+	                    	            	console.log('ARRAY  TASTE PROFILE OBJECTS at createNewTastePRofile(): '+JSON.stringify(arrayNewProfileIDsAndPlaylistNames));
+	                    	            	
+	                    	              	//i++;
+	                    	            	//readyforNextOne = true;
+	                    	          
+	                    	            	
+	                    	            	
+	                    	           //if all playlist have a profile set autocomplete for playlist similarity
+	                    	            	
+	                    	            	numberOfNewPlaylists = numberOfNewPlaylists-1;
+	                    	            	if(numberOfNewPlaylists == 0){readyToSetAutoComplete = true;
+	                    	            								//notYetFinishedTransmittingProfileData = false;
+	                    	            	}
+	                    	            	//readyToSetAutoComplete = true;
+	                    	            	if(readyToSetAutoComplete){
+	                    	            		//getAllTasteProfileIDs1();
+	                    	            		addToAutocompleteArray();
+	                    	            	}
+	                    	            	
+	                    	            });	
+	                    		
+	                    	
+	                    });
+	        	
+			//});
+		
+	});
+	
+}
 
 function  deleteTasteProfiles1(arrayDeleteTasteProfileIDs){
 	console.log('deleteTasteProfiles1() was called. Number of profiles to be deleted: '+arrayDeleteTasteProfileIDs.length);
+	
+
 	
 	var deleteURL = 'http://developer.echonest.com/api/v4/catalog/delete';
 	
@@ -79,31 +296,50 @@ function  deleteTasteProfiles1(arrayDeleteTasteProfileIDs){
 	            	console.log('tasteProfile delete call response: '+JSON.stringify(data.response));
 	            	
 	            	
-	            	for (var i=0; i<=localStorage.length-1; i++)  
-	                {   
-	                   var  key = localStorage.key(i);  
-	                   var playlistObject = JSON.parse(localStorage.getItem(key));  
-	                    
-	                    //console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
-	                    
-	                    arrayStoredPlaylistObjects.push( playlistObject);
-	                }  
+	            	
 	         
+	            
 	            	
-	            	arrayStoredPlaylistObjects.forEach(function(entry){
-	            		var nameAndIdObject = {};
-    	            	
-    	            	
-    	            	nameAndIdObject.name=  entry.playlistName;
-    	            	nameAndIdObject.tasteProfileID = entry.tasteProfileID;
-    	            	
-    	            	arrayProfileIDsAndPlaylistNames.push(nameAndIdObject); 
-	            	});
-	            	
-	            	setupPlaylistSimilarity(arrayProfileIDsAndPlaylistNames);
 	            	
 	            });	
 	});
+	
+	
+	
+	//set the autocomplete data
+	var arrayStoredPlaylistObjects = new Array();
+	
+	for (var i=0; i<=localStorage.length-1; i++)  
+    {   
+       var  key = localStorage.key(i);  
+       var playlistObject = JSON.parse(localStorage.getItem(key));  
+        
+        //console.log('NEXT PLAYLIST OBJECT: '+JSON.stringify(playlistObject));
+        
+        arrayStoredPlaylistObjects.push( playlistObject);
+    }  
+	
+	
+	arrayStoredPlaylistObjects.forEach(function(entry){
+		var nameAndIdObject = {};
+    	
+    	
+    	nameAndIdObject.name=  entry.playlistName;
+    	nameAndIdObject.tasteProfileID = entry.tasteProfileID;
+    	
+    	
+    	var hasToBeAdded = checkIfAutocompleteObjectHasToBeAddedToArray(nameAndIdObject);
+    	console.log('DELETE TASTE PROFILES, OBJECT HAS TO BE ADDED: '+hasToBeAdded);
+    	if(hasToBeAdded){
+    		
+    	arrayNewProfileIDsAndPlaylistNames.push(nameAndIdObject); 
+    	}
+	});
+	
+	
+	addToAutocompleteArray();
+	
+	
 	
 }
 
@@ -143,7 +379,7 @@ function getBasicInformationOfAllTasteProfiles1(){
 	        		
 	        		for(var i= 0; i < arrayAllTasteProfileIDs.length; i++){
 	        			var idForInfo = JSON.stringify(arrayAllTasteProfileIDs[i].id).replace(/"/g , "");
-	        			console.log('ID FOR INFO: '+idForInfo);
+	        			//console.log('ID FOR INFO: '+idForInfo);
 	        			
 	        			$.getJSON(getBasicInfoURL, 
 	        		    		{'id':idForInfo
@@ -263,7 +499,7 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
                     	
                     	//console.log('Taste Profile Id: '+profile_id );
                     	
-                    	
+                    	//store the new playlist objects
                     	entry.tasteProfileID = profile_id;
                     	localStorage.setItem( entry.playlistURI,JSON.stringify(entry ));
                     	
@@ -295,8 +531,8 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
                     	            	nameAndIdObject.name=  profileName1;
                     	            	nameAndIdObject.tasteProfileID = profile_id;
                     	            	
-                    	            	arrayProfileIDsAndPlaylistNames.push(nameAndIdObject);  		
-                    	            	console.log('ARRAY TASTE PROFILE OBJECTS: '+JSON.stringify(arrayProfileIDsAndPlaylistNames));
+                    	            	arrayNewProfileIDsAndPlaylistNames.push(nameAndIdObject);  		
+                    	            	console.log('ARRAY TASTE PROFILE OBJECTS: '+JSON.stringify(arrayNewProfileIDsAndPlaylistNames));
                     	            	
                     	              	//i++;
                     	            	//readyforNextOne = true;
@@ -312,7 +548,7 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
                     	            	//readyToSetAutoComplete = true;
                     	            	if(readyToSetAutoComplete){
                     	            		//getAllTasteProfileIDs1();
-                    	            		setupPlaylistSimilarity(arrayProfileIDsAndPlaylistNames);
+                    	            		 addToAutocompleteArray();
                     	            	}
                     	            	
                     	            });	
@@ -333,24 +569,74 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
 }
 
 
-function setupPlaylistSimilarity(IDandNameObjectArray){
+function checkIfAutocompleteObjectHasToBeAddedToArray(autocompleteObject){
+//check for Duplicate Entrys in autocompleTasteProfileIDsAndNamesArray
+	
+	
 
-	console.log('ECHONEST TASTE PROFILE setupPlaylistSimilarity() was called');
+	for(var i = 0; i<arrayNewProfileIDsAndPlaylistNames.length; i++){
+		var comparisonTasteProfileID = arrayNewProfileIDsAndPlaylistNames[i].tasteProfileID
+		
+		//console.log('comparisonTasteProfileID: '+comparisonTasteProfileID);
+		//console.log('tasteProfileId of current Object: '+autocompleteObject.tasteProfileID);
+		
+		if(comparisonTasteProfileID==autocompleteObject.tasteProfileID){
+			console.log('DEDECTED A DUPLICAT ENTRY IN ARRAY NEW PROFILE IDS AND NAMES');
+			//break;
+			return false;
+		}
+			
+		
+	}
+	
+	return true;
+	
+	
+}	
+	
+function addToAutocompleteArray(){
+	console.log('ECHONEST TASTE PROFILE addToAutocompleteArray() was called');
 	
 	//tasteProfileIDsArray.push('CARHJKV140E8922AA8' );
 	
-	autocompleTasteProfileIDsAndNamesArray = IDandNameObjectArray;
+	
+	
+	
+	/*arrayNewProfileIDsAndPlaylistNames.forEach(function(entry){
+		autocompleTasteProfileIDsAndNamesArray.push(entry);
+	});*/
+	
+	
+	autocompleTasteProfileIDsAndNamesArray =arrayNewProfileIDsAndPlaylistNames;
+	
+
 	 console.log('ARRAY USED FOR AUTOCOMPLETE PLAYLIST SIMILARITY: '+JSON.stringify(autocompleTasteProfileIDsAndNamesArray));
 	 
- for (var i=0; i<=autocompleTasteProfileIDsAndNamesArray.length-1; i++){  
-		 
+	 
+ for (var i=0; i<autocompleTasteProfileIDsAndNamesArray.length; i++){  
+		 var doubleName = false;
 		 //var playlistName = JSON.stringify(IDandNameObjectArray[i].name);
 		 var playlistName = autocompleTasteProfileIDsAndNamesArray[i].name;
-		 autocompletePlaylistNamesArray.push(playlistName);
+		if($.inArray(playlistName, autocompletePlaylistNamesArray )>-1){
+			console.log('TRYING TO PUTTING A DUPLICATE ENTRY INTO AUTOCOMPLETE NAMES ARRAY');
+			doubleName = true;
+		}
+		
+		if(!doubleName){autocompletePlaylistNamesArray.push(playlistName)};
+		}
+		 
+		 //}
 	
+
+ 
+ console.log(' addToAutocompleteArray() NAMES ARRAY FOR AUTOCOMPLETE: '+autocompletePlaylistNamesArray)
+
 }
 
-	
+function setupPlaylistSimilarity1(){
+
+
+	console.log('ECHONEST TASTEPROFILE setupPlaylistSimilarity1() was called');
 	
 	  $( "#tags1" ).autocomplete({
     		source: autocompletePlaylistNamesArray,
@@ -429,8 +715,10 @@ var randomNumber =  Math.floor(Math.random()*100);
 	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key=BNV9970E1PHXZ9RQW&format=json'+'&_='+randomNumber;
 	var deleteURL = 'http://developer.echonest.com/api/v4/catalog/delete';
 		
+	
+	
 	$.getJSON(listTasteProfileIDsURL, 
-	    		{'results':'200'
+	    		{'results':'400'
 	            },
 	            function(data) {
 	        if (checkResponse(data)) {
