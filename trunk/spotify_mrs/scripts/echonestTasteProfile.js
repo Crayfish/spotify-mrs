@@ -45,6 +45,10 @@ var setupPlaylistSimilarity = function(){
 
 var noNewOrDeletedPlaylists = function(){
 	noNewOrDeletedPlaylists1();
+};
+
+var deleteSongsInTasteProfiles = function(deleteSongsObjectsArray){
+	deleteSongsInTasteProfiles1(deleteSongsObjectsArray);
 }
 
   
@@ -56,6 +60,7 @@ var noNewOrDeletedPlaylists = function(){
   exports.createNewTasteProfiles = createNewTasteProfiles;
   exports.setupPlaylistSimilarity =  setupPlaylistSimilarity;
   exports.noNewOrDeletedPlaylists = noNewOrDeletedPlaylists;
+  exports.deleteSongsInTasteProfiles = deleteSongsInTasteProfiles;
 });
 
 
@@ -76,6 +81,15 @@ var numberOfNewPlaylists = 0;
 
 var arrayNewProfileIDsAndPlaylistNames = new Array();
 
+
+function deleteSongsInTasteProfiles1(deleteSongsObjectsArray){
+	console.log('ECHONEST TASTE PROFILE deleteSongsInTasteProfiles1() was called');
+	console.log('ECHONEST TASTE PROFILE DELETE OBJECT: '+JSON.stringify(deleteSongsObjectsArray));
+	
+	
+	
+	
+}
 
 function noNewOrDeletedPlaylists1(){
 	
