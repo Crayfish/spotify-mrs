@@ -52,12 +52,15 @@ var isFirstLocalStorage = false;
 var initialTasteProfileCreationNeeded = false;
 var tasteProfilesNeedToBeDeleted = false;
 var  newTasteProfileIsNeeded = false;
+var tasteProfileDeleteUpdateIsNeeded = false;
 
 var arrayTasteProfileIdsToBeDeleted = new Array();
 var arrayNewPlaylistObjects = new Array();
 
 var echonestTasteProfileScript = null;
 
+
+var deleteSongsObjectsArray = new Array();
 
 function updateArrayStoredPlaylistObjects(){
 	for (var i=0; i<=localStorage.length-1; i++)  
@@ -198,7 +201,7 @@ function checkIfFirstLocalStorageOfPlaylists1(){
    
 		checkForDeletedPlaylists();
 		checkForNewPLaylists();
-		//checkIfDeletedSongsInPLaylists();
+		checkIfDeletedSongsInPLaylists();
 		//checkIfNewSongsInPlaylists();
     
     
@@ -226,6 +229,9 @@ function checkIfFirstLocalStorageOfPlaylists1(){
 		//if there are no new or deleted playlists
 		if(!tasteProfilesNeedToBeDeleted && !newTasteProfileIsNeeded){
 			echonestTasteProfileScript.noNewOrDeletedPlaylists();
+		}
+		if(tasteProfileDeleteUpdateIsNeeded){
+			echonestTasteProfileScript.deleteSongsInTasteProfiles(deleteSongsObjectsArray);
 		}
 			
 	}
@@ -396,6 +402,7 @@ function checkIfDeletedSongsInPLaylists(){
 		var storedPlaylistItemArray = new Array();
 		var currentPlaylistItemArray = new Array();
 		var storedPlaylistURI = entry.playlistURI;
+		var deleteObjectNeedsToBeStored = false;
 		
 		storedPlaylistItemArray = entry.itemArray;
 		
@@ -415,6 +422,12 @@ function checkIfDeletedSongsInPLaylists(){
 		}
 		
 		
+		//create a deleteObject and store it in an array for the echonnest call
+		var deleteObject = {};
+		deleteObject.tasteProfileId = entry.tasteProfileID ;
+		deleteObject.deleteTrackIdsArray= [];
+		
+		
 		
 		//comparing the two itemArrays, first detect deleted songs
 		
@@ -430,16 +443,32 @@ function checkIfDeletedSongsInPLaylists(){
 			});
 			
 			
+			
 			if($.inArray( storedTrackIDForComparison,currentObjectTrackIdsArray )==-1){
 				console.log('DETECTED A DELETED SONG IN CURRENT PLAYLIST: '+playlistObjectForComparison.playlistName);
 				localStorage.setItem(playlistObjectForComparison.playlistURI ,JSON.stringify(playlistObjectForComparison));
 				updateArrayStoredPlaylistObjects();
-				//echonest Taste Profile update call
+				
+				
+				
+				
+				
+			    var deleteTrackID = storedTrackIDForComparison;
+				
+				deleteObject.deleteTrackIdsArray.push(deleteTrackID);
+				
+				deleteObjectNeedsToBeStored = true;
+					
+				
+				
 			};
 		});
 		
 		
-		
+		if(deleteObjectNeedsToBeStored){
+			deleteSongsObjectsArray.push(deleteObject);
+			tasteProfileDeleteUpdateIsNeeded = true;
+		}
 		
 		
 		
