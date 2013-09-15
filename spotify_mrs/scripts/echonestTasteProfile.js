@@ -49,9 +49,13 @@ var noNewOrDeletedPlaylists = function(){
 
 var deleteSongsInTasteProfiles = function(deleteSongsObjectsArray){
 	deleteSongsInTasteProfiles1(deleteSongsObjectsArray);
+};
+
+var  addSongsInTasteProfiles = function(addSongsObjectsArray){
+	addSongsInTasteProfiles1(addSongsObjectsArray);
 }
 
-  
+
   exports.deleteAllTasteProfiles = deleteAllTasteProfiles;
   exports.initialCreateOfAllTasteProfile = initialCreateOfAllTasteProfile;
   exports.getAllTasteProfileIDs = getAllTasteProfileIDs;
@@ -61,6 +65,7 @@ var deleteSongsInTasteProfiles = function(deleteSongsObjectsArray){
   exports.setupPlaylistSimilarity =  setupPlaylistSimilarity;
   exports.noNewOrDeletedPlaylists = noNewOrDeletedPlaylists;
   exports.deleteSongsInTasteProfiles = deleteSongsInTasteProfiles;
+  exports.addSongsInTasteProfiles =  addSongsInTasteProfiles;
 });
 
 
@@ -82,11 +87,70 @@ var numberOfNewPlaylists = 0;
 var arrayNewProfileIDsAndPlaylistNames = new Array();
 
 
+function addSongsInTasteProfiles1(addSongsObjectsArray){
+	console.log('ECHONEST TASTE PROFILE addSongsInTasteProfiles1() was called');
+	console.log('ECHONEST TASTE PROFILE ADD SONGS  OBJECT: '+JSON.stringify(addSongsObjectsArray));
+	
+	
+	var addSongsURL = "http://developer.echonest.com/api/v4/catalog/update";
+	
+	addSongsObjectsArray.forEach(function(entry){
+		var tasteProfileID = entry.tasteProfileId;
+		console.log('ADD SONGS TASTE PROFILE ID USED FOR ECHONEST CALL: '+tasteProfileID);
+		var jsonData = JSON.stringify(entry.addItemsArray);
+			
+			
+		
+			
+		$.post(addSongsURL, 
+		    		{
+		    	'api_key':'BNV9970E1PHXZ9RQW',
+		    	'format':'json',
+		    	'id': tasteProfileID,
+		    	'data_type':'json',
+		    	'data' : jsonData
+		    	
+		            }).done(function(data) {	
+		            	console.log('ADD SONGS UPDATE CALL RESPONSE: '+JSON.stringify(data.response));
+			
+		            });
+	});
+	
+
+	
+	
+}
+
 function deleteSongsInTasteProfiles1(deleteSongsObjectsArray){
 	console.log('ECHONEST TASTE PROFILE deleteSongsInTasteProfiles1() was called');
 	console.log('ECHONEST TASTE PROFILE DELETE OBJECT: '+JSON.stringify(deleteSongsObjectsArray));
 	
 	
+	var deleteSongsURL = "http://developer.echonest.com/api/v4/catalog/update";
+	
+	deleteSongsObjectsArray.forEach(function(entry){
+		var tasteProfileID = entry.tasteProfileId;
+		console.log('DELETE SONGS TASTE PROFILE ID USED FOR ECHONEST CALL: '+tasteProfileID);
+		var jsonData = JSON.stringify(entry.deleteItemsArray);
+			
+			
+		
+			
+		$.post(deleteSongsURL, 
+		    		{
+		    	'api_key':'BNV9970E1PHXZ9RQW',
+		    	'format':'json',
+		    	'id': tasteProfileID,
+		    	'data_type':'json',
+		    	'data' : jsonData
+		    	
+		            }).done(function(data) {	
+		            	console.log('DELETE SONGS UPDATE CALL RESPONSE: '+JSON.stringify(data.response));
+			
+		            });
+	});
+	
+
 	
 	
 }
@@ -117,8 +181,9 @@ function noNewOrDeletedPlaylists1(){
     	nameAndIdObject.tasteProfileID = entry.tasteProfileID;
     	
     	
+    	if(checkIfAutocompleteObjectHasToBeAddedToArray(nameAndIdObject)){
     	arrayNewProfileIDsAndPlaylistNames.push(nameAndIdObject); 
-		
+    	}
 	});
 	
 	addToAutocompleteArray();
@@ -257,6 +322,7 @@ function createNewTasteProfiles1(arrayNewPlaylistObjects){
 	                    	            	nameAndIdObject.tasteProfileID = profile_id;
 	                    	            	
 	                    	            	arrayNewProfileIDsAndPlaylistNames.push(nameAndIdObject);  		
+	                    	            	
 	                    	            	console.log('ARRAY  TASTE PROFILE OBJECTS at createNewTastePRofile(): '+JSON.stringify(arrayNewProfileIDsAndPlaylistNames));
 	                    	            	
 	                    	              	//i++;
@@ -594,8 +660,8 @@ function checkIfAutocompleteObjectHasToBeAddedToArray(autocompleteObject){
 		//console.log('comparisonTasteProfileID: '+comparisonTasteProfileID);
 		//console.log('tasteProfileId of current Object: '+autocompleteObject.tasteProfileID);
 		
-		if(comparisonTasteProfileID==autocompleteObject.tasteProfileID){
-			console.log('DEDECTED A DUPLICAT ENTRY IN ARRAY NEW PROFILE IDS AND NAMES');
+		if(comparisonTasteProfileID==autocompleteObject.tasteProfileID||autocompleteObject.tasteProfileID == null){
+			console.log('DEDECTED A DUPLICAT ENTRY IN ARRAY NEW PROFILE IDS AND NAMES: '+JSON.stringify(autocompleteObject));
 			//break;
 			return false;
 		}
