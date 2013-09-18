@@ -103,7 +103,9 @@ function setUpArtistVarietySlider1(echonestDynamic){
 	
 }
 
-function setUpPopSlider1(echonestDynamic){
+
+//old code for range slider
+/*function setUpPopSlider1(echonestDynamic){
           console.log('SetUpPopSlider() betreten');
                 //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
                 $( "#slider-pop" ).slider({
@@ -132,16 +134,16 @@ function setUpPopSlider1(echonestDynamic){
                 	
                 	echonestDynamic.changeArtistPopularity();
                         //console.log("Pop slider Stop");
-                	/*if(document.getElementById('song').checked){
+                	if(document.getElementById('song').checked){
                         echonestDynamic.changeArtistPopularity();
                 	}else{
                 		 echonestDynamic.changeArtistPopularity();
-                	}*/
+                	}
                 },
                
-                /*change: function( event, ui ) {
+                change: function( event, ui ) {
                         console.log('Slider Change Event');
-                }*/
+                }
                
                 });
                
@@ -149,9 +151,9 @@ function setUpPopSlider1(echonestDynamic){
                
                 $( "#pop" ).val(  $( "#slider-pop" ).slider( "values", 0 ) +
                 " - " + $( "#slider-pop" ).slider( "values", 1 ) );
-}
+}*/
 
-function setUpHotSlider1(echonestDynamic){
+/*function setUpHotSlider1(echonestDynamic){
         console.log('SetUpSongHotSlider() betreten');
         //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
         $( "#slider-hot" ).slider({
@@ -174,18 +176,76 @@ function setUpHotSlider1(echonestDynamic){
         stop: function ( event, ui ) {
                 console.log('Hot slider Stop');
                 echonestDynamic.changeArtistHotness();
-                /*if(document.getElementById('song').checked){
+                if(document.getElementById('song').checked){
                     echonest.getPlaylistSongSimilarity();
             	}else{
             		echonest.getPlaylistArtistSimilarity();
-            	}*/
+            	}
         }      
        
         });
        
         $( "#hot" ).val(  $( "#slider-hot" ).slider( "values", 0 ) +
         " - " + $( "#slider-hot" ).slider( "values", 1 ) );
+}*/
+
+function setUpPopSlider1(echonestDynamic){
+    console.log('SetUpPopSlider() betreten');
+          //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
+          $( "#slider-pop" ).slider({
+          //setzen der Slider Attributte  
+      
+          min: 0,
+          max: 5,
+         step: 1,
+ 
+          slide: function( event, ui ) {
+         
+          },
+         
+          stop: function ( event, ui ) {
+        	var artistFamilarityLevel = ui.value;
+          	echonestDynamic.changeArtistFamiliarity(  artistFamilarityLevel);
+                  //console.log("Pop slider Stop");
+          
+          },
+         
+          change: function( event, ui ) {
+                  //console.log('Slider Change Event');
+          }
+         
+          });
+         
+ 
+         
+        
 }
+function setUpHotSlider1(echonestDynamic){
+    console.log('SetUpSongHotSlider() betreten');
+    //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
+    $( "#slider-hot" ).slider({
+    //setzen der Slider Attributte  
+    
+    min: 0,
+    max: 5,
+    step: 1,
+   
+    slide: function( event, ui ) {
+  
+    },
+    stop: function ( event, ui ) {
+            console.log('Hot slider Stop');
+            var artistHotnessLevel = ui.value;// $( ".selector" ).slider( "option", "value" );
+            //console.log('ARTIST HOTNESS SLIDER VALUE: '+artistHotnessLevel);
+            echonestDynamic.changeArtistHotness(artistHotnessLevel);
+           
+    }      
+   
+    });
+   
+    
+}
+
 
 function setUpSongHotSlider1(echonestDynamic){
     console.log('SetUpHotSlider() betreten');
