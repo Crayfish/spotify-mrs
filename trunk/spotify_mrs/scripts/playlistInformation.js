@@ -64,7 +64,7 @@ var echonestTasteProfileScript = null;
 var deleteSongsObjectsArray = new Array();
 var addSongsObjectsArray = new Array();
 
-
+var playlistObjectsToBeStoredAfterNewOrDeletedSongsCheck = new Array();
 
 function updateArrayStoredPlaylistObjects(){
 	
@@ -387,7 +387,11 @@ function checkIfNewSongsInPlaylists(){
 			entry.tasteProfileID = playlistObjectForComparison.tasteProfileID;
 			
 			
-			localStorage.setItem(currentPlaylistURI , JSON.stringify(entry));
+			//localStorage.setItem(currentPlaylistURI , JSON.stringify(entry));
+			
+			playlistObjectsToBeStoredAfterNewOrDeletedSongsCheck.push(entry);
+			
+			
 			//echonest Taste Profile update call
 			
 			var addItemId = entry1.item.item_id;
@@ -426,6 +430,11 @@ function checkIfNewSongsInPlaylists(){
 	
 	
 });
+	
+	playlistObjectsToBeStoredAfterNewOrDeletedSongsCheck.forEach(function(entry){
+	localStorage.setItem(entry.playlistURI , JSON.stringify(entry));
+	});
+	
 }
 
 function checkIfDeletedSongsInPLaylists(){
@@ -492,7 +501,10 @@ function checkIfDeletedSongsInPLaylists(){
 			if($.inArray( storedTrackIDForComparison,currentObjectTrackIdsArray )==-1){
 				console.log('DETECTED A DELETED SONG IN CURRENT PLAYLIST: '+playlistObjectForComparison.playlistName);
 				playlistObjectForComparison.tasteProfileID = entry.tasteProfileID;
-				localStorage.setItem(playlistObjectForComparison.playlistURI ,JSON.stringify(playlistObjectForComparison));
+				//localStorage.setItem(playlistObjectForComparison.playlistURI ,JSON.stringify(playlistObjectForComparison));
+				
+				playlistObjectsToBeStoredAfterNewOrDeletedSongsCheck.push(playlistObjectForComparison);
+				
 				updateArrayStoredPlaylistObjects();
 				
 				 var deleteItemObject ={

@@ -28,6 +28,11 @@ function setupGenreFilter1(echonestDynamic){
 	
 }
 
+
+
+
+
+
 function getAllEchonestGenres(echonestDynamic){
 	
 	var genreQueryUrl ='http://developer.echonest.com/api/v4/artist/list_genres?api_key=BNV9970E1PHXZ9RQW&format=json';
@@ -76,6 +81,9 @@ function getAllEchonestGenres(echonestDynamic){
 	
 	
 }
+
+
+
 
 function checkResponse(data) {
     if (data.response) {

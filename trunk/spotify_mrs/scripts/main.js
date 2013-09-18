@@ -11,7 +11,7 @@ require([
   'scripts/setupGenreFilter',
   'scripts/setupTagCloud',
   'scripts/setUpSimilarityAccordion',
-  /*'scripts/echonestTasteProfile', */
+  'scripts/echonestGenreData', 
   'scripts/customplaylist',
   'scripts/jPagesSetup',
   'scripts/setupNoveltyCheckBoxes',
@@ -21,7 +21,7 @@ require([
   
 ], function( models, /*heading,*/generatePlaylistButton,setupSlider, 
 		echonestDynamic, echonest, setupGenreFilter,setupTagCloud, 
-		setUpSimilarityAccordion, /*echonestTasteProfile,*/ customplaylist, 
+		setUpSimilarityAccordion, echonestGenreData, customplaylist, 
 		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider /*setupPlaylistFilter*/) {
   'use strict';
  
@@ -87,7 +87,7 @@ require([
 		// heading.writeHeading();
 		  
 		  
-		
+		//echonestGenreData.getGenreData();
 
 		playlistInformation.setUpPlaylistInformation();
 		
