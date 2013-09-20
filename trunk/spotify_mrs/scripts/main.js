@@ -132,6 +132,8 @@ require([
 		//setupSlider.setUpPopSlider(echonest);
 		// setupSlider.setUpHotSlider(echonest);
 		 
+		
+		 $(document).tooltip();
 	  }
 	  
 	  function removeoverlay(){
