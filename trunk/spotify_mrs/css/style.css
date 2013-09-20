@@ -106,13 +106,17 @@ visibility: hidden;
 	display: inline-block;
 	float:right;
 	border: 1px solid #a1a1a1;
-	border-radius:5px;
+	
+	border-top-left-radius : 5px;
+	border-top-right-radius : 5px;
+	border-bottom-right-radius: 5px;
 	background:#dddddd;
 	width:200px;
 	height : 100%;
 	spacing : 0px;
 	padding : 0px;
 	margin-left:10px;
+	
 }
 
 .rulerContent{
