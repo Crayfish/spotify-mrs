@@ -7,7 +7,7 @@ require([
   
   
   var createNewPlaylist = function() {
-	  createNewPlaylist1(models, List);
+	  createNewPlaylist1(models, List, yearSlider);
   };
   
   var addTrackToPlaylist = function(trackID){
@@ -64,9 +64,10 @@ var playlistcnt = 0;
  * @param models1 @see spotify api.models
  * @param List @see spotify views.List
  */
-function createNewPlaylist1(models1, List){
+function createNewPlaylist1(models1, List, yearSlider){
 	
 	if (playlist != null) clearPlaylist(models1);
+	yearSlider.reset();
 	
 	playlist = null;
 	playlist = models1.Playlist.createTemporary("MRS Playlist").done(function(playlist){

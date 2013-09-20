@@ -12,8 +12,14 @@ require([
 	  addYear1(models, track);
   }
   
+  var reset = function reset(){
+	  reset1();
+  }
+  
+    
   exports.addYear = addYear;
   exports.setupYearSlider = setupYearSlider;
+  exports.reset = reset;
   
 });//end require
 
@@ -26,16 +32,38 @@ require([
 	var minvalue = 2013;
 	var maxvalue = 1900;
 	
-	var slider;
-	
-	
+	/**
+	 * Set up year input fields. The value is checked on validity every time it changes.
+	 */
 	function setupYearSlider1(){
-		console.log('setting up yearslider');
-		//$("#yearto").val(max);
-		//$("#yearfrom").val(min);
+		
+		$("#yearto").change( function (){
+			if(checkInput(this)){
+				max = this.value;
+			}
+			else{
+				
+				$("#yearto").val("");
+			}
+		});
+		
+		$("#yearfrom").change( function (){
+			if(checkInput(this)){
+				min = this.value;
+			}
+			else{
+				
+				$("#yearfrom").val("");
+			}
+		});
 		
 	}
 
+	/**
+	 * Extract the release year of the track and update the min and max year values.
+	 * @param models spotify models api
+	 * @param track the current track
+	 */
 	function addYear1(models, track){
 		track.load('album').done(function(){
 			track.album.load('date').done(function(){
@@ -50,5 +78,36 @@ require([
 			});
 			
 		});
+	}
+	
+	/**
+	 * Reset min and max year values.
+	 */
+	function reset1(){
+		min = 2013;
+		max = 1900;
+	}
+	
+	/**
+	 * Validate the input values.
+	 * Input value has to be a number between 1300 and 2050. (regarding future use)
+	 * @param input input value
+	 * @returns {Boolean} true if input is valid
+	 */
+	function checkInput(input){
+		var value = input.value;
+		
+		if(isNaN(value)){
+			return false;
+		}
+		
+		else{
+			if(value < 2050 && value > 1300){
+				return true;
+			}
+			else return false;
+		} 
+		
+		return false;
 	}
 
