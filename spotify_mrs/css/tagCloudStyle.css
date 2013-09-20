@@ -53,5 +53,10 @@ a.tagCloud:hover span
 
 }	
 
-
+		#selected{
+    color: #FF0000
+} 
+		#notselected{
+    color: #000000
+} 
 
