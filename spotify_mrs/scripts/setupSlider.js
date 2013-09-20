@@ -199,6 +199,10 @@ function setUpPopSlider1(echonestDynamic){
           max: 5,
          step: 1,
  
+         create: function( event, ui ) {
+             setSliderTicks(event.target);
+           },
+           
           slide: function( event, ui ) {
          
           },
@@ -229,10 +233,15 @@ function setUpHotSlider1(echonestDynamic){
     min: 0,
     max: 5,
     step: 1,
-   
+    
+    create: function( event, ui ) {
+        setSliderTicks(event.target);
+    },
+    
     slide: function( event, ui ) {
   
     },
+    
     stop: function ( event, ui ) {
             console.log('Hot slider Stop');
             var artistHotnessLevel = ui.value;// $( ".selector" ).slider( "option", "value" );
@@ -281,5 +290,20 @@ function setUpSongHotSlider1(echonestDynamic){
    
     $( "#songHot" ).val(  $( "#slider-songHot" ).slider( "values", 0 ) +
     " - " + $( "#slider-songHot" ).slider( "values", 1 ) );
+}
+
+function setSliderTicks(el) {
+    var $slider =  $(el);
+    var max =  $slider.slider("option", "max");    
+    var min =  $slider.slider("option", "min");    
+    var spacing =  100 / (max - min);
+
+    $slider.find('.ui-slider-tick-mark').remove();
+    for (var i = 0; i < max-min ; i++) {
+    	if(i>0){
+    		$('<span class="ui-slider-tick-mark"></span>').css('left', (spacing * i) +  '%').appendTo($slider); 
+    	}
+        
+     }
 }
 

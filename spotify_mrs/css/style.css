@@ -216,3 +216,12 @@ width: 50px;
 	height:30px;
 }
 
+.ui-slider-tick-mark{
+    display:inline-block;
+    width:1px;
+    background:grey;
+    height:100%;
+    position:absolute;
+    
+}
+
