@@ -1,13 +1,14 @@
 require([
   '$api/models',
- 'scripts/echonestDynamic'
+ 'scripts/echonestDynamic',
+ '$views/popup#Popup'
  
-], function(models,echonestDynamic ) {
+], function(models,echonestDynamic,Popup ) {
   'use strict';
 
 
   var addTagCloudEventHandler = function() {
-	  addTagCloudEventHandler1(echonestDynamic);
+	  addTagCloudEventHandler1(echonestDynamic,Popup);
  
   };
 
@@ -17,7 +18,7 @@ require([
 
 
 
-function addTagCloudEventHandler1(echonestDynamic){
+function addTagCloudEventHandler1(echonestDynamic,Popup){
 	
 	
 	$("#tagCloud.tagcloudlink").on("click", function(e) {
@@ -33,7 +34,7 @@ function addTagCloudEventHandler1(echonestDynamic){
 		
 	});
 	
-	console.log('TagCloud EventHandler finished setup');
+	
 	
 	
 }
