@@ -24,7 +24,7 @@ require([
 
 	/**selected minimum and maximum year values*/
 	var minvalue = 2013;
-	var maxvalue = 2013;
+	var maxvalue = 1900;
 	
 	var slider;
 	
@@ -44,8 +44,8 @@ require([
 				max = Math.max(max,year);
 				min = Math.min(min,year);
 				
-				//$("#yearto").val(max);
-				//$("#yearfrom").val(min);
+				$("#yearto").attr("placeholder", max);
+				$("#yearfrom").attr("placeholder", min);
 				
 			});
 			
