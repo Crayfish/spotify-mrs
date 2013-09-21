@@ -1,13 +1,15 @@
 require([
   '$api/models',
-  'scripts/echonestDynamic'
+  'scripts/echonestDynamic',
+  'scripts/apiKey'
   
 
  
-], function(models, echonestDynamic /*setupPlaylistFilter*/) {
+], function(models, echonestDynamic, apiKey /*setupPlaylistFilter*/) {
   'use strict';
 
   echonestDynamicScript = echonestDynamic;
+  echonestApiKey = apiKey.getApiKey();
 
   var initialCreateOfAllTasteProfile = function() {
 	  initialCreateOfAllTasteProfile1(echonestDynamic);
@@ -86,6 +88,8 @@ var numberOfNewPlaylists = 0;
 
 var arrayNewProfileIDsAndPlaylistNames = new Array();
 
+var echonestApiKey = null;
+
 
 function addSongsInTasteProfiles1(addSongsObjectsArray){
 	console.log('ECHONEST TASTE PROFILE addSongsInTasteProfiles1() was called');
@@ -104,7 +108,7 @@ function addSongsInTasteProfiles1(addSongsObjectsArray){
 			
 		$.post(addSongsURL, 
 		    		{
-		    	'api_key':'BNV9970E1PHXZ9RQW',
+		    	'api_key': echonestApiKey,
 		    	'format':'json',
 		    	'id': tasteProfileID,
 		    	'data_type':'json',
@@ -138,7 +142,7 @@ function deleteSongsInTasteProfiles1(deleteSongsObjectsArray){
 			
 		$.post(deleteSongsURL, 
 		    		{
-		    	'api_key':'BNV9970E1PHXZ9RQW',
+		    	'api_key':echonestApiKey,
 		    	'format':'json',
 		    	'id': tasteProfileID,
 		    	'data_type':'json',
@@ -274,7 +278,7 @@ function createNewTasteProfiles1(arrayNewPlaylistObjects){
 	        	
 	        	$.post(createURL, 
 	            		{
-	            	'api_key':'BNV9970E1PHXZ9RQW',
+	            	'api_key': echonestApiKey,
 	            	'format':'json',
 	            	'type':'song',
 	            	'name': Math.floor(Math.random()*10000)+tasteProfileName
@@ -301,7 +305,7 @@ function createNewTasteProfiles1(arrayNewPlaylistObjects){
 	                    	
 	                    		$.post(updateURL, 
 	                    	    		{
-	                    	    	'api_key':'BNV9970E1PHXZ9RQW',
+	                    	    	'api_key': echonestApiKey,
 	                    	    	'format':'json',
 	                    	    	'id': profile_id,
 	                    	    	'data_type':'json',
@@ -368,7 +372,7 @@ function  deleteTasteProfiles1(arrayDeleteTasteProfileIDs){
 		
 		$.post(deleteURL, 
 	    		{
-	    	'api_key':'BNV9970E1PHXZ9RQW',
+	    	'api_key': echonestApiKey,
 	    	'format':'json',
 	    	'id': IdToBeDeleted,
 	    	    	    	
@@ -426,8 +430,8 @@ function  deleteTasteProfiles1(arrayDeleteTasteProfileIDs){
 
 function getBasicInformationOfAllTasteProfiles1(){
 	var randomNumber =  Math.floor(Math.random()*100);
-	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key=BNV9970E1PHXZ9RQW&format=json'+'&_='+randomNumber;
-	var getBasicInfoURL = 'http://developer.echonest.com/api/v4/catalog/profile?api_key=BNV9970E1PHXZ9RQW&format=json';
+	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key='+echonestApiKey+'&format=json'+'&_='+randomNumber;
+	var getBasicInfoURL = 'http://developer.echonest.com/api/v4/catalog/profile?api_key='+echonestApiKey+'&format=json';
 		
 	$.getJSON(listTasteProfileIDsURL, 
 	    		{'results':'100'
@@ -566,7 +570,7 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
         	
         	$.post(createURL, 
             		{
-            	'api_key':'BNV9970E1PHXZ9RQW',
+            	'api_key': echonestApiKey,
             	'format':'json',
             	'type':'song',
             	'name': Math.floor(Math.random()*10000)+tasteProfileName
@@ -591,7 +595,7 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
                     	
                     		$.post(updateURL, 
                     	    		{
-                    	    	'api_key':'BNV9970E1PHXZ9RQW',
+                    	    	'api_key': echonestApiKey,
                     	    	'format':'json',
                     	    	'id': profile_id,
                     	    	'data_type':'json',
@@ -765,7 +769,7 @@ function setupPlaylistSimilarity1(){
 
 function getAllTasteProfileIDs1(){
 	var randomNumber =  Math.floor(Math.random()*100);
-	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key=BNV9970E1PHXZ9RQW&format=json'+'&_='+randomNumber;
+	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key='+echonestApiKey+'&format=json'+'&_='+randomNumber;
 	
 		$.getJSON(listTasteProfileIDsURL, 
 	    		{'results':'100'
@@ -792,7 +796,7 @@ function getAllTasteProfileIDs1(){
 function deleteAllTasteProfiles1(){
 	
 var randomNumber =  Math.floor(Math.random()*100);
-	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key=BNV9970E1PHXZ9RQW&format=json'+'&_='+randomNumber;
+	var listTasteProfileIDsURL = 'http://developer.echonest.com/api/v4/catalog/list?api_key='+echonestApiKey+'&format=json'+'&_='+randomNumber;
 	var deleteURL = 'http://developer.echonest.com/api/v4/catalog/delete';
 		
 	
@@ -833,7 +837,7 @@ var randomNumber =  Math.floor(Math.random()*100);
 	        			
 	        			$.post(deleteURL, 
 	        		    		{
-	        		    	'api_key':'BNV9970E1PHXZ9RQW',
+	        		    	'api_key': echonestApiKey,
 	        		    	'format':'json',
 	        		    	'id': IdToBeDeleted,
 	        		    	    	    	

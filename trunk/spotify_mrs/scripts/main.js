@@ -3,11 +3,11 @@ jQuery.ajaxSettings.traditional = true;
 
 require([
   '$api/models',
-  //'scripts/heading',
+  'scripts/apiKey',
   'scripts/generatePlaylistButton',
   'scripts/setupSlider',
   'scripts/echonestDynamic',
-  'scripts/echonest',
+  //'scripts/echonest',
   'scripts/setupGenreFilter',
   'scripts/setupTagCloud',
   'scripts/setUpSimilarityAccordion',
@@ -19,8 +19,8 @@ require([
   'scripts/yearSlider',
   //'scripts/setupPlaylistFilter'
   
-], function( models, /*heading,*/generatePlaylistButton,setupSlider, 
-		echonestDynamic, echonest, setupGenreFilter,setupTagCloud, 
+], function( models, apiKey, generatePlaylistButton,setupSlider, 
+		echonestDynamic,/* echonest,*/ setupGenreFilter,setupTagCloud, 
 		setUpSimilarityAccordion, echonestGenreData, customplaylist, 
 		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider /*setupPlaylistFilter*/) {
   'use strict';
@@ -88,7 +88,11 @@ require([
 		  
 		  
 		//echonestGenreData.getGenreData();
-
+		 
+		  
+		//enter developer name here: Marc, Tom or Julius
+		apiKey.setEchonestApiKey('Julius'); 
+		  
 		playlistInformation.setUpPlaylistInformation();
 		
 		//echonestTasteProfile.initialCreateOfAllTasteProfile();

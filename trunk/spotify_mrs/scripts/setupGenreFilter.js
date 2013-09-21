@@ -1,13 +1,15 @@
 require([
   '$api/models',
- 'scripts/echonestDynamic'
+ 'scripts/echonestDynamic',
+ 'scripts/apiKey'
  
-], function(models,echonestDynamic ) {
+], function(models,echonestDynamic, apiKey ) {
   'use strict';
 
+  
 
   var setupGenreFilter = function() {
-   setupGenreFilter1(echonestDynamic);
+   setupGenreFilter1(echonestDynamic, apiKey);
  
   };
 
@@ -15,11 +17,12 @@ require([
 });
 
 var genreArray = new Array();
+var echonestApiKey = null;
 
-function setupGenreFilter1(echonestDynamic){
+function setupGenreFilter1(echonestDynamic, apiKey){
 	console.log('setupGenreFilter() was called');
 	
-	
+	echonestApiKey = apiKey.getApiKey();
 	
 	 getAllEchonestGenres(echonestDynamic);
 	 
@@ -35,7 +38,7 @@ function setupGenreFilter1(echonestDynamic){
 
 function getAllEchonestGenres(echonestDynamic){
 	 var randomNumber =  Math.floor(Math.random()*100);
-	var genreQueryUrl ='http://developer.echonest.com/api/v4/artist/list_genres?api_key=BNV9970E1PHXZ9RQW&format=json&_='+randomNumber;
+	var genreQueryUrl ='http://developer.echonest.com/api/v4/artist/list_genres?api_key='+echonestApiKey+'&format=json&_='+randomNumber;
 	
 	var genreArray = new Array();
 	
