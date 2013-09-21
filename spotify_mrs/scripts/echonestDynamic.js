@@ -45,8 +45,8 @@ require([
 	}; 
 	
 	
-	var changeSongHotness = function(){
-		changeSongHotness1();
+	var changeSongHotness = function(songHotnessLevel){
+		changeSongHotness1(songHotnessLevel);
 	};
 	
 	var changeToGenreSimilarity = function(genreName){
@@ -172,11 +172,19 @@ var arrayOfTracksInSpotifyPlaylists = new Array();
 
 
 var similarityModeIsGenre = false;
+var similarityModeIsArtist = false;
+var similarityModeIsSong = false;
+ var similarityModeIsPlaylist = false;
 
 var lowerArtistHotnessBorderForGenreSimilarity = null;
 var upperArtistHotnessBorderForGenreSimilarity = null;
 var lowerArtistFamilarityBorderForGenreSimilarity = null;
 var upperArtistFamilarityBorderForGenreSimilarity = null;
+var lowerSongHotnessBorderForGenreSimilarity = null;
+var upperSongHotnessBorderForGenreSimilarity = null;
+
+var mittelwertArtistHotnesGenreSimliarity = null;
+var varianzArtistHotnesGenreSimliarity = null;
 
 function setArrayOfAllSongs1(array1){
 	arrayOfTracksInSpotifyPlaylists = array1;
@@ -186,6 +194,10 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject){
 	
 console.log('changeToPlaylistSimilarity1() was called with tasteProfileID: '+tasteProfileIDandNameObject.tasteProfileID);
 	
+similarityModeIsGenre = false;
+similarityModeIsArtist = false;
+similarityModeIsSong = false;
+similarityModeIsPlaylist = true;
 	
 	
 	var randomNumber =  Math.floor(Math.random()*100);
@@ -371,7 +383,7 @@ function changeArtistVariety1(){
 
 
 function  changeArtistFamiliarity1(artistFamilarityLevel){
-	console.log("changeArtistPopularity() was called with artistPopularityLevel: "+artistFamilarityLevel);
+	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "+artistFamilarityLevel);
 	
 		getConstraintsInfo();
 	
@@ -436,7 +448,7 @@ function  changeArtistFamiliarity1(artistFamilarityLevel){
 			     min_artist_familiarity : minFamilarity,
 			     max_artist_familiarity : maxFamilarity
 			     	
-		}
+		};
 
 	    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
 	    $.getJSON(url, args,
@@ -461,42 +473,175 @@ function  changeArtistFamiliarity1(artistFamilarityLevel){
 function  changeArtistHotness1(artistHotnessLevel){
 	console.log("changeArtistHotness() was called with artistHotnessLevel: "+artistHotnessLevel);
 	
-		//getConstraintsInfo();
+		getConstraintsInfo();
 	
+		var minHotness = null;
+		var maxHotness = null;	
+		
+	
+	if(similarityModeIsArtist){
+		switch (artistHotnessLevel)
+		{
+		case 0:
+			minHotness = 0.0;
+			maxHotness = 0.3;
+		  break;
+		case 1:
+			minHotness = 0.3;
+			maxHotness = 0.4;
+		  break;
+		case 2:
+			minHotness = 0.4;
+			maxHotness = 0.5;
+		  break;
+		case 3:
+			minHotness = 0.5;
+			maxHotness = 0.6;
+		  break;
+		case 4:
+			minHotness = 0.6;
+			maxHotness =0.8;
+		  break;
+		case 5:
+			minHotness = 0.8;
+			maxHotness = 1;
+		  break;
+		
+		} 
+	} 
+	
+	
+	if(similarityModeIsSong){
+		switch (artistHotnessLevel)
+		{
+		case 0:
+			minHotness = 0.0;
+			maxHotness = 0.3;
+		  break;
+		case 1:
+			minHotness = 0.3;
+			maxHotness = 0.4;
+		  break;
+		case 2:
+			minHotness = 0.4;
+			maxHotness = 0.5;
+		  break;
+		case 3:
+			minHotness = 0.5;
+			maxHotness = 0.6;
+		  break;
+		case 4:
+			minHotness = 0.6;
+			maxHotness =0.8;
+		  break;
+		case 5:
+			minHotness = 0.8;
+			maxHotness = 1;
+		  break;
+		
+		} 
+	}
+	
+	if(similarityModeIsPlaylist){
+		switch (artistHotnessLevel)
+		{
+		case 0:
+			minHotness = 0.0;
+			maxHotness = 0.3;
+		  break;
+		case 1:
+			minHotness = 0.3;
+			maxHotness = 0.4;
+		  break;
+		case 2:
+			minHotness = 0.4;
+			maxHotness = 0.5;
+		  break;
+		case 3:
+			minHotness = 0.5;
+			maxHotness = 0.6;
+		  break;
+		case 4:
+			minHotness = 0.6;
+			maxHotness =0.8;
+		  break;
+		case 5:
+			minHotness = 0.8;
+			maxHotness = 1;
+		  break;
+		
+		} 
+	} 
+		
+		
 	if(similarityModeIsGenre){
-	var minHotness = lowerArtistHotnessBorderForGenreSimilarity;
-	var maxHotness = upperArtistHotnessBorderForGenreSimilarity;
-	var range = upperArtistHotnessBorderForGenreSimilarity - lowerArtistHotnessBorderForGenreSimilarity;
-	var rangeStep = range/5;
+	minHotness = 0;// lowerArtistHotnessBorderForGenreSimilarity;
+	maxHotness = upperArtistHotnessBorderForGenreSimilarity;
 	
-	switch (artistHotnessLevel)
+	//var range = upperArtistHotnessBorderForGenreSimilarity - lowerArtistHotnessBorderForGenreSimilarity;
+	//var rangeStep = range/5;
+	
+	/*switch (artistHotnessLevel)
 	{
 	case 0:
 		minHotness = 0.0;
 		
 	  break;
 	case 1:
-		minHotness = lowerArtistHotnessBorderForGenreSimilarity;
-		
+		//minHotness = lowerArtistHotnessBorderForGenreSimilarity;
+		minHotness = mittelwertArtistHotnesGenreSimliarity-varianzArtistHotnesGenreSimliarity
 	  break;
 	case 2:
-		minHotness =  lowerArtistHotnessBorderForGenreSimilarity + rangeStep;
-		
+		//minHotness =  lowerArtistHotnessBorderForGenreSimilarity + rangeStep;
+		minHotness = mittelwertArtistHotnesGenreSimliarity-1/2*varianzArtistHotnesGenreSimliarity
 	  break;
 	case 3:
-		minHotness = lowerArtistHotnessBorderForGenreSimilarity + 2*rangeStep;
-		
+		//minHotness = lowerArtistHotnessBorderForGenreSimilarity + 2*rangeStep;
+		minHotness = mittelwertArtistHotnesGenreSimliarity
 	  break;
 	case 4:
-		minHotness = lowerArtistHotnessBorderForGenreSimilarity + 3*rangeStep;
-		
+		//minHotness = lowerArtistHotnessBorderForGenreSimilarity + 3*rangeStep;
+		minHotness = mittelwertArtistHotnesGenreSimliarity+1/2*varianzArtistHotnesGenreSimliarity
 	  break;
 	case 5:
-		minHotness = upperArtistHotnessBorderForGenreSimilarity-rangeStep;
-		
+		//minHotness = upperArtistHotnessBorderForGenreSimilarity-rangeStep;
+		minHotness = mittelwertArtistHotnesGenreSimliarity+varianzArtistHotnesGenreSimliarity
+	  break;
+	
+	} */
+	
+	//Variante mit Bereichen
+	switch (artistHotnessLevel)
+	{
+	case 0:
+		minHotness = 0.0;
+		maxHotness = mittelwertArtistHotnesGenreSimliarity-varianzArtistHotnesGenreSimliarity;
+	  break;
+	case 1:
+		minHotness = mittelwertArtistHotnesGenreSimliarity-varianzArtistHotnesGenreSimliarity;
+		maxHotness = mittelwertArtistHotnesGenreSimliarity-1/2*varianzArtistHotnesGenreSimliarity;
+	  break;
+	case 2:
+		minHotness = mittelwertArtistHotnesGenreSimliarity-1/2*varianzArtistHotnesGenreSimliarity;
+		maxHotness = mittelwertArtistHotnesGenreSimliarity;
+	  break;
+	case 3:
+		minHotness = mittelwertArtistHotnesGenreSimliarity;
+		maxHotness = mittelwertArtistHotnesGenreSimliarity+1/2*varianzArtistHotnesGenreSimliarity;
+	  break;
+	case 4:
+		minHotness = mittelwertArtistHotnesGenreSimliarity+1/2*varianzArtistHotnesGenreSimliarity;
+		maxHotness = mittelwertArtistHotnesGenreSimliarity+varianzArtistHotnesGenreSimliarity;
+	  break;
+	case 5:
+		minHotness = mittelwertArtistHotnesGenreSimliarity+varianzArtistHotnesGenreSimliarity
+		maxHotness = upperArtistHotnessBorderForGenreSimilarity;
 	  break;
 	
 	} 
+	
+	
+	
 	}  
 	   
 		console.log('maxArtistHotness changeArtistHotness1(): '+maxHotness);
@@ -513,10 +658,10 @@ function  changeArtistHotness1(artistHotnessLevel){
 				 api_key: 'BNV9970E1PHXZ9RQW',
 			     format:'json',
 			     max_artist_hotttnesss :maxHotness,
-		    	 min_artist_hotttnesss :minHotness
-		    	 //max_artist_familiarity: 0.5,
-		    	// min_artist_familiarity: 0.3
-		}
+		    	 min_artist_hotttnesss :minHotness,
+		    	// max_artist_familiarity: 0.0,
+		    	 //min_artist_familiarity: 0.0
+		};
 
 	    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
 	    $.getJSON(url, args,
@@ -588,18 +733,49 @@ function  changeArtistHotness1(artistHotnessLevel){
 }
 */
 
-function  changeSongHotness1(){
-	console.log("changeSongHotness() was called");
+function  changeSongHotness1(songHotnessLevel){
+	console.log("changeSongHotness() was called with songHotnessLevel: "+songHotnessLevel);
 	
-		//getConstraintsInfo();
 	
-	   //Setzen der Werte für die Query
-		var minSongHotness = $( "#slider-songHot" ).slider( "values", 0 )/100;
-		var maxSongHotness = $( "#slider-songHot" ).slider( "values", 1 )/100;
+	if(similarityModeIsGenre){
+		
+	var minSongHotness = lowerSongHotnessBorderForGenreSimilarity;
+	var maxSongHotness = upperSongHotnessBorderForGenreSimilarity;
+	var range = upperSongHotnessBorderForGenreSimilarity - lowerSongHotnessBorderForGenreSimilarity;
+	var rangeStep = range/5;
+	
+	switch (songHotnessLevel)
+	{
+	case 0:
+		minSongHotness = 0.0;
+		
+	  break;
+	case 1:
+		minSongHotness = lowerSongHotnessBorderForGenreSimilarity;
+		
+	  break;
+	case 2:
+		minSongHotness =  lowerSongHotnessBorderForGenreSimilarity + rangeStep;
+		
+	  break;
+	case 3:
+		minSongHotness = lowerSongHotnessBorderForGenreSimilarity + 2*rangeStep;
+		
+	  break;
+	case 4:
+		minSongHotness = lowerSongHotnessBorderForGenreSimilarity + 3*rangeStep;
+		
+	  break;
+	case 5:
+		minSongHotness =  upperSongHotnessBorderForGenreSimilarity-rangeStep;
+		
+	  break;
+	
+	} 
+	}  
 	   
 		console.log('maxSongHotness changeSongHotness1(): '+maxSongHotness);
-	    console.log('minSongHotness changeSongHotness1(): '+minSongHotness);
-	   
+	    console.log('minSongHotness changesongHotness1(): '+minSongHotness);
 	    
 	    var randomNumber =  Math.floor(Math.random()*100);
 	    
@@ -608,7 +784,7 @@ function  changeSongHotness1(){
 	    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
 	    	
 
-	    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+	    
 	    $.getJSON(url, 
 	    		{// 'artist_id':replacedArtistID ,
 	    	//'track_id': replacedSongID, 
@@ -625,6 +801,7 @@ function  changeSongHotness1(){
 	            
 	        	//console.log('Changed Hotness Values');
 	        	getConstraintsInfo();
+	        	getNextSong1();
 	           
 	       
 	        } else {
@@ -641,10 +818,14 @@ function changeToGenreSimilarity1(genreName){
 	console.log('changeToGenreSimilarity1() was called with genre: '+genreName);
 	
 	similarityModeIsGenre = true;
+	similarityModeIsArtist = false;
+	similarityModeIsSong = false;
+	similarityModeIsPlaylist = false;
 	
 	//get the popularity range for a given genre
 	getArtistHotnesRangeforGenre(genreName);
 	getArtistFamilarityRangeforGenre(genreName);
+	getSongHotnesRangeforGenre(genreName);
 	
 	
 	
@@ -681,7 +862,7 @@ function changeToGenreSimilarity1(genreName){
         
         console.log("New session ID  is used: "+session_id);
        
-        getNextXXSong1();
+        getNextSong1();
         
         
         } else {
@@ -689,6 +870,87 @@ function changeToGenreSimilarity1(genreName){
         }
     });
 
+}
+
+
+function getSongHotnesRangeforGenre(genreName){
+	
+	
+	
+	console.log('ECHONEST DYNAMIC getSongHotnesRangeforGenre(genreName) was called');
+	var randomNumber =  Math.floor(Math.random()*100);
+	
+	var urlHotnes = 'http://developer.echonest.com/api/v4/song/search?';
+	//get the lowest value
+	var args = {
+			 api_key: 'BNV9970E1PHXZ9RQW',
+		     format:'json',
+		     bucket : ['song_hotttnesss'],
+		     sort : 'song_hotttnesss-desc',
+		     results: '10',
+		     style: genreName
+		    	
+			
+	}
+	
+	$.getJSON(urlHotnes, args,
+            function(genreData) {
+	  			if (checkResponse(genreData)) {
+	  				
+	  				//console.log('GENRE '+entry+': '+JSON.stringify(genreData));
+	  				
+	  				var arraySongHotnessValues = new Array();
+	  				//console.log('GENRE '+entry+' Ascending');
+	  				for(var i = 0; i<genreData.response.songs.length;i++){
+	  					arraySongHotnessValues.push(genreData.response.songs[i].song_hotttnesss);
+	  					//console.log('song hotness asc for '+genreData.response.songs[i].artist_name+': '+genreData.response.songs[i].song_hotttnesss);
+	  					
+	  				}
+	  				upperSongHotnessBorderForGenreSimilarity = arraySongHotnessValues[0];
+	  				console.log('upperSongHotnessBorderForGenreSimilarity for genre '+genreName+': '+upperSongHotnessBorderForGenreSimilarity);
+	  				
+	  				
+	  				
+	  				
+	  				
+	  				 
+	  			}
+            });
+	
+	//get the highest value
+	var args1 = {
+			 api_key: 'BNV9970E1PHXZ9RQW',
+		     format:'json',
+		     bucket : ['song_hotttnesss'],
+		     sort : 'song_hotttnesss-asc',
+		     results: '10',
+		     style: genreName
+		    }
+	
+	$.getJSON(urlHotnes, args1,
+            function(genreData) {
+	  			if (checkResponse(genreData)) {
+	  				
+	  				//console.log('GENRE '+entry+': '+JSON.stringify(genreData));
+	  				
+	  				var arraySongHotnessValues = new Array();
+	  				//console.log('GENRE '+entry+' Ascending');
+	  				for(var i = 0; i<genreData.response.songs.length;i++){
+	  					arraySongHotnessValues.push(genreData.response.songs[i].song_hotttnesss);
+	  					//console.log('song hotness asc for '+genreData.response.songs[i].artist_name+': '+genreData.response.songs[i].song_hotttnesss);
+	  					
+	  				}
+	  				lowerSongHotnessBorderForGenreSimilarity = arraySongHotnessValues[0];
+	  				console.log('lowerSongHotnessBorderForGenreSimilarity for genre '+genreName+': '+lowerSongHotnessBorderForGenreSimilarity);
+	  				
+	  				
+	  				
+	  				
+	  				
+	  				 
+	  			}
+            });
+	
 }
 
 function getArtistHotnesRangeforGenre(genreName){
@@ -717,7 +979,7 @@ function getArtistHotnesRangeforGenre(genreName){
 	  					
 	  				}
 	  					
-	  				console.log('ECHONEST GENRE DATA HOTNESS ASCENDING FOR GENRE '+genreName+': '+ arrayHotnessValues);
+	  				//console.log('ECHONEST GENRE DATA HOTNESS ASCENDING FOR GENRE '+genreName+': '+ arrayHotnessValues);
 	  				
 	  				lowerArtistHotnessBorderForGenreSimilarity = arrayHotnessValues[0];
 	  				console.log('lowerArtistHotnessBorderForGenreSimilarity for genre '+genreName+': '+lowerArtistHotnessBorderForGenreSimilarity);
@@ -748,7 +1010,7 @@ function getArtistHotnesRangeforGenre(genreName){
 	  					
 	  				}
 	  					
-	  				console.log('ECHONEST GENRE DATA HOTNESS DESCENDING FOR GENRE '+genreName+': '+ arrayHotnessValues);
+	  				//console.log('ECHONEST GENRE DATA HOTNESS DESCENDING FOR GENRE '+genreName+': '+ arrayHotnessValues);
 	  				upperArtistHotnessBorderForGenreSimilarity = arrayHotnessValues[0];
 	  				console.log('upperArtistHotnessBorderForGenreSimilarity for genre '+genreName+': '+upperArtistHotnessBorderForGenreSimilarity);
 	  				
@@ -757,6 +1019,78 @@ function getArtistHotnesRangeforGenre(genreName){
 	  				 
 	  			}
            });
+	
+	
+	
+	
+	//Test auf Normalverteilung 
+	var args2 = {
+			 api_key: 'BNV9970E1PHXZ9RQW',
+		     format:'json',
+		     bucket : ['hotttnesss'],
+		     //sort : 'hotttnesss-desc',
+		     results: '100',
+		    	genre: genreName
+	}	
+	
+	var arrayHotnessValues = new Array();
+	
+	$.getJSON(url, args2,
+            function(genreData) {
+	  			if (checkResponse(genreData)) {
+	  			
+	  				//console.log('GENRE '+entry+' Descending');
+	  				for(var i = 0; i<genreData.response.artists.length;i++){
+	  					arrayHotnessValues.push(genreData.response.artists[i].hotttnesss);
+	  					//console.log('artist hotness desc for '+genreData.response.artists[i].name+': '+genreData.response.artists[i].hotttnesss);
+	  					
+	  				}
+	  					
+	  				arrayHotnessValues.sort(function(a,b){return a-b});
+	  				console.log('ECHONEST GENRE DATA REGGAE ARTIST HOTNESS : '+ arrayHotnessValues);
+	  				
+	  				
+	  				//Mittelwert berechnen
+	  				
+	  				
+	  				var summe = 0;
+	  				
+	  				for(var i =0; i<arrayHotnessValues.length;i++){
+	  					summe = summe +arrayHotnessValues[i];
+	  				}
+	  				
+	  				mittelwertArtistHotnesGenreSimliarity = summe/arrayHotnessValues.length;
+	  				
+	  				console.log('ECHONEST GENRE DATA ARTIST HOTNESS MITTELWERT FOR GENRE SIMILARITY: '+mittelwertArtistHotnesGenreSimliarity);
+	  				
+	  				//Varianz berechnen
+	  				
+	  				var varianzSumme= 0;
+	  				for(var i =0; i<arrayHotnessValues.length;i++){
+	  					varianzSumme =  varianzSumme + Math.pow(arrayHotnessValues[i]- mittelwertArtistHotnesGenreSimliarity,2);
+	  				}
+	  				
+	  				
+	  				
+	  				
+	  				 varianzArtistHotnesGenreSimliarity =  Math.sqrt((1/(arrayHotnessValues.length -1))*varianzSumme);
+	  				
+	  				
+	  				console.log('ECHONEST GENRE DATA ARTIST HOTNESS VARIANZ  FOR GENRE SIMILARITY: '+varianzArtistHotnesGenreSimliarity);
+	  				
+	  				/*var mittelwertPlusVarianz1 = mittelwert + varianz;
+	  				var mittelwertPlusVarianz2 = mittelwert + 2*varianz;
+	  				var mittelwertPlusVarianz3 = mittelwert + 3*varianz;
+	  				
+	  				var mittelwertMinusVarianz1 = mittelwert - varianz;
+	  				var mittelwertMinusVarianz2 = mittelwert - 2*varianz;
+	  				var mittelwertMinusVarianz3 = mittelwert - 3*varianz;
+	  				
+	  				console.log('ECHONEST GENRE DATA ARTIST HOTNESS GENRE SPANNE 1 VON: '+ mittelwertMinusVarianz1+' bis '+mittelwertPlusVarianz1+' = 68% ABDECKUNG');
+	  				console.log('ECHONEST GENRE DATA ARTIST HOTNESS GENRE SPANNE 2  VON: '+ mittelwertMinusVarianz2+' bis '+mittelwertPlusVarianz2+ ' = 95% BADECKUNG');
+	  				console.log('ECHONEST GENRE DATA ARTIST HOTNESS GENRE SPANNE 3  VON: '+ mittelwertMinusVarianz3+' bis '+mittelwertPlusVarianz3 +' = 99% ABDECKUNG');*/
+	  			}
+            });
 	
 	
 	
@@ -791,7 +1125,7 @@ function getArtistFamilarityRangeforGenre(genreName){
 	  					
 	  				}
 	  					
-	  				console.log('ECHONEST GENRE DATA FAMILARITY ASCENDING FOR GENRE '+genreName+': '+  arrayFamilarityValues);
+	  				//console.log('ECHONEST GENRE DATA FAMILARITY ASCENDING FOR GENRE '+genreName+': '+  arrayFamilarityValues);
 	  				
 	  				lowerArtistFamilarityBorderForGenreSimilarity = arrayFamilarityValues[0];
 	  				console.log('lowerArtistFamilarityBorderForGenreSimilarity for genre '+genreName+': '+lowerArtistFamilarityBorderForGenreSimilarity);
@@ -823,7 +1157,7 @@ function getArtistFamilarityRangeforGenre(genreName){
 	  					
 	  				}
 	  					
-	  				console.log('ECHONEST GENRE DATA FAMILARITY DESCENDING FOR GENRE '+genreName+': '+  arrayFamilarityValues);
+	  				//console.log('ECHONEST GENRE DATA FAMILARITY DESCENDING FOR GENRE '+genreName+': '+  arrayFamilarityValues);
 	  				
 	  				upperArtistFamilarityBorderForGenreSimilarity = arrayFamilarityValues[0];
 	  				console.log('upperArtistFamilarityBorderForGenreSimilarity for genre '+genreName+': '+upperArtistFamilarityBorderForGenreSimilarity);
@@ -993,6 +1327,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1/*, pl
        	 //for (var i = 0; i <20; i++){
             //var i =0;
             //while(i<20){
+            similarityModeIsArtist = true;
             getNextSong1( );
             //setTimeout(function() {info("Timeout");},1000);
             //i++;
@@ -1285,6 +1620,12 @@ function changeSeedSongSimilarity1(){
 function changeToArtistSimilarity1(){
 	// console.log("New session is started");
 	 
+	
+	similarityModeIsGenre = false;
+	similarityModeIsArtist = true;
+	similarityModeIsSong = false;
+	similarityModeIsPlaylist = false;
+	
 	 //numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
 	 
@@ -1411,6 +1752,11 @@ function changeToArtistSimilarity1(){
 
 function changeToSongSimilarity1(){
 	 console.log(" echonest changeToSongSimilarity1() was called");
+	 
+	 similarityModeIsGenre = false;
+		similarityModeIsArtist = false;
+		similarityModeIsSong = true;
+		similarityModeIsPlaylist = false;
 	 
 	 //numberOfSongs=10;
 	 //songsAlreadyUsed = new Array();
@@ -1569,10 +1915,11 @@ function getNextSong1( ){
 	            },
 	            function(data) {
 	        if (checkResponse(data)) {
-	        
-                //console.log('ECHONEST DYNAMIC getNextSong1() RESPONSE DATA: '+JSON.stringify(data));
+	        	
+             
                 
            	// for (var i = 0; i < data.response.songs.length; i++){
+	        	//console.log('ECHONEST DYNAMIC getNextSong1() DATA RESPONSE: '+JSON.stringify(data.response));
  	            console.log('Next song is: ' +data.response.songs[0].title+' by '+data.response.songs[0].artist_name);
  	            
  	            var echonestTrackId = data.response.songs[0].id;
@@ -1636,45 +1983,7 @@ function getNextSong1( ){
  	 	          };
  	            
  	            
- 	         /*  
- 	          if($.inArray(echonestTrackId,  songsAlreadyUsed) == -1){
- 	            songsAlreadyUsed.push(echonestTrackId);
- 	          }
- 	          
- 	         // console.log('IN ARRAY with INDEX: '+ $.inArray(echonestTrackId,  songsAlreadyUsed));
- 	            
- 	           
- 	          if( $.inArray(echonestTrackId,  songsAlreadyUsed) > -1){
- 	        	  //console.log('TRACK ALREADY USED');
- 	            var id = data.response.songs[0].tracks[0].foreign_id;
- 	            trackCover1.getTrackCover(id);
- 	          }
-                
- 	           banSongFeedBack(trackCover1, echonestTrackId);*/
- 	            
- 	        	
-              
-	            //steerPlaylist(trackCover1);
-                
-               
-	        	
-	        	 
-	        	/* for (var i = 0; i < data.response.lookahead.length; i++){
-	 	            console.log('Next song:' +data.response.lookahead[i].title+' by '+data.response.lookahead[i].artist_name);
-	 	            
-	 	            var id = data.response.lookahead[i].tracks[0].foreign_id;
-	                 trackCover1.getTrackCover(id);
-	                 
-	                
-	 	            
-	 	        }*/
-	        	 
-	        	
-	        	 
-	        	 
-	            
-	          // getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
-	           //getArtistHotness(artistIdsForPopularity, sliderUpdate1);
+ 	       
 	            
 	        } else {
 	            info("trouble getting results");
@@ -1686,7 +1995,7 @@ function getNextSong1( ){
 
 
 
-function getNextXXSong1( ){
+/*function getNextXXSong1( ){
 	console.log('getNextXXSong() was called');
 	
 	
@@ -1726,7 +2035,7 @@ function getNextXXSong1( ){
 	              getNextSong1( );
 	           
 	           // session_id = data.response.session_id;
-	        	/* for (var i = 0; i < data.response.songs.length; i++){
+	        	 for (var i = 0; i < data.response.songs.length; i++){
 	            console.log('Next song:' +data.response.songs[i].title+' by '+data.response.songs[i].artist_name);
 	            
 	            var id = data.response.songs[i].tracks[0].foreign_id;
@@ -1734,9 +2043,9 @@ function getNextXXSong1( ){
                 
                
 	            
-	        	 }*/
+	        	 }
 	        	 
-	        	/* for (var i = 0; i < data.response.lookahead.length; i++){
+	        	 for (var i = 0; i < data.response.lookahead.length; i++){
 	 	            console.log('Next song:' +data.response.lookahead[i].title+' by '+data.response.lookahead[i].artist_name);
 	 	            
 	 	            var id = data.response.lookahead[i].tracks[0].foreign_id;
@@ -1745,11 +2054,11 @@ function getNextXXSong1( ){
 	                
 	 	            
 	 	        }
-	        	 */
-	        	/* if(counter == 1){
+	        	 
+	        	 if(counter == 1){
 	        	steerPlaylist(trackCover1);
 	        	 }
-	        	 */
+	        	 
 	        	 
 	            
 	          // getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
@@ -1760,7 +2069,7 @@ function getNextXXSong1( ){
 	        }
 	    });
 	
-}
+}*/
 
 
 
@@ -1963,20 +2272,7 @@ function banSongFeedBack( echnonestTrackId){
 	            function(data) {
 	        if (checkResponse(data)) {
 	          	        	 
-	        	//console.log('banSong() was called with echonest ID: '+echnonestTrackId);
-	        	
-	        	 //setTimeout(function(){getNextSong1(trackCover1)},1000);
-	        	
-	        	
-	        	/*if(numberOfSongs == 0){
-	        		
-	        		console.log('Number of fetched songs: '+songsAlreadyUsed.length);
-	        		 for(var j =0; j< songsAlreadyUsed.length;j++){
-	        			 console.log('Song Already Used no '+j+': '+songsAlreadyUsed[j]);
-	        		 }
-	        		 getBanedSongsInfo();
-	        		
-	        	}*/
+	       
 	        	
 	        	var continueLoop = trackCoverScript.checkLoopContinue();
 	        	
@@ -1993,40 +2289,7 @@ function banSongFeedBack( echnonestTrackId){
 	        		trackCoverScript.setLoopContinueToTrue();
 	        	}
 	        	
-	        	/*else{
-	        		
-	        	
-	        		
-	        		
-	        		
-	        		   $("div.holder").jPages("destroy").jPages({
-	                        containerID   : "albumCoverContainer",
-	                        perPage       :10,
-	                        first       : "first",
-	                        previous    : "previous",
-	                        next        : "next",
-	                        last        : "last",
-	                         animation   : "fadeInLeftBig"
-	                        callback    : function( pages, items ){
-	                                   pageCount =  pages.count;
-	                               
-	                        },
-	        		   
-	        		   		//startPage: pageCount 
-	        		   	
-	                    });
-	        		   
-	        		   $("div.holder").jPages( pageCount );
-	        		   pageCount= pageCount+1;
-	        		   
-	        	}//end of else
-*/	        	
-	       /* 	else{
-	        	$("#tagCloud").empty();
-	            	$("#tagCloud").tagCloud(styleTermObjects);
-	        	}
-	        	*/
-	        	
+	
 	        	
 	        	
 	        
@@ -2095,6 +2358,9 @@ function getBanedArtistInfo(){
 }
 
 
+
+
+
 function getConstraintsInfo(){
 console.log('getConstraintsInfo() was called');
 	
@@ -2110,7 +2376,7 @@ console.log('getConstraintsInfo() was called');
 	    	 
 	    	//for(var i=0;i<data.response.banned_song_ids.length;i++){
 	    	
-	    		console.log('Constraints: '+JSON.stringify(data.response.constraints));
+	    		console.log(' ECHONEST DYNAMIC getConstraintsInfo() Constraints: '+JSON.stringify(data.response.constraints));
 	    		//console.log('Constraints: '+JSON.stringify(data.response));
 	    	 
 	    	//}

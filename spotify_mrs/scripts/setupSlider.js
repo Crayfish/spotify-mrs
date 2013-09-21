@@ -257,6 +257,30 @@ function setUpHotSlider1(echonestDynamic){
 
 
 function setUpSongHotSlider1(echonestDynamic){
+	  console.log('SetUpHotSlider() betreten');
+	    //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
+	    $( "#slider-songHot" ).slider({
+	    //setzen der Slider Attributte  
+	   
+	    min: 0,
+	    max: 5,
+	    step: 1,
+	    slide: function( event, ui ) {
+	   
+	    },
+	    stop: function ( event, ui ) {
+	            console.log('SongHot slider Stop');
+	            var songHotnesLevel =  ui.value
+	            echonestDynamic.changeSongHotness(songHotnesLevel);
+	         
+	    }
+	    
+	    });
+	   
+	   
+}
+
+/*function setUpSongHotSlider1(echonestDynamic){
     console.log('SetUpHotSlider() betreten');
     //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
     $( "#slider-songHot" ).slider({
@@ -279,18 +303,18 @@ function setUpSongHotSlider1(echonestDynamic){
     stop: function ( event, ui ) {
             console.log('SongHot slider Stop');
             echonestDynamic.changeSongHotness();
-            /*if(document.getElementById('song').checked){
+            if(document.getElementById('song').checked){
                 echonest.getPlaylistSongSimilarity();
         	}else{
         		echonest.getPlaylistArtistSimilarity();
-        	}*/
+        	}
     }      
    
     });
    
     $( "#songHot" ).val(  $( "#slider-songHot" ).slider( "values", 0 ) +
     " - " + $( "#slider-songHot" ).slider( "values", 1 ) );
-}
+}*/
 
 function setSliderTicks(el) {
     var $slider =  $(el);
