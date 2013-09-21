@@ -6,17 +6,17 @@ require([
   '$views/throbber#Throbber',
   'scripts/jPagesTrackCover',
   'scripts/customplaylist',
-  //'scripts/playlistInformation',
+  'scripts/apiKey',
   //'scripts/setupNoveltyCheckBoxes',
 
-  ], function(models, throbber, trackCover, customplaylist/*, playlistInformation*/) {
+  ], function(models, throbber, trackCover, customplaylist, apiKey/*, playlistInformation*/) {
  
 	  'use strict';
 
   
   var startNewSession = function(){
 	 // console.log("New session is started");
-	  startNewSession1(models, throbber, trackCover, customplaylist/*, playlistInformation*/);
+	  startNewSession1(models, throbber, trackCover, customplaylist, apiKey/*, playlistInformation*/);
 	 
   };
   
@@ -29,11 +29,11 @@ require([
 	 
   };
   
-  var getNextXXSong = function(){
+/*  var getNextXXSong = function(){
 		 // console.log("New session is started");
 		  getNextXXSong1( );
 		 
-	  };
+	  };*/
 	  
 	var changeArtistFamiliarity = function(artistFamilarityLevel){
 		changeArtistFamiliarity1(artistFamilarityLevel);
@@ -102,7 +102,7 @@ require([
 		 setArrayOfAllSongs1(array1);
 	 }
   
-  exports.getNextXXSong =getNextXXSong;
+  //exports.getNextXXSong =getNextXXSong;
   exports.getNextSong=getNextSong;
   exports.startNewSession = startNewSession;
   exports.changeArtistFamiliarity =  changeArtistFamiliarity;
@@ -128,7 +128,7 @@ require([
 
 
 
-
+var echonestApiKey = null;
 
 var session_id ='';
 
@@ -201,7 +201,7 @@ similarityModeIsPlaylist = true;
 	
 	
 	var randomNumber =  Math.floor(Math.random()*100);
-	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&type=catalog-radio&bucket=id:spotify-WW&bucket=tracks&callback=?&_='+randomNumber;
+	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='+echonestApiKey+'&type=catalog-radio&bucket=id:spotify-WW&bucket=tracks&callback=?&_='+randomNumber;
 	$.getJSON(genreUrl, 
     		{// 'artist_id':replacedArtistID ,
     	//'track_id': replacedSongID, 
@@ -235,7 +235,7 @@ similarityModeIsPlaylist = true;
         
         console.log("New session ID  is used: "+session_id);
        
-        getNextXXSong1();
+        getNextSong1();
         
         
         } else {
@@ -274,7 +274,7 @@ var randomNumber =  Math.floor(Math.random()*100);
     
     
     //var artistIdsForPopularity = new Array();
-    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
+    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key='+echonestApiKey+'&callback=?&session_id='+session_id+'&_='+randomNumber;
     	
 
     //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
@@ -313,21 +313,16 @@ function changeAdventurousness1(){
     
     
     //var artistIdsForPopularity = new Array();
-    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
-    	
+    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?session_id='+session_id+'&_='+randomNumber;
+    var args ={
+			api_key : echonestApiKey,
+			format: 'json',
+			adventurousness :adventurousnessSliderValue 
+			
+			} 	
 
     //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
-    $.getJSON(url, 
-    		{// 'artist_id':replacedArtistID ,
-    	//'track_id': replacedSongID, 
-    	'format':'jsonp',
-    	//limit : true,
-        //'type':'artist-radio', 
-    	//'max_artist_hotttnesss':maxHotness,
-    	 'adventurousness':adventurousnessSliderValue 
-        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-            //bucket : ['id:spotify-WW', 'tracks'],
-            },
+    $.getJSON(url, args,
             function(data) {
         if (checkResponse(data)) {
             
@@ -353,21 +348,18 @@ function changeArtistVariety1(){
     
     
     //var artistIdsForPopularity = new Array();
-    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
-    	
+    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?session_id='+session_id+'&_='+randomNumber;
+    var  args ={
+    		api_key : echonestApiKey,
+    		format: 'json',
+    		variety : changeArtistVarietySliderValue 
+    		
+    		
+    };	
 
     //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
     $.getJSON(url, 
-    		{// 'artist_id':replacedArtistID ,
-    	//'track_id': replacedSongID, 
-    	'format':'jsonp',
-    	//limit : true,
-        //'type':'artist-radio', 
-    	//'max_artist_hotttnesss':maxHotness,
-    	 'variety':changeArtistVarietySliderValue 
-        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-            //bucket : ['id:spotify-WW', 'tracks'],
-            },
+    		args,
             function(data) {
         if (checkResponse(data)) {
             
@@ -387,10 +379,13 @@ function  changeArtistFamiliarity1(artistFamilarityLevel){
 	
 		getConstraintsInfo();
 	
+		var minFamilarity = 0.0;
+		var maxFamilarity = 1.0;
+		
 	
 	if(similarityModeIsGenre){
-		var minFamilarity = lowerArtistFamilarityBorderForGenreSimilarity;
-		var maxFamilarity = upperArtistFamilarityBorderForGenreSimilarity;
+		minFamilarity = lowerArtistFamilarityBorderForGenreSimilarity;
+		maxFamilarity = upperArtistFamilarityBorderForGenreSimilarity;
 		var range = upperArtistFamilarityBorderForGenreSimilarity - lowerArtistFamilarityBorderForGenreSimilarity;
 		var rangeStep = range/5;
 		
@@ -443,7 +438,7 @@ function  changeArtistFamiliarity1(artistFamilarityLevel){
 	    
 	    var args = {
 				session_id: session_id,
-				 api_key: 'BNV9970E1PHXZ9RQW',
+				 api_key: echonestApiKey,
 			     format:'json',
 			     min_artist_familiarity : minFamilarity,
 			     max_artist_familiarity : maxFamilarity
@@ -655,7 +650,7 @@ function  changeArtistHotness1(artistHotnessLevel){
 	    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='+randomNumber;
 		var args = {
 				session_id: session_id,
-				 api_key: 'BNV9970E1PHXZ9RQW',
+				 api_key: echonestApiKey,
 			     format:'json',
 			     max_artist_hotttnesss :maxHotness,
 		    	 min_artist_hotttnesss :minHotness,
@@ -736,11 +731,16 @@ function  changeArtistHotness1(artistHotnessLevel){
 function  changeSongHotness1(songHotnessLevel){
 	console.log("changeSongHotness() was called with songHotnessLevel: "+songHotnessLevel);
 	
+	var minSongHotness = 0.0;
+	var maxSongHotness = 1.0;
+	
+	
+	
 	
 	if(similarityModeIsGenre){
 		
-	var minSongHotness = lowerSongHotnessBorderForGenreSimilarity;
-	var maxSongHotness = upperSongHotnessBorderForGenreSimilarity;
+	minSongHotness = lowerSongHotnessBorderForGenreSimilarity;
+	maxSongHotness = upperSongHotnessBorderForGenreSimilarity;
 	var range = upperSongHotnessBorderForGenreSimilarity - lowerSongHotnessBorderForGenreSimilarity;
 	var rangeStep = range/5;
 	
@@ -780,22 +780,23 @@ function  changeSongHotness1(songHotnessLevel){
 	    var randomNumber =  Math.floor(Math.random()*100);
 	    
 	    
-	    //var artistIdsForPopularity = new Array();
-	    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&callback=?&session_id='+session_id+'&_='+randomNumber;
-	    	
+	    
+	    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='+randomNumber;
+		var args = {
+				session_id: session_id,
+				 api_key: echonestApiKey,
+			     format:'json',
+			     max_song_hotttnesss :maxSongHotness,
+		    	 min_song_hotttnesss :minSongHotness,
+		    	// max_artist_familiarity: 0.0,
+		    	 //min_artist_familiarity: 0.0
+		};
+
+	 
 
 	    
-	    $.getJSON(url, 
-	    		{// 'artist_id':replacedArtistID ,
-	    	//'track_id': replacedSongID, 
-	    	'format':'jsonp',
-	    	//limit : true,
-	        //'type':'artist-radio', 
-	    	'max_song_hotttnesss':maxSongHotness,
-	    	 'min_song_hotttnesss':minSongHotness 
-	        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-	            //bucket : ['id:spotify-WW', 'tracks'],
-	            },
+	    $.getJSON(url, args,
+	    		
 	            function(data) {
 	        if (checkResponse(data)) {
 	            
@@ -830,19 +831,13 @@ function changeToGenreSimilarity1(genreName){
 	
 	
 	var randomNumber =  Math.floor(Math.random()*100);
-	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&type=genre-radio&bucket=id:spotify-WW&bucket=tracks&callback=?&_='+randomNumber;
+	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='+echonestApiKey+'&type=genre-radio&bucket=id:spotify-WW&bucket=tracks&callback=?&_='+randomNumber;
 	$.getJSON(genreUrl, 
-    		{// 'artist_id':replacedArtistID ,
-    	//'track_id': replacedSongID, 
+    		{
     	'format':'jsonp',
     	limit : true,
     	'genre':genreName
-    	//limit : true,
-        //'type':'artist-radio', 
-    	//'max_song_hotttnesss':maxSongHotness,
-    	// 'min_song_hotttnesss':minSongHotness 
-        //'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-            //bucket : ['id:spotify-WW', 'tracks'],
+    	
             },
             function(data) {
         if (checkResponse(data)) {
@@ -883,7 +878,7 @@ function getSongHotnesRangeforGenre(genreName){
 	var urlHotnes = 'http://developer.echonest.com/api/v4/song/search?';
 	//get the lowest value
 	var args = {
-			 api_key: 'BNV9970E1PHXZ9RQW',
+			 api_key: echonestApiKey,
 		     format:'json',
 		     bucket : ['song_hotttnesss'],
 		     sort : 'song_hotttnesss-desc',
@@ -919,7 +914,7 @@ function getSongHotnesRangeforGenre(genreName){
 	
 	//get the highest value
 	var args1 = {
-			 api_key: 'BNV9970E1PHXZ9RQW',
+			 api_key: echonestApiKey,
 		     format:'json',
 		     bucket : ['song_hotttnesss'],
 		     sort : 'song_hotttnesss-asc',
@@ -960,7 +955,7 @@ function getArtistHotnesRangeforGenre(genreName){
 	
 	//get the lowest Value of the range
 	var args = {
-			 api_key: 'BNV9970E1PHXZ9RQW',
+			 api_key: echonestApiKey,
 		     format:'json',
 		     bucket : ['hotttnesss'],
 		     sort : 'hotttnesss-asc',
@@ -991,7 +986,7 @@ function getArtistHotnesRangeforGenre(genreName){
 	
 	//get the highest value of the range
 	var args1 = {
-			 api_key: 'BNV9970E1PHXZ9RQW',
+			 api_key: echonestApiKey,
 		     format:'json',
 		     bucket : ['hotttnesss'],
 		     sort : 'hotttnesss-desc',
@@ -1025,7 +1020,7 @@ function getArtistHotnesRangeforGenre(genreName){
 	
 	//Test auf Normalverteilung 
 	var args2 = {
-			 api_key: 'BNV9970E1PHXZ9RQW',
+			 api_key: echonestApiKey,
 		     format:'json',
 		     bucket : ['hotttnesss'],
 		     //sort : 'hotttnesss-desc',
@@ -1106,7 +1101,7 @@ function getArtistFamilarityRangeforGenre(genreName){
 	
 	//get the lowest Value of the range
 	var args = {
-			 api_key: 'BNV9970E1PHXZ9RQW',
+			 api_key: echonestApiKey,
 		     format:'json',
 		     bucket : ['familiarity'],
 		     sort : 'familiarity-asc',
@@ -1138,7 +1133,7 @@ function getArtistFamilarityRangeforGenre(genreName){
 	
 	//get the highest value of the range
 	var args1 = {
-			 api_key: 'BNV9970E1PHXZ9RQW',
+			 api_key: echonestApiKey,
 		     format:'json',
 		     bucket : ['familiarity'],
 		     sort : 'familiarity-desc',
@@ -1171,9 +1166,11 @@ function getArtistFamilarityRangeforGenre(genreName){
 
 
 
-function startNewSession1(models1, throbber1, trackCover1, customplaylist1/*, playlistInformation1*/ ){
+function startNewSession1(models1, throbber1, trackCover1, customplaylist1, apiKey/*, playlistInformation1*/ ){
 	 console.log("New session is started");
 	
+	 echonestApiKey = apiKey.getApiKey();
+	 console.log('ECHONEST DYNAMIC apiKey was set to: '+echonestApiKey);
 	 
 	 models = models1;
 	 
@@ -1292,26 +1289,23 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1/*, pl
     
     var randomNumber =  Math.floor(Math.random()*100);
     
-    
-   // var artistIdsForPopularity = new Array();
-    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+seedArtistIdforEchonestCalls+'&_='+randomNumber;
-    	//&track_id='+replacedSongID;
-    	//&track_id='+replacedSongID;
-    //var session_id ='';
+  //api_key='+echonestApiKey+'&
+   //&artist_id='+seedArtistIdforEchonestCalls+'
+    //&bucket=id:spotify-WW&bucket=tracks
+    var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?&_='+randomNumber;
+    var args = {
+        	api_key : echonestApiKey,
+        	artist_id : seedArtistIdforEchonestCalls,
+        	format :'json',
+        	limit : true,
+            type :'artist-radio', 
+            bucket : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss', 'tracks', 'id:spotify-WW']
+           
+         }
 
     //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
-    $.getJSON(url, 
-    		{// 'artist_id':replacedArtistID ,
-    	//'track_id': replacedSongID, 
-    	'format':'jsonp',
-    	limit : true,
-        'type':'artist-radio', 
-        'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
-       
-        //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
-       // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-            //bucket : ['id:spotify-WW', 'tracks'],
-            },
+    $.getJSON(url, args,
+    		
             function(data) {
         if (checkResponse(data)) {
             info("");
@@ -1323,7 +1317,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1/*, pl
            
             session_id = data.response.session_id;
            
-            console.log("New session ID  is used: "+session_id);
+            console.log("ECHONEST DYNAMIC New session ID  is used: "+session_id);
        	 //for (var i = 0; i <20; i++){
             //var i =0;
             //while(i<20){
@@ -1431,24 +1425,20 @@ function changeSeedArtistSimilarity1(){
    
    
    //var artistIdsForPopularity = new Array();
-   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+ seedArtistIdforEchonestCalls+'&session_id='+session_id+'&_='+randomNumber;
-   	//&track_id='+replacedSongID;
-   	//&track_id='+replacedSongID;
-   //var session_id ='';
+   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?session_id='+session_id+'&_='+randomNumber;
+  var args ={
+		  	api_key : echonestApiKey,
+		  	artist_id : seedArtistIdforEchonestCalls,
+			format:'json',
+		   	limit : true,
+		    type :'artist-radio', 
+		    bucket : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss', 'tracks' , 'id:spotify-WW' ]
+ 
+  };
 
    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
-   $.getJSON(url, 
-   		{// 'artist_id':replacedArtistID ,
-   	//'track_id': replacedSongID, 
-   	'format':'jsonp',
-   	limit : true,
-       'type':'artist-radio', 
-       'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
-      
-       //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
-      // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-           //bucket : ['id:spotify-WW', 'tracks'],
-           },
+   $.getJSON(url, args,
+   		
            function(data) {
        if (checkResponse(data)) {
            info("");
@@ -1559,24 +1549,21 @@ function changeSeedSongSimilarity1(){
   
   
   var artistIdsForPopularity = new Array();
-  var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&song_id='+replacedSongID+'&session_id='+session_id+'&_='+randomNumber;
-  	//&track_id='+replacedSongID;
-  	//&track_id='+replacedSongID;
-  //var session_id ='';
+  var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?session_id='+session_id+'&_='+randomNumber;
+  var args ={
+		  	api_key : echonestApiKey,
+		  	song_id : replacedSongID,
+		  	artist_id : seedArtistIdforEchonestCalls,
+			format:'json',
+		   	limit : true,
+		    type :'song-radio', 
+		   
+
+};
 
   //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
-  $.getJSON(url, 
-  		{//'artist_id': " " ,
-  	//'track_id': replacedSongID, 
-  	'format':'jsonp',
-  	limit : true,
-      'type':'song-radio', 
-      'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
-     
-      //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
-     // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-          //bucket : ['id:spotify-WW', 'tracks'],
-          },
+  $.getJSON(url, args,
+  		
           function(data) {
       if (checkResponse(data)) {
           info("");
@@ -1689,7 +1676,7 @@ function changeToArtistSimilarity1(){
    
    
    var artistIdsForPopularity = new Array();
-   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+replacedArtistID+'&_='+randomNumber;
+   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='+echonestApiKey+'&callback=?&bucket=id:spotify-WW&bucket=tracks&artist_id='+replacedArtistID+'&_='+randomNumber;
    	//&track_id='+replacedSongID;
    	//&track_id='+replacedSongID;
    //var session_id ='';
@@ -1701,7 +1688,7 @@ function changeToArtistSimilarity1(){
    	'format':'jsonp',
    	limit : true,
        'type':'artist-radio', 
-       'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
+       //'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
       
        //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
       // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
@@ -1758,58 +1745,16 @@ function changeToSongSimilarity1(){
 		similarityModeIsSong = true;
 		similarityModeIsPlaylist = false;
 	 
-	 //numberOfSongs=10;
-	 //songsAlreadyUsed = new Array();
-	 
-	/* var track = models1.player.load('track');
-    console.log('TRACK= '+track);
-    var artist = models1.player.track.artists[0];
-    console.log('ARTIST: '+artist);
 	
-	
-	    if (track == null) {
-	    	info('Start playing something and I ll make a playlist of good songs based on that song');
-	    	
-	    } else {*/
 	
    
    var cover = document.getElementById('albumCoverContainer');
-  // var cover = $(".albumCoverContainer") ;
-   //var pictureThrobber = throbber1.forElement(cover);
-   //pictureThrobber.setSize('normal');
   
-   //getAllEchonestGenres();
-   
-  // var artist_id = models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
-   
-   //var artistName = models1.player.track.artists[0].name;
-   
-   //var trackName =  models1.player.track.name;
  
    
    $( "#songSimilarityInfo").text('"'+trackName+'" by '+ artistName);
-   //info('Getting Songs like "'+trackName+'" by '+ artistName);
-   
-   
-   //var artist_id=  models1.player.track.artists[0].toString();
-  // console.log('artist_id: '+artist_id);
-   
-  // var replacedArtistID= artist_id.replace('spotify', 'spotify-WW');
-   //console.log('Replaced Artist ID: '+replacedArtistID);
   
-   //replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
-   
-  // var song_id=models1.player.track.uri.toString();
-   //.decodeForText();
-  // console.log('Spotify Song ID: '+song_id);
-   //var replacedSongID= models1.player.track.uri.decodeForText().replace('spotify', 'spotify-WW');
    var replacedSongID= song_id.replace('spotify', 'spotify-WW');
-   //console.log('Replaced ID: '+replacedSongID);
-   //replacedSongID = '"'+replacedSongID+'"';
-  //console.log('Replaced ID mit " "': '+replacedSongID);
-   //Format:  spotify-WW:track:3L7BcXHCG8uT92viO6Tikl
- // replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
- // console.log('Replaced ID: '+replacedSongID);
   
   
   
@@ -1821,7 +1766,7 @@ function changeToSongSimilarity1(){
    
    
    //var artistIdsForPopularity = new Array();
-   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key=BNV9970E1PHXZ9RQW&callback=?&bucket=id:spotify-WW&bucket=tracks&song_id='+replacedSongID+'&_='+randomNumber;
+   var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='+echonestApiKey+'&bucket=id:spotify-WW&bucket=tracks&song_id='+replacedSongID+'&_='+randomNumber;
    	//&track_id='+replacedSongID;
    	//&track_id='+replacedSongID;
    //var session_id ='';
@@ -1830,10 +1775,10 @@ function changeToSongSimilarity1(){
    $.getJSON(url, 
    		{//'artist_id': " " ,
    	//'track_id': replacedSongID, 
-   	'format':'jsonp',
+   	'format':'json',
    	limit : true,
        'type':'song-radio', 
-       'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
+       //'bucket' : ['song_hotttnesss', 'artist_familiarity','artist_hotttnesss']
       
        //'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
       // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
@@ -1889,30 +1834,16 @@ function getNextSong1( ){
 	throbber.show();
 	// $("#albumCoverContainer").hide();
 	
-	
+	//api_key=BNV9970E1PHXZ9RQW&format=json&results=1&
 	var randomNumber =  Math.floor(Math.random()*100);
-	 var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/next?api_key=BNV9970E1PHXZ9RQW&format=json&results=1&session_id='+session_id+'&_='+randomNumber;
-	    //&session_id=3c717a4465dc4a2ba871747a2044f441';
-	    //var session_id ='';
-	    //var numberOfSongs = 1;
-
-	    //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei erfolgreicher Anfrage ausgeführt wird)
+	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/next?session_id='+session_id+'&_='+randomNumber;
+	var args ={
+				api_key : echonestApiKey,
+				format: 'json',
+				results : 1,
+				}   
 	   
-	   
-	    $.getJSON(url, 
-	    		{ //'artist_id': artist_id,//
-	    	//'lookahead' = 5,
-	    	//'results' = '1',
-	    	//'track_id':replacedSongID, 
-	    	//'format':'jsonp',
-	    	//limit : true,
-	        //'type':'song-radio', 
-	       // 'song_min_hotttnesss': minHotness, 'song_max_hotttnesss': maxHotness,
-	       // 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity': minPopularity
-	         //bucket : ['id:spotify-WW', 'tracks'],
-	          
-	    	//'callback': console.log('Calllback executed');
-	            },
+	    $.getJSON(url, args,
 	            function(data) {
 	        if (checkResponse(data)) {
 	        	
@@ -2086,7 +2017,7 @@ function getArtistTerms(artistID){
 	//console.log(artist_id3);
 	
 	var randomNumber= Math.floor(Math.random()*100);	
-	var url1 = 'http://developer.echonest.com/api/v4/artist/terms?api_key=BNV9970E1PHXZ9RQW&format=json&type=style&'+'&_='+randomNumber;
+	var url1 = 'http://developer.echonest.com/api/v4/artist/terms?api_key='+echonestApiKey+'&format=json&type=style'+'&_='+randomNumber;
 	//console.log(url1);
 	
 	
@@ -2162,29 +2093,7 @@ function getArtistTerms(artistID){
 
 
 
-function steerPlaylist(trackCover1){
-	
-	var tempo = Math.floor(Math.random()*100);
-	 var urlSteer ='http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key=BNV9970E1PHXZ9RQW&session_id='+session_id+'&min_tempo='+tempo
-	 
-	   $.getJSON(urlSteer, 
-	    		{
-	            },
-	            function(data) {
-	        if (checkResponse(data)) {
-	          	        	 
-	        	console.log('steerPlaylist() was called');
-	        	 
-	        	getSongsSchleife(trackCover1); 
-	        	 
-	         
-	            
-	        } else {
-	            info("trouble getting results");
-	        }
-	    });
-	
-}
+
 
 /*function banArtistFeedback1 (){
 	
@@ -2264,11 +2173,14 @@ function steerPlaylist(trackCover1){
 function banSongFeedBack( echnonestTrackId){
 	
 	var randomNumber= Math.floor(Math.random()*100);
-	var skipUrl ='http://developer.echonest.com/api/v4/playlist/dynamic/feedback?api_key=BNV9970E1PHXZ9RQW&format=json&session_id='+session_id+'&_='+randomNumber;
-	
-	 $.getJSON(skipUrl, 
-	    		{'ban_song':echnonestTrackId
-	            },
+	var skipUrl ='http://developer.echonest.com/api/v4/playlist/dynamic/feedback?session_id='+session_id+'&_='+randomNumber;
+	var args ={
+			api_key : echonestApiKey,
+			format: 'json',
+			ban_song : echnonestTrackId,
+			
+			} 
+	 $.getJSON(skipUrl, args,
 	            function(data) {
 	        if (checkResponse(data)) {
 	          	        	 
@@ -2310,7 +2222,7 @@ function getBanedSongsInfo(){
 	console.log('getBanedSongsInfo() was called');
 	
 	var randomNumber= Math.floor(Math.random()*100);	
-	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key=BNV9970E1PHXZ9RQW&session_id='+session_id+'&_='+randomNumber;
+	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key='+echonestApiKey+'&session_id='+session_id+'&_='+randomNumber;
 	$.getJSON(infoUrl, 
 			{
 	        },
@@ -2336,7 +2248,7 @@ function getBanedArtistInfo(){
 	console.log('getBanedArtistInfo() was called');
 	
 	var randomNumber= Math.floor(Math.random()*100);	
-	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key=BNV9970E1PHXZ9RQW&session_id='+session_id+'&_='+randomNumber;
+	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key='+echonestApiKey+'&session_id='+session_id+'&_='+randomNumber;
 	$.getJSON(infoUrl, 
 			{
 	        },
@@ -2365,7 +2277,7 @@ function getConstraintsInfo(){
 console.log('getConstraintsInfo() was called');
 	
 	var randomNumber= Math.floor(Math.random()*100);	
-	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key=BNV9970E1PHXZ9RQW&session_id='+session_id+'&_='+randomNumber;
+	var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key='+echonestApiKey+'&session_id='+session_id+'&_='+randomNumber;
 	$.getJSON(infoUrl, 
 			{
 	        },
@@ -2391,7 +2303,7 @@ console.log('getConstraintsInfo() was called');
 function getPlaylistInfo(){
 	
 var randomNumber= Math.floor(Math.random()*100);	
-var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key=BNV9970E1PHXZ9RQW&session_id='+session_id+'&_='+randomNumber;
+var infoUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/info?api_key='+echonestApiKey+'&session_id='+session_id+'&_='+randomNumber;
 $.getJSON(infoUrl, 
 		{
         },
