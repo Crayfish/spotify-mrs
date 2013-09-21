@@ -548,6 +548,7 @@ function getArrayOfAllSongsInSpotifyPlaylists1(){
 function  setUpPlaylistInformation1(tasteProfileScript1, models1, Library, echonestDynamic){
 	
 	echonestTasteProfileScript = tasteProfileScript1;
+	echonestTasteProfileScript.setApiKey();
 	echonestTasteProfileScript.setupPlaylistSimilarity();
 	
 	//tasteProfileScript.createAllTasteProfiles();

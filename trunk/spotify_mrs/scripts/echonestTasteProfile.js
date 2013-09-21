@@ -9,8 +9,12 @@ require([
   'use strict';
 
   echonestDynamicScript = echonestDynamic;
-  echonestApiKey = apiKey.getApiKey();
+  //echonestApiKey = apiKey.getApiKey();
 
+var setApiKey = function(){
+	echonestApiKey = apiKey.getApiKey();
+}
+  
   var initialCreateOfAllTasteProfile = function() {
 	  initialCreateOfAllTasteProfile1(echonestDynamic);
  
@@ -68,6 +72,7 @@ var  addSongsInTasteProfiles = function(addSongsObjectsArray){
   exports.noNewOrDeletedPlaylists = noNewOrDeletedPlaylists;
   exports.deleteSongsInTasteProfiles = deleteSongsInTasteProfiles;
   exports.addSongsInTasteProfiles =  addSongsInTasteProfiles;
+  exports.setApiKey = setApiKey;
 });
 
 
@@ -542,15 +547,7 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
 	
         var createURL = "http://developer.echonest.com/api/v4/catalog/create";  
        
-        
-	// for (var i=0; i<=arrayPlaylistObjects.length-1; i++){  
-		//var notYetFinishedTransmittingProfileData = true;
-		//var readyforNextOne = true;
-		//var i =7;
-		
-        //while(notYetFinishedTransmittingProfileData){
-        	//if(readyforNextOne){
-        		//notYetFinishedTransmittingProfileData = false;
+  
 		
 		arrayPlaylistObjects.forEach(function(entry) {
 			console.log(' ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
@@ -570,10 +567,10 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
         	
         	$.post(createURL, 
             		{
-            	'api_key': echonestApiKey,
-            	'format':'json',
-            	'type':'song',
-            	'name': Math.floor(Math.random()*10000)+tasteProfileName
+            	api_key: echonestApiKey,
+            	format : 'json',
+            	type:'song',
+            	name : Math.floor(Math.random()*10000)+tasteProfileName
             	
                     }).done(function(data) {	
                     	console.log(JSON.stringify(data.response));
@@ -641,13 +638,7 @@ function initialCreateOfAllTasteProfile1(echonestDynamic){
                     });
         	
 		});//end of forEachLoop
-        	//}//ifEnde
-       // }//while ende
-		
-		
-	
-	// }//for schleife Ende
-	
+        	
 	
 	
 }

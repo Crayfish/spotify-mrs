@@ -831,12 +831,12 @@ function changeToGenreSimilarity1(genreName){
 	
 	
 	var randomNumber =  Math.floor(Math.random()*100);
-	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='+echonestApiKey+'&type=genre-radio&bucket=id:spotify-WW&bucket=tracks&callback=?&_='+randomNumber;
+	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='+echonestApiKey+'&type=genre-radio&bucket=id:spotify-WW&bucket=tracks&_='+randomNumber;
 	$.getJSON(genreUrl, 
     		{
-    	'format':'jsonp',
+    	format:'json',
     	limit : true,
-    	'genre':genreName
+    	genre :genreName
     	
             },
             function(data) {
