@@ -95,6 +95,7 @@ require([
 		//echonestTasteProfile.deleteAllTasteProfiles();
 		//echonestTasteProfile.getBasicInformationOfAllTasteProfiles();
 		
+		setupGenreFilter.setupGenreFilter(echonestDynamic);
 
 		setupNoveltyCheckBoxes.setUpExcludeSeedArtistCheckBox();
 		setupNoveltyCheckBoxes.setUpNoSongsFromSpotifyCollectionCheckBox();
@@ -112,7 +113,7 @@ require([
 
 		echonestDynamic.startNewSession();
 
-		setupGenreFilter.setupGenreFilter(echonestDynamic);
+		//setupGenreFilter.setupGenreFilter(echonestDynamic);
 		//setupPlaylistFilter.setupPlaylistFilter(echonestDynamic);
 		setUpSimilarityAccordion.setupAccordion();
 

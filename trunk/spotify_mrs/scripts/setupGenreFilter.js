@@ -34,8 +34,8 @@ function setupGenreFilter1(echonestDynamic){
 
 
 function getAllEchonestGenres(echonestDynamic){
-	
-	var genreQueryUrl ='http://developer.echonest.com/api/v4/artist/list_genres?api_key=BNV9970E1PHXZ9RQW&format=json';
+	 var randomNumber =  Math.floor(Math.random()*100);
+	var genreQueryUrl ='http://developer.echonest.com/api/v4/artist/list_genres?api_key=BNV9970E1PHXZ9RQW&format=json&_='+randomNumber;
 	
 	var genreArray = new Array();
 	
@@ -53,7 +53,7 @@ function getAllEchonestGenres(echonestDynamic){
 	                
 	            		}
 	                
-	                //console.log('Echonest Genre List: '+genreArray);
+	                //console.log('SETUP GENRE FILTER Genre List: '+genreArray);
 	                 
 	                	
 	                $( "#tags" ).autocomplete({
