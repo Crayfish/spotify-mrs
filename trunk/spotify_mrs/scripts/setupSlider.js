@@ -265,6 +265,9 @@ function setUpSongHotSlider1(echonestDynamic){
 	    min: 0,
 	    max: 5,
 	    step: 1,
+	    create: function( event, ui ) {
+	        setSliderTicks(event.target);
+	    },
 	    slide: function( event, ui ) {
 	   
 	    },
