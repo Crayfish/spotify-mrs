@@ -46,7 +46,7 @@ function setEchonestApiKey1(userName){
 	var keysArray= [
 	            {
 	                "userName": "Marc",
-	                "apiKey": "BNV9970E1PHXZ9RQW"
+	                "apiKey": "QWX0DBDRJ1VJXS0WX"
 	            },
 	            {
 	                "userName": "Tom",

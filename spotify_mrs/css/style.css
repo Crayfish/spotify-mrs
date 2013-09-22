@@ -107,9 +107,8 @@ visibility: hidden;
 	float:right;
 	border: 1px solid #a1a1a1;
 	
-	border-top-left-radius : 5px;
-	border-top-right-radius : 5px;
-	border-bottom-right-radius: 5px;
+	border-radius : 5px;
+	
 	background:#dddddd;
 	width:200px;
 	min-height : 877px;
@@ -229,4 +228,11 @@ width: 50px;
     position:absolute;
     
 }
+
+#slider-songHot .ui-slider-range { 
+	background-color: #f6931f; 
+	
+}
+
+.ui-slider-handle { border-color: #f6931f; }
 
