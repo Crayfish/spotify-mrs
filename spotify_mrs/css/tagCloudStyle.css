@@ -1,20 +1,21 @@
 @charset "utf-8";
 /* CSS Document */
 #tagCloud {
+	margin-left:8px;
 	margin-top:30px;
-	width: 638px;
-	min-height: 297px;
+	width: 610px;
+	min-height: 305px;
 	max-height:100%;
-	/*background:#dddddd;
-	border-top: 1px solid #a1a1a1;
-	border-bottom: 1px solid #a1a1a1;
+	background:#dddddd;
+	border: 1px solid #a1a1a1;
+	border-radius: 5px;
+	/*border-bottom: 1px solid #a1a1a1;
 	border-left: 1px solid #a1a1a1;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 	/*padding: 10px;*/
 	font: 75% Arial, "MS Trebuchet", sans-serif;
 	/*float:left;*/
-	posotion:relative;
 	z-index:1;
 	padding: 10px;
 }
