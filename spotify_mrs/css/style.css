@@ -165,6 +165,7 @@ visibility: hidden;
 .playlistContainer{
 	height:475px;
 	position:relative;	
+	overflow-y:scroll;
 }
 
 #flipbutton, #newSeed, #nextSongsButton{
