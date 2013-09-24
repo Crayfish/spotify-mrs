@@ -16,8 +16,8 @@ require([
 
 	   // Default settings:
 	   var defaults = {
-	      //sort: function (a, b) {return a.tag < b.tag ? -1 : (a.tag == b.tag ? 0 : 1)},//default sorting: abc
-	      sort: function (a, b) {return a.count > b.count ? -1 : (a.count == b.count ? 0 : 1)},
+	      sort: function (a, b) {return a.tag < b.tag ? -1 : (a.tag == b.tag ? 0 : 1)},//default sorting: abc
+	      //sort: function (a, b) {return a.count > b.count ? -1 : (a.count == b.count ? 0 : 1)},
 	      click: function(tag) {},
 	      maxFontSizeEm: 4
 	   }
