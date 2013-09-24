@@ -89,7 +89,7 @@ require([
 	}
 	
 	/**
-	 * Validate the input values.
+	 * Validate the input values on the GUI.
 	 * Input value has to be a number between 1300 and 2050. (regarding future use)
 	 * @param input input value
 	 * @returns {Boolean} true if input is valid

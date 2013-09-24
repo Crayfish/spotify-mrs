@@ -125,8 +125,8 @@ require([
 
 		setUpSimilarityAccordion.setupChangeSeedSongButton();
 
-		customplaylist.setupFlipButton();
-		customplaylist.createNewPlaylist();
+		//customplaylist.setupFlipButton();
+		//customplaylist.createNewPlaylist();
 		
 		yearSlider.setupYearSlider();
 

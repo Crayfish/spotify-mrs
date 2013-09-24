@@ -66,11 +66,14 @@ var playlistcnt = 0;
  */
 function createNewPlaylist1(models1, List, yearSlider){
 	
+	console.log("playlist: "+playlist);
+	
+	
 	if (playlist != null) clearPlaylist(models1);
 	yearSlider.reset();
 	
 	playlist = null;
-	playlist = models1.Playlist.createTemporary("MRS Playlist").done(function(playlist){
+	playlist = models1.Playlist.createTemporary("MRS Playlist "+playlistcnt).done(function(playlist){
 		playlist.collaborative = true;
 		playlists[playlistcnt] = playlist;
 		playlistcnt++;
@@ -139,6 +142,7 @@ function showPlaylist1(List){
  * @param models1 @see spotify api.models
  */
 function clearPlaylist(models1){
+	console.log("clearing playlist");
 	
 	playlist._args[0].load("tracks").done(function(tracks){
 		playlist._args[0].tracks.clear();
