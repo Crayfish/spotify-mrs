@@ -166,7 +166,7 @@ function deleteSongsInTasteProfiles1(deleteSongsObjectsArray){
 
 function noNewOrDeletedPlaylists1(){
 	
-	console.log('noNewOrDeletedPlaylists1() was called');
+	console.log('ECHONEST TASTE PROFILE noNewOrDeletedPlaylists1() was called');
 	//get the info from local storage
 	var arrayStoredPlaylistObjects = new Array();
 

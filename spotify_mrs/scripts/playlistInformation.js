@@ -82,62 +82,69 @@ function updateArrayStoredPlaylistObjects(){
 
 
 function checkIfFirstLocalStorageOfPlaylists1(){
-	console.log('checkIfFirstLocalStorageOfPlaylists1() was called');
+	console.log('PLAYLIST INFORMATION checkIfFirstLocalStorageOfPlaylists1() was called');
+	//console.log('PLAYLIST INFORMATION localStorage.length: '+localStorage.length);
+	if(localStorage.length == 0){
+		
+		isFirstLocalStorage = true
+		//console.log('PLAYLIST INFORMATION isFirstLocalStorage: '+isFirstLocalStorage)	
+	};
 	
-	if(localStorage.length ==0){isFirstLocalStorage = true};
+	//console.log('PLAYLIST INFORMATION isFirstLocalStorage: '+isFirstLocalStorage)	
 	
 	//if it is not the first local storage: get the playlist Information already stored in Local Storage
+	
+	 var finishedGettingCurrentPlaylistsState = false;
+	 
 	
 	if(!isFirstLocalStorage){
 		updateArrayStoredPlaylistObjects();
 	}
 	 //console.log('PLAYLIST INFO ALREADY STORED IN LOCAL STORAGE: '+JSON.stringify(arrayStoredPlaylistObjects));
 	
-	
-	
+	 var finishedGettingCurrentPlaylistsState = false;
+	 var counter = localStorage.length;
 	
 	//get current state of playlist Information
 	playlistCollection.snapshot().done(function(snapshot) {
 		
+			var counter = snapshot.length;
 		  for (var i = 0; i < snapshot.length; i++) {
-		    //console.log(snapshot.get(i));
+		    console.log('PLAYLIST INFORMATION PLAYLIST COLLECTION SNAPSHOT: '+ snapshot.get(i));
 		    
 		    var playlistI = snapshot.get(i)
 		    
 		    if(playlistI!=null){
-//		    console.log(playlistI.name);
+		    	
+		    console.log('PLAYLIST INFORMATION SNAPSHOT PLAYLIST NAME: '+playlistI.name);
 		    
-		    var playlistName = playlistI.name;
-		    
-		    var playlistURI = playlistI.uri;
-		    
-		    
-		    
-		   var arrayforDuplicateIDsCheck = new Array();  
-		    
-		  //create a playlist Object
-		    
-		    var playlistObject = {};
-		    
-		    playlistObject.playlistName = playlistName;
-		    playlistObject.playlistURI = playlistURI;
-		    playlistObject.tasteProfileID = null;
-		    playlistObject.itemArray = [];
-		    
-		
-		    
-		    
-		   var tracks = null;
-			   
 			playlistI.load('tracks').done(function(playlistI){
-				tracks =playlistI.tracks;
-				
-				
+				var tracks =playlistI.tracks;
+				var playlistName = playlistI.name;
+				var playlistURI = playlistI.uri;
 				
 				tracks.snapshot().done(function(snapshot1) {
-			    	  //var len = Math.min(snapshot.length, 50);
+			    	  
+					
+					
+					 var arrayforDuplicateIDsCheck = new Array();  
+					    
+					  //create a playlist Object
+					    
+					    var playlistObject = {};
+					    playlistObject.playlistName = playlistName;
+					    playlistObject.playlistURI = playlistURI;
+					    playlistObject.tasteProfileID = null;
+					    playlistObject.itemArray = [];
+					    
+					
+					    
+					    
+					   //var tracks = null;
+					 
+					
 			    	  for (var i = 0; i < snapshot1.length; i++) {
-			    	    //console.log(' playlistI tracks snapshot: '+ snapshot1.get(i));
+			    	   //console.log(' playlistI tracks snapshot: '+ snapshot1.get(i));
 			    	    
 			    	    
 			    	    var itemObject = {};
@@ -161,39 +168,56 @@ function checkIfFirstLocalStorageOfPlaylists1(){
 			    	    }
 			    	    arrayforDuplicateIDsCheck.push(itemID);
 			    	    
+			    	  }//end of tracks loop
+			    	  
+			    	  
+			    	
+			    	  
+			    	  
+			    	  
+			    	  currentPlaylistObjectsArray.push(playlistObject);
+			    	  counter = counter -1;
+			    	  if(counter == 0){
+			    		  finishedGettingCurrentPlaylistsState = true;
+			    		  console.log('PLAYLIST INFORMATION  finishedGettingCurrentPlaylistsState: '+ finishedGettingCurrentPlaylistsState);
 			    	  }
-			    	});
+			    	  
+			    	  if(finishedGettingCurrentPlaylistsState){startPlaylistUpdateLogic()};
+			    	  //console.log('PLAYLIST INFORMATION CURRENT PLAYLIST OBJECT '+JSON.stringify(playlistObject));
+			    	  
+			    	});//end of load single tracks for playlist
 				
-			
 				
-			});
+				
+				
+				
+				
+						});//end of load tracks snapshot
 		   
-			currentPlaylistObjectsArray.push(playlistObject);
-		    //localStorage.setItem( playlistURI, JSON.stringify(playlistObject) );
-		    
-		  	}
-		    }
-		
-	
-		    
-		  
-	});
+			
+		    		}//end of 	 if(playlistI!=null) check	 
+		  		}//end of playlist collection loop  
+			});//end of getting current playlist state   
 	
 	
-	/*currentPlaylistObjectsArray.forEach(function(entry){
-		console.log('STATE OF CURRENT PLAYLIST OBJECT ARRAY AFTER INIT: '+ JSON.stringify(entry.playlistName));
-	});*/
+	}//end of function
+	
+	
 
-	//end of getting current playlist state
+
+function startPlaylistUpdateLogic(){
+	console.log('PLAYLIST INFORMATION startPlaylistUpdateLogic() was called');
 	
 	//check for new playlists
 	//if first local storage, store all the playlist
     
 	if(isFirstLocalStorage){
+		
+		
 		currentPlaylistObjectsArray.forEach(function(entry) {
 	    	
 	    	
-			//console.log(' ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
+			console.log(' PLAYLIST INFORMATION ENTRY OF arrayPlaylistObjects: '+JSON.stringify(entry));
 	    	
 	    		var playlistURIForFirstStorage = entry.playlistURI;
 	    		  console.log("DETECTED A FIRST LOCAL STORAGE PLAYLIST: "+playlistURIForFirstStorage);
@@ -246,12 +270,29 @@ function checkIfFirstLocalStorageOfPlaylists1(){
 			echonestTasteProfileScript.addSongsInTasteProfiles(addSongsObjectsArray);
 		}
 			
-	}
+	}  
+	
+}
+
+
+	
+		 
+				 
+				 
+
 	
 	
 	
 	
-}//end of function
+	
+
+	
+	
+	
+		   
+	
+	
+
 
 function checkForDeletedPlaylists(){
 	
@@ -550,6 +591,7 @@ function  setUpPlaylistInformation1(tasteProfileScript1, models1, Library, echon
 	echonestTasteProfileScript = tasteProfileScript1;
 	echonestTasteProfileScript.setApiKey();
 	echonestTasteProfileScript.setupPlaylistSimilarity();
+	//echonestTasteProfileScript.deleteAllTasteProfiles();
 	
 	//tasteProfileScript.createAllTasteProfiles();
 	console.log('PLAYLIST INFORMATION setUpPlaylistInformation1 was called');
