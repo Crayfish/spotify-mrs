@@ -23,6 +23,7 @@
 .tagcloudlink {
 	text-decoration: none;
 	color: black;
+	font-weight: bold;
 }
 
 .tagcloudlink:hover {
