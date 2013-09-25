@@ -2,15 +2,30 @@
 
 require([
   '$api/models',
- 'scripts/echonest'
-], function(models, echonest) {
+ 'scripts/echonestDynamic'
+], function(models, echonestDynamic) {
   'use strict';
 
  
   var setupSimilarityButtons = function() {
-	  var radios = document.forms[0].elements["similarity"];
+	  var artistRadiobtn = document.getElementById("artistRadiobtn");
+	  artistRadiobtn.checked = true;
+	  
+	  //var changeSeedSongSimilarityButton = document.getElementById("changeSeedSong");
+	  //changeSeedSongSimilarityButton.style.display = 'none'; 
+	  $('#changeSeedSong').hide();
+	  $('#tags').hide();
+	  $('#genreSelectLabel').hide();
+	  $('#tags1').hide();
+	 $('#playlistSelectLabel').hide();
+	  
+	  var radios = document.forms[0].elements["sim"];
 	  for (var i = [0]; i < radios.length; i++)
 	    radios[i].onclick=radioClicked;
+	  
+	  setupChangeSeedArtistButton(echonestDynamic);
+	  setupChangeSeedSongButton(echonestDynamic);
+	  
   };
 
   
@@ -27,12 +42,37 @@ require([
 	  switch(this.value) {
 	    case "song" :
 	      console.log('Song Similarity Radio Button was clicked');
-	      echonest.getPlaylistSongSimilarity();
+	      
+	      	      
+	      echonestDynamic.changeToSongSimilarity();
+	      
 	       break;
 	    case "artist" :
 	       console.log('Artist Similarity Radio Button was clicked');
-	       echonest.getPlaylistArtistSimilarity();
+	       echonestDynamic.changeToArtistSimilarity();
+	      
 	       break;
+	    case "genre" :
+		       console.log('Genre Similarity Radio Button was clicked');
+		       $('#tags').show();
+		 	  $('#genreSelectLabel').show();
+		 	 $('#changeSeedSong').hide();
+		 	 $('#changeSeedArtist').hide();
+		 	 $( "#similarityInfo").text('');
+		 	$('#tags1').hide();
+		 	 $('#playlistSelectLabel').hide();
+		 	  
+		       break;
+	    case "spotifyPLaylist" :
+		       console.log('Playlist Similarity Radio Button was clicked');
+		       	$('#tags1').show();
+			 	 $('#playlistSelectLabel').show();
+			 	 $('#changeSeedSong').hide();
+			 	 $('#changeSeedArtist').hide();
+			 	 $( "#similarityInfo").text('');
+			 	  $('#tags').hide();
+			 	  $('#genreSelectLabel').hide();
+		       break;
 	   
 	  }
 
@@ -48,7 +88,37 @@ require([
 
 
 
+function setupChangeSeedArtistButton(echonestDynamic){
+	
+	 $( "#changeSeedArtist" ).button().click(function( event ) {
+	 event.preventDefault();
+	 
+	 //console.log('Change Seed Artist Button was clicked');
+	 
+	 echonestDynamic.changeSeedArtistSimilarity();
+	 
+	 });
+	
+	
+	
+}
 
+
+function setupChangeSeedSongButton(echonestDynamic){
+	
+	 $( "#changeSeedSong" ).button().click(function( event ) {
+		 event.preventDefault();
+		 
+		// console.log('Change Seed Song Button was clicked');
+		 
+		 echonestDynamic.changeSeedSongSimilarity();
+		 
+		 });
+	
+	
+	
+	
+}
 
 function returnSimilarityMode1(){
 	if(document.getElementById('song').checked){

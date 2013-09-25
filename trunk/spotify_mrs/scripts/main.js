@@ -17,12 +17,12 @@ require([
   'scripts/setupNoveltyCheckBoxes',
   'scripts/playlistInformation',
   'scripts/yearSlider',
-  //'scripts/setupPlaylistFilter'
+  'scripts/setupSimilarityRadioButtons'
   
 ], function( models, apiKey, generatePlaylistButton,setupSlider, 
 		echonestDynamic,/* echonest,*/ setupGenreFilter,setupTagCloud, 
 		setUpSimilarityAccordion, echonestGenreData, customplaylist, 
-		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider /*setupPlaylistFilter*/) {
+		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupSimilarityRadioButtons /*setupPlaylistFilter*/) {
   'use strict';
  
   	  /**load a page when the app is started*/
@@ -107,6 +107,7 @@ require([
 		generatePlaylistButton.setUpNewSeedButton();
 		generatePlaylistButton.setUpNextSongsButton();
 
+		setupSimilarityRadioButtons.setupSimilarityButtons();
 		setupSlider.setUpPopSlider(echonestDynamic);
 		setupSlider.setUpHotSlider(echonestDynamic);
 		setupSlider.setUpSongHotSlider(echonestDynamic);
@@ -119,11 +120,13 @@ require([
 
 		//setupGenreFilter.setupGenreFilter(echonestDynamic);
 		//setupPlaylistFilter.setupPlaylistFilter(echonestDynamic);
-		setUpSimilarityAccordion.setupAccordion();
+		
+		
+		//setUpSimilarityAccordion.setupAccordion();
 
-		setUpSimilarityAccordion.setupChangeSeedArtistButton();
+		//setUpSimilarityAccordion.setupChangeSeedArtistButton();
 
-		setUpSimilarityAccordion.setupChangeSeedSongButton();
+		//setUpSimilarityAccordion.setupChangeSeedSongButton();
 
 		//customplaylist.setupFlipButton();
 		//customplaylist.createNewPlaylist();

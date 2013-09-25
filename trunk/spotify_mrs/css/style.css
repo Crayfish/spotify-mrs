@@ -119,6 +119,83 @@ visibility: hidden;
 	
 }
 
+.noveltySection{
+	display: inline-block;
+	/*float:right;*/
+	border: 1px solid #a1a1a1;
+	border-radius:5px;
+	background:#dddddd;
+	width:180px;
+	height : 100%;
+	spacing : 0px;
+	padding : 0px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 10px;
+}
+
+.diversitySection{
+	display: inline-block;
+	/*float:right;*/
+	border: 1px solid #a1a1a1;
+	border-radius:5px;
+	background:#dddddd;
+	width:180px;
+	height : 100%;
+	spacing : 0px;
+	padding-bottom : 20px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 10px;
+}
+
+
+.simmilaritySection{
+	display: inline-block;
+	/*float:right;*/
+	border: 1px solid #a1a1a1;
+	border-radius:5px;
+	background:#dddddd;
+	width:180px;
+	height : 100%;
+	spacing : 0px;
+	padding-bottom : 20px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 10px;
+}
+
+.yearSection{
+	display: inline-block;
+	/*float:right;*/
+	border: 1px solid #a1a1a1;
+	border-radius:5px;
+	background:#dddddd;
+	width:180px;
+	height : 100%;
+	spacing : 0px;
+	padding-bottom : 20px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 10px;
+}
+
+
+.popularitySection{
+	display: inline-block;
+	/*float:right;*/
+	border: 1px solid #a1a1a1;
+	border-radius:5px;
+	background:#dddddd;
+	width:180px;
+	height : 100%;
+	spacing : 0px;
+	padding-bottom : 20px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 10px;
+}
+
 .rulerContent{
 	padding : 13px;	
 	

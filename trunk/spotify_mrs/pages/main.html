@@ -63,31 +63,37 @@
 			<img id="flipbuttonimg" src="img/listicon.png" title="switch view">
 		</button>
 
-		<div class="wrapper">
-			Year range:
-			<div>
-				
-				<label for="yearfrom" id="year_from" title="from year">from</label> 
-				<input type="text" id="yearfrom" style="border: 0; color: #f6931f; font-weight: bold; width: 55px;" placeholder="0"/>
-				<label for="yearto" id="year_to">to</label> 
-				<input type="text" id="yearto" style="border: 0; color: #f6931f; font-weight: bold; width: 55px; float: right;" placeholder="0" />
-			</div>
-		</div>
 
 
-		<div class="wrapper">
-			<label for="artistVarietySlider">Artist Diversity:</label>
-			<div id="artistVarietySlider"></div>
-		</div>
-		<div class="wrapper">
-			<label for="adventurousnessSlider">Adventurousness:</label>
-			<div id="adventurousnessSlider"></div>
-		</div>
+
+<div class = "simmilaritySection"> 
+<label>Similarity based on:</label>
+<form>
+<input type="radio" name="sim" id="artistRadiobtn" value="artist">Artist<br>
+<input type="radio" name="sim"  value="song">Song<br>
+<input type="radio" name="sim"  value="genre">Genre<br>
+<input type="radio" name="sim"  value="spotifyPLaylist">Spotify Playlist<br>
+</form>
+<div id="similarityInfo"></div>
+<button id="changeSeedArtist">Make playing artist new seed artist</button>
+<button id=changeSeedSong>Make playing song new seed song</button>
+<div class="ui-widget">
+	<label for="tags" id = 'genreSelectLabel'>Select a Genre: </label> <input id="tags" />
+					</div>
+<div class="ui-widget">
+					<label for="tags1" id='playlistSelectLabel'>Select a playlist: </label> <input id="tags1" />
+				</div>
+</div>
 
 
+
+
+
+
+<div class ="popularitySection">
 		<!--Song Hotness Slider-->
 		<p>
-			<label for="songHot">Song Hotness:</label> 
+			<label for="songHot">Song Trendiness:</label> 
 			<!-- <input type="text" id="songHot" style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" /> -->
 		</p>
 
@@ -98,7 +104,7 @@
 
 		<!--Artist Hotness Slider-->
 		<p>
-			<label for="hot">Artist Hotness:</label> 
+			<label for="hot">Artist Trendiness:</label> 
 			<!--  <input type="text" id="hot" style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" />-->
 		</p>
 
@@ -109,15 +115,18 @@
 
 		<!-- Popularity Slider -->
 		<p>
-			<label for="pop">Artist Familiarity:</label> 
+			<label for="pop">Artist Popularity:</label> 
 			<!-- <input type="text" id="pop" style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" /> -->
 		</p>
 
 		<p>
 		<div id="slider-pop"></div>
 		</p>
-
-
+		
+		</div>
+		
+		<!-- Novelty Section -->
+		<div class="noveltySection">
 		<label>Novelty:</label>
 
 		<p>
@@ -125,12 +134,40 @@
 				id='excludeSeedArtistCheckBox'>exclude seed artist<br>
 
 			<input type="checkbox" name="noSpotifysongs" value=""
-				id='excludeSpotifyPlaylistSongs'>no songs from spotify
+				id='excludeSpotifyPlaylistSongs'>no songs from  my spotify
 			playlists<br>
 
 		</p>
+		</div>
 		
-		<p>Similarity based on:</p>
+			<div class="diversitySection">
+		<label>Recommendation Diverstiy:</label>
+		<div class="wrapper">
+			<label for="artistVarietySlider">Artist Diversity:</label>
+			<div id="artistVarietySlider"></div>
+		</div>
+		<div class="wrapper">
+			<label for="adventurousnessSlider">Adventurousness:</label>
+			<div id="adventurousnessSlider"></div>
+		</div>
+	</div>
+		
+		<!-- Year Section -->
+		<div class ="yearSection">
+		<div class="wrapper">
+			Year range:
+			<div>
+				
+				<label for="yearfrom" id="year_from" title="from year">from</label> 
+				<input type="text" id="yearfrom" style="border: 0; color: #f6931f; font-weight: bold; width: 55px;" placeholder="0"/>
+				<label for="yearto" id="year_to">to</label> 
+				<input type="text" id="yearto" style="border: 0; color: #f6931f; font-weight: bold; width: 55px; float: right;" placeholder="0" />
+			</div>
+		</div>
+</div>
+		
+		<!-- Similarity Acordion -->
+		<!-- <p>Similarity based on:</p>
 		<div id="accordion">
 
 			<h3>Artist</h3>
@@ -154,7 +191,7 @@
 			<h3>Genre</h3>
 			<div>
 				<p>
-					<!-- Genre Filter -->
+					Genre Filter
 				<p>
 				<div id="genreSimilarityInfo">There is no genre selected.</div>
 				</p>
@@ -164,7 +201,7 @@
 				</p>
 			</div>
 
-			<h3>Playlist</h3>
+			<h3> Your Spotify Playlists</h3>
 			<div>
 					<div id="playlistSimilarityInfo">There is no playlist selected.</div>
 				</p>
@@ -174,7 +211,7 @@
 				</p>
 				
 			</div>
-		</div>
+		</div> -->
 		<!-- end accordion -->
 		<!--Artist Terms Information-->
 		<!-- 		<p>
