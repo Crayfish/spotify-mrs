@@ -22,15 +22,16 @@
 
 .tagcloudlink {
 	text-decoration: none;
+	color: black;
 }
 
 .tagcloudlink:hover {
 	text-decoration: underline;
 }
 
-.tagcloudlink:focus {
-	color: #FF0000
-}
+.tagcloudlink.active {  
+	color: LawnGreen; 
+	}
 
 .tagcloud-wrapper{
 	float:left;
@@ -54,10 +55,4 @@ a.tagCloud:hover span
 
 }	
 
-		#selected{
-    color: #FF0000
-} 
-		#notselected{
-    color: #000000
-} 
 

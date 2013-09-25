@@ -58,14 +58,7 @@ require([
 	                           + getNormalizedSize(cl[i].count)
 	                           + 'em">' + tag + '<\/a>')
 	                  .data('tag', tag);
-	      
-	     // var tagEl = jQuery('<a href="" class="tagcloudlink" style="font-size: '
-           //       + getNormalizedSize(cl[i].count)
-             //     + 'em">' + tag + '<\/a>')
-         //.data('tag', tag);
-	      
-	      
-	      
+	 
 
 	      if (options.click) {
 	         tagEl.click(function(event) {
@@ -100,7 +93,7 @@ require([
 	            options.click(jQuery(event.target).data('tag'), event);
 				console.log('This Tag was clicked on: '+jQuery(event.target).data('tag'));
 				echonestDynamic.setTermFilter(jQuery(event.target).data('tag'));
-	            
+				$(this).toggleClass("active");
 	         });
 	      }
 	      this.append(tagEl).append(" ");
