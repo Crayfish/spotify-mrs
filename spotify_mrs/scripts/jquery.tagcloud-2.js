@@ -50,6 +50,9 @@ require([
 
 	   // Generating the output
 	   this.empty();
+	   
+   
+	   
 	   for (var i = 0; i < cl.length; ++i) {
 	    // var tag = cl[i].tag+':'+cl[i].count;
 	     var tag = cl[i].tag;
@@ -59,7 +62,9 @@ require([
 	                           + 'em">' + tag + '<\/a>')
 	                  .data('tag', tag);
 	 
-
+	  
+	   
+	      
 	      if (options.click) {
 	         tagEl.click(function(event) {
 	            event.preventDefault();
