@@ -242,7 +242,7 @@ visibility: hidden;
 .playlistContainer{
 	height:475px;
 	position:relative;	
-	overflow-y:scroll;
+	overflow-y:auto;
 }
 
 #flipbutton, #newSeed, #nextSongsButton{
@@ -313,4 +313,11 @@ width: 50px;
 }
 
 .ui-slider-handle { border-color: #f6931f; }
+
+
+	 
+#playlistaccordion div{
+	padding	:0px;
+	height:340px;
+}	 
 

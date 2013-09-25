@@ -15,6 +15,7 @@ require([
   };
   
   var setupFlipButton = function(){
+	  console.log("flip button setup");
 	  var cnt = 0;
 	  var flipbutton = document.getElementById('flipbutton');
 	  var flipimg = document.getElementById('flipbuttonimg');
@@ -34,7 +35,7 @@ require([
 	  }
 	  
 	  setupSubscribeButton(models);
-	 
+	  setupPlaylistAccordion1();
 	  
   };
   
@@ -56,11 +57,11 @@ var playlist = null;
 var list = null;
 var playlists = new Array();
 var playlistcnt = 0;
+var activeplaylist = 0;
 
 /**
- * Create a new empty playlist.
- * The playlist is created once, the tracks are deleted on new session.
- * The temporary playlist will be deleted automatically, when the application is closed.
+ * Create a new empty playlist, and a new list in the playlist accordion.
+ * The different playlists are saved in an array.
  * @param models1 @see spotify api.models
  * @param List @see spotify views.List
  */
@@ -69,24 +70,37 @@ function createNewPlaylist1(models1, List, yearSlider){
 	console.log("playlist: "+playlist);
 	
 	
-	if (playlist != null) clearPlaylist(models1);
+	//if (playlist != null) clearPlaylist(models1);
 	yearSlider.reset();
 	
-	playlist = null;
-	playlist = models1.Playlist.createTemporary("MRS Playlist "+playlistcnt).done(function(playlist){
-		playlist.collaborative = true;
-		playlists[playlistcnt] = playlist;
+	//playlist = null;
+	var playlist1 = models1.Playlist.createTemporary("MRS Playlist "+playlistcnt).done(function(playlist1){
+		playlists[playlistcnt] = playlist1;
 		playlistcnt++;
-		console.log("Empty playlist created: "+playlist.uri);
+		clearPlaylist(models1);
+		console.log("Empty playlist created: "+playlist1.uri);
 	});
 	
-	//bind the playlist to the list when first created
+	playlist = playlist1;
+	
+	
+	
+	//bind the playlist to the a new list and add an item to the playlist accordion
 	playlist.done(function(playlist){
-		if(list == null){
+		//if(list == null){
 			list = List.forPlaylist(playlist, {height:"fixed",style:"rounded", fields: ["ordinal","star","share", "track","time", "artist", "album"]});
-		    document.getElementById('playlistContainer').appendChild(list.node);
+		    var h3 = document.createElement("h3");
+		    h3.innerHTML = "playlist "+playlistcnt;
+		    
+		    var div = document.createElement("div");
+		    div.appendChild(list.node);
+			
+			document.getElementById('playlistaccordion').appendChild(h3);
+			document.getElementById('playlistaccordion').appendChild(div);
 		    list.init();
-		}
+		    $( "#playlistaccordion" ).accordion("refresh");
+		    
+		//}
 		
 	});
 	
@@ -146,7 +160,7 @@ function clearPlaylist(models1){
 	
 	playlist._args[0].load("tracks").done(function(tracks){
 		playlist._args[0].tracks.clear();
-		list.clear();
+		//list.clear();
 		console.log("playlist deleted");
 	});
 	
@@ -161,15 +175,23 @@ function clearPlaylist(models1){
  * @param models1 @see spotify api.models
  */
 function setupSubscribeButton(models1){
+	console.log("subscribe button setup");
 	var subscribebutton = document.getElementById('subscribebutton');
 	  subscribebutton.onclick=function(){
 		  
+		  console.log("Subscribe button clicked.");
+		  console.log("Nr of active playlist: "+activeplaylist);
+		  console.log("playlist to save: "+playlists[activeplaylist]);
 		  //create new playlist
-		  var newplaylist = models1.Playlist.create("my recommended playlist");
+		  var newplaylist = models1.Playlist.create("TMR Playlist "+activeplaylist);
+		  //var currentplaylist = playlists[activeplaylist];
+		  
+		  //console.log("currentplaylist: "+models1.Playlist.fromURI(currentplaylist));
+		  //console.log("playlist: "+playlist);
 		  
 		  //load tracks from temporary playlist
-		  playlist.done(function(playlist){
-			  playlist.load('tracks').done(function(playlist1){
+		 // models1.Playlist.fromURI(currentplaylist).done(function(playlist){
+		  	playlists[activeplaylist].load('tracks').done(function(playlist1){
 				  playlist1.tracks.snapshot().done(function(snapshot1){
 					  
 					  //add tracks to the new playlist
@@ -184,7 +206,30 @@ function setupSubscribeButton(models1){
 					  
 				  });
 			  });
-		  });
+//		  });
 	  }
+}
+
+/**
+ * Setup the playlist accordions.
+ * When an accordion is selected, change the nr of the playlist to save.
+ */
+function setupPlaylistAccordion1(){
+	console.log("Setting up playlist accordion");
+	
+	$( "#playlistaccordion" ).accordion({ heightStyle: "content"});
+	 
+	 $( "#playlistaccordion").accordion({
+		 activate: function( event, ui ) {
+			 
+			var active = $( "#playlistaccordion" ).accordion( "option", "active" );	 
+			console.log("A new playlistaccordion header was activated: "+active);
+			activeplaylist = parseInt(active);
+			console.log("Nr of active playlist: "+active);
+		 
+		 }
+	 	});
+	
+	   $(".ui-accordion-content").css("padding","4px"); 
 }
 
