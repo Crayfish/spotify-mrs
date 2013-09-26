@@ -34,11 +34,12 @@ require([
 var echonestDynamicScript = null;
 
 function setUpNoSongsFromSpotifyCollectionCheckBox1(echonestDynamic){
-	 var excludeSpotifyPlaylistSongsCheckBox = document.getElementById('excludeSpotifyPlaylistSongs');
+	 var excludeSpotifyPlaylistSongsCheckBox = document.getElementById('excludeSpotifyPlaylistSongsCheckBox');
+	
 	 excludeSpotifyPlaylistSongsCheckBox.onclick=function(){
 	    	//console.log("exclude seed artist checkbox was checked");
 	    	
-	    	var isChecked = $('#excludeSpotifyPlaylistSongs').prop('checked');
+	    	var isChecked = $('#excludeSpotifyPlaylistSongsCheckBox').prop('checked');
 	    	if(isChecked){
 	    		console.log('excludeSpotifyPlaylistSongsCheckBox is checked')
 	    		//excludeSeedArtistCheckBoxisChecked = true;
