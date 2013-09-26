@@ -314,7 +314,10 @@ width: 50px;
 
 .ui-slider-handle { border-color: #f6931f; }
 
-
+.sliderClass{
+margin-left:10px;
+margin-right:10px;	
+}
 	 
 #playlistaccordion div{
 	padding	:0px;
