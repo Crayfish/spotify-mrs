@@ -157,12 +157,14 @@ function showPlaylist1(List){
  */
 function clearPlaylist(models1){
 	console.log("clearing playlist");
+	if(playlist!=null){
+		playlist._args[0].load("tracks").done(function(tracks){
+			playlist._args[0].tracks.clear();
+			//list.clear();
+			console.log("playlist deleted");
+		});
+	}
 	
-	playlist._args[0].load("tracks").done(function(tracks){
-		playlist._args[0].tracks.clear();
-		//list.clear();
-		console.log("playlist deleted");
-	});
 	
 	
 

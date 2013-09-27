@@ -53,34 +53,37 @@
 
 
 
-
+			<button id="flipbutton">
+				<img id="flipbuttonimg" src="img/listicon.png" title="switch view">
+			</button>
 			<button id="newSeed">
-				<img src="img/refresh.png" alt="new session">
+				<img src="img/lupe.png" alt="new session">
 			</button>
 			<!-- 
 		<button id="nextSongsButton">
 			<img src="img/more.png" alt="load more songs">
 		</button>
 		 -->
-			<button id="flipbutton">
-				<img id="flipbuttonimg" src="img/listicon.png" title="switch view">
-			</button>
+			
 
 
 
 
-			<div class="simmilaritySection">
-				<label>Similarity based on:</label>
+			<div class="simmilaritySection Section">
+				<p><label>Similarity based on:</label>
 				<form>
 					<input type="radio" name="sim" id="artistRadiobtn" value="artist">Artist<br>
-					<input type="radio" name="sim" value="song">Song<br> <input
-						type="radio" name="sim" value="genre">Genre<br> <input
-						type="radio" name="sim" value="spotifyPLaylist">Spotify
-					Playlist<br>
+					<input type="radio" name="sim" value="song">Song<br> 
+					<input type="radio" name="sim" value="genre">Genre<br> 
+					<input type="radio" name="sim" value="spotifyPLaylist">Spotify Playlist<br>
 				</form>
+				</p>
+				<p>
 				<div id="similarityInfo"></div>
 				<button id="changeSeedArtist">Make playing artist new seed
 					artist</button>
+				</p>
+				<p>
 				<button id=changeSeedSong>Make playing song new seed song</button>
 				<div class="ui-widget">
 					<label for="tags" id='genreSelectLabel'>Select a Genre: </label> <input
@@ -90,6 +93,7 @@
 					<label for="tags1" id='playlistSelectLabel'>Select a
 						playlist: </label> <input id="tags1" />
 				</div>
+				</p>
 			</div>
 
 
@@ -97,7 +101,7 @@
 
 
 
-			<div class="popularitySection">
+			<div class="popularitySection Section">
 				<!--Song Hotness Slider-->
 				<p>
 					<label for="songHot">Song Trendiness:</label>
@@ -139,20 +143,20 @@
 			</div>
 
 			<!-- Novelty Section -->
-			<div class="noveltySection">
-				<label>Novelty:</label><br>
+			<div class="noveltySection Section">
+				<p><label>Novelty:</label></p>
 
 
 				<!-- <input type="checkbox" name="excludeSeedArtist" value=""
 				id='excludeSeedArtistCheckBox'>exclude seed artist<br> -->
 
-
+				<p>
 				<label id="excludeSeedArtistLabel"><input type="checkbox"
 					id='excludeSeedArtistCheckBox'>exclude seed artist</label><br>
 				<label id="excludeSpotifyPlaylistSongs"><input
 					type="checkbox" id="excludeSpotifyPlaylistSongsCheckBox">no
 					songs from my spotify Playlists</label>
-
+				</p>
 
 
 				<!-- <input type="checkbox" name="noSpotifysongs" value=""
@@ -162,16 +166,16 @@
 
 			</div>
 
-			<div class="diversitySection">
-				<label>Recommendation Diverstiy:</label>
+			<div class="diversitySection Section">
+				<p><label>Recommendation Diverstiy:</label></p>
 				<div class="wrapper">
-					<label for="artistVarietySlider">Artist Diversity:</label>
+					<p><label for="artistVarietySlider">Artist Diversity:</label></p>
 					<div class="sliderClass">
 					<div id="artistVarietySlider"></div>
 					</div>
 				</div>
 				<div class="wrapper">
-					<label id="adventurousnessSliderLabel" for="adventurousnessSlider">Adventurousness:</label>
+					<p><label id="adventurousnessSliderLabel" for="adventurousnessSlider">Adventurousness:</label></p>
 					<div class="sliderClass">
 					<div id="adventurousnessSlider"></div>
 					</div>
@@ -179,19 +183,19 @@
 			</div>
 
 			<!-- Year Section -->
-			<div class="yearSection">
+			<div class="yearSection Section">
 				<div class="wrapper">
-					Year range:
+					<p>Year range:</p>
+					<p>
 					<div>
 
-						<label for="yearfrom" id="year_from" title="from year">from</label>
-						<input type="text" id="yearfrom"
-							style="border: 0; color: #f6931f; font-weight: bold; width: 55px;"
-							placeholder="0" /> <label for="yearto" id="year_to">to</label> <input
-							type="text" id="yearto"
-							style="border: 0; color: #f6931f; font-weight: bold; width: 55px; float: right;"
-							placeholder="0" />
+						<label for="yearfrom" id="year_from">from</label>
+						<input type="text" id="yearfrom" placeholder="0"  title="from year"/> 
+						
+						<label for="yearto" id="year_to" >to</label> 
+						<input type="text" id="yearto" placeholder="0" title="until year"/>
 					</div>
+					</p>
 				</div>
 			</div>
 

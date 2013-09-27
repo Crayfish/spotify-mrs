@@ -115,89 +115,28 @@ visibility: hidden;
 	max-height:100%;
 	spacing : 0px;
 	padding : 0px;
-	margin-left:10px;
+	
 	
 }
 
-.noveltySection{
+.Section{
 	display: inline-block;
 	/*float:right;*/
 	border: 1px solid #a1a1a1;
 	border-radius:5px;
 	background:#dddddd;
-	width:180px;
+	width:94%;
 	height : 100%;
 	spacing : 0px;
-	padding : 0px;
+	padding : 5px;
 	margin-left:auto;
 	margin-right:auto;
 	margin-top: 10px;
 }
 
-.diversitySection{
-	display: inline-block;
-	/*float:right;*/
-	border: 1px solid #a1a1a1;
-	border-radius:5px;
-	background:#dddddd;
-	width:180px;
-	height : 100%;
-	spacing : 0px;
-	padding-bottom : 20px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top: 10px;
-}
-
-
-.simmilaritySection{
-	display: inline-block;
-	/*float:right;*/
-	border: 1px solid #a1a1a1;
-	border-radius:5px;
-	background:#dddddd;
-	width:180px;
-	height : 100%;
-	spacing : 0px;
-	padding-bottom : 20px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top: 10px;
-}
-
-.yearSection{
-	display: inline-block;
-	/*float:right;*/
-	border: 1px solid #a1a1a1;
-	border-radius:5px;
-	background:#dddddd;
-	width:180px;
-	height : 100%;
-	spacing : 0px;
-	padding-bottom : 20px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top: 10px;
-}
-
-
-.popularitySection{
-	display: inline-block;
-	/*float:right;*/
-	border: 1px solid #a1a1a1;
-	border-radius:5px;
-	background:#dddddd;
-	width:180px;
-	height : 100%;
-	spacing : 0px;
-	padding-bottom : 20px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-top: 10px;
-}
 
 .rulerContent{
-	padding : 13px;	
+	padding : 8px;	
 	
 }
 
@@ -263,23 +202,27 @@ visibility: hidden;
 	
 }
 
-#minyear{
-	float:left;
-	display:inline-block;
+
+
+#yearfrom{
+	margin-left:5px;
+	border: 0; 
+	color: #f6931f; 
+	font-weight: bold; 
+	width: 40px;
+}
+
+#yearto{
+	border: 0; 
 	color: #f6931f; 
 	font-weight: bold;
+	width: 40px; 
+	float: right;
+	margin-right:8px;
 }
-#maxyear{
-	float:right;
-	color: #f6931f; 
-	font-weight: bold;
-	
-}
-#min, #max{
-	
-width: 50px;
-    text-align: center;
-	
+
+#year_to{
+	margin-left:23px;
 }
 
 .wrapper{
@@ -307,10 +250,7 @@ width: 50px;
     
 }
 
-#slider-songHot .ui-slider-range { 
-	background-color: #f6931f; 
-	
-}
+
 
 .ui-slider-handle { border-color: #f6931f; }
 
@@ -322,5 +262,9 @@ margin-right:10px;
 #playlistaccordion div{
 	padding	:0px;
 	height:340px;
-}	 
+}
+
+#subscribebutton{
+	height:25px;
+}
 
