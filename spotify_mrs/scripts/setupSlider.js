@@ -194,31 +194,32 @@ function setUpPopSlider1(echonestDynamic){
           //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
           $( "#slider-pop" ).slider({
           //setzen der Slider Attributte  
-      
-          min: 0,
-          max: 5,
-         step: 1,
+        	  min: 0,
+        	  max: 5,
+        	  step: 1,
+              animate: true,
  
-         create: function( event, ui ) {
-             setSliderTicks(event.target);
-           },
-           
-          slide: function( event, ui ) {
-         
-          },
-         
-          stop: function ( event, ui ) {
-        	var artistFamilarityLevel = ui.value;
-          	echonestDynamic.changeArtistFamiliarity(  artistFamilarityLevel);
-                  //console.log("Pop slider Stop");
-          
-          },
-         
-          change: function( event, ui ) {
-                  //console.log('Slider Change Event');
-          }
-         
+	         create: function( event, ui ) {
+	             setSliderTicks(event.target);
+	         },
+	           
+	         slide: function( event, ui ) {
+	         
+	         },
+	         
+	         stop: function ( event, ui ) {
+	        	 var artistFamilarityLevel = ui.value;
+	        	 echonestDynamic.changeArtistFamiliarity(  artistFamilarityLevel);
+	        	 //console.log("Pop slider Stop");
+	        	 
+	         },
+	         
+	         change: function( event, ui ) {
+	                  //console.log('Slider Change Event');
+	         }
+	         
           });
+          
          
  
          
@@ -229,10 +230,10 @@ function setUpHotSlider1(echonestDynamic){
     //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
     $( "#slider-hot" ).slider({
     //setzen der Slider Attributte  
-    
     min: 0,
     max: 5,
-    step: 1,
+    step: 1,                
+    animate: true,
     
     create: function( event, ui ) {
         setSliderTicks(event.target);
@@ -265,6 +266,7 @@ function setUpSongHotSlider1(echonestDynamic){
 	    min: 0,
 	    max: 5,
 	    step: 1,
+        animate: true,
 	    create: function( event, ui ) {
 	        setSliderTicks(event.target);
 	    },
