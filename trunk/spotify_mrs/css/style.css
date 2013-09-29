@@ -230,7 +230,6 @@ visibility: hidden;
 }
 
 #btnLoadmore{
-	display:block;
 	color:red;
 	margin-left:300px;
 	margin-right:auto;
@@ -252,7 +251,7 @@ visibility: hidden;
 
 
 
-.ui-slider-handle { border-color: #f6931f; }
+
 
 .sliderClass{
 margin-left:10px;
@@ -267,4 +266,5 @@ margin-right:10px;
 #subscribebutton{
 	height:25px;
 }
+
 

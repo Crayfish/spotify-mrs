@@ -124,8 +124,10 @@ var seedArtistSpotifyId = '';
 
 var song_id = '';
 
+/**currently used artist name*/
 var artistName = '';
 
+/**currently used track name*/
 var trackName = '';
 
 // var numberOfSongs = 10;
@@ -137,7 +139,9 @@ var styleTermNames = new Array();
 
 var continueFetchSongsLoop = true;
 
+/**trobber to use for playlist and covers*/
 var throbber = null;
+/**throbber to use for tagcloud*/
 var throbberTagCloud = null;
 
 var trackCoverScript = null;
@@ -159,7 +163,7 @@ var noSpotifyPlaylistSongs = false;
 var arrayOfTracksInSpotifyPlaylists = new Array();
 
 var similarityModeIsGenre = false;
-var similarityModeIsArtist = false;
+var similarityModeIsArtist = true;
 var similarityModeIsSong = false;
 var similarityModeIsPlaylist = false;
 
@@ -179,6 +183,17 @@ var varianzSongHotnesGenreSimliarity = null;
 
 var arrayArtistIdsForTermsQuery = new Array();
 
+/**selected genre if genre mode is on*/
+var selectedgenre = "";
+
+/**selected spotify playlist of the user if playlist similarity mode is on*/
+var selectedUserPlaylistName = "";
+
+/**values of the sliders*/
+var songTrendiness = 0;
+var artistTrendiness = 0;
+var artistPopularity = 0;
+
 function setArrayOfAllSongs1(array1) {
 	arrayOfTracksInSpotifyPlaylists = array1;
 }
@@ -188,11 +203,16 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	console
 			.log('changeToPlaylistSimilarity1() was called with tasteProfileID: '
 					+ tasteProfileIDandNameObject.tasteProfileID);
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = false;
 	similarityModeIsPlaylist = true;
+	
+	selectedUserPlaylistName = tasteProfileIDandNameObject.name;
+	
+	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	customPlaylistScript.createNewPlaylist();// create new playlist
 
 	var randomNumber = Math.floor(Math.random() * 100);
 	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='
@@ -383,10 +403,11 @@ function changeArtistVariety1() {
 }
 
 function changeArtistFamiliarity1(artistFamilarityLevel) {
-	console
-			.log("changeArtistFamiliarity() was called with artistPopularityLevel: "
+	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "
 					+ artistFamilarityLevel);
-
+	
+	artistPopularity = artistFamilarityLevel;
+	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	customPlaylistScript.createNewPlaylist();// create new playlist
 
 	getConstraintsInfo();
@@ -614,7 +635,9 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 function changeArtistHotness1(artistHotnessLevel) {
 	console.log("changeArtistHotness() was called with artistHotnessLevel: "
 			+ artistHotnessLevel);
-
+	
+	artistTrendiness = artistHotnessLevel;
+	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	customPlaylistScript.createNewPlaylist();// create new playlist
 
 	getConstraintsInfo();
@@ -890,7 +913,10 @@ function changeArtistHotness1(artistHotnessLevel) {
 function changeSongHotness1(songHotnessLevel) {
 	console.log("changeSongHotness() was called with songHotnessLevel: "
 			+ songHotnessLevel);
-
+	
+	songTrendiness = songHotnessLevel;
+	
+	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	customPlaylistScript.createNewPlaylist();// create new playlist
 
 	var minSongHotness = 0.0;
@@ -1103,7 +1129,7 @@ function changeToGenreSimilarity1(genreName) {
 	console.log('changeToGenreSimilarity1() was called with genre: '
 			+ genreName);
 
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	selectedgenre = genreName;
 
 	similarityModeIsGenre = true;
 	similarityModeIsArtist = false;
@@ -1116,7 +1142,9 @@ function changeToGenreSimilarity1(genreName) {
 	 * getArtistFamilarityRangeforGenre(genreName);
 	 * getSongHotnesRangeforGenre(genreName);
 	 */
-
+	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	customPlaylistScript.createNewPlaylist();// create new playlist
+	
 	var randomNumber = Math.floor(Math.random() * 100);
 	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='
 			+ echonestApiKey
@@ -1720,7 +1748,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1,
 	// numberOfSongs=10;
 	songsAlreadyUsed = new Array();
 
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	
 
 	/*
 	 * models.player.track.load('name', 'duration').done(function(){
@@ -1778,7 +1806,10 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1,
 		artistName = models.player.track.artists[0].name;
 		// models.player
 		trackName = models.player.track.name;
-
+		
+		customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+		customPlaylistScript.createNewPlaylist();// create new playlist
+		
 		$("#artistSimilarityInfo").text(artistName);
 		$("#similarityInfo").text(
 				'Now Songs are recommended because they are played by artists  similar to '
@@ -1883,7 +1914,6 @@ function changeSeedArtistSimilarity1() {
 		info('Start playing something and I ll make a playlist of good songs based on that song');
 
 	} else {
-		customPlaylistScript.createNewPlaylist();// create new playlist
 
 		var cover = document.getElementById('albumCoverContainer');
 		// var cover = $(".albumCoverContainer") ;
@@ -1927,6 +1957,9 @@ function changeSeedArtistSimilarity1() {
 		// Format: spotify-WW:track:3L7BcXHCG8uT92viO6Tikl
 		// replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
 		// console.log('Replaced ID: '+replacedSongID);
+		
+		customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+		customPlaylistScript.createNewPlaylist();// create new playlist
 
 		if ($('#excludeSeedArtistCheckBox').prop('checked')) {
 
@@ -2015,7 +2048,6 @@ function changeSeedSongSimilarity1() {
 
 	} else {
 
-		customPlaylistScript.createNewPlaylist();// create new playlist
 		var cover = document.getElementById('albumCoverContainer');
 		// var cover = $(".albumCoverContainer") ;
 		// var pictureThrobber = throbber1.forElement(cover);
@@ -2056,6 +2088,9 @@ function changeSeedSongSimilarity1() {
 		// replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
 		// console.log('Replaced ID: '+replacedSongID);
 
+		customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+		customPlaylistScript.createNewPlaylist();// create new playlist
+		
 		if ($('#excludeSeedArtistCheckBox').prop('checked')) {
 
 			banedSeedArtistId = seedArtistSpotifyId;
@@ -2124,7 +2159,6 @@ function changeSeedSongSimilarity1() {
 function changeToArtistSimilarity1() {
 	// console.log("New session is started");
 
-	customPlaylistScript.createNewPlaylist();// create new playlist
 
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = true;
@@ -2177,6 +2211,9 @@ function changeToArtistSimilarity1() {
 
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
+	
+	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	customPlaylistScript.createNewPlaylist();// create new playlist
 
 	// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
@@ -2274,7 +2311,6 @@ function changeToSongSimilarity1() {
 	similarityModeIsSong = true;
 	similarityModeIsPlaylist = false;
 
-	customPlaylistScript.createNewPlaylist();// create new playlist
 
 	var cover = document.getElementById('albumCoverContainer');
 
@@ -2301,6 +2337,9 @@ function changeToSongSimilarity1() {
 
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
+	
+	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	customPlaylistScript.createNewPlaylist();// create new playlist
 
 	var replacedSongID = song_id.replace('spotify', 'spotify-WW');
 
@@ -3034,4 +3073,36 @@ function checkResponse(data) {
 		error("Unexpected response from server");
 	}
 	return false;
+}
+
+function getSearchString(){
+	var returnstring = "Search based upon ";
+	if (similarityModeIsGenre){
+		returnstring = returnstring+"<i>genre</i> "+"<b>"+selectedgenre+"</b>";
+		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
+		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
+		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
+		
+	}
+	else if (similarityModeIsArtist){
+		returnstring = returnstring+"<i>artist</i>"+" <b>"+artistName+"</b>";
+		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
+		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
+		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
+	
+	}
+	else if (similarityModeIsSong){
+		returnstring = returnstring+"<i>song</i> <b>"+trackName+"</b> by <b> "+artistName+"</b>";
+		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
+		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
+		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
+	}
+	else if (similarityModeIsPlaylist){
+		returnstring = returnstring+"<i>playlist</i> + <b> "+selectedUserPlaylistName+"</b>";
+		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
+		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
+		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
+	}
+	
+	return returnstring;
 }

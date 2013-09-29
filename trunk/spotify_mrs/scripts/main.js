@@ -141,7 +141,15 @@ require([
 		// setupSlider.setUpHotSlider(echonest);
 		 
 		
-		 $(document).tooltip();
+		 $(document).tooltip({
+			 content: function() {
+		 
+             var element = $( this );
+             if ( element.is( "[title]" ) ) {
+                 return element.attr( "title" );
+             }
+			 }
+         });
 	  }
 	  
 	  function removeoverlay(){

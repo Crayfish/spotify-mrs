@@ -42,22 +42,33 @@ require([
   var showPlaylist = function(){
 	  showPlaylist1(List);
   };
+  
+  var setSearchAttributes = function(searchattributes){
+	  setSearchAttributes1(searchattributes);
+  };
 
   exports.addTrackToPlaylist = addTrackToPlaylist; 
   exports.createNewPlaylist = createNewPlaylist;
   exports.setupFlipButton = setupFlipButton;
   exports.showPlaylist = showPlaylist;
+  exports.setSearchAttributes = setSearchAttributes;
   
 });//end require
 
 //***************************************************************************************************************
 
-
+/**the current (last created) playlist*/
 var playlist = null;
+/**the current list to show the playlist*/
 var list = null;
+/**array of all created playlists*/
 var playlists = new Array();
+/**playlist counter*/
 var playlistcnt = 0;
+/**the number of the currently shown playlist in the accordion, for saving purposes*/
 var activeplaylist = 0;
+/**the collection of string literals used for the current search. showed as hint*/
+var searchstring = "hello world<br>thisis a new line";
 
 /**
  * Create a new empty playlist, and a new list in the playlist accordion.
@@ -69,11 +80,10 @@ function createNewPlaylist1(models1, List, yearSlider){
 	
 	console.log("playlist: "+playlist);
 	
-	
-	//if (playlist != null) clearPlaylist(models1);
+	//reset the year range when a new list is created
 	yearSlider.reset();
 	
-	//playlist = null;
+	//create a temporary playlist and clear it, save it to the array
 	var playlist1 = models1.Playlist.createTemporary("MRS Playlist "+playlistcnt).done(function(playlist1){
 		playlists[playlistcnt] = playlist1;
 		playlistcnt++;
@@ -81,26 +91,36 @@ function createNewPlaylist1(models1, List, yearSlider){
 		console.log("Empty playlist created: "+playlist1.uri);
 	});
 	
+	//set the current playlist
 	playlist = playlist1;
-	
-	
 	
 	//bind the playlist to the a new list and add an item to the playlist accordion
 	playlist.done(function(playlist){
-		//if(list == null){
-			list = List.forPlaylist(playlist, {height:"fixed",style:"rounded", fields: ["ordinal","star","share", "track","time", "artist", "album"]});
-		    var h3 = document.createElement("h3");
-		    h3.innerHTML = "playlist "+playlistcnt;
-		    
-		    var div = document.createElement("div");
-		    div.appendChild(list.node);
-			
-			document.getElementById('playlistaccordion').appendChild(h3);
-			document.getElementById('playlistaccordion').appendChild(div);
-		    list.init();
-		    $( "#playlistaccordion" ).accordion("refresh");
-		    
-		//}
+		
+		//create a List for the current playlist
+		list = List.forPlaylist(playlist, {height:"fixed",fields: ["ordinal","star","share", "track","time", "artist", "album"]});
+		
+		//create accordion header for the current playlist
+		var h3 = document.createElement("h3");
+		h3.setAttribute("title", searchstring);
+		h3.innerHTML = "playlist "+playlistcnt;
+		
+		//put the List into a div
+		var div = document.createElement("div");
+		div.appendChild(list.node);
+				
+		//append the new section to the accordion
+		document.getElementById('playlistaccordion').appendChild(h3);
+		document.getElementById('playlistaccordion').appendChild(div);
+		
+		//init the list
+		list.init();
+		
+		//apply the changes to the accordion
+		$( "#playlistaccordion" ).accordion("refresh");
+			    
+		//activate the last created accordion section
+		$( "#playlistaccordion" ).accordion({active: playlistcnt-1});
 		
 	});
 	
@@ -114,6 +134,7 @@ function createNewPlaylist1(models1, List, yearSlider){
  */
 function addTrackToPLaylist1(List, models1, trackID, yearSlider){
 	
+	//convert track ID
 	var id = trackID.replace('-WW','');
 	
 	playlist.done(function(playlist){
@@ -160,7 +181,6 @@ function clearPlaylist(models1){
 	if(playlist!=null){
 		playlist._args[0].load("tracks").done(function(tracks){
 			playlist._args[0].tracks.clear();
-			//list.clear();
 			console.log("playlist deleted");
 		});
 	}
@@ -179,36 +199,30 @@ function clearPlaylist(models1){
 function setupSubscribeButton(models1){
 	console.log("subscribe button setup");
 	var subscribebutton = document.getElementById('subscribebutton');
-	  subscribebutton.onclick=function(){
+	 
+	subscribebutton.onclick=function(){
 		  
 		  console.log("Subscribe button clicked.");
-		  console.log("Nr of active playlist: "+activeplaylist);
-		  console.log("playlist to save: "+playlists[activeplaylist]);
-		  //create new playlist
+		 
+		  //create new persistent playlist
 		  var newplaylist = models1.Playlist.create("TMR Playlist "+activeplaylist);
-		  //var currentplaylist = playlists[activeplaylist];
-		  
-		  //console.log("currentplaylist: "+models1.Playlist.fromURI(currentplaylist));
-		  //console.log("playlist: "+playlist);
 		  
 		  //load tracks from temporary playlist
-		 // models1.Playlist.fromURI(currentplaylist).done(function(playlist){
-		  	playlists[activeplaylist].load('tracks').done(function(playlist1){
-				  playlist1.tracks.snapshot().done(function(snapshot1){
+		  playlists[activeplaylist].load('tracks').done(function(playlist1){
+			  playlist1.tracks.snapshot().done(function(snapshot1){
 					  
-					  //add tracks to the new playlist
-					  newplaylist.done(function(newplaylist){
-						  newplaylist.load('tracks').done(function(newplaylist){
-							  for (var i = 0; i < snapshot1.length; i++) {
-								  newplaylist.tracks.add(snapshot1.get(i));
-							  }
-							   
-						  });
+				  //add tracks to the new playlist
+				  newplaylist.done(function(newplaylist){
+					  newplaylist.load('tracks').done(function(newplaylist){
+						  for (var i = 0; i < snapshot1.length; i++) {
+							  newplaylist.tracks.add(snapshot1.get(i));
+						  }
+						   
 					  });
-					  
 				  });
+				  
 			  });
-//		  });
+		  });
 	  }
 }
 
@@ -219,19 +233,22 @@ function setupSubscribeButton(models1){
 function setupPlaylistAccordion1(){
 	console.log("Setting up playlist accordion");
 	
-	$( "#playlistaccordion" ).accordion({ heightStyle: "content"});
-	 
 	 $( "#playlistaccordion").accordion({
 		 activate: function( event, ui ) {
 			 
 			var active = $( "#playlistaccordion" ).accordion( "option", "active" );	 
 			console.log("A new playlistaccordion header was activated: "+active);
 			activeplaylist = parseInt(active);
-			console.log("Nr of active playlist: "+active);
 		 
 		 }
-	 	});
-	
-	   $(".ui-accordion-content").css("padding","4px"); 
+	 });
+}
+
+/**
+ * Set the search string for the current search. Used as hint in the playlist view.
+ * @param searchattributes collection of string literals
+ */
+function setSearchAttributes1(searchattributes){
+	searchstring = searchattributes;
 }
 
