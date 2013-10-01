@@ -9,7 +9,7 @@ require([
   'scripts/echonestDynamic',
   //'scripts/echonest',
   'scripts/setupGenreFilter',
-  'scripts/setupTagCloud',
+ // 'scripts/setupTagCloud',
   'scripts/setUpSimilarityAccordion',
   'scripts/echonestGenreData', 
   'scripts/customplaylist',
@@ -20,7 +20,7 @@ require([
   'scripts/setupSimilarityRadioButtons'
   
 ], function( models, apiKey, generatePlaylistButton,setupSlider, 
-		echonestDynamic,/* echonest,*/ setupGenreFilter,setupTagCloud, 
+		echonestDynamic,/* echonest,*/ setupGenreFilter,/*setupTagCloud, */
 		setUpSimilarityAccordion, echonestGenreData, customplaylist, 
 		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupSimilarityRadioButtons /*setupPlaylistFilter*/) {
   'use strict';

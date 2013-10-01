@@ -11,6 +11,9 @@ require([
   
   
   jQuery.fn.tagCloud = function(cl, givenOptions) { //return this.each( function() { //like a real jQuery plugin: run on on each element
+	  
+	  console.log('TAG CLOUD tagCloud() was called()');
+	  
 	   if (!cl || !cl.length)
 	      return this;
 
@@ -97,7 +100,7 @@ require([
 	            
 	            options.click(jQuery(event.target).data('tag'), event);
 				console.log('This Tag was clicked on: '+jQuery(event.target).data('tag'));
-				echonestDynamic.setTermFilter(jQuery(event.target).data('tag'));
+				//echonestDynamic.setTermFilter(jQuery(event.target).data('tag'));
 				$(this).toggleClass("active");
 	         });
 	      }

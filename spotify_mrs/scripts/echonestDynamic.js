@@ -731,9 +731,9 @@ function changeArtistHotness1(artistHotnessLevel) {
 			session_id : session_id,
 			api_key : echonestApiKey,
 			format : 'json',
-			target_artist_hotttnesss : targetValue
+			target_artist_hotttnesss : targetValue,
 		// max_artist_hotttnesss :maxHotness,
-		// min_artist_hotttnesss :minHotness,
+		min_artist_hotttnesss :0.66,
 		// max_artist_familiarity: 0.0,
 		// min_artist_familiarity: 0.0
 		};
