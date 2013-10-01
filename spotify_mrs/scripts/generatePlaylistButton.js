@@ -12,10 +12,14 @@ require([
 
   var setUpNextSongsButton = function(){
 
-		$('#btnLoadmore').click( function(){
-			console.log("Pressed NextSongs Button");
+		$('#nextSongsButton').button().click(function(event) {
+			event.preventDefault();
+
+			 console.log('Get Next Songs Button was clicked');
+
 			echonestDynamic.getNextSong();
-		}); 
+
+		});
 		  
 		  
 //	    var generateNextSongsButton = document.getElementById('nextSongsButton');

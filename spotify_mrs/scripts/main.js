@@ -91,7 +91,7 @@ require([
 		 
 		  
 		//enter developer name here: Marc, Tom or Julius
-		apiKey.setEchonestApiKey('Marc'); 
+		apiKey.setEchonestApiKey('Julius'); 
 		  
 		playlistInformation.setUpPlaylistInformation();
 		
@@ -104,7 +104,7 @@ require([
 		setupNoveltyCheckBoxes.setUpExcludeSeedArtistCheckBox();
 		setupNoveltyCheckBoxes.setUpNoSongsFromSpotifyCollectionCheckBox();
 
-		generatePlaylistButton.setUpNewSeedButton();
+		//generatePlaylistButton.setUpNewSeedButton();
 		generatePlaylistButton.setUpNextSongsButton();
 
 		setupSimilarityRadioButtons.setupSimilarityButtons();
@@ -135,7 +135,7 @@ require([
 
 		//setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 		// generatePlaylistButton.setUpNewSeedButton();
-		// generatePlaylistButton.setUpGeneratePlaylistButton();
+		//generatePlaylistButton.setUpNextSongsButton();
 		// setupSimilarityRadioButtons.setupSimilarityButtons();
 		//setupSlider.setUpPopSlider(echonest);
 		// setupSlider.setUpHotSlider(echonest);

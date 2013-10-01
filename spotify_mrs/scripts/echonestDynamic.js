@@ -393,8 +393,8 @@ function changeArtistVariety1() {
 		if (checkResponse(data)) {
 
 			// console.log('Changed Hotness Values');
-			getPlaylistInfo();
-			getNextSong1();
+			getPlaylistInfo('artistVariety');
+			//getNextSong1();
 
 		} else {
 			info("trouble getting results");
@@ -410,7 +410,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	customPlaylistScript.createNewPlaylist();// create new playlist
 
-	getConstraintsInfo();
+	//getConstraintsInfo();
 
 	var minFamilarity = 0.0;
 	var maxFamilarity = 1.0;
@@ -429,58 +429,100 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 		 */
 
 		var targetValue = null;
+		
+		
+		
+		if(artistFamilarityLevel  == 0){
+			console.log("ECHONEST DYNAMIC artist popularity slider was moved to Off Position");
+			
+			var randomNumber = Math.floor(Math.random() * 100);
 
+			var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?reset=true&_='
+					+ randomNumber;
+			
+			var args = {
+					session_id : session_id,
+					api_key : echonestApiKey,
+					format : 'json',
+					//target_artist_familiarity : 0.1,
+					//reset: true,
+					//min_artist_familiarity:0.1,
+					// min_song_hotttnesss:0.8
+				};
+			
+			
+			$.getJSON(url, args, function(data) {
+				if (checkResponse(data)) {
+
+					console.log('ECHONEST DYNAMIC response Data RESET ARTIST POPULARITY:'+JSON.stringify(data));
+					getConstraintsInfo();
+					//getNextSong1();
+
+				} else {
+					info("trouble getting results");
+				}
+			});
+			
+			
+			
+		}else{
 		switch (artistFamilarityLevel) {
-		case 0:
-			targetValue = 0.1;
-			break;
 		case 1:
-			targetValue = 0.3;
+			targetValue = 0.0;
 			break;
 		case 2:
-			targetValue = 0.4;
+			targetValue = 0.25;
 			break;
 		case 3:
 			targetValue = 0.5;
 			break;
 		case 4:
-			targetValue = 0.6;
+			targetValue = 0.75;
 			break;
 		case 5:
-			targetValue = 0.9;
+			targetValue = 1;
 			break;
+		
 
 		}
-
+		
+		var args = {
+				session_id : session_id,
+				api_key : echonestApiKey,
+				format : 'json',
+				target_artist_familiarity : targetValue
+			// max_artist_hotttnesss :maxHotness,
+			// min_artist_hotttnesss :minHotness,
+			// max_artist_familiarity: 0.0,
+			// min_artist_familiarity: 0.0
+			};
+		
 		var randomNumber = Math.floor(Math.random() * 100);
 
 		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
 				+ randomNumber;
-		var args = {
-			session_id : session_id,
-			api_key : echonestApiKey,
-			format : 'json',
-			target_artist_familiarity : targetValue
-		// max_artist_hotttnesss :maxHotness,
-		// min_artist_hotttnesss :minHotness,
-		// max_artist_familiarity: 0.0,
-		// min_artist_familiarity: 0.0
-		};
-
-		// getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String
-		// der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
-		// erfolgreicher Anfrage ausgeführt wird)
+		
 		$.getJSON(url, args, function(data) {
 			if (checkResponse(data)) {
 
 				// console.log('Changed Hotness Values');
 				getConstraintsInfo();
-				getNextSong1();
+				//getNextSong1();
 
 			} else {
 				info("trouble getting results");
 			}
 		});
+		
+		
+		
+		}
+		
+		
+		
+	
+
+	
 
 	}
 
@@ -621,7 +663,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 
 				// console.log('Changed Popularity Values');
 				getConstraintsInfo();
-				getNextSong1();
+				//getNextSong1();
 
 			} else {
 				info("trouble getting results");
@@ -704,7 +746,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 
 				// console.log('Changed Hotness Values');
 				getConstraintsInfo();
-				getNextSong1();
+				//getNextSong1();
 
 			} else {
 				info("trouble getting results");
@@ -783,7 +825,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 
 				// console.log('Changed Hotness Values');
 				getConstraintsInfo();
-				getNextSong1();
+				//getNextSong1();
 
 			} else {
 				info("trouble getting results");
@@ -972,7 +1014,7 @@ function changeSongHotness1(songHotnessLevel) {
 
 				// console.log('Changed Hotness Values');
 				getConstraintsInfo();
-				getNextSong1();
+				//getNextSong1();
 
 			} else {
 				info("trouble getting results");
@@ -1109,7 +1151,7 @@ function changeSongHotness1(songHotnessLevel) {
 
 				// console.log('Changed Hotness Values');
 				getConstraintsInfo();
-				getNextSong1();
+				//getNextSong1();
 
 			} else {
 				info("trouble getting results");
@@ -2063,6 +2105,9 @@ function changeSeedSongSimilarity1() {
 		trackName = models.player.track.name;
 
 		$("#songSimilarityInfo").text('"' + trackName + '" by ' + artistName);
+		$("#similarityInfo").text(
+				'Now Songs are recommended because they are similar to ' + '"'
+						+ trackName + '" by ' + artistName);
 		// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
@@ -2921,7 +2966,7 @@ function banSongFeedBack(echnonestTrackId) {
 												+ songsAlreadyUsed.length);
 
 								trackCoverScript.setLoopContinueToTrue();
-
+								//getConstraintsInfo();
 								getArtistsTerms();
 							}
 
@@ -3039,6 +3084,13 @@ function getPlaylistInfo(infoString) {
 										.log(' ECHONEST DYNAMIC Playlist Info adventurousness was set to: '
 												+ JSON
 														.stringify(data.response.options.adventurousness));
+							}
+							
+							if(infoString == 'artistVariety'){
+								console
+								.log(' ECHONEST DYNAMIC Playlist Info artist variety was set to: '
+										+ JSON
+												.stringify(data.response.options.variety));
 							}
 
 						} else {

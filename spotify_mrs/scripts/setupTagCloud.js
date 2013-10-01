@@ -1,7 +1,7 @@
-require([
+/*require([
   '$api/models',
- 'scripts/echonestDynamic',
- '$views/popup#Popup'
+// 'scripts/echonestDynamic',
+ //'$views/popup#Popup'
  
 ], function(models,echonestDynamic,Popup ) {
   'use strict';
@@ -34,4 +34,4 @@ function addTagCloudEventHandler1(echonestDynamic,Popup){
 	
 	
 }
-
+*/
