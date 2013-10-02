@@ -209,10 +209,15 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	similarityModeIsSong = false;
 	similarityModeIsPlaylist = true;
 	
-	selectedUserPlaylistName = tasteProfileIDandNameObject.name;
 	
-	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	resetSliders();
+	$("#adventurousnessSliderLabel").show();
+	$("#adventurousnessSlider").show();
+	
+	//selectedUserPlaylistName = tasteProfileIDandNameObject.name;
+	
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 
 	var randomNumber = Math.floor(Math.random() * 100);
 	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='
@@ -306,22 +311,16 @@ function setTermFilter1(term) {
 	// getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der
 	// mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
 	// erfolgreicher Anfrage ausgeführt wird)
-	$.getJSON(url, {// 'artist_id':replacedArtistID ,
-		// 'track_id': replacedSongID,
+	$.getJSON(url, {
 		'format' : 'jsonp',
-		// limit : true,
-		// 'type':'artist-radio',
-		// 'max_artist_hotttnesss':maxHotness,
 		'style' : term
-	// 'artist_max_familiarity': maxPopularity, 'artist_min_familiarity':
-	// minPopularity
-	// bucket : ['id:spotify-WW', 'tracks'],
+	
 	}, function(data) {
 		if (checkResponse(data)) {
 
 			// console.log('Changed Hotness Values');
-			getPlaylistInfo();
-			getNextSong1();
+			getPlaylistInfo('style');
+			//getNextSong1();
 
 		} else {
 			info("trouble getting results");
@@ -406,9 +405,9 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "
 					+ artistFamilarityLevel);
 	
-	artistPopularity = artistFamilarityLevel;
-	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	//artistPopularity = artistFamilarityLevel;
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 
 	//getConstraintsInfo();
 
@@ -434,6 +433,11 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 		
 		if(artistFamilarityLevel  == 0){
 			console.log("ECHONEST DYNAMIC artist popularity slider was moved to Off Position");
+			
+			//disable the slider
+			$("#slider-pop").slider( "value", 0 );
+			$("#slider-pop").slider( "option", "disabled", true );
+
 			
 			var randomNumber = Math.floor(Math.random() * 100);
 
@@ -580,6 +584,14 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 	// varianzArtistFamiliarityGenreSimliarity
 
 	if (similarityModeIsGenre) {
+		
+		if(artistFamilarityLevel  == 0){
+			console.log("ECHONEST DYNAMIC artist popularity slider was moved to Off Position");
+			
+			//disable the slider
+			$("#slider-pop").slider( "value", 0 );
+			$("#slider-pop").slider( "option", "disabled", true );
+		}else{
 
 		var targetValue = null;
 
@@ -671,6 +683,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 		});
 
 	}
+	}
 
 }
 
@@ -678,9 +691,9 @@ function changeArtistHotness1(artistHotnessLevel) {
 	console.log("changeArtistHotness() was called with artistHotnessLevel: "
 			+ artistHotnessLevel);
 	
-	artistTrendiness = artistHotnessLevel;
-	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	//artistTrendiness = artistHotnessLevel;
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 
 	getConstraintsInfo();
 
@@ -698,6 +711,13 @@ function changeArtistHotness1(artistHotnessLevel) {
 		 * =0.8; break; case 5: minHotness = 0.8; maxHotness = 1; break;
 		 *  }
 		 */
+		
+		if(artistHotnessLevel==0){
+			//disable the slider
+			$("#slider-hot").slider( "value", 0 );
+			$("#slider-hot").slider( "option", "disabled", true );
+			//reset echonest playlist state
+		}else{
 
 		var targetValue = null;
 
@@ -733,7 +753,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 			format : 'json',
 			target_artist_hotttnesss : targetValue,
 		// max_artist_hotttnesss :maxHotness,
-		min_artist_hotttnesss :0.66,
+		//min_artist_hotttnesss :0.66,
 		// max_artist_familiarity: 0.0,
 		// min_artist_familiarity: 0.0
 		};
@@ -753,6 +773,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 			}
 		});
 
+	}
 	}
 
 	/*
@@ -779,6 +800,13 @@ function changeArtistHotness1(artistHotnessLevel) {
 		// minHotness = 0;// lowerArtistHotnessBorderForGenreSimilarity;
 		// maxHotness = upperArtistHotnessBorderForGenreSimilarity;
 
+		if(artistHotnessLevel==0){
+			//disable the slider
+			$("#slider-hot").slider( "value", 0 );
+			$("#slider-hot").slider( "option", "disabled", true );
+			//reset echonest playlist state
+		}else{
+		
 		var targetValue = null;
 
 		switch (artistHotnessLevel) {
@@ -832,6 +860,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 			}
 		});
 
+	}
 	}
 
 	// Variante mit Varianz Berechung
@@ -966,6 +995,12 @@ function changeSongHotness1(songHotnessLevel) {
 
 	if (similarityModeIsArtist || similarityModeIsSong
 			|| similarityModeIsPlaylist) {
+		
+		if(songHotnessLevel==0){
+			$("#slider-songHot").slider( "value", 0 );
+			$("#slider-songHot").slider( "option", "disabled", true );
+			
+		}else{
 
 		var targetValue = 0;
 
@@ -1022,6 +1057,7 @@ function changeSongHotness1(songHotnessLevel) {
 		});
 
 	}
+	}
 
 	/*
 	 * if(similarityModeIsSong){ switch (songHotnessLevel) { case 0:
@@ -1076,6 +1112,12 @@ function changeSongHotness1(songHotnessLevel) {
 	// varianzSongHotnesGenreSimliarity
 
 	if (similarityModeIsGenre) {
+		
+		if(songHotnessLevel==0){
+			$("#slider-songHot").slider( "value", 0 );
+			$("#slider-songHot").slider( "option", "disabled", true );
+			
+		}else{
 
 		var targetValue = 0;
 
@@ -1158,6 +1200,7 @@ function changeSongHotness1(songHotnessLevel) {
 			}
 		});
 
+	}
 	}
 
 }
@@ -2257,6 +2300,8 @@ function changeToArtistSimilarity1() {
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
 	
+	resetSliders();
+	
 	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	customPlaylistScript.createNewPlaylist();// create new playlist
 
@@ -2382,6 +2427,8 @@ function changeToSongSimilarity1() {
 
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
+	
+	resetSliders();
 	
 	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	customPlaylistScript.createNewPlaylist();// create new playlist
@@ -3092,6 +3139,22 @@ function getPlaylistInfo(infoString) {
 										+ JSON
 												.stringify(data.response.options.variety));
 							}
+							
+							if(infoString == 'style'){
+								console
+								.log(' ECHONEST DYNAMIC Playlist Info currently used style terms: '
+										+ JSON
+												.stringify(data.response.seeds.descriptions));
+								//resetPlaylist();
+							}
+							
+							if(infoString == 'all'){
+								console
+								.log(' ECHONEST DYNAMIC Playlist Info All Info: '
+										+ JSON
+												.stringify(data.response));
+								
+							}
 
 						} else {
 							info("trouble getting results");
@@ -3099,6 +3162,57 @@ function getPlaylistInfo(infoString) {
 					});
 
 }
+
+
+function resetSliders(){
+	$("#slider-songHot").slider( "value", 0 );
+	$("#slider-songHot").slider( "option", "disabled", true );
+	$("#slider-hot").slider( "value", 0 );
+	$("#slider-hot").slider( "option", "disabled", true );
+	$("#slider-pop").slider( "value", 0 );
+	$("#slider-pop").slider( "option", "disabled", true );
+
+	
+
+	
+	
+}
+
+function resetPlaylist(){
+	console.log('ECHONEST DYNAMIC resetPlaylist() was called()');
+	
+	
+	var randomNumber = Math.floor(Math.random() * 100);
+
+	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?reset=true&_='
+			+ randomNumber;
+	
+	var args = {
+			session_id : session_id,
+			api_key : echonestApiKey,
+			format : 'json',
+			//style: 'myOwnStyle'
+			//target_artist_familiarity : 0.1,
+			//reset: true,
+			//min_artist_familiarity:0.1,
+			//min_song_hotttnesss:0.666
+		};
+	
+	
+	$.getJSON(url, args, function(data) {
+		if (checkResponse(data)) {
+
+			console.log('ECHONEST DYNAMIC response Data RESET:'+JSON.stringify(data));
+			 getPlaylistInfo('all');
+
+		} else {
+			info("trouble getting results");
+		}
+	});
+	
+	
+}
+
 
 function info(s) {
 	var info = document.getElementById('info');

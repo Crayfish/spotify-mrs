@@ -75,8 +75,8 @@ require([ '$api/models', 'scripts/echonestDynamic' ], function(models,
 			$('#excludeSeedArtistLabel').hide();
 
 			$('#excludeSeedArtistLabel').next('br').hide();
-			$("#adventurousnessSliderLabel").show();
-			$("#adventurousnessSlider").show();
+			//$("#adventurousnessSliderLabel").show();
+			//$("#adventurousnessSlider").show();
 			break;
 
 		}

@@ -37,11 +37,12 @@ function setupPlaylistFilter1(echonestDynamic){
     		 select: function( event, ui){
     			
     			 console.log('EventHandlerPlaylist List sent this playlist name: '+ui.item.label);
-    			 
+    			
     			 for (var i=0; i<=tasteProfileIDsArray.length-1; i++){  
     				 
     				if(ui.item.label == tasteProfileIDsArray[i].name){
     					console.log('TRYING TO CHANGE TO PLAYLIST SIMILARITY WITH ID: '+tasteProfileIDsArray[i].tasteProfileID);
+    				
     					echonestDynamic.changeToPlaylistSimilarity(tasteProfileIDsArray[i]);
     					break;
     				}
@@ -55,7 +56,6 @@ function setupPlaylistFilter1(echonestDynamic){
     		
     		
     			 
-    			 //echonestDynamic.changeToPlaylistSimilarity( ui.item.label);
     			 
     			$(this).val(''); return false;
     			 
