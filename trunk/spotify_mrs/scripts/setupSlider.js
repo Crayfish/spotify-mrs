@@ -56,7 +56,9 @@ function setUpAdventurousnessSlider1(echonestDynamic){
        min: 0,
        max: 100,
        value: 20 ,
-
+       
+       
+       
         slide: function( event, ui ) {
       
         },
@@ -191,6 +193,14 @@ function setUpArtistVarietySlider1(echonestDynamic){
 
 function setUpPopSlider1(echonestDynamic){
     console.log('SetUpPopSlider() betreten');
+    
+    $( "#slider-pop" ).bind("mousedown", function(event){
+
+		  if( $( "#slider-pop" ).slider( "option", "disabled" )){
+	       		 $( "#slider-pop" ).slider( "enable" );
+	       	 }  
+
+	    });
           //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
           $( "#slider-pop" ).slider({
           //setzen der Slider Attributte  
@@ -202,6 +212,8 @@ function setUpPopSlider1(echonestDynamic){
 	         create: function( event, ui ) {
 	             setSliderTicks(event.target);
 	         },
+	         
+	        
 	           
 	         slide: function( event, ui ) {
 	         
@@ -209,6 +221,8 @@ function setUpPopSlider1(echonestDynamic){
 	         
 	         stop: function ( event, ui ) {
 	        	 var artistFamilarityLevel = ui.value;
+	        	 
+	        	
 	        	 echonestDynamic.changeArtistFamiliarity(  artistFamilarityLevel);
 	        	 //console.log("Pop slider Stop");
 	        	 
@@ -219,14 +233,26 @@ function setUpPopSlider1(echonestDynamic){
 	         }
 	         
           });
-          
-         
+        //disbale for app start  
+      	$("#slider-pop").slider( "value", 0 );
+    	$("#slider-pop").slider( "option", "disabled", true );
  
          
         
 }
+
+
 function setUpHotSlider1(echonestDynamic){
     console.log('SetUpSongHotSlider() betreten');
+    
+    $( "#slider-hot" ).bind("mousedown", function(event){
+
+		  if( $( "#slider-hot" ).slider( "option", "disabled" )){
+	       		 $( "#slider-hot" ).slider( "enable" );
+	       	 }  
+
+	    });
+    
     //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
     $( "#slider-hot" ).slider({
     //setzen der Slider Attributte  
@@ -243,6 +269,8 @@ function setUpHotSlider1(echonestDynamic){
   
     },
     
+   
+    
     stop: function ( event, ui ) {
             console.log('Hot slider Stop');
             var artistHotnessLevel = ui.value;// $( ".selector" ).slider( "option", "value" );
@@ -253,12 +281,23 @@ function setUpHotSlider1(echonestDynamic){
    
     });
    
-    
+    //disable for app start
+    $("#slider-hot").slider( "value", 0 );
+	$("#slider-hot").slider( "option", "disabled", true ); 
 }
 
 
 function setUpSongHotSlider1(echonestDynamic){
 	  console.log('SetUpHotSlider() betreten');
+	  
+	  $( "#slider-songHot" ).bind("mousedown", function(event){
+
+		  if( $( "#slider-songHot" ).slider( "option", "disabled" )){
+	       		 $( "#slider-songHot" ).slider( "enable" );
+	       	 }  
+
+	    });
+	  
 	    //jQuery Syntax: $(selector).action(), # steht für element with id="slider-range"
 	    $( "#slider-songHot" ).slider({
 	    //setzen der Slider Attributte  
@@ -273,6 +312,8 @@ function setUpSongHotSlider1(echonestDynamic){
 	    slide: function( event, ui ) {
 	   
 	    },
+	   
+	    
 	    stop: function ( event, ui ) {
 	            console.log('SongHot slider Stop');
 	            var songHotnesLevel =  ui.value
@@ -282,8 +323,12 @@ function setUpSongHotSlider1(echonestDynamic){
 	    
 	    });
 	   
-	   
+	  //disable for app start
+	    $("#slider-songHot").slider( "value", 0 );
+		$("#slider-songHot").slider( "option", "disabled", true );
 }
+
+
 
 /*function setUpSongHotSlider1(echonestDynamic){
     console.log('SetUpHotSlider() betreten');

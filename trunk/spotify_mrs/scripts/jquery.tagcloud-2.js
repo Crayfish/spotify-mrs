@@ -100,7 +100,7 @@ require([
 	            
 	            options.click(jQuery(event.target).data('tag'), event);
 				console.log('This Tag was clicked on: '+jQuery(event.target).data('tag'));
-				//echonestDynamic.setTermFilter(jQuery(event.target).data('tag'));
+				echonestDynamic.setTermFilter(jQuery(event.target).data('tag'));
 				$(this).toggleClass("active");
 	         });
 	      }
