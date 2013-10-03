@@ -35,7 +35,7 @@ require(
 
 								$('.tagcloudlink').filter(function() {
 									return $(this).text() === tag;
-								}).css("color", "black");
+								}).css("color", '#666667');
 
 							} else {
 								tagCloudObjects[k].currentlySet = true;
