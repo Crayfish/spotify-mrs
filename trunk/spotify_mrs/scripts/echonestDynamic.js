@@ -985,10 +985,10 @@ function changeSongHotness1(songHotnessLevel) {
 	console.log("changeSongHotness() was called with songHotnessLevel: "
 			+ songHotnessLevel);
 	
-	songTrendiness = songHotnessLevel;
+	//songTrendiness = songHotnessLevel;
 	
-	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 
 	var minSongHotness = 0.0;
 	var maxSongHotness = 1.0;
@@ -1227,8 +1227,8 @@ function changeToGenreSimilarity1(genreName) {
 	 * getArtistFamilarityRangeforGenre(genreName);
 	 * getSongHotnesRangeforGenre(genreName);
 	 */
-	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 	
 	var randomNumber = Math.floor(Math.random() * 100);
 	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='
@@ -1987,7 +1987,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1,
 function changeSeedArtistSimilarity1() {
 	console.log('echonestDynamic changeSeedArtistSimilarity1() was called');
 
-	// numberOfSongs=10;
+	resetSliders();
 	songsAlreadyUsed = new Array();
 
 	var track = models.player.load('track');
@@ -2062,8 +2062,7 @@ function changeSeedArtistSimilarity1() {
 		var randomNumber = Math.floor(Math.random() * 100);
 
 		// var artistIdsForPopularity = new Array();
-		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?session_id='
-				+ session_id + '&_=' + randomNumber;
+		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?&_=' + randomNumber;
 		var args = {
 			api_key : echonestApiKey,
 			artist_id : seedArtistIdforEchonestCalls,
@@ -2074,6 +2073,10 @@ function changeSeedArtistSimilarity1() {
 					'artist_hotttnesss', 'tracks', 'id:spotify-WW' ]
 
 		};
+		
+		
+	
+		
 
 		// getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String
 		// der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
@@ -2121,8 +2124,9 @@ function changeSeedSongSimilarity1() {
 	console.log('echonestDynamic changeSeedSongSimilarity1() was called');
 
 	// numberOfSongs=10;
-	// songsAlreadyUsed = new Array();
-
+	 songsAlreadyUsed = new Array();
+	 resetSliders();
+	
 	var track = models.player.load('track');
 	console.log('TRACK= ' + track);
 	var artist = models.player.track.artists[0];
@@ -2190,8 +2194,7 @@ function changeSeedSongSimilarity1() {
 		var randomNumber = Math.floor(Math.random() * 100);
 
 		var artistIdsForPopularity = new Array();
-		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?session_id='
-				+ session_id + '&_=' + randomNumber;
+		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?&_=' + randomNumber;
 		var args = {
 			api_key : echonestApiKey,
 			song_id : replacedSongID,
