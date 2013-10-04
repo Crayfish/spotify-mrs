@@ -13,9 +13,9 @@ require([
   '$api/search',
 
   '$views/image#Image',
-  '$views/popup#Popup'
-  //'scripts/echonestDynamic',
-], function(models,search, Image, Popup) {
+  '$views/popup#Popup',
+  'scripts/customplaylist',
+], function(models,search, Image, Popup, customplaylist) {
   'use strict';
 
        
@@ -135,6 +135,8 @@ require([
                      playableCovers.push(target1);   
                      console.log('size of playableCovers: '+playableCovers.length);
                      
+                     customplaylist.addTrackToPlaylist(trackID);
+                     
                      if(playableCovers.length == numberOfSongs){
                     	 for(var i = 0; i < playableCovers.length; i++){
                     		 covercontainer.appendChild(playableCovers[i]);
@@ -151,6 +153,7 @@ require([
   	                        previous    : "previous",
   	                        next        : "next",
   	                       last        : "last", 
+  	                       
   	                       // last        :  "Next Songs", 
   	                        animation   : "fadeInLeftBig",
   	                      

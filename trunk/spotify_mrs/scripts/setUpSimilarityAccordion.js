@@ -66,7 +66,7 @@ function setupAccordion1(echonestDynamic){
 	console.log('setupAccordion1() was called');
 	
 	
-		 $( "#accordion" ).accordion({ heightStyle: "content"});
+		// $( "#accordion" ).accordion({heightStyle: "content"});
 		 
 		 $( "#accordion").accordion({
 			 activate: function( event, ui ) {
