@@ -95,7 +95,7 @@ function resetSliders(){
 	$("#slider-pop").slider( "value", 0 );
 	$("#slider-pop").slider( "option", "disabled", true );
 
-	
+	$("#artistVarietySlider").slider( "value", 50 );
 
 	
 	
