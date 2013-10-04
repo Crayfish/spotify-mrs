@@ -36,3 +36,41 @@
 
 
 
+
+
+.p_holder {
+	margin: 15px 0;
+}
+
+.p_holder a {
+	font-size: 12px;
+	cursor: pointer;
+	margin: 0 5px;
+	color: #333;
+}
+
+.p_holder a:hover {
+	background-color: #222;
+	color: #fff;
+}
+
+.p_holder a.jp-previous { margin-right: 15px; }
+.p_holder a.jp-next { margin-left: 15px; }
+
+.p_holder a.jp-current, a.jp-current:hover { 
+	color: #FF4242;
+	font-weight: bold;
+}
+
+.p_holder a.jp-disabled, a.jp-disabled:hover {
+	color: #bbb;
+}
+
+.p_holder a.jp-current, a.jp-current:hover,
+.p_holder a.jp-disabled, a.jp-disabled:hover {
+	cursor: default; 
+	background: none;
+}
+
+.p_holder span { margin: 0 5px; }
+

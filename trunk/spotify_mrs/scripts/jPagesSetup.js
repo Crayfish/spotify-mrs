@@ -38,5 +38,23 @@ function setupPages1(){
        
 	  
 	  });
+	  
+	  $("div.p_holder").jPages({
+		    containerID : "playlistContainer",
+		    perPage      :1,
+		   /* first       : "first",
+	        previous    : "previous",
+	        next        : "next",
+	        last        : "last",*/
+	        first       : false,
+	        previous    : false,
+	        next        : false,
+	        last        : false,
+	      animation   : "fadeInLeftBig",
+	    	
+	       
+	       
+		  
+		  });
 	
 }

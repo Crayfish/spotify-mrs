@@ -131,7 +131,7 @@ visibility: hidden;
 	padding : 5px;
 	margin-left:auto;
 	margin-right:auto;
-	margin-top: 10px;
+	margin-bottom: 8px;
 }
 
 
@@ -180,7 +180,7 @@ visibility: hidden;
 
 .playlistContainer{
 	height:475px;
-	position:relative;	
+	width:645px;
 	overflow-y:auto;
 }
 
@@ -207,14 +207,14 @@ visibility: hidden;
 #yearfrom{
 	margin-left:5px;
 	border: 0; 
-	color: #f6931f; 
+	color: red; 
 	font-weight: bold; 
 	width: 40px;
 }
 
 #yearto{
 	border: 0; 
-	color: #f6931f; 
+	color: red; 
 	font-weight: bold;
 	width: 40px; 
 	float: right;
@@ -229,7 +229,7 @@ visibility: hidden;
 	margin-top:15px;
 }
 
-#btnLoadmore{
+#flipbutton{
 	color:red;
 	margin-left:300px;
 	margin-right:auto;
@@ -238,6 +238,7 @@ visibility: hidden;
 	z-index:11111;
 	text-decoration:none;
 	height:30px;
+	background-color: inherit;
 }
 
 .ui-slider-tick-mark{
@@ -257,11 +258,7 @@ visibility: hidden;
 margin-left:10px;
 margin-right:10px;	
 }
-	 
-#playlistaccordion div{
-	padding	:0px;
-	height:340px;
-}
+
 
 #subscribebutton{
 	height:25px;
