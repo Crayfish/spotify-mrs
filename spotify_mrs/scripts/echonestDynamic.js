@@ -2589,8 +2589,8 @@ function getNextSong1() {
 														+ noSpotifyPlaylistSongs);
 										banSongFeedBack(echonestTrackId);
 									} else {
-										customPlaylistScript
-												.addTrackToPlaylist(id);
+										//customPlaylistScript
+												//.addTrackToPlaylist(id);
 										trackCoverScript.getTrackCover(id);
 										// customplaylist1.addTrackToPLaylist(id);
 
@@ -2604,7 +2604,7 @@ function getNextSong1() {
 
 									
 
-									customPlaylistScript.addTrackToPlaylist(id);
+									//customPlaylistScript.addTrackToPlaylist(id);
 									trackCoverScript.getTrackCover(id);
 
 									
