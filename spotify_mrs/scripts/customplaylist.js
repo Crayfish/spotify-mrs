@@ -22,12 +22,12 @@ require([
 	  flipbutton.onclick=function(){
 		  if(cnt%2==0){
 			  console.log("playlist is front");
-			  flipimg.src="img/cover.png";
+			  //flipimg.src="img/cover.png";
 			  showPlaylist();
 		  }
 		  else{
 			  console.log("covers are front");
-			  flipimg.src="img/listicon.png";
+			 // flipimg.src="img/listicon.png";
 		  }
 		  
 		  document.querySelector('#flip-toggle').classList.toggle('flip');
@@ -70,6 +70,8 @@ var activeplaylist = 0;
 /**the collection of string literals used for the current search. showed as hint*/
 var searchstring = "hello world<br>thisis a new line";
 
+var pageCount = 1;
+
 /**
  * Create a new empty playlist, and a new list in the playlist accordion.
  * The different playlists are saved in an array.
@@ -98,32 +100,34 @@ function createNewPlaylist1(models1, List, yearSlider){
 	playlist.done(function(playlist){
 		
 		//create a List for the current playlist
-		list = List.forPlaylist(playlist, {height:"fixed",fields: ["ordinal","star","share", "track","time", "artist", "album"]});
-		
-		//create accordion header for the current playlist
-		var h3 = document.createElement("h3");
-		h3.setAttribute("title", searchstring);
-		h3.innerHTML = "playlist "+playlistcnt;
-		
-		//put the List into a div
-		var div = document.createElement("div");
-		div.appendChild(list.node);
-				
-		//append the new section to the accordion
-		document.getElementById('playlistaccordion').appendChild(h3);
-		document.getElementById('playlistaccordion').appendChild(div);
+		list = List.forPlaylist(playlist, {height:"dynamic",style:"rounded",fields: ["ordinal","star","share", "track","time", "artist", "album"]});
 		
 		//init the list
 		list.init();
 		
-		//apply the changes to the accordion
-		$( "#playlistaccordion" ).accordion("refresh");
-			    
-		//activate the last created accordion section
-		$( "#playlistaccordion" ).accordion({active: playlistcnt-1});
+		document.getElementById('playlistContainer').appendChild(list.node);
+		
+		 
+		
 		
 	});
-	
+	$("div.p_holder").jPages("destroy").jPages({
+        containerID   : "playlistContainer",
+        perPage       :1,
+        first       : "first",
+        previous    : "previous",
+        next        : "next",
+       last        : "last",
+       // last        :  "Next Songs",
+        animation   : "fadeInLeftBig",
+      
+       
+    });
+     
+     $("div.p_holder").jPages( pageCount );
+     pageCount= pageCount+1;
+     
+     console.log("page count: "+pageCount )
 }
 
 /**

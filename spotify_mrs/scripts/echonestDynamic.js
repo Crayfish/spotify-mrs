@@ -3266,30 +3266,31 @@ function getSearchString(){
 	var returnstring = "Search based upon ";
 	if (similarityModeIsGenre){
 		returnstring = returnstring+"<i>genre</i> "+"<b>"+selectedgenre+"</b>";
-		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
-		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
-		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
 		
 	}
 	else if (similarityModeIsArtist){
 		returnstring = returnstring+"<i>artist</i>"+" <b>"+artistName+"</b>";
-		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
-		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
-		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
 	
 	}
 	else if (similarityModeIsSong){
 		returnstring = returnstring+"<i>song</i> <b>"+trackName+"</b> by <b> "+artistName+"</b>";
-		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
-		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
-		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
 	}
 	else if (similarityModeIsPlaylist){
-		returnstring = returnstring+"<i>playlist</i> + <b> "+selectedUserPlaylistName+"</b>";
+		returnstring = returnstring+"<i>playlist</i> <b> "+selectedUserPlaylistName+"</b>";
+	}
+	
+	if(songTrendiness!=0){
 		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
+	}
+	
+	if(artistTrendiness!=0){
 		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
+	}
+	
+	if(artistPopularity!=0){
 		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
 	}
+	
 	
 	return returnstring;
 }

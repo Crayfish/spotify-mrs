@@ -16,10 +16,15 @@ require([
 	  reset1();
   }
   
+  var checkYear = function checkYear(track){
+	  checkYear1(models, track);
+  }
+  
     
   exports.addYear = addYear;
   exports.setupYearSlider = setupYearSlider;
   exports.reset = reset;
+  exports.checkYear = checkYear;
   
 });//end require
 
@@ -109,5 +114,29 @@ require([
 		} 
 		
 		return false;
+	}
+	
+	/**
+	 * Check if the track is in the given year range.
+	 * @param models spotify models to access data
+	 * @param track the current track to check
+	 * @returns {Boolean} true if the track is in the given year range 
+	 * or if there is no input in the year input boxes.
+	 */
+	function checkYear(models, track){
+		
+		
+		track.load('album').done(function(){
+			track.album.load('date').done(function(){
+				var year = track.album.date;
+				console.log("track release year: "+year);
+				max = Math.max(max,year);
+				min = Math.min(min,year);
+				
+				
+			});
+			
+		});
+		 return true;
 	}
 
