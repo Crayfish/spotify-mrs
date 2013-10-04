@@ -209,8 +209,10 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	similarityModeIsSong = false;
 	similarityModeIsPlaylist = true;
 	
+	songsAlreadyUsed = new Array();
 	
 	resetSliders();
+	$("#adventurousnessSlider").slider( "value", 20 );
 	$("#adventurousnessSliderLabel").show();
 	$("#adventurousnessSlider").show();
 	
@@ -355,7 +357,7 @@ function changeAdventurousness1() {
 
 			// console.log('Changed Hotness Values');
 			getPlaylistInfo('adventurousness');
-			getNextSong1();
+			//getNextSong1();
 
 		} else {
 			info("trouble getting results");
@@ -1216,6 +1218,8 @@ function changeToGenreSimilarity1(genreName) {
 
 	selectedgenre = genreName;
 
+	songsAlreadyUsed = new Array();
+	
 	similarityModeIsGenre = true;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = false;
@@ -2299,6 +2303,8 @@ function changeToArtistSimilarity1() {
 	$('#excludeSeedArtistLabel').show();
 
 	$('#excludeSeedArtistLabel').next('br').show();
+	
+	$("#artistVarietySlider").slider( "value", 50 );
 
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
@@ -2404,6 +2410,7 @@ function changeToSongSimilarity1() {
 	similarityModeIsSong = true;
 	similarityModeIsPlaylist = false;
 
+	songsAlreadyUsed = new Array();
 
 	var cover = document.getElementById('albumCoverContainer');
 
@@ -2427,6 +2434,8 @@ function changeToSongSimilarity1() {
 	$('#excludeSeedArtistLabel').show();
 
 	$('#excludeSeedArtistLabel').next('br').show();
+	
+	$("#artistVarietySlider").slider( "value", 50 );
 
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
@@ -2511,6 +2520,10 @@ function getNextSong1() {
 		results : 1,
 	}
 
+	
+	
+	
+	
 	$
 			.getJSON(
 					url,
@@ -2518,36 +2531,41 @@ function getNextSong1() {
 					function(data) {
 						if (checkResponse(data)) {
 
-							// for (var i = 0; i < data.response.songs.length;
-							// i++){
-							// console.log('ECHONEST DYNAMIC getNextSong1() DATA
-							// RESPONSE: '+JSON.stringify(data.response));
+
+							try
+							  {
 							console.log('Next song is: '
 									+ data.response.songs[0].title + ' by '
 									+ data.response.songs[0].artist_name);
 
+							
+
+							
 							var echonestTrackId = data.response.songs[0].id;
 							// console.log('echnonestTrackId:
 							// '+echnonestTrackId);
-
-							// Varainte ohne lokales Array
-							/*
-							 * var id =
-							 * data.response.songs[0].tracks[0].foreign_id;
-							 * trackCover1.getTrackCover(id);
-							 * banSongFeedBack(trackCover1, echonestTrackId);
-							 */
+							var id = data.response.songs[0].tracks[0].foreign_id;
+							var echonestArtistId = data.response.songs[0].artist_id;
+							  }
+							catch(err)
+							  { console.log('ECHONEST DYNAMIC getNextsong() catch block error message: '+err.message);
+							  getNextSong1();
+							  }
+							
+							
+							
+							
+							
 
 							if ($.inArray(echonestTrackId, songsAlreadyUsed) > -1) {
 								console.log('Song bereits verwendet');
-								// numberOfSongs = numberOfSongs+1;
+								
 								banSongFeedBack(echonestTrackId);
 							} else {
 
 								songsAlreadyUsed.push(echonestTrackId);
-								// console.log('getNextsong1() data.response:
-								// '+JSON.stringify(data.response));
-								var id = data.response.songs[0].tracks[0].foreign_id;
+								
+								
 								// console.log('getNextSong1() response track
 								// id: ' + id);
 								var replacedTrackId = id.replace('spotify-WW',
@@ -2559,7 +2577,7 @@ function getNextSong1() {
 								// console.log('getNextSong1() response
 								// information: ' +
 								// JSON.stringify(data.response));
-								var echonestArtistId = data.response.songs[0].artist_id;
+								
 
 								if (noSpotifyPlaylistSongs) {
 									console
@@ -2584,16 +2602,12 @@ function getNextSong1() {
 									}
 								} else {
 
-									// var playable =
-									// playableCheck.checkIfTrackIsPlayable(id);
-									// console.log('echonestDynamic
-									// getNextsong1() return from
-									// checkIfTrackIsPlayable(): '+playable);
+									
 
 									customPlaylistScript.addTrackToPlaylist(id);
 									trackCoverScript.getTrackCover(id);
 
-									// getArtistTerms(echonestArtistId);
+									
 									arrayArtistIdsForTermsQuery
 											.push(echonestArtistId);
 
@@ -2608,6 +2622,8 @@ function getNextSong1() {
 						}
 					});
 
+	
+	
 }
 
 /*
@@ -3174,6 +3190,8 @@ function resetSliders(){
 	$("#slider-hot").slider( "option", "disabled", true );
 	$("#slider-pop").slider( "value", 0 );
 	$("#slider-pop").slider( "option", "disabled", true );
+	
+	$("#artistVarietySlider").slider( "value", 50 );
 
 	
 
