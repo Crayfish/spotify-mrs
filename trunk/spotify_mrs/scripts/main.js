@@ -7,7 +7,7 @@ require([
   'scripts/generatePlaylistButton',
   'scripts/setupSlider',
   'scripts/echonestDynamic',
-  //'scripts/echonest',
+  'scripts/setupSwitchViewButton',
   'scripts/setupGenreFilter',
  // 'scripts/setupTagCloud',
   'scripts/setUpSimilarityAccordion',
@@ -20,7 +20,7 @@ require([
   'scripts/setupSimilarityRadioButtons'
   
 ], function( models, apiKey, generatePlaylistButton,setupSlider, 
-		echonestDynamic,/* echonest,*/ setupGenreFilter,/*setupTagCloud, */
+		echonestDynamic,setupSwitchViewButton, setupGenreFilter,/*setupTagCloud, */
 		setUpSimilarityAccordion, echonestGenreData, customplaylist, 
 		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupSimilarityRadioButtons /*setupPlaylistFilter*/) {
   'use strict';
@@ -113,6 +113,8 @@ require([
 		setupSlider.setUpSongHotSlider(echonestDynamic);
 		setupSlider.setUpArtistVarietySlider(echonestDynamic);
 		setupSlider.setUpAdventurousnessSlider(echonestDynamic);
+		
+		setupSwitchViewButton.setupFlipButton();
 
 		jPagesSetup.setupPages();
 
@@ -128,7 +130,7 @@ require([
 
 		//setUpSimilarityAccordion.setupChangeSeedSongButton();
 
-		customplaylist.setupFlipButton();
+		customplaylist.setupSubscribeButton();
 		//customplaylist.createNewPlaylist();
 		
 		yearSlider.setupYearSlider();

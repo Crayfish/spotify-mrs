@@ -6,36 +6,20 @@ require([
   'use strict';
   
   
-  var createNewPlaylist = function() {
-	  createNewPlaylist1(models, List, yearSlider);
+  var createNewPlaylist = function(idsArray) {
+	  createNewPlaylist1(models, List, yearSlider, idsArray);
   };
   
   var addTrackToPlaylist = function(trackID){
 	  addTrackToPLaylist1(List, models, trackID, yearSlider);
   };
   
-  var setupFlipButton = function(){
-	  console.log("flip button setup");
-	  var cnt = 0;
-	  var flipbutton = document.getElementById('flipbutton');
-	  var flipimg = document.getElementById('flipbuttonimg');
-	  flipbutton.onclick=function(){
-		  if(cnt%2==0){
-			  console.log("playlist is front");
-			  //flipimg.src="img/cover.png";
-			  showPlaylist();
-		  }
-		  else{
-			  console.log("covers are front");
-			 // flipimg.src="img/listicon.png";
-		  }
-		  
-		  document.querySelector('#flip-toggle').classList.toggle('flip');
-		  cnt++;
-	  }
+  var setupSubscribeButton = function(){
+	  console.log("Subscribe button setup");
+	 
 	  
-	  setupSubscribeButton(models);
-	  setupPlaylistAccordion1();
+	  setupSubscribeButton1(models);
+	 
 	  
   };
   
@@ -49,7 +33,7 @@ require([
 
   exports.addTrackToPlaylist = addTrackToPlaylist; 
   exports.createNewPlaylist = createNewPlaylist;
-  exports.setupFlipButton = setupFlipButton;
+  exports.setupSubscribeButton = setupSubscribeButton;
   exports.showPlaylist = showPlaylist;
   exports.setSearchAttributes = setSearchAttributes;
   
@@ -78,9 +62,11 @@ var pageCount = 1;
  * @param models1 @see spotify api.models
  * @param List @see spotify views.List
  */
-function createNewPlaylist1(models1, List, yearSlider){
+function createNewPlaylist1(models1, List, yearSlider, idsArray){
 	
 	console.log("playlist: "+playlist);
+	
+	console.log('CUSTOM PLAYLIST createNewPlaylist1 ids Array: '+idsArray)
 	
 	//reset the year range when a new list is created
 	yearSlider.reset();
@@ -111,7 +97,7 @@ function createNewPlaylist1(models1, List, yearSlider){
 		
 		
 	});
-	$("div.p_holder").jPages("destroy").jPages({
+/*	$("div.p_holder").jPages("destroy").jPages({
         containerID   : "playlistContainer",
         perPage       :1,
         first       : "first",
@@ -127,7 +113,7 @@ function createNewPlaylist1(models1, List, yearSlider){
      $("div.p_holder").jPages( pageCount );
      pageCount= pageCount+1;
      
-     console.log("page count: "+pageCount )
+     console.log("page count: "+pageCount )*/
 }
 
 /**
@@ -170,6 +156,9 @@ function showPlaylist1(List){
 		list.clear();
 		list.setItem(playlist);
 		list.init();
+		
+
+		
 		console.log(playlist);
 	});
 	
@@ -200,7 +189,7 @@ function clearPlaylist(models1){
  * Tracks from the temporary playlist are copied to a persistent new playlist.
  * @param models1 @see spotify api.models
  */
-function setupSubscribeButton(models1){
+function setupSubscribeButton1(models1){
 	console.log("subscribe button setup");
 	var subscribebutton = document.getElementById('subscribebutton');
 	 
@@ -234,7 +223,7 @@ function setupSubscribeButton(models1){
  * Setup the playlist accordions.
  * When an accordion is selected, change the nr of the playlist to save.
  */
-function setupPlaylistAccordion1(){
+/*function setupPlaylistAccordion1(){
 	console.log("Setting up playlist accordion");
 	
 	 $( "#playlistaccordion").accordion({
@@ -246,7 +235,7 @@ function setupPlaylistAccordion1(){
 		 
 		 }
 	 });
-}
+}*/
 
 /**
  * Set the search string for the current search. Used as hint in the playlist view.

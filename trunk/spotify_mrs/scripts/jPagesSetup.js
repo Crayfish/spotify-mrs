@@ -21,7 +21,7 @@ function setupPages1(){
 	console.log('setupPages1() was called');
 	
 
-	  $("div.holder").jPages({
+	  $("#holder").jPages({
 	    containerID : "albumCoverContainer",
 	    perPage      :12,
 	   /* first       : "first",
@@ -39,13 +39,13 @@ function setupPages1(){
 	  
 	  });
 	  
-	  $("div.p_holder").jPages({
+	/*  $("div.p_holder").jPages({
 		    containerID : "playlistContainer",
 		    perPage      :1,
-		   /* first       : "first",
+		    first       : "first",
 	        previous    : "previous",
 	        next        : "next",
-	        last        : "last",*/
+	        last        : "last",
 	        first       : false,
 	        previous    : false,
 	        next        : false,
@@ -55,6 +55,6 @@ function setupPages1(){
 	       
 	       
 		  
-		  });
+		  });*/
 	
 }
