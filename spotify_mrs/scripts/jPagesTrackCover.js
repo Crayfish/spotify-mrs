@@ -7,6 +7,8 @@
  var loopContinue = true;
  
  var bannedSeedArtist = null;
+ 
+ var trackIdsforPlaylist = new Array();
 
 require([
   '$api/models',
@@ -53,7 +55,7 @@ require([
         if(!track.playable){console.log('TRACK NOT PLAYABLE');};
         if(track.playable){
         	
-        	
+        		
         	   var artist = models.Artist.fromURI(track.artists[0]);
                
                console.log('jpagesTrackCover.getTrackCover() artist Id: '+artist);
@@ -65,9 +67,9 @@ require([
         	
                if(artist != bannedSeedArtist){
                
-        //load image for the track
+     
    
-        	
+            	   trackIdsforPlaylist.push(id);
         	
         	
         
@@ -135,18 +137,22 @@ require([
                      playableCovers.push(target1);   
                      console.log('size of playableCovers: '+playableCovers.length);
                      
-                     customplaylist.addTrackToPlaylist(trackID);
-                     
+                    
                      if(playableCovers.length == numberOfSongs){
                     	 for(var i = 0; i < playableCovers.length; i++){
                     		 covercontainer.appendChild(playableCovers[i]);
                     	 }
                     	 
+                    	
                     	 playableCovers = new Array();
                     	 
                     	 loopContinue = false;
                     	 
-                    	  $("div.holder").jPages("destroy").jPages({
+                    	 $('#playlistContainer').hide();
+                    	 $('#playlistHeader').hide();
+           			  	$('#subscribebutton').hide();
+                    	 
+                    	  $("#holder").jPages("destroy").jPages({
   	                        containerID   : "albumCoverContainer",
   	                        perPage       :numberOfSongs,
   	                        first       : "first",
@@ -166,10 +172,14 @@ require([
   	        		   	
   	                    });
   	        		   
-  	        		   $("div.holder").jPages( pageCount );
+  	        		   $("#holder").jPages( pageCount );
   	        		   pageCount= pageCount+1;
-                    	 
-                    	 
+                    	
+  	        		 customplaylist.createNewPlaylist(trackIdsforPlaylist);
+  	        		 /* for(var i = 0; i< trackIdsforPlaylist.length; i++){
+  	        			 customplaylist.addTrackToPlaylist(trackIdsforPlaylist[i]);
+  	        		  }*/
+  	        		 trackIdsforPlaylist = new Array(); 
                      }
                         
                     //covercontainer.appendChild(target1);

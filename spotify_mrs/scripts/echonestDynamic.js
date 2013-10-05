@@ -3,21 +3,18 @@ require(
 		[
 
 		'$api/models', '$views/throbber#Throbber', 'scripts/jPagesTrackCover',
-				'scripts/customplaylist', 'scripts/apiKey',
-		// 'scripts/setupNoveltyCheckBoxes',
+				'scripts/apiKey'
+		
 
 		],
-		function(models, throbber, trackCover, customplaylist, apiKey/*
-																		 * ,
-																		 * playlistInformation
-																		 */) {
+		function(models, throbber, trackCover,apiKey) {
 
 			'use strict';
 
 			var startNewSession = function() {
 				// console.log("New session is started");
-				startNewSession1(models, throbber, trackCover, customplaylist,
-						apiKey/* , playlistInformation */);
+				startNewSession1(models, throbber, trackCover, 
+						apiKey);
 
 			};
 
@@ -1811,7 +1808,7 @@ function getArtistFamilarityRangeforGenre(genreName) {
 
 }
 
-function startNewSession1(models1, throbber1, trackCover1, customplaylist1,
+function startNewSession1(models1, throbber1, trackCover1,
 		apiKey/* , playlistInformation1 */) {
 	console.log("New session is started");
 
@@ -1822,7 +1819,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1,
 
 	// models.player.playTrack(models.Track.fromURI('spotify:track:3P6p25MvU3qnvWa8L7i5Lr'));
 
-	customPlaylistScript = customplaylist1;
+	//customPlaylistScript = customplaylist1;
 
 	trackCoverScript = trackCover1;
 
@@ -1874,7 +1871,7 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1,
 		$("#albumCoverContainer").hide();
 		// cover.hide();
 
-		var throbberContainer = document.getElementById('flip-toggle');
+		var throbberContainer = document.getElementById('display');
 		throbber = throbber1.forElement(throbberContainer);
 		throbber.setPosition('center', 'center');
 
@@ -1896,8 +1893,8 @@ function startNewSession1(models1, throbber1, trackCover1, customplaylist1,
 		// models.player
 		trackName = models.player.track.name;
 		
-		customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-		customPlaylistScript.createNewPlaylist();// create new playlist
+		//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+		//customPlaylistScript.createNewPlaylist();// create new playlist
 		
 		$("#artistSimilarityInfo").text(artistName);
 		$("#similarityInfo").text(
@@ -2184,8 +2181,8 @@ function changeSeedSongSimilarity1() {
 		// replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
 		// console.log('Replaced ID: '+replacedSongID);
 
-		customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-		customPlaylistScript.createNewPlaylist();// create new playlist
+		//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+		//customPlaylistScript.createNewPlaylist();// create new playlist
 		
 		if ($('#excludeSeedArtistCheckBox').prop('checked')) {
 
@@ -2311,8 +2308,8 @@ function changeToArtistSimilarity1() {
 	
 	resetSliders();
 	
-	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 
 	// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
@@ -2442,8 +2439,8 @@ function changeToSongSimilarity1() {
 	
 	resetSliders();
 	
-	customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	customPlaylistScript.createNewPlaylist();// create new playlist
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 
 	var replacedSongID = song_id.replace('spotify', 'spotify-WW');
 
