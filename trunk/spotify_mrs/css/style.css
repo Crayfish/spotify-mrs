@@ -33,13 +33,10 @@ body{
 	/*width : 100%;*/ 
 }
 
-/*cover caption*/
+
 h2 { 
-   position: absolute; 
-   top: 0px; 
-   left: 0; 
-   /*width: 100%;*/ 
-	z-index:100;
+   float:left;
+   margin-top:0;
 }
 
 h2 span { 
@@ -179,7 +176,7 @@ visibility: hidden;
 }
 
 .playlistContainer{
-	height:475px;
+	height:462px;
 	width:645px;
 	overflow-y:auto;
 }

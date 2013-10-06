@@ -176,7 +176,7 @@ require([
   	        		   pageCount= pageCount+1;
                     	
   	        		 customplaylist.createNewPlaylist(trackIdsforPlaylist);
-  	        		 /* for(var i = 0; i< trackIdsforPlaylist.length; i++){
+  	        		  /*for(var i = 0; i< trackIdsforPlaylist.length; i++){
   	        			 customplaylist.addTrackToPlaylist(trackIdsforPlaylist[i]);
   	        		  }*/
   	        		 trackIdsforPlaylist = new Array(); 
