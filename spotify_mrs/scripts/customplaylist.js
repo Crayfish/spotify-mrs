@@ -77,10 +77,21 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 		playlistcnt++;
 		clearPlaylist(models1);
 		console.log("Empty playlist created: "+playlist1.uri);
+		
 	});
 	
 	//set the current playlist
 	playlist = playlist1;
+	
+	playlist.done(function(playlist){
+		playlist.load("tracks").done(function(loadedplaylist){
+			for(var i; i<idsArray.lenght; i++){
+				console.log("next track id "+id);
+				loadedplaylist.tracks.add(models1.Track.fromURI(id));
+			}
+		});
+	});
+	
 	
 	//bind the playlist to the a new list and add an item to the playlist accordion
 	playlist.done(function(playlist){
@@ -88,12 +99,12 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 		//create a List for the current playlist
 		list = List.forPlaylist(playlist, {height:"dynamic",style:"rounded",fields: ["ordinal","star","share", "track","time", "artist", "album"]});
 		
-		//init the list
-		list.init();
+		
 		
 		document.getElementById('playlistContainer').appendChild(list.node);
 		
-		 
+		 //init the list
+		list.init();
 		
 		
 	});
