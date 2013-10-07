@@ -202,7 +202,7 @@ function clearPlaylist(models1){
  */
 function setupSubscribeButton1(models1){
 	console.log("subscribe button setup");
-	var subscribebutton = document.getElementById('subscribebutton');
+/*	var subscribebutton = document.getElementById('subscribebutton');
 	 
 	subscribebutton.onclick=function(){
 		  
@@ -227,7 +227,38 @@ function setupSubscribeButton1(models1){
 				  
 			  });
 		  });
-	  }
+	  }*/
+	
+	
+	
+	$("#subscribebutton").button().click(function(event) {
+		event.preventDefault();
+		  console.log("Subscribe button clicked.");
+			 
+		  //create new persistent playlist
+		  var newplaylist = models1.Playlist.create("TMR Playlist "+activeplaylist);
+		  
+		  //load tracks from temporary playlist
+		  playlists[activeplaylist].load('tracks').done(function(playlist1){
+			  playlist1.tracks.snapshot().done(function(snapshot1){
+					  
+				  //add tracks to the new playlist
+				  newplaylist.done(function(newplaylist){
+					  newplaylist.load('tracks').done(function(newplaylist){
+						  for (var i = 0; i < snapshot1.length; i++) {
+							  newplaylist.tracks.add(snapshot1.get(i));
+						  }
+						   
+					  });
+				  });
+				  
+			  });
+		  });
+		
+		
+
+	});
+	
 }
 
 /**
