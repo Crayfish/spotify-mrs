@@ -91,7 +91,7 @@ function setupFlipButton1(customplaylist){
 				next        : "next",
 				last        : "last", 
                  
-				animation   : "flipInY",
+				animation   : "fadeInUp",
                 
 				callback    : function( pages,items ){
 					console.log("covers on page: "+pages.current);
@@ -125,7 +125,7 @@ function newCoverPage1(){
 		previous    : "previous",
 		next        : "next",
 		last        : "last", 
-		animation   : "flipInY",
+		animation   : "fadeInUp",
 		callback    : function( pages,items ){
 			console.log("covers on page: "+pages.current);
 			currentpageCover = pages.current;

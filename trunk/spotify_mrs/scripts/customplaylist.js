@@ -81,12 +81,12 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 				console.log("adding new tracks");
 				for(var i=0; i<idsArray.length; i++){
 					var track = models1.Track.fromURI(idsArray[i]);
-					track.load('playable', 'name').done(function(track) {
-						if(track.playable){
+					track.load(/*'playable', */'name').done(function(track) {
+						//if(track.playable){
 							playlist1.tracks.add(track);
-							console.log("Track added to playlist: "+track.name);
+							console.log("CUSTOM PLAYLIST Track added to playlist: "+track.name);
 							
-						}
+						//}
 					});
 				}
 			});
