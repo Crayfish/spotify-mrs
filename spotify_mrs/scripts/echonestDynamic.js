@@ -440,17 +440,15 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			
 			var randomNumber = Math.floor(Math.random() * 100);
 
-			var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?reset=true&_='
+			var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/restart?&_='
 					+ randomNumber;
 			
 			var args = {
 					session_id : session_id,
 					api_key : echonestApiKey,
 					format : 'json',
-					//target_artist_familiarity : 0.1,
-					//reset: true,
-					//min_artist_familiarity:0.1,
-					// min_song_hotttnesss:0.8
+					type: 'genre-radio',
+					genre: 'reggae'
 				};
 			
 			
@@ -2044,8 +2042,8 @@ function changeSeedArtistSimilarity1() {
 		// replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
 		// console.log('Replaced ID: '+replacedSongID);
 		
-		customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-		customPlaylistScript.createNewPlaylist();// create new playlist
+		//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+		//customPlaylistScript.createNewPlaylist();// create new playlist
 
 		if ($('#excludeSeedArtistCheckBox').prop('checked')) {
 
@@ -2506,6 +2504,14 @@ function getNextSong1() {
 	throbber.show();
 	throbberTagCloud.show();
 	// $("#albumCoverContainer").hide();
+	
+	var echonestTrackId = null;
+	var id = null;
+	var echonestArtistId = null;
+	var replacedTrackId  = null;
+	
+	
+	
 
 	// api_key=BNV9970E1PHXZ9RQW&format=json&results=1&
 	var randomNumber = Math.floor(Math.random() * 100);
@@ -2538,11 +2544,13 @@ function getNextSong1() {
 							
 
 							
-							var echonestTrackId = data.response.songs[0].id;
+							 echonestTrackId = data.response.songs[0].id;
 							// console.log('echnonestTrackId:
 							// '+echnonestTrackId);
-							var id = data.response.songs[0].tracks[0].foreign_id;
-							var echonestArtistId = data.response.songs[0].artist_id;
+							id = data.response.songs[0].tracks[0].foreign_id;
+							echonestArtistId = data.response.songs[0].artist_id;
+							replacedTrackId = id.replace('spotify-WW',
+							'spotify');
 							  }
 							catch(err)
 							  { console.log('ECHONEST DYNAMIC getNextsong() catch block error message: '+err.message);
@@ -2565,8 +2573,7 @@ function getNextSong1() {
 								
 								// console.log('getNextSong1() response track
 								// id: ' + id);
-								var replacedTrackId = id.replace('spotify-WW',
-										'spotify');
+						
 								console
 										.log('getNextSong1() replaced response track id: '
 												+ replacedTrackId);
