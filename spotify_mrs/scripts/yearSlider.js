@@ -124,14 +124,14 @@ require([
 	 * or if there is no input in the year input boxes.
 	 */
 	function checkYear(models, track){
-		
+		var minval = $("#yearfrom").val();
+		var maxval = $("#yearto").val();
 		
 		track.load('album').done(function(){
 			track.album.load('date').done(function(){
 				var year = track.album.date;
 				console.log("track release year: "+year);
-				max = Math.max(max,year);
-				min = Math.min(min,year);
+				
 				
 				
 			});
