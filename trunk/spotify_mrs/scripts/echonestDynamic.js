@@ -2551,6 +2551,8 @@ function getNextSong1() {
 							echonestArtistId = data.response.songs[0].artist_id;
 							replacedTrackId = id.replace('spotify-WW',
 							'spotify');
+							
+							
 							  }
 							catch(err)
 							  { console.log('ECHONEST DYNAMIC getNextsong() catch block error message: '+err.message);
@@ -2593,12 +2595,9 @@ function getNextSong1() {
 														+ noSpotifyPlaylistSongs);
 										banSongFeedBack(echonestTrackId);
 									} else {
-										//customPlaylistScript
-												//.addTrackToPlaylist(id);
-										trackCoverScript.getTrackCover(id);
-										// customplaylist1.addTrackToPLaylist(id);
-
-										// getArtistTerms(echonestArtistId);
+										
+										trackCoverScript.getTrackCover(replacedTrackId);
+									
 										arrayArtistIdsForTermsQuery
 												.push(echonestArtistId);
 
@@ -2608,8 +2607,8 @@ function getNextSong1() {
 
 									
 
-									//customPlaylistScript.addTrackToPlaylist(id);
-									trackCoverScript.getTrackCover(id);
+									
+									trackCoverScript.getTrackCover(replacedTrackId);
 
 									
 									arrayArtistIdsForTermsQuery
@@ -2629,6 +2628,10 @@ function getNextSong1() {
 	
 	
 }
+
+
+
+
 
 /*
  * function getNextXXSong1( ){ console.log('getNextXXSong() was called');

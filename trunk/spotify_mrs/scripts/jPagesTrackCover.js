@@ -27,8 +27,8 @@ require([
 	  covercontainer.setAttribute('style', 'width: 645px;');
     
 	  //load track from id
-	  var id = trackID.replace('-WW','');
-	  var track = models.Track.fromURI(id);
+	 // var id = trackID.replace('-WW','');
+	  var track = models.Track.fromURI(trackID);
 
 	  //if track not playable --> no cover download
 	  track.load('playable','name','artists').done(function(track) {
@@ -49,7 +49,7 @@ require([
         	
                if(artist != bannedSeedArtist){
             	   
-            	   trackIdsforPlaylist.push(id);
+            	   trackIdsforPlaylist.push(trackID);
             
             	   artist.load('name').done(function(artist){
             		   
