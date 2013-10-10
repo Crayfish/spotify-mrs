@@ -141,9 +141,17 @@ function showPlaylist1(List){
 
 	playlist.done(function(playlist){
 		if(list == null){
+			
 			list = List.forPlaylist(playlist, {height:"dynamic",style:"rounded",fields: ["ordinal","star","share", "track","time", "artist", "album"]});
 			document.getElementById('playlistContainer').appendChild(list.node);
 			list.init();
+			var infodiv = document.createElement('div');
+			infodiv.className="playlistinfo";
+			infodiv.innerHTML = 
+				'<img id="infobutton" src="img/info.png" title="Recommendation made upon the following settings">'
+				+ searchstring;
+			document.getElementById('playlistContainer').appendChild(infodiv);
+				
 		}
 		
 		console.log("show playlist "+playlist);
