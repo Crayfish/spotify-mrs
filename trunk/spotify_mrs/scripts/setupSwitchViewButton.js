@@ -52,7 +52,7 @@ function setupFlipButton1(customplaylist){
 				
 			$("#holder").jPages("destroy").jPages({
 				containerID   : "playlistContainer",
-				perPage       :1,
+				perPage       :2,
 				first       : "first",
 				previous    : "previous",
 				next        : "next",

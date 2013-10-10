@@ -16,15 +16,25 @@ require([
 	  reset1();
   }
   
-  var checkYear = function checkYear(track){
-	  checkYear1(models, track);
+  var isInYearRange = function isInYearRange(track, callback){
+	  isInYearRange1(models, track, callback);
+  }
+  
+  var getMinValue = function getMinValue(){
+	  return getMinValue1();
+  }
+  
+  var getMaxValue = function getMaxValue(){
+	  return getMaxValue1();
   }
   
     
   exports.addYear = addYear;
   exports.setupYearSlider = setupYearSlider;
   exports.reset = reset;
-  exports.checkYear = checkYear;
+  exports.isInYearRange = isInYearRange;
+  exports.getMinValue = getMinValue;
+  exports.getMaxValue = getMaxValue;
   
 });//end require
 
@@ -34,8 +44,8 @@ require([
 	var max = 1900;
 
 	/**selected minimum and maximum year values*/
-	var minvalue = 2013;
-	var maxvalue = 1900;
+	var minvalue = 1300;
+	var maxvalue = 2050;
 	
 	/**
 	 * Set up year input fields. The value is checked on validity every time it changes.
@@ -44,21 +54,23 @@ require([
 		
 		$("#yearto").change( function (){
 			if(checkInput(this)){
-				max = this.value;
+				maxvalue = this.value;
 			}
 			else{
 				
 				$("#yearto").val("");
+				maxvalue = 2050;
 			}
 		});
 		
 		$("#yearfrom").change( function (){
 			if(checkInput(this)){
-				min = this.value;
+				minvalue = this.value;
 			}
 			else{
 				
 				$("#yearfrom").val("");
+				minvalue = 1300;
 			}
 		});
 		
@@ -70,6 +82,7 @@ require([
 	 * @param track the current track
 	 */
 	function addYear1(models, track){
+		
 		track.load('album').done(function(){
 			track.album.load('date').done(function(){
 				var year = track.album.date;
@@ -123,20 +136,46 @@ require([
 	 * @returns {Boolean} true if the track is in the given year range 
 	 * or if there is no input in the year input boxes.
 	 */
-	function checkYear(models, track){
-		var minval = $("#yearfrom").val();
-		var maxval = $("#yearto").val();
+	function isInYearRange1(models, track, callback){
 		
-		track.load('album').done(function(){
-			track.album.load('date').done(function(){
-				var year = track.album.date;
-				console.log("track release year: "+year);
-				
-				
+		
+		if(minvalue == 1300 && maxvalue == 2050){
+			console.log("year range not specified");
+			callback(true);
+		}
+		else{
+			
+			
+			var album = models.Album.fromURI(track.album);
+			
+			
+			track.load('album').done( function getAlbum(){
+				track.album.load('date').done(function(){
+					var year = track.album.date;
+					console.log("track release year: "+year);
+					
+					if (year > minvalue && year < maxvalue){
+						console.log("Track is IN the year range");
+						callback(true);
+					}
+					else{
+						console.log("Track is OUT the year range");
+						callback(true);
+					}
+					
+					
+				});
 				
 			});
 			
-		});
-		 return true;
+		}
+	}
+	
+	function getMinValue(){
+		return minvalue;
+	}
+	
+	function getMaxValue(){
+		return maxvalue;
 	}
 

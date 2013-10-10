@@ -3,15 +3,11 @@
 <div class="main-wrapper" id="main-wrapper">
 
 	<div class="leftside">
-
-
-				
-				
-				
+	
 				
 				<div id="display"> 
 					<div id="playlistHeader" class="playlistHeader">
-						<h2>Your custom playlist <img id="infobutton" src="img/info.png" title="Info for playlist"></h2>
+						<h2>Your custom playlist </h2>
 						<button id="subscribebutton">+ save playlist</button>
 					</div>
 					<div id="albumCoverContainer" class="albumCoverContainer"></div>
@@ -22,28 +18,8 @@
 
 				</div>
 				
-				
-
 			
-			
-			
-		
-			
-			
-		
-			
-		
-			
-			
-			
-			
-
-		
-
-	<!--  <button id="flipbutton">
-				<img id="flipbuttonimg" src="img/listicon.png" title="switch view">
-			</button>-->
-
+	
 		<!--Artist Terms Information-->
 		<div id="tagcloud-wrapper" class="tagcloud-wrapper">
 
@@ -60,54 +36,36 @@
 
 
 	<div id="rulerContainer" class="rulerContainer">
-		<!--  <p class="rulerheader">Rulers</p> -->
 
 		<div class="rulerContent">
-
-
-
-			<!-- <button id="flipbutton">
-				<img id="flipbuttonimg" src="img/listicon.png" title="switch view">
-			</button> -->
-			<!-- <button id="newSeed">
-				<img src="img/lupe.png" alt="new session">
-			</button>
-		 -->
-		<!-- <button id="nextSongsButton">
-			<img src="img/more.png" alt="load more songs">
-		</button> -->
-	
-
-
-
-
 
 			<div class="simmilaritySection Section">
 				<p>
 					<label>Similarity based on:</label>
-				<form>
-					<input type="radio" name="sim" id="artistRadiobtn" value="artist">Artist<br>
-					<input type="radio" name="sim" value="song">Song<br> <input
-						type="radio" name="sim" value="genre">Genre<br> <input
-						type="radio" name="sim" value="spotifyPLaylist">Spotify
-					Playlist<br>
-				</form>
+					<form>
+						<input type="radio" name="sim" id="artistRadiobtn" value="artist">Artist<br>
+						<input type="radio" name="sim" value="song">Song<br> 
+						<input type="radio" name="sim" value="genre">Genre<br> 
+						<input type="radio" name="sim" value="spotifyPLaylist">Spotify Playlist<br>
+					</form>
 				</p>
 				<p>
-				<div id="similarityInfo"></div>
-				<button id="changeSeedArtist">Make playing artist new seed
-					artist</button>
+					<div id="similarityInfo"></div>
 				</p>
 				<p>
+					
+					<button id="changeSeedArtist">Make playing artist new seed artist</button>
+				
 					<button id=changeSeedSong>Make playing song new seed song</button>
-				<div class="ui-widget">
-					<label for="tags" id='genreSelectLabel'>Select a Genre: </label> <input
-						id="tags" />
-				</div>
-				<div class="ui-widget">
-					<label for="tags1" id='playlistSelectLabel'>Select a
-						playlist: </label> <input id="tags1" />
-				</div>
+					<div class="ui-widget">
+						<label for="tags" id='genreSelectLabel'>Select a Genre: </label> 
+						<input id="tags" />
+					</div>
+				
+					<div class="ui-widget">
+						<label for="tags1" id='playlistSelectLabel'>Select a playlist: </label> 
+						<input id="tags1" />
+					</div>
 				</p>
 			</div>
 
@@ -206,10 +164,10 @@
 					<p>
 					<div>
 
-						<label for="yearfrom" id="year_from">from</label> <input
-							type="text" id="yearfrom" placeholder="0" title="from year" /> <label
-							for="yearto" id="year_to">to</label> <input type="text"
-							id="yearto" placeholder="0" title="until year" />
+						<label for="yearfrom" id="year_from">from</label> 
+						<input type="text" id="yearfrom" placeholder="0" title="songs appeared after this year" /> 
+						<label for="yearto" id="year_to">to</label> 
+						<input type="text" id="yearto" placeholder="0" title="songs appeared before this year" />
 					</div>
 					</p>
 				</div>

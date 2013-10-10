@@ -90,6 +90,10 @@ require(
 			var setArrayOfAllSongs = function(array1) {
 				setArrayOfAllSongs1(array1);
 			}
+			
+			var getSearchString = function(){
+				return getSearchString1();
+			}
 
 			// exports.getNextXXSong =getNextXXSong;
 			exports.getNextSong = getNextSong;
@@ -110,6 +114,7 @@ require(
 			exports.setBanedArtistId = setBanedArtistId;
 			exports.setNoSpotifyPlaylistSongs = setNoSpotifyPlaylistSongs;
 			exports.setArrayOfAllSongs = setArrayOfAllSongs;
+			exports.getSearchString = getSearchString;
 
 		});// end of require()
 
@@ -191,6 +196,7 @@ var currentlyUsedTasteProfileObject = null;
 var songTrendiness = 0;
 var artistTrendiness = 0;
 var artistPopularity = 0;
+var artistVariety = 50;
 
 function setArrayOfAllSongs1(array1) {
 	arrayOfTracksInSpotifyPlaylists = array1;
@@ -373,11 +379,11 @@ function changeArtistVariety1() {
 
 	// slider Value
 
-	var changeArtistVarietySliderValue = $("#artistVarietySlider").slider(
-			"value") / 100;
+	var changeArtistVarietySliderValue = $("#artistVarietySlider").slider("value") / 100;
 	console.log('changeArtistVarietySliderValue:'
 			+ changeArtistVarietySliderValue);
 	var randomNumber = Math.floor(Math.random() * 100);
+	artistVariety = changeArtistVarietySliderValue*100;
 
 	// var artistIdsForPopularity = new Array();
 	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?session_id='
@@ -409,11 +415,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "
 					+ artistFamilarityLevel);
 	
-	//artistPopularity = artistFamilarityLevel;
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
-
-	//getConstraintsInfo();
+	artistPopularity = artistFamilarityLevel;
 
 	var minFamilarity = 0.0;
 	var maxFamilarity = 1.0;
@@ -670,9 +672,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 	console.log("changeArtistHotness() was called with artistHotnessLevel: "
 			+ artistHotnessLevel);
 	
-	//artistTrendiness = artistHotnessLevel;
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
+	artistTrendiness = artistHotnessLevel;
 
 	getPlaylistInfo('constraints');
 
@@ -964,7 +964,7 @@ function changeSongHotness1(songHotnessLevel) {
 	console.log("changeSongHotness() was called with songHotnessLevel: "
 			+ songHotnessLevel);
 	
-	//songTrendiness = songHotnessLevel;
+	songTrendiness = songHotnessLevel;
 	
 	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	//customPlaylistScript.createNewPlaylist();// create new playlist
@@ -1835,7 +1835,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 		
 		$("#artistSimilarityInfo").text(artistName);
 		$("#similarityInfo").text(
-				'Now Songs are recommended because they are played by artists  similar to '
+				'Now Songs are recommended because they are played by artists similar to '
 						+ artistName);
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
@@ -2926,7 +2926,7 @@ function banSongFeedBack(echnonestTrackId) {
 
 							var continueLoop = trackCoverScript
 									.checkLoopContinue();
-
+							trackCoverScript.setSearchString(getSearchString1());
 							// console.log('bansongFeddback() result of
 							// checkLoopContinue(): '+continueLoop);
 
@@ -3277,34 +3277,61 @@ function checkResponse(data) {
 	return false;
 }
 
-function getSearchString(){
-	var returnstring = "Search based upon ";
+function getSearchString1(){
+	var returnstring = "<p>Search based upon ";
 	if (similarityModeIsGenre){
 		returnstring = returnstring+"<i>genre</i> "+"<b>"+selectedgenre+"</b>";
 		
 	}
 	else if (similarityModeIsArtist){
 		returnstring = returnstring+"<i>artist</i>"+" <b>"+artistName+"</b>";
+		if ($('#excludeSeedArtistCheckBox').prop('checked')){
+			returnstring = returnstring+" (artist's songs excluded)";
+		}
 	
 	}
 	else if (similarityModeIsSong){
 		returnstring = returnstring+"<i>song</i> <b>"+trackName+"</b> by <b> "+artistName+"</b>";
+		if ($('#excludeSeedArtistCheckBox').prop('checked')){
+			returnstring = returnstring+" (artist's songs excluded)";
+		}
 	}
 	else if (similarityModeIsPlaylist){
 		returnstring = returnstring+"<i>playlist</i> <b> "+selectedUserPlaylistName+"</b>";
 	}
+	if ($('#excludeSpotifyPlaylistSongsCheckBox').prop('checked')){
+		returnstring = returnstring+"<br/> Songs from my spotify playlists are excluded.";
+	}
+	var minyear = $("#yearfrom").val();
+	var maxyear = $("#yearto").val();
+	var min = $("#yearfrom").attr("placeholder");
+	var max = $("#yearto").attr("placeholder");
+	var minvalue = min;
+	var maxvalue = max;
+	if(minyear != 0) minvalue = minyear;
+	if(maxyear != 0) maxvalue = maxyear;
+	
+	
+	returnstring = returnstring +"<br/>Year range : "+minvalue+" - "+maxvalue+"<br/>";
+	
 	
 	if(songTrendiness!=0){
-		returnstring = returnstring+"<br/> Song Trendiness : <i>"+songTrendiness+"</i>";
+		returnstring = returnstring+"Song Trendiness : <i>( "+songTrendiness+" )    </i>";
 	}
 	
 	if(artistTrendiness!=0){
-		returnstring = returnstring+"<br/> Artist Trendiness : <i>"+artistTrendiness+"</i>";
+		returnstring = returnstring+"Artist Trendiness : <i>( "+artistTrendiness+" )    </i>";
 	}
 	
 	if(artistPopularity!=0){
-		returnstring = returnstring+"<br/> Artist Popularity : <i>"+artistPopularity+"</i>";
+		returnstring = returnstring+"Artist Popularity : <i>( "+artistPopularity+" )    </i>";
 	}
+	
+	if (artistVariety != 50){
+		returnstring = returnstring+"Artist Variety : <i>( "+artistVariety+" ) </i>";
+	}
+	
+	returnstring = returnstring+"</p>"
 	
 	
 	return returnstring;

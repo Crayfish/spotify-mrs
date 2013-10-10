@@ -7,6 +7,8 @@
  var bannedSeedArtist = null;
  
  var trackIdsforPlaylist = new Array();
+ 
+ var searchstring = "this is a placeholder for playlist information";
 
 require([
   '$api/models',
@@ -15,7 +17,8 @@ require([
   '$views/popup#Popup',
   'scripts/customplaylist',
   'scripts/setupSwitchViewButton',
-], function(models,search, Image, Popup, customplaylist, setupSwitchViewButton) {
+  'scripts/yearSlider',
+], function(models,search, Image, Popup, customplaylist, setupSwitchViewButton, yearSlider) {
   'use strict';
 
   
@@ -49,6 +52,10 @@ require([
         	
                if(artist != bannedSeedArtist){
             	   
+//            	   yearSlider.isInYearRange(track, function(inrange){
+//            	   console.log("in range: "+inrange);
+            	   
+            	   
             	   trackIdsforPlaylist.push(trackID);
             
             	   artist.load('name').done(function(artist){
@@ -67,7 +74,11 @@ require([
             		   target1.appendChild(image.node);
 
                        //save the div to list
-            		   playableCovers.push(target1);   
+            		   playableCovers.push(target1);  
+            		   
+            		   //add year
+            		   yearSlider.addYear(track);
+            		   
             		   console.log('size of playableCovers: '+playableCovers.length);
                      
             		   //if there is enough covers to load
@@ -87,14 +98,19 @@ require([
             			   //add a new cover page to the pagination
             			   setupSwitchViewButton.newCoverPage();
                     	
+            			   customplaylist.setSearchAttributes(searchstring);
+            			   
             			   //create a temporary playlist 
             			   customplaylist.createNewPlaylist(trackIdsforPlaylist);
+            			   
+            			   
             			   
             			   //reset track ID array
             			   trackIdsforPlaylist = new Array(); 
             		   }
             		   
             	   });//end load artist
+//               });
                }//end banned artist check
 		  }//end playable track check
 	  });//end load track
@@ -130,11 +146,16 @@ require([
 	  console.log('jpagesTrackCover.setBannedSeedArtist() :' +bannedSeedArtistFromEchonestDynamic);
 				 
   };  
+  
+  var setSearchString = function(searchString){
+	  searchstring = searchString;
+  }
 
   exports.setLoopContinueToTrue=setLoopContinueToTrue;  
   exports.checkLoopContinue = checkLoopContinue;  
   exports.getTrackCover = getTrackCover;
   exports.setBannedSeedArtist = setBannedSeedArtist;
+  exports.setSearchString = setSearchString;
   
   
 });

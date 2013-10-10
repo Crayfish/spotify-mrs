@@ -83,20 +83,6 @@ visibility: hidden;
 	
 }
 
-.rulerheader{
-	font-weight: bold;
-	/*background: #c0c0c0;*/
-
-	background: -webkit-linear-gradient(top, white, #dddddd);
-	margin :0px;
-	padding : 10px;
-	spacing : 0px;
-	border-bottom: 1px solid #a1a1a1;
-	border-top-left-radius : 4px;
-	border-top-right-radius : 4px;
-	/*border-radius:11px;*/
-		
-}
 
 
 .rulerContainer{
@@ -189,6 +175,22 @@ visibility: hidden;
 	overflow-y:auto;
 }
 
+.playlistContainer .playlistinfo{
+	padding: 10px;
+}
+
+.playlistContainer img{
+	float:left;
+	 display:inline-block;
+		
+}
+
+.playlistContainer p{
+	float:left;
+	 display:inline-block;
+		
+}
+
 #flipbutton, #newSeed, #nextSongsButton{
 	background:#f5f5f5;
   -moz-border-radius: 4px;
@@ -267,7 +269,7 @@ margin-right:10px;
 	height:30px;
 }
 
-#infobutton{
+
 	
 
 
