@@ -181,14 +181,17 @@ visibility: hidden;
 
 .playlistContainer img{
 	float:left;
-	 display:inline-block;
+	
 		
 }
 
 .playlistContainer p{
 	float:left;
 	 display:inline-block;
-		
+	 	margin-left: 30px;
+	 	margin-top: 0px;
+	 	
+
 }
 
 #flipbutton, #newSeed, #nextSongsButton{

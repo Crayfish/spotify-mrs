@@ -513,7 +513,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "
 					+ artistFamilarityLevel);
 	
-	//artistPopularity = artistFamilarityLevel;
+	artistPopularity = artistFamilarityLevel;
 	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	//customPlaylistScript.createNewPlaylist();// create new playlist
 
@@ -783,7 +783,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 	console.log("changeArtistHotness() was called with artistHotnessLevel: "
 			+ artistHotnessLevel);
 	
-	//artistTrendiness = artistHotnessLevel;
+	artistTrendiness = artistHotnessLevel;
 	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	//customPlaylistScript.createNewPlaylist();// create new playlist
 
@@ -1086,7 +1086,7 @@ function changeSongHotness1(songHotnessLevel) {
 	console.log("changeSongHotness() was called with songHotnessLevel: "
 			+ songHotnessLevel);
 	
-	//songTrendiness = songHotnessLevel;
+	songTrendiness = songHotnessLevel;
 	
 	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	//customPlaylistScript.createNewPlaylist();// create new playlist
@@ -3668,7 +3668,7 @@ function checkResponse(data) {
 }
 
 function getSearchString1(){
-	var returnstring = "<p>Search based upon ";
+	var returnstring = "<p>These recommendations are based upon ";
 	if (similarityModeIsGenre){
 		returnstring = returnstring+"<i>genre</i> "+"<b>"+selectedgenre+"</b>";
 		
@@ -3705,20 +3705,38 @@ function getSearchString1(){
 	returnstring = returnstring +"<br/>Year range : "+minvalue+" - "+maxvalue+"<br/>";
 	
 	
-	if(songTrendiness!=0){
-		returnstring = returnstring+"Song Trendiness : <i>( "+songTrendiness+" )    </i>";
-	}
+		var value1;
+		switch(songTrendiness){
+			case 0: value1 = "Off"; break;
+			case 1: value1 = "Low to Medium"; break;
+			case 2: value1 = "Medium"; break;
+			case 3: value1 = "Medium to High"; break;
+			case 4: value1 = "High"; break;
+		}
+		returnstring = returnstring+"Song Trendiness : <i>( "+value1+" )    </i>";
 	
-	if(artistTrendiness!=0){
-		returnstring = returnstring+"Artist Trendiness : <i>( "+artistTrendiness+" )    </i>";
-	}
+		var value2;
+		switch(artistTrendiness){
+			case 0: value2 = "Off"; break;
+			case 1: value2 = "Low to Medium"; break;
+			case 2: value2 = "Medium"; break;
+			case 3: value2 = "Medium to High"; break;
+			case 4: value2 = "Highest"; break;
+		}
+		returnstring = returnstring+"Artist Trendiness : <i>( "+value2+" )    </i>";
 	
-	if(artistPopularity!=0){
-		returnstring = returnstring+"Artist Popularity : <i>( "+artistPopularity+" )    </i>";
-	}
+		var value3;
+		switch(artistPopularity){
+			case 0: value3 = "Off"; break;
+			case 1: value3 = "Low to Medium"; break;
+			case 2: value3 = "Medium"; break;
+			case 3: value3 = "Medium to High"; break;
+			case 4: value3 = "High"; break;
+		}
+		returnstring = returnstring+"Artist Popularity : <i>( "+value3+" )    </i>";
 	
 	if (artistVariety != 50){
-		returnstring = returnstring+"Artist Variety : <i>( "+artistVariety+" ) </i>";
+		returnstring = returnstring+"Artist Variety : <i>( "+parseInt(artistVariety)+" ) </i>";
 	}
 	
 	returnstring = returnstring+"</p>"
