@@ -31,16 +31,16 @@ require([
   };
 
   
-  var setUpNewSeedButton = function() {
+/*  var setUpNewSeedButton = function() {
 	    var newSeedButton = document.getElementById('newSeed');
 	    newSeedButton.onclick=function(){
 	    	console.log("Pressed New Seed Button");
 	    	
 	    	echonestDynamic.startNewSession();
 	  };
-};
+};*/
   
 
   exports.setUpNextSongsButton = setUpNextSongsButton;
-  exports.setUpNewSeedButton = setUpNewSeedButton;
+ // exports.setUpNewSeedButton = setUpNewSeedButton;
 });

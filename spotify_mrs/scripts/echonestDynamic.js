@@ -89,11 +89,16 @@ require(
 
 			var setArrayOfAllSongs = function(array1) {
 				setArrayOfAllSongs1(array1);
-			}
+			};
 			
 			var getSearchString = function(){
 				return getSearchString1();
-			}
+			};
+			
+
+			 var removeTermFromCurrentlySetTermsArray = function(tagToBeRemoved){
+				 removeTermFromCurrentlySetTermsArray1(tagToBeRemoved);
+			 };
 
 			// exports.getNextXXSong =getNextXXSong;
 			exports.getNextSong = getNextSong;
@@ -115,6 +120,7 @@ require(
 			exports.setNoSpotifyPlaylistSongs = setNoSpotifyPlaylistSongs;
 			exports.setArrayOfAllSongs = setArrayOfAllSongs;
 			exports.getSearchString = getSearchString;
+			exports.removeTermFromCurrentlySetTermsArray = removeTermFromCurrentlySetTermsArray;
 
 		});// end of require()
 
@@ -198,9 +204,34 @@ var artistTrendiness = 0;
 var artistPopularity = 0;
 var artistVariety = 50;
 
+
+/** current steering values */
+var currentSongHotnesValue = 0;
+var currentArtistHotnesValue = 0;
+var currentArtistPopularityValue = 0;
+var currentlySetTagCloudTermsArray= new Array();
+
+var resetDueToChangedStyleTermsIsNeeded  = false;
+
 function setArrayOfAllSongs1(array1) {
 	arrayOfTracksInSpotifyPlaylists = array1;
 }
+
+
+
+function removeTermFromCurrentlySetTermsArray1(tagToBeRemoved){
+	console.log('ECHONEST  DYNAMIC removeTermFromCurrentlySetTermsArray() was called with term: '+tagToBeRemoved);
+	resetDueToChangedStyleTermsIsNeeded = true;
+	for (var i= currentlySetTagCloudTermsArray.length-1; i>=0; i--) {
+	    if ( currentlySetTagCloudTermsArray[i] === tagToBeRemoved) {
+	    	currentlySetTagCloudTermsArray.splice(i, 1);
+	        // break;       //<-- Uncomment  if only the first term has to be removed
+	    }
+	}
+	
+	console.log('ECHONEST DYNAMIC removeTermFromCurrentlySetTermsArray() state of set Terms Array: '+currentlySetTagCloudTermsArray);
+}
+
 
 function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 
@@ -304,28 +335,77 @@ function setBanedArtistId1(setValue) {
 
 }
 
+
+
+function setTermFilterAfterReset(term){
+	console.log('echonestDynamic setTermFilterAfterReset() was called with term: '
+			+ term);
+
+	
+	
+	var randomNumber = Math.floor(Math.random() * 100);
+	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
+		+ randomNumber;
+	
+	var args = {
+			session_id : session_id,
+			api_key : echonestApiKey,
+			format : 'json',
+			style: term
+			
+		};
+	
+
+
+	
+	$.getJSON(url,args , function(data) {
+		if (checkResponse(data)) {
+
+			
+			getPlaylistInfo('style');
+	
+
+		} else {
+			info("trouble getting results");
+		}
+	});
+}
+
 function setTermFilter1(term) {
 	console.log('echonestDynamic setTermFilter1() was called with term: '
 			+ term);
 
+	currentlySetTagCloudTermsArray.push(term);
+	
 	var randomNumber = Math.floor(Math.random() * 100);
+	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
+		+ randomNumber;
+	
+	var args = {
+			session_id : session_id,
+			api_key : echonestApiKey,
+			format : 'json',
+			style: term
+			
+		};
+	
+
+	
+/*	
+	var styleString = '';
+	for(var i = 0; i< currentlySetTagCloudTermsArray.length; i++){
+		styleString = styleString + currentlySetTagCloudTermsArray[i]+', ';
+	}
+	console.log('ECHONEST DYNAMIC setTermFilter1()  styleString to set: '+styleString);
+	args.style = styleString;*/
+	
+	
 
 	// var artistIdsForPopularity = new Array();
-	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?api_key='
-			+ echonestApiKey
-			+ '&callback=?&session_id='
-			+ session_id
-			+ '&_='
-			+ randomNumber;
-
-	// getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String der
-	// mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
-	// erfolgreicher Anfrage ausgeführt wird)
-	$.getJSON(url, {
-		'format' : 'jsonp',
-		'style' : term
 	
-	}, function(data) {
+
+	
+	$.getJSON(url,args , function(data) {
 		if (checkResponse(data)) {
 
 			// console.log('Changed Hotness Values');
@@ -411,14 +491,20 @@ function changeArtistVariety1() {
 	});
 }
 
+
+
 function changeArtistFamiliarity1(artistFamilarityLevel) {
 	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "
 					+ artistFamilarityLevel);
 	
-	artistPopularity = artistFamilarityLevel;
+	//artistPopularity = artistFamilarityLevel;
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 
-	var minFamilarity = 0.0;
-	var maxFamilarity = 1.0;
+	//getConstraintsInfo();
+
+	//var minFamilarity = 0.0;
+	//var maxFamilarity = 1.0;
 
 	if (similarityModeIsArtist || similarityModeIsSong
 			|| similarityModeIsPlaylist) {
@@ -443,7 +529,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			//disable the slider
 			$("#slider-pop").slider( "value", 0 );
 			$("#slider-pop").slider( "option", "disabled", true );
-
+			currentArtistPopularityValue = 0.0;
 			restartSessionWithCurrentGuiState();
 
 			
@@ -452,18 +538,23 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 		switch (artistFamilarityLevel) {
 		case 1:
 			targetValue = 0.0;
+			currentArtistPopularityValue = targetValue;
 			break;
 		case 2:
 			targetValue = 0.25;
+			currentArtistPopularityValue = targetValue;
 			break;
 		case 3:
 			targetValue = 0.5;
+			currentArtistPopularityValue = targetValue;
 			break;
 		case 4:
 			targetValue = 0.75;
+			currentArtistPopularityValue = targetValue;
 			break;
 		case 5:
-			targetValue = 1;
+			targetValue = 1.0;
+			currentArtistPopularityValue = targetValue;
 			break;
 		
 
@@ -570,6 +661,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			//disable the slider
 			$("#slider-pop").slider( "value", 0 );
 			$("#slider-pop").slider( "option", "disabled", true );
+			//currentArtistPopularityValue = 0;
 			restartSesionWithCurrentGuiState();
 			
 		}else{
@@ -577,23 +669,26 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 		var targetValue = null;
 
 		switch (artistFamilarityLevel) {
-		case 0:
-			targetValue = 0.1;
-			break;
+	
 		case 1:
-			targetValue = 0.3;
+			targetValue = 0.0;
+			currentArtistPopularityValue = targetValue;
 			break;
 		case 2:
-			targetValue = 0.4;
+			targetValue = 0.25;
+			currentArtistPopularityValue = targetValue;
 			break;
 		case 3:
 			targetValue = 0.5;
+			currentArtistPopularityValue = targetValue;
 			break;
 		case 4:
-			targetValue = 0.6;
+			targetValue = 0.75;
+			currentArtistPopularityValue = targetValue;
 			break;
 		case 5:
-			targetValue = 0.9;
+			targetValue = 1.0;
+			currentArtistPopularityValue = targetValue;
 			break;
 
 		}
@@ -672,12 +767,14 @@ function changeArtistHotness1(artistHotnessLevel) {
 	console.log("changeArtistHotness() was called with artistHotnessLevel: "
 			+ artistHotnessLevel);
 	
-	artistTrendiness = artistHotnessLevel;
+	//artistTrendiness = artistHotnessLevel;
+	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
+	//customPlaylistScript.createNewPlaylist();// create new playlist
 
 	getPlaylistInfo('constraints');
 
-	var minHotness = null;
-	var maxHotness = null;
+	//var minHotness = null;
+	//var maxHotness = null;
 
 	if (similarityModeIsArtist || similarityModeIsSong
 			|| similarityModeIsPlaylist) {
@@ -695,29 +792,33 @@ function changeArtistHotness1(artistHotnessLevel) {
 			//disable the slider
 			$("#slider-hot").slider( "value", 0 );
 			$("#slider-hot").slider( "option", "disabled", true );
+			currentArtistHotnesValue = 0.0;
 			restartSessionWithCurrentGuiState();
 		}else{
 
 		var targetValue = null;
 
 		switch (artistHotnessLevel) {
-	/*	case 0:
-			targetValue = 0.1;
-			break;*/
+	
 		case 1:
 			targetValue = 0.0;
+			currentArtistHotnesValue = targetValue;
 			break;
 		case 2:
 			targetValue = 0.25;
+			currentArtistHotnesValue = targetValue;
 			break;
 		case 3:
 			targetValue = 0.5;
+			currentArtistHotnesValue = targetValue;
 			break;
 		case 4:
 			targetValue = 0.75;
+			currentArtistHotnesValue = targetValue;
 			break;
 		case 5:
 			targetValue = 1;
+			currentArtistHotnesValue = targetValue;
 			break;
 
 		}
@@ -783,29 +884,33 @@ function changeArtistHotness1(artistHotnessLevel) {
 			//disable the slider
 			$("#slider-hot").slider( "value", 0 );
 			$("#slider-hot").slider( "option", "disabled", true );
+			currentArtistHotnesValue = 0.0;
 			restartSessionWithCurrentGuiState();
 		}else{
 		
 		var targetValue = null;
 
 		switch (artistHotnessLevel) {
-		case 0:
-			targetValue = 0.1;
-			break;
+	
 		case 1:
-			targetValue = 0.3;
+			targetValue = 0.0;
+			currentArtistHotnesValue = targetValue;
 			break;
 		case 2:
-			targetValue = 0.4;
+			targetValue = 0.25;
+			currentArtistHotnesValue = targetValue;
 			break;
 		case 3:
 			targetValue = 0.5;
+			currentArtistHotnesValue = targetValue;
 			break;
 		case 4:
-			targetValue = 0.6;
+			targetValue = 0.75;
+			currentArtistHotnesValue = targetValue;
 			break;
 		case 5:
-			targetValue = 0.9;
+			targetValue = 1.0;
+			currentArtistHotnesValue = targetValue;
 			break;
 
 		}
@@ -831,7 +936,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 			if (checkResponse(data)) {
 
 				// console.log('Changed Hotness Values');
-				getConstraintsInfo();
+				getPlaylistInfo('constraints');
 				//getNextSong1();
 
 			} else {
@@ -921,6 +1026,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 
 }
 
+
 // old function with slider rage
 /*
  * function changeArtistHotness1(artistHotnessLevel){
@@ -964,7 +1070,7 @@ function changeSongHotness1(songHotnessLevel) {
 	console.log("changeSongHotness() was called with songHotnessLevel: "
 			+ songHotnessLevel);
 	
-	songTrendiness = songHotnessLevel;
+	//songTrendiness = songHotnessLevel;
 	
 	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
 	//customPlaylistScript.createNewPlaylist();// create new playlist
@@ -978,6 +1084,7 @@ function changeSongHotness1(songHotnessLevel) {
 		if(songHotnessLevel==0){
 			$("#slider-songHot").slider( "value", 0 );
 			$("#slider-songHot").slider( "option", "disabled", true );
+			currentSongHotnesValue = 0.0;
 			restartSessionWithCurrentGuiState();
 			
 		}else{
@@ -985,23 +1092,26 @@ function changeSongHotness1(songHotnessLevel) {
 		var targetValue = 0;
 
 		switch (songHotnessLevel) {
-		/*case 0:
-			targetValue = 0.1;
-			break;*/
+		
 		case 1:
 			targetValue = 0.0;
+			currentSongHotnesValue = targetValue;
 			break;
 		case 2:
 			targetValue =0.25;
+			currentSongHotnesValue = targetValue;
 			break;
 		case 3:
 			targetValue = 0.5;
+			currentSongHotnesValue = targetValue;
 			break;
 		case 4:
 			targetValue = 0.75;
+			currentSongHotnesValue = targetValue;
 			break;
 		case 5:
 			targetValue = 1.0;
+			currentSongHotnesValue = targetValue;
 			break;
 
 		}
@@ -1024,8 +1134,8 @@ function changeSongHotness1(songHotnessLevel) {
 		$.getJSON(url, args, function(data) {
 			if (checkResponse(data)) {
 
-				// console.log('Changed Hotness Values');
-				getPlaylistInfo('Constraints');
+				console.log('ECHONEST DYNAMIC Changed Hotness Values');
+				getPlaylistInfo('constraints');
 				//getNextSong1();
 
 			} else {
@@ -1093,6 +1203,7 @@ function changeSongHotness1(songHotnessLevel) {
 		if(songHotnessLevel==0){
 			$("#slider-songHot").slider( "value", 0 );
 			$("#slider-songHot").slider( "option", "disabled", true );
+			currentSongHotnesValue = 0.0;
 			restartSessionWithCurrentGuiState();
 			
 		}else{
@@ -1100,23 +1211,26 @@ function changeSongHotness1(songHotnessLevel) {
 		var targetValue = 0;
 
 		switch (songHotnessLevel) {
-		/*case 0:
-			targetValue = 0.1;
-			break;*/
+		
 		case 1:
 			targetValue = 0.0;
+			currentSongHotnesValue = targetValue;
 			break;
 		case 2:
 			targetValue = 0.25;
+			currentSongHotnesValue = targetValue;
 			break;
 		case 3:
 			targetValue = 0.5;
+			currentSongHotnesValue = targetValue;
 			break;
 		case 4:
 			targetValue = 0.75;
+			currentSongHotnesValue = targetValue;
 			break;
 		case 5:
 			targetValue =1;
+			currentSongHotnesValue = targetValue;
 			break;
 
 		}
@@ -1182,6 +1296,7 @@ function changeSongHotness1(songHotnessLevel) {
 	}
 
 }
+
 
 /**
  * When user chooses a genre in the genre accordion.
@@ -2404,7 +2519,144 @@ function changeToSongSimilarity1() {
 
 }
 
+
+
 function getNextSong1() {
+	// console.log('getNextSong() was called');
+
+	throbber.show();
+	throbberTagCloud.show();
+	// $("#albumCoverContainer").hide();
+	
+	var echonestTrackId = null;
+	var id = null;
+	var echonestArtistId = null;
+	var replacedTrackId  = null;
+	
+	if(resetDueToChangedStyleTermsIsNeeded){
+		restartSessionWithCurrentGuiState();
+	}else{
+	
+
+	// api_key=BNV9970E1PHXZ9RQW&format=json&results=1&
+	var randomNumber = Math.floor(Math.random() * 100);
+	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/next?session_id='
+			+ session_id + '&_=' + randomNumber;
+	var args = {
+		api_key : echonestApiKey,
+		format : 'json',
+		results : 1,
+	}
+
+	
+	
+	
+	
+	$
+			.getJSON(
+					url,
+					args,
+					function(data) {
+						if (checkResponse(data)) {
+
+
+							try
+							  {
+							console.log('Next song is: '
+									+ data.response.songs[0].title + ' by '
+									+ data.response.songs[0].artist_name);
+
+							
+
+							
+							 echonestTrackId = data.response.songs[0].id;
+							// console.log('echnonestTrackId:
+							// '+echnonestTrackId);
+							id = data.response.songs[0].tracks[0].foreign_id;
+							echonestArtistId = data.response.songs[0].artist_id;
+							replacedTrackId = id.replace('spotify-WW',
+							'spotify');
+							
+							
+							  }
+							catch(err)
+							  { console.log('ECHONEST DYNAMIC getNextsong() catch block error message: '+err.message);
+							  getNextSong1();
+							  }
+							
+							
+							
+							
+							
+
+							if ($.inArray(echonestTrackId, songsAlreadyUsed) > -1) {
+								console.log('Song bereits verwendet');
+								
+								banSongFeedBack(echonestTrackId);
+							} else {
+
+								songsAlreadyUsed.push(echonestTrackId);
+								
+								
+								// console.log('getNextSong1() response track
+								// id: ' + id);
+						
+								console
+										.log('getNextSong1() replaced response track id: '
+												+ replacedTrackId);
+
+								// console.log('getNextSong1() response
+								// information: ' +
+								// JSON.stringify(data.response));
+								
+
+								if (noSpotifyPlaylistSongs) {
+									console
+											.log('start checking if track is in a spotifyplaylist');
+									if ($.inArray(id,
+											arrayOfTracksInSpotifyPlaylists) > -1) {
+										console
+												.log('DETECTED a song already in your playlist and noSpotifyPlaylistSongs was set to:'
+														+ noSpotifyPlaylistSongs);
+										banSongFeedBack(echonestTrackId);
+									} else {
+										
+										trackCoverScript.getTrackCover(replacedTrackId);
+									
+										arrayArtistIdsForTermsQuery
+												.push(echonestArtistId);
+
+										banSongFeedBack(echonestTrackId);
+									}
+								} else {
+
+									
+
+									
+									trackCoverScript.getTrackCover(replacedTrackId);
+
+									
+									arrayArtistIdsForTermsQuery
+											.push(echonestArtistId);
+
+									banSongFeedBack(echonestTrackId);
+								}
+
+							}
+							;
+
+						} else {
+							info("trouble getting results");
+						}
+					});
+
+	}
+	
+}
+
+
+
+/*function getNextSong1() {
 	// console.log('getNextSong() was called');
 
 	throbber.show();
@@ -2536,7 +2788,7 @@ function getNextSong1() {
 }
 
 
-
+*/
 
 
 /*
@@ -3201,15 +3453,121 @@ function restartSessionWithCurrentGuiState(){
           if (checkResponse(data)) {
 
                 console.log('ECHONEST DYNAMIC response Data RESTART:'+JSON.stringify(data));
-                getPlaylistInfo('type');
-                getPlaylistInfo('genre');
-                getPlaylistInfo('constraints');
-                //getNextSong1();
+                //getPlaylistInfo('type');
+                //getPlaylistInfo('genre');
+                //getPlaylistInfo('constraints');
+                steeringAfterReset();
 
           } else {
                 info("trouble getting results");
           }
     });
+}
+
+
+
+function steeringAfterReset(){
+
+	var randomNumber = Math.floor(Math.random() * 100);
+
+	
+	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
+			+ randomNumber;
+
+	var args = {
+		session_id : session_id,
+		api_key : echonestApiKey,
+		format : 'json'
+		
+	};
+	
+	
+	//Steetering for Trendiness and Popularity Values
+	 //0.0 value means slider is set to off position
+	if(currentArtistPopularityValue != 0.0){
+		args.target_artist_familiarity = currentArtistPopularityValue;
+	}
+	
+	if(currentArtistHotnesValue != 0.0){
+		args.target_artist_hotttnesss = currentArtistHotnesValue;
+	}
+	
+	
+	if(currentSongHotnesValue != 0.0){
+		args.target_song_hotttnesss = currentSongHotnesValue;
+	}
+	
+
+	
+	//steering for artist variety
+	var currentArtistVarietyValue = $("#artistVarietySlider").slider(
+	"value") / 100;
+	args.variety=currentArtistVarietyValue;
+	
+	//steering for adventouressness
+	if($("#adventurousnessSlider").is(':visible')){
+		var currentAdventurousnessValue= $("#adventurousnessSlider").slider("value") / 100;
+		args.adventurousness =currentAdventurousnessValue;
+	}
+	
+  
+
+	$.getJSON(url, args,
+
+	function(data) {
+		if (checkResponse(data)) {
+			
+			
+			console.log('ECHONEST DYNAMIC steeringAfterReset was sucessfull');
+		    getPlaylistInfo('type');
+            getPlaylistInfo('genre');
+         	getPlaylistInfo('constraints');
+			getPlaylistInfo('artistVariety');
+			getPlaylistInfo('adventurousness');
+			
+			
+			styleTermSteeringAfterReset();
+
+		
+	
+
+		} else {
+			info("trouble getting results");
+		}
+	});
+	
+	
+	
+	
+	
+}
+
+
+function styleTermSteeringAfterReset(){
+	
+	console.log('ECHONEST DYNAMIC styleTermSteeringAfterReset() was called');
+	  //steering for style
+    if(resetDueToChangedStyleTermsIsNeeded){
+    	if(currentlySetTagCloudTermsArray.length != 0){
+    	//var styleString = '';
+    	for(var i = 0; i< currentlySetTagCloudTermsArray.length; i++){
+    		setTermFilterAfterReset(currentlySetTagCloudTermsArray[i]);
+    	}
+    	//console.log('ECHONEST DYNAMIC styleString for reset: '+styleString);
+    	//args.style = styleString;
+    	}
+    }
+	
+	
+	
+	
+	
+	
+	if(resetDueToChangedStyleTermsIsNeeded){
+		resetDueToChangedStyleTermsIsNeeded=false;
+		getPlaylistInfo('style');
+		getNextSong1();
+	}
 }
 
 

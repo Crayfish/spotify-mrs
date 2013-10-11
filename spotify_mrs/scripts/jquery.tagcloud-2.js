@@ -36,6 +36,8 @@ require(
 								$('.tagcloudlink').filter(function() {
 									return $(this).text() === tag;
 								}).css("color", '#666667');
+								
+								echonestDynamic.removeTermFromCurrentlySetTermsArray(tag);
 
 							} else {
 								tagCloudObjects[k].currentlySet = true;
