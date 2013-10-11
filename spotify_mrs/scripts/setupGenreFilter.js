@@ -69,6 +69,7 @@ function getAllEchonestGenres(echonestDynamic){
 	           			 resetSliders();
 	           			 echonestDynamic.changeToGenreSimilarity( ui.item.label);
 	           			 
+	           			$(this).blur(); 
 	           			$(this).val(''); return false;
 	           			 
 	           		 }
