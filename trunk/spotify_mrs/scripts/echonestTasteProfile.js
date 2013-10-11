@@ -725,6 +725,7 @@ function setupPlaylistSimilarity1(){
     				 
     				if(ui.item.label == autocompleTasteProfileIDsAndNamesArray[i].name){
     					console.log('TRYING TO CHANGE TO PLAYLIST SIMILARITY WITH ID: '+autocompleTasteProfileIDsAndNamesArray[i].tasteProfileID);
+    					$(this).blur(); 
     					echonestDynamicScript.changeToPlaylistSimilarity(autocompleTasteProfileIDsAndNamesArray[i]);
     					break;
     				}
