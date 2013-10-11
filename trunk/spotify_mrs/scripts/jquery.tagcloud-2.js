@@ -75,14 +75,26 @@ require(
 				if (!cl || !cl.length)
 					return this;
 
+				var tagCloudResetDueToSimialrityChangeIsNeeded = givenOptions;
+				
+				console.log('TAG CLOUD tagCloudResetDueToSimialrityChangeIsNeeded='+tagCloudResetDueToSimialrityChangeIsNeeded);
+				
+		
+				
+				
+				
 				currentlySetTagCloudObjects = new Array();
 				// store the terms that were alreadySet
+				
+				if(!tagCloudResetDueToSimialrityChangeIsNeeded){
 				for ( var g = 0; g < tagCloudObjects.length; g++) {
 					if (tagCloudObjects[g].currentlySet) {
 						currentlySetTagCloudObjects.push(tagCloudObjects[g]);
 					}
 				}
-
+				}
+				
+				
 				console.log('TAG CLOUD currentlySetTagCloudObjects Array:'
 						+ JSON.stringify(currentlySetTagCloudObjects));
 
@@ -105,7 +117,7 @@ require(
 				// check if the alreadyset Objects are in the tagCloudObjects
 				// Array, this array contains the same tags as the cl Array by
 				// now
-
+				if(!tagCloudResetDueToSimialrityChangeIsNeeded){
 				for ( var e = 0; e < currentlySetTagCloudObjects.length; e++) {
 					var hasToBeAddedToTagCloudObjectsArray = true;
 					for ( var r = 0; r < tagCloudObjects.length; r++) {
@@ -131,13 +143,18 @@ require(
 					}
 
 				}
-
+				}
+				
+				
+				
+				echonestDynamic.setTagCloudResetDueToSimialrityChangeIsNeededToFalse();
+				
 				jQuery.extend(options, defaults, givenOptions);
 
 				// calculating the max and min count values
 				var max = -1;
-				var min = cl[0].count;
-				$.each(cl, function(i, n) {
+				var min = tagCloudObjects[0].count;
+				$.each(tagCloudObjects, function(i, n) {
 					max = Math.max(n.count, max);
 					min = Math.min(n.count, min);
 				});
@@ -214,7 +231,7 @@ require(
 				}
 
 				return this;
-
+				
 			}
 
 		});// end of require()
