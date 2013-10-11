@@ -60,6 +60,7 @@ function getAllEchonestGenres(echonestDynamic){
 	                 
 	                	
 	                $( "#tags" ).autocomplete({
+	                 minLength: 0,
 	           		 source: genreArray,
 	           		
 	           		 select: function( event, ui){
@@ -73,11 +74,16 @@ function getAllEchonestGenres(echonestDynamic){
 	           		 }
 	                
 	               
-	           		 //{console.log("A genre was choossen: "+  ui.item.label)}
-	           		 //select: function( event, ui ) {console.log("A genre was choossen: "+  $(this).attr('name') )}
-	           		 });
+	           		
+	           		 }).focus(function(){     
+	     		        //Use the below line instead of triggering keydown
+	     		        //$(this).data("autocomplete").search($(this).val());
+	     		        //$(this).autocomplete("search");
+	     			 
+	     		        $(this).autocomplete('search', $(this).val());
+	     		    });
 	                
-	               // $( "#tags" ).on( "autocompletechange", function( event, ui ) {console.log('EventHandler Genre List sent event CHANGE')} );
+	              
 	                
 	            	   
 	            	}
