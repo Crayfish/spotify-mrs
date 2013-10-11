@@ -1331,6 +1331,8 @@ function changeToGenreSimilarity1(genreName) {
 	similarityModeIsArtist = false;
 	similarityModeIsSong = false;
 	similarityModeIsPlaylist = false;
+	
+	$("#tags1").blur(); 
 
 	// get the popularity range for a given genre
 	/*
