@@ -10,7 +10,7 @@ require([
   'scripts/setupSwitchViewButton',
   'scripts/setupGenreFilter',
  // 'scripts/setupTagCloud',
-  'scripts/setUpSimilarityAccordion',
+  //'scripts/setUpSimilarityAccordion',
   'scripts/echonestGenreData', 
   'scripts/customplaylist',
   'scripts/jPagesSetup',
@@ -21,7 +21,7 @@ require([
   
 ], function( models, apiKey, generatePlaylistButton,setupSlider, 
 		echonestDynamic,setupSwitchViewButton, setupGenreFilter,/*setupTagCloud, */
-		setUpSimilarityAccordion, echonestGenreData, customplaylist, 
+		/*setUpSimilarityAccordion,*/ echonestGenreData, customplaylist, 
 		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupSimilarityRadioButtons /*setupPlaylistFilter*/) {
   'use strict';
  
