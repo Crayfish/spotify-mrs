@@ -677,8 +677,8 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			//disable the slider
 			$("#slider-pop").slider( "value", 0 );
 			$("#slider-pop").slider( "option", "disabled", true );
-			//currentArtistPopularityValue = 0;
-			restartSesionWithCurrentGuiState();
+			currentArtistPopularityValue = 0;
+			restartSessionWithCurrentGuiState();
 			
 		}else{
 
@@ -3549,7 +3549,7 @@ function steeringAfterReset(){
 			console.log('ECHONEST DYNAMIC steeringAfterReset was sucessfull');
 		   // getPlaylistInfo('type');
            // getPlaylistInfo('genre');
-         	//getPlaylistInfo('constraints');
+         	getPlaylistInfo('constraints');
 			//getPlaylistInfo('artistVariety');
 			//getPlaylistInfo('adventurousness');
 			getPlaylistInfo('style');
