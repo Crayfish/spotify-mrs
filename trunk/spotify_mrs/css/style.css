@@ -85,6 +85,11 @@ visibility: hidden;
 
 
 
+/* .yearpick
+{
+float:right;
+}  */
+
 .rulerContainer{
 	display: inline-block;
 	float:right;
@@ -259,6 +264,10 @@ visibility: hidden;
     position:absolute;
     
 }
+
+
+
+
 
 
 

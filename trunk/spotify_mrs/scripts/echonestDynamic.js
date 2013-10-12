@@ -104,7 +104,20 @@ require(
 			 setTagCloudResetDueToSimialrityChangeIsNeededToFalse1();
 			 };
 			 
+			 var setArtistStartYearBefore = function(year){
+				 setArtistStartYearBefore1(year);
+			 };
 			 
+			 var setArtistStartYearAfter = function(year){
+				 setArtistStartYearAfter1(year);
+			 };
+			 
+			 var setArtistEndYearBefore = function(year){
+				 setArtistEndYearBefore1(year);
+			 };
+			 var setArtistEndYearAfter = function(year){
+				 setArtistEndYearAfter1(year);
+			 };
 			 
 			// exports.getNextXXSong =getNextXXSong;
 			exports.getNextSong = getNextSong;
@@ -128,7 +141,10 @@ require(
 			exports.getSearchString = getSearchString;
 			exports.removeTermFromCurrentlySetTermsArray = removeTermFromCurrentlySetTermsArray;
 			exports.setTagCloudResetDueToSimialrityChangeIsNeededToFalse = setTagCloudResetDueToSimialrityChangeIsNeededToFalse;
-
+			exports.setArtistStartYearBefore = setArtistStartYearBefore;
+			exports.setArtistStartYearAfter = setArtistStartYearAfter;
+			exports.setArtistEndYearBefore = setArtistEndYearBefore;
+			exports.setArtistEndYearAfter = setArtistEndYearAfter;
 		});// end of require()
 
 var echonestApiKey = null;
@@ -211,6 +227,12 @@ var artistTrendiness = 0;
 var artistPopularity = 0;
 var artistVariety = 50;
 
+/** current restart values */
+var currentArtistStartYearBefore = 'off';
+var currentArtistStartYearAfter = 'off';
+var currentArtistEndYearBefore = 'off';
+var currentArtistEndYearAfter = 'off';
+
 
 /** current steering values */
 var currentSongHotnesValue = 0;
@@ -220,6 +242,39 @@ var currentlySetTagCloudTermsArray= new Array();
 
 var resetDueToRemovedStyleTermsIsNeeded  = false;
 var tagCloudResetDueToSimialrityChangeIsNeeded = false;
+
+
+function setArtistStartYearBefore1(year){
+	console.log('ECHONEST DYNAMIC  setArtistStartYearBefore1() was called with year: '+year);
+	currentArtistStartYearBefore = year;
+	restartSessionWithCurrentGuiState();
+	}
+
+
+function  setArtistStartYearAfter1(year){
+	console.log('ECHONEST DYNAMIC  setArtistStartYearAfter1() was called with year: '+year);
+	currentArtistStartYearAfter = year;
+	restartSessionWithCurrentGuiState();
+}
+
+function setArtistEndYearBefore1(year){
+	console.log('ECHONEST DYNAMIC  setArtistEndYearBefore1() was called with year: '+year);
+	 currentArtistEndYearBefore = year;
+	 restartSessionWithCurrentGuiState();
+}
+
+
+function setArtistEndYearAfter1(year){
+	console.log('ECHONEST DYNAMIC  setArtistEndYearAfter1() was called with year: '+year);
+	currentArtistEndYearAfter;
+	restartSessionWithCurrentGuiState();
+	
+}
+
+
+
+
+
 
 function setArrayOfAllSongs1(array1) {
 	arrayOfTracksInSpotifyPlaylists = array1;
@@ -3436,7 +3491,7 @@ function restartSessionWithCurrentGuiState(){
     if(similarityModeIsArtist){
           args.type ='artist-radio';
           args.artist_id = seedArtistIdforEchonestCalls;
-    }
+    };
     
     
  
@@ -3444,21 +3499,42 @@ function restartSessionWithCurrentGuiState(){
    		var replacedSongID= song_id.replace('spotify', 'spotify-WW');
     	 args.type ='song-radio';
     	 args.song_id =replacedSongID;
-    }
+    };
     
     
     
    if(similarityModeIsGenre){
 	   args.type ='genre-radio';
 	   args.genre = selectedgenre;
-    }
+    };
     
     
     if(similarityModeIsPlaylist){
     	args.type='catalog-radio';
     	args.seed_catalog = currentlyUsedTasteProfileObject.tasteProfileID
-    }
+    };
     
+    
+    
+    
+    
+    if(currentArtistStartYearBefore != 'off'){
+    	args.artist_start_year_before = currentArtistStartYearBefore;	
+    	
+    };
+    if(currentArtistStartYearAfter != 'off'){
+    	args.artist_start_year_after = currentArtistStartYearAfter;
+    };
+    if(currentArtistEndYearBefore != 'off'){
+    	args.artist_end_year_before =  currentArtistEndYearBefore;
+    };
+    if(currentArtistEndYearAfter != 'off'){
+    	args.artist_end_year_after = currentArtistEndYearAfter;
+    };
+    
+    
+    
+
     
     
     
@@ -3552,7 +3628,7 @@ function steeringAfterReset(){
          	getPlaylistInfo('constraints');
 			//getPlaylistInfo('artistVariety');
 			//getPlaylistInfo('adventurousness');
-			getPlaylistInfo('style');
+			//getPlaylistInfo('style');
 			
 			//if(resetDueToRemovedStyleTermsIsNeeded){
 				//resetDueToRemovedStyleTermsIsNeeded=false;
