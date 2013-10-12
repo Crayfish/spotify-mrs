@@ -9,7 +9,7 @@ require([
   'scripts/echonestDynamic',
   'scripts/setupSwitchViewButton',
   'scripts/setupGenreFilter',
- // 'scripts/setupTagCloud',
+  'scripts/yearPickerSetup',
   //'scripts/setUpSimilarityAccordion',
   'scripts/echonestGenreData', 
   'scripts/customplaylist',
@@ -20,7 +20,7 @@ require([
   'scripts/setupSimilarityRadioButtons'
   
 ], function( models, apiKey, generatePlaylistButton,setupSlider, 
-		echonestDynamic,setupSwitchViewButton, setupGenreFilter,/*setupTagCloud, */
+		echonestDynamic,setupSwitchViewButton, setupGenreFilter,yearPickerSetup,
 		/*setUpSimilarityAccordion,*/ echonestGenreData, customplaylist, 
 		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupSimilarityRadioButtons /*setupPlaylistFilter*/) {
   'use strict';
@@ -91,7 +91,7 @@ require([
 		 
 		  
 		//enter developer name here: Marc, Tom or Julius
-		apiKey.setEchonestApiKey('Marc'); 
+		apiKey.setEchonestApiKey('Julius'); 
 		  
 		playlistInformation.setUpPlaylistInformation();
 		
@@ -101,6 +101,8 @@ require([
 		
 		setupGenreFilter.setupGenreFilter(echonestDynamic);
 
+		yearPickerSetup.setUpYearPicker();
+		
 		setupNoveltyCheckBoxes.setUpExcludeSeedArtistCheckBox();
 		setupNoveltyCheckBoxes.setUpNoSongsFromSpotifyCollectionCheckBox();
 
@@ -133,7 +135,7 @@ require([
 		customplaylist.setupSubscribeButton();
 		//customplaylist.createNewPlaylist();
 		
-		yearSlider.setupYearSlider();
+		//yearSlider.setupYearSlider();
 
 		//setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 		// generatePlaylistButton.setUpNewSeedButton();
