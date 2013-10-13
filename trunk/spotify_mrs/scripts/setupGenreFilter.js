@@ -90,6 +90,31 @@ function getAllEchonestGenres(echonestDynamic){
 	            	}
 	            });
 	
+	  
+	  
+	  //when enter key is pressed down, select if it is in genre array
+	  $( "#tags" ).keydown(function(event) {
+		  
+			if(event.keyCode == 13) {
+				console.log( "SETUP GENERE FILTER enter key was pressed down" );
+				
+				//get the current text written into the form field
+				var currentText =  $( "#tags" ).val();
+				//console.log("SETUP GENERE FILTER currently entered text: "+ currentText)
+				//check if it is the genre array
+				if(jQuery.inArray( currentText, genreArray)!= -1){
+					console.log("SETUP GENERE FILTER  entered text matches genre name: "+ currentText)
+					echonestDynamic.changeToGenreSimilarity(currentText);
+					$( "#tags" ).val('');
+					$( "#tags" ).blur();
+				}
+				
+				
+				}
+		  
+		  
+		  });
+	  
 	
 }
 

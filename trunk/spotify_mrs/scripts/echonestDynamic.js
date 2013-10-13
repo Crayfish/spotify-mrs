@@ -240,7 +240,7 @@ var currentArtistHotnesValue = 0;
 var currentArtistPopularityValue = 0;
 var currentlySetTagCloudTermsArray= new Array();
 
-var resetDueToRemovedStyleTermsIsNeeded  = false;
+//var resetDueToRemovedStyleTermsIsNeeded  = false;
 var tagCloudResetDueToSimialrityChangeIsNeeded = false;
 
 

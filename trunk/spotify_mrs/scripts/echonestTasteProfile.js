@@ -755,7 +755,40 @@ function setupPlaylistSimilarity1(){
     		        $(this).autocomplete('search', $(this).val());
     		    });
 	 
-	 
+	  
+	  //when enter key is pressed down, select if it is in genre array
+	  $( "#tags1" ).keydown(function(event) {
+		  
+			if(event.keyCode == 13) {
+				console.log( "ECHONEST TASTE PROFILE enter key was pressed down" );
+				
+				//get the current text written into the form field
+				var currentText =  $( "#tags1" ).val();
+				//console.log("SETUP GENERE FILTER currently entered text: "+ currentText)
+				//check if it is the genre array
+				if(jQuery.inArray( currentText, autocompletePlaylistNamesArray)!= -1){
+					console.log("SETUP GENERE FILTER  entered text matches playlist name: "+ currentText)
+					 for (var i=0; i<=autocompleTasteProfileIDsAndNamesArray.length-1; i++){  
+	    				 
+		    				if(currentText == autocompleTasteProfileIDsAndNamesArray[i].name){
+		    					console.log('TRYING TO CHANGE TO PLAYLIST SIMILARITY WITH ID: '+autocompleTasteProfileIDsAndNamesArray[i].tasteProfileID);
+		    					$( "#tags1" ).val('');
+		    					$( "#tags1" ).blur();
+		    					echonestDynamicScript.changeToPlaylistSimilarity(autocompleTasteProfileIDsAndNamesArray[i]);
+		    					break;
+		    				}
+		    				
+		    			
+		    		};
+				
+				}
+				
+				
+				}
+		  
+		  
+		  });
+	  
 	 
 }
 
