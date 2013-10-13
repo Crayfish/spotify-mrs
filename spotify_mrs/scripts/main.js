@@ -135,7 +135,7 @@ require([
 		customplaylist.setupSubscribeButton();
 		//customplaylist.createNewPlaylist();
 		
-		//yearSlider.setupYearSlider();
+		yearSlider.setupYearSlider();
 
 		//setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 		// generatePlaylistButton.setUpNewSeedButton();
