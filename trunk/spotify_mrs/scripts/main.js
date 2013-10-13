@@ -91,7 +91,7 @@ require([
 		 
 		  
 		//enter developer name here: Marc, Tom or Julius
-		apiKey.setEchonestApiKey('Julius'); 
+		apiKey.setEchonestApiKey('Marc'); 
 		  
 		playlistInformation.setUpPlaylistInformation();
 		

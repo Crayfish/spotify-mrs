@@ -171,11 +171,11 @@ require([
 		}
 	}
 	
-	function getMinValue(){
-		return minvalue;
+	function getMinValue1(){
+		return min;
 	}
 	
-	function getMaxValue(){
-		return maxvalue;
+	function getMaxValue1(){
+		return max;
 	}
 
