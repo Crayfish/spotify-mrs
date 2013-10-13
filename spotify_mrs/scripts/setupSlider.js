@@ -195,8 +195,8 @@ function setUpPopSlider1(echonestDynamic){
     console.log('SetUpPopSlider() betreten');
     
     $( "#slider-pop" ).bind("mousedown", function(event){
-
-		  if( $( "#slider-pop" ).slider( "option", "disabled" )){
+    	 var guiDisabled = echonestDynamic.returnGuiDisabled();
+		  if( $( "#slider-pop" ).slider( "option", "disabled" )&& !guiDisabled){
 	       		 $( "#slider-pop" ).slider( "enable" );
 	       	 }  
 
@@ -246,8 +246,8 @@ function setUpHotSlider1(echonestDynamic){
     console.log('SetUpSongHotSlider() betreten');
     
     $( "#slider-hot" ).bind("mousedown", function(event){
-
-		  if( $( "#slider-hot" ).slider( "option", "disabled" )){
+    	 var guiDisabled = echonestDynamic.returnGuiDisabled();
+		  if( $( "#slider-hot" ).slider( "option", "disabled" )&& !guiDisabled){
 	       		 $( "#slider-hot" ).slider( "enable" );
 	       	 }  
 
@@ -291,8 +291,8 @@ function setUpSongHotSlider1(echonestDynamic){
 	  console.log('SetUpHotSlider() betreten');
 	  
 	  $( "#slider-songHot" ).bind("mousedown", function(event){
-
-		  if( $( "#slider-songHot" ).slider( "option", "disabled" )){
+		  var guiDisabled = echonestDynamic.returnGuiDisabled();
+		  if( $( "#slider-songHot" ).slider( "option", "disabled" )&& !guiDisabled){
 	       		 $( "#slider-songHot" ).slider( "enable" );
 	       	 }  
 
