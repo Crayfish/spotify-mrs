@@ -2698,9 +2698,9 @@ function getNextSong1() {
 	var echonestArtistId = null;
 	var replacedTrackId  = null;
 	
-	//if(resetDueToRemovedStyleTermsIsNeeded){
-		//restartSessionWithCurrentGuiState();
-	//}else{
+	if(trackCoverScript.isSearchStringSet){
+		trackCoverScript.setSearchString(getSearchString1());
+	}
 	
 	
 	if(!guiDisabled){
@@ -3382,9 +3382,10 @@ function banSongFeedBack(echnonestTrackId) {
 					function(data) {
 						if (checkResponse(data)) {
 
-							var continueLoop = trackCoverScript
-									.checkLoopContinue();
-							trackCoverScript.setSearchString(getSearchString1());
+							var continueLoop = trackCoverScript.checkLoopContinue();
+							
+							
+							
 							// console.log('bansongFeddback() result of
 							// checkLoopContinue(): '+continueLoop);
 
@@ -3919,7 +3920,7 @@ function getSearchString1(){
 	if(maxyear != 0) maxvalue = maxyear;
 	
 	
-	returnstring = returnstring +"<br/>Year range : "+minvalue+" - "+maxvalue+"<br/>";
+	returnstring = returnstring +"<br/>Year range : "+trackCoverScript.getYearRange()+"<br/>";
 	
 	
 		var value1;
@@ -3930,7 +3931,7 @@ function getSearchString1(){
 			case 3: value1 = "Medium to High"; break;
 			case 4: value1 = "High"; break;
 		}
-		returnstring = returnstring+"Song Trendiness : <i>( "+value1+" )    </i>";
+		returnstring = returnstring+"Song Trendiness:<i>( "+value1+" )    </i>   ";
 	
 		var value2;
 		switch(artistTrendiness){
@@ -3940,7 +3941,7 @@ function getSearchString1(){
 			case 3: value2 = "Medium to High"; break;
 			case 4: value2 = "Highest"; break;
 		}
-		returnstring = returnstring+"Artist Trendiness : <i>( "+value2+" )    </i>";
+		returnstring = returnstring+"Artist Trendiness:<i>( "+value2+" )    </i>   ";
 	
 		var value3;
 		switch(artistPopularity){
@@ -3950,10 +3951,10 @@ function getSearchString1(){
 			case 3: value3 = "Medium to High"; break;
 			case 4: value3 = "High"; break;
 		}
-		returnstring = returnstring+"Artist Popularity : <i>( "+value3+" )    </i>";
+		returnstring = returnstring+"Artist Popularity:<i>( "+value3+" )    </i>   ";
 	
 	if (artistVariety != 50){
-		returnstring = returnstring+"Artist Variety : <i>( "+parseInt(artistVariety)+" ) </i>";
+		returnstring = returnstring+"Artist Variety:<i>( "+parseInt(artistVariety)+" ) </i>";
 	}
 	
 	returnstring = returnstring+"</p>"

@@ -8,7 +8,7 @@
  
  var trackIdsforPlaylist = new Array();
  
- var searchstring = "this is a placeholder for playlist information";
+ var searchstring = "The playlist information could not be established.";
 
 require([
   '$api/models',
@@ -52,16 +52,13 @@ require([
         	
                if(artist != bannedSeedArtist){
             	   
-//            	   yearSlider.isInYearRange(track, function(inrange){
-//            	   console.log("in range: "+inrange);
-            	   
             	   
             	   trackIdsforPlaylist.push(trackID);
             
             	   artist.load('name').done(function(artist){
             		   
-            		   var trackname = track.name.decodeForHtml();
-            		   var artist = artist.name.decodeForHtml();
+            		   var trackname = track.name.decodeForText();
+            		   var artist = artist.name.decodeForText();
             	
             		   var image = Image.forTrack(track, {width: 150, height: 150, player: true, overlay:[trackname, artist]});
 
@@ -104,13 +101,12 @@ require([
             			   customplaylist.createNewPlaylist(trackIdsforPlaylist);
             			   
             			   
-            			   
             			   //reset track ID array
             			   trackIdsforPlaylist = new Array(); 
+            			   searchstring = null;
             		   }
             		   
             	   });//end load artist
-//               });
                }//end banned artist check
 		  }//end playable track check
 	  });//end load track
@@ -147,8 +143,22 @@ require([
 				 
   };  
   
+  /**
+   * Set the search string for playlist view
+   */
   var setSearchString = function(searchString){
 	  searchstring = searchString;
+  }
+  
+  /**
+   * if the search string has been already set
+   */
+  var isSearchStringSet = function(){
+	  return (searchstring != null);
+  }
+  
+  var getYearRange = function(){
+	  return (yearSlider.getMinValue()+" - "+ yearSlider.getMaxValue())
   }
 
   exports.setLoopContinueToTrue=setLoopContinueToTrue;  
@@ -156,7 +166,8 @@ require([
   exports.getTrackCover = getTrackCover;
   exports.setBannedSeedArtist = setBannedSeedArtist;
   exports.setSearchString = setSearchString;
-  
+  exports.isSearchStringSet = isSearchStringSet;
+  exports.getYearRange = getYearRange;
   
 });
 

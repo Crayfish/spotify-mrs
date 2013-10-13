@@ -121,7 +121,6 @@ function addTrackToPLaylist1(List, models1, trackID){
 					loadedPlaylist.tracks.add(track);
 					console.log("Track added to playlist: "+track.name);
 					list.refresh();
-//					yearSlider.addYear(track);
 				}
 			});
 			
@@ -140,7 +139,8 @@ function addTrackToPLaylist1(List, models1, trackID){
 function showPlaylist1(List){
 
 	playlist.done(function(playlist){
-		if(list == null){
+		
+		if(list == null){//add playlist only once
 			
 			list = List.forPlaylist(playlist, {height:"dynamic",style:"rounded",fields: ["ordinal","star","share", "track","time", "artist", "album"]});
 			document.getElementById('playlistContainer').appendChild(list.node);
@@ -152,6 +152,9 @@ function showPlaylist1(List){
 				+ searchstring;
 			document.getElementById('playlistContainer').appendChild(infodiv);
 				
+		}
+		else{
+			console.log("show playlist: list is not null");
 		}
 		
 		console.log("show playlist "+playlist);
