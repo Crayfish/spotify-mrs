@@ -521,7 +521,12 @@ function changeAdventurousness1() {
 		} else {
 			info("trouble getting results");
 		}
-	});
+	}).fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "ECHONEST DYNAMIC changeAdventurousness1() Request Failed: " + err );
+		errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+		
+		});
 
 }
 
@@ -657,7 +662,12 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			} else {
 				info("trouble getting results");
 			}
-		});
+		}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "ECHONEST DYNAMIC Request Failed: " + err );
+			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+			
+			});
 		
 		
 		
@@ -827,7 +837,12 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			} else {
 				info("trouble getting results");
 			}
-		});
+		}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+			
+			});
 
 	}
 	}
@@ -922,7 +937,12 @@ function changeArtistHotness1(artistHotnessLevel) {
 			} else {
 				info("trouble getting results");
 			}
-		});
+		}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+			
+			});
 
 	}
 	}
@@ -1212,7 +1232,12 @@ function changeSongHotness1(songHotnessLevel) {
 			} else {
 				info("trouble getting results");
 			}
-		});
+		}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+			
+			});
 
 	}
 	}
@@ -1361,7 +1386,12 @@ function changeSongHotness1(songHotnessLevel) {
 			} else {
 				info("trouble getting results");
 			}
-		});
+		}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+			
+			});
 
 	}
 	}
@@ -1436,7 +1466,12 @@ function changeToGenreSimilarity1(genreName) {
 		} else {
 			info("trouble getting results");
 		}
-	});
+	}).fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+		errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+		
+		});
 
 }
 
@@ -2217,7 +2252,12 @@ function changeSeedArtistSimilarity1() {
 			} else {
 				info("trouble getting results");
 			}
-		});
+		}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+			
+			});
 
 	}
 
@@ -2345,7 +2385,12 @@ function changeSeedSongSimilarity1() {
 			} else {
 				info("trouble getting results");
 			}
-		});
+		}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+			
+			});
 
 	}
 
@@ -2484,7 +2529,12 @@ function changeToArtistSimilarity1() {
 		} else {
 			info("trouble getting results");
 		}
-	});
+	}).fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+		errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+		
+		});
 
 	// }
 
@@ -2590,7 +2640,12 @@ function changeToSongSimilarity1() {
 		} else {
 			info("trouble getting results");
 		}
-	});
+	}).fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
+		errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+		
+		});
 
 }
 
@@ -2723,7 +2778,12 @@ function getNextSong1() {
 						} else {
 							info("trouble getting results");
 						}
-					});
+					}).fail(function( jqxhr, textStatus, error ) {
+						var err = textStatus + ", " + error;
+						console.log( "ECHONEST DYNAMIC getNextSong1() Request Failed: " + err );
+						errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+						
+						});
 
 	//}
 	
@@ -3069,13 +3129,40 @@ function getArtistsTerms() {
 										}
 
 									}
-								});
+								}) .fail(function( jqxhr, textStatus, error ) {
+									var err = textStatus + ", " + error;
+									console.log( "ECHONEST DYNAMIC getArtistTerms() Request Failed: " + err );
+									errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+									
+									});
 
 			});
 
 }
 
-function getArtistTerms(artistID) {
+
+function errorHandlingforEchonestCalls(jqxhr, textStatus, error ){
+	console.log('ECHONEST DYNAMIC errorHandlingforEchonestCalls() was called');
+	console.log('ECHONEST DYNAMIC errorHandlingforEchonestCalls() jqxhr: '+JSON.stringify(jqxhr));
+	console.log('ECHONEST DYNAMIC errorHandlingforEchonestCalls() textStatus: '+textStatus);
+	console.log('ECHONEST DYNAMIC errorHandlingforEchonestCalls() error: '+ error);
+	
+	//if too many requests show message to user an continue after x seconds
+	if(error == 'Too Many Requests'){
+		console.log('ECHONEST DYNAMIC errorHandlingforEchonestCalls() TOO MANY REQUESTS ERROR');
+		
+		
+	 alert(error+'\nThis app is limited to 120 echonest server calls per Minute.\n Wait a few seconds and then click OK to continue.');
+
+
+	  getNextSong1();	
+	
+	}
+	
+}
+
+
+/*function getArtistTerms(artistID) {
 
 	// $("#styleresults").empty();
 	// $('#cblist').empty();
@@ -3124,7 +3211,7 @@ function getArtistTerms(artistID) {
 
 				}
 
-				/*
+				
 				 * if($.inArray(name,styleTermNames) >= -1){ //check if
 				 * termWeight is bigger than already stored weight for this
 				 * styleName for(var i=0; i<styleTermObjects.length;i++){
@@ -3133,11 +3220,11 @@ function getArtistTerms(artistID) {
 				 * //styleTermObjects.remove(i); console.log('TAG CLOUD SAME
 				 * NAME BUT BIGGER WEIGHT');
 				 * styleTermObjects.push(termAndWeight); break; } } }
-				 */
+				 
 
 				// Variante 2: pro Term summierte Gewichte
 				// var comparisonArray = styleTermObjects;
-				/*
+				
 				 * var name= dataGenre.response.terms[i].name; var weight =
 				 * dataGenre.response.terms[i].weight;
 				 * 
@@ -3159,7 +3246,7 @@ function getArtistTerms(artistID) {
 				 * styleTermObjects[i].count + termAndWeight.count; break; }
 				 *  }
 				 *  }
-				 */
+				 
 
 				// var tags = [{tag: "Techno", count: 0.2}, {tag: "Jazz" , count
 				// :0.9}, {tag: "Classic" , count :0.7}, {tag: "Deep" , count
@@ -3175,7 +3262,7 @@ function getArtistTerms(artistID) {
 	});
 
 }
-
+*/
 /*
  * function banArtistFeedback1 (){
  * 
@@ -3269,6 +3356,8 @@ function banSongFeedBack(echnonestTrackId) {
 							}
 
 							if (!continueLoop) {
+								
+								
 								throbber.hide();
 								throbberTagCloud.hide();
 
@@ -3284,7 +3373,12 @@ function banSongFeedBack(echnonestTrackId) {
 						} else {
 							info("trouble getting results");
 						}
-					});
+					}).fail(function( jqxhr, textStatus, error ) {
+						var err = textStatus + ", " + error;
+						console.log( "ECHONEST DYNAMIC banSongFeedBack() Request Failed: " + err );
+						errorHandlingforEchonestCalls(jqxhr, textStatus, error );
+						
+						});
 
 }
 
@@ -3728,12 +3822,16 @@ function getSpotifyID(song) {
 	return uri.replace('spotify-WW', 'spotify');
 }
 
+
+
+
+
 function checkResponse(data) {
 	if (data.response) {
 		if (data.response.status.code != 0) {
-			info("Whoops... Unexpected error from server. "
-					+ data.response.status.message);
-			console.log(JSON.stringify(data.response));
+			//info("Whoops... Unexpected error from server. "
+					//+ data.response.status.message);
+			console.log('ECHONEST DYNAMIC checkResponse(): '+JSON.stringify(data.response));
 		} else {
 			return true;
 		}
@@ -3742,6 +3840,10 @@ function checkResponse(data) {
 	}
 	return false;
 }
+
+
+
+
 
 function getSearchString1(){
 	var returnstring = "<p>These recommendations are based upon ";
