@@ -119,6 +119,10 @@ require(
 				 setArtistEndYearAfter1(year);
 			 };
 			 
+			 var returnGuiDisabled = function(){
+				 return returnGuiDisabled1();
+			 };
+			 
 			// exports.getNextXXSong =getNextXXSong;
 			exports.getNextSong = getNextSong;
 			exports.startNewSession = startNewSession;
@@ -145,6 +149,7 @@ require(
 			exports.setArtistStartYearAfter = setArtistStartYearAfter;
 			exports.setArtistEndYearBefore = setArtistEndYearBefore;
 			exports.setArtistEndYearAfter = setArtistEndYearAfter;
+			exports.returnGuiDisabled = returnGuiDisabled;
 		});// end of require()
 
 var echonestApiKey = null;
@@ -240,9 +245,16 @@ var currentArtistHotnesValue = 0;
 var currentArtistPopularityValue = 0;
 var currentlySetTagCloudTermsArray= new Array();
 
+
+var guiDisabled = false;
+
 //var resetDueToRemovedStyleTermsIsNeeded  = false;
 var tagCloudResetDueToSimialrityChangeIsNeeded = false;
 
+
+function returnGuiDisabled1(){
+	return  guiDisabled;
+}
 
 function setArtistStartYearBefore1(year){
 	console.log('ECHONEST DYNAMIC  setArtistStartYearBefore1() was called with year: '+year);
@@ -382,6 +394,28 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	});
 
 }
+
+
+function disableGUI(){
+	 guiDisabled = true;
+	 $(':input').prop('disabled', true);
+	 $( "#adventurousnessSlider" ).slider( "option", "disabled", true );
+	 $( "#artistVarietySlider" ).slider( "option", "disabled", true );
+	 $( "#slider-pop" ).slider( "option", "disabled", true );
+	 $( "#slider-hot" ).slider( "option", "disabled", true );
+	 $( "#slider-songHot" ).slider( "option", "disabled", true );
+}
+
+function enableGUI(){
+	guiDisabled = false;
+	$(':input').prop('disabled', false);
+	$( "#adventurousnessSlider" ).slider( "option", "disabled", false );
+	$( "#artistVarietySlider" ).slider( "option", "disabled", false );
+	$( "#slider-pop" ).slider( "option", "disabled", false );
+	$( "#slider-hot" ).slider( "option", "disabled", false );
+	$( "#slider-songHot" ).slider( "option", "disabled", false );
+}
+
 
 function setNoSpotifyPlaylistSongs1(setValue) {
 	noSpotifyPlaylistSongs = setValue;
@@ -2048,6 +2082,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 		throbberTagCloud = throbber1.forElement(throbberContainerTagCloud);
 		throbberTagCloud.setPosition('center', 'center');
 
+		disableGUI();
 	
 		artistName = models.player.track.artists[0].name;
 		
@@ -2667,6 +2702,10 @@ function getNextSong1() {
 		//restartSessionWithCurrentGuiState();
 	//}else{
 	
+	
+	if(!guiDisabled){
+		disableGUI();
+	}
 
 	// api_key=BNV9970E1PHXZ9RQW&format=json&results=1&
 	var randomNumber = Math.floor(Math.random() * 100);
@@ -3357,7 +3396,7 @@ function banSongFeedBack(echnonestTrackId) {
 
 							if (!continueLoop) {
 								
-								
+								enableGUI();
 								throbber.hide();
 								throbberTagCloud.hide();
 
