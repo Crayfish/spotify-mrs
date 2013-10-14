@@ -107,6 +107,10 @@ float:right;
 	
 }
 
+.afterLabel{
+	padding-right : 8px;
+}
+
 .Section{
 	display: inline-block;
 	/*float:right;*/
