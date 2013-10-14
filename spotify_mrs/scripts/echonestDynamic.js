@@ -398,7 +398,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 
 function disableGUI(){
 	 guiDisabled = true;
-	// $(':input').prop('disabled', true);
+	 $('.rulerContent').find(':input').prop('disabled', true);
 	 $( "#adventurousnessSlider" ).slider( "option", "disabled", true );
 	 $( "#artistVarietySlider" ).slider( "option", "disabled", true );
 	 $( "#slider-pop" ).slider( "option", "disabled", true );
@@ -408,7 +408,7 @@ function disableGUI(){
 
 function enableGUI(){
 	guiDisabled = false;
-	$(':input').prop('disabled', false);
+	$('.rulerContent').find(':input').prop('disabled',false);
 	$( "#adventurousnessSlider" ).slider( "option", "disabled", false );
 	$( "#artistVarietySlider" ).slider( "option", "disabled", false );
 	$( "#slider-pop" ).slider( "option", "disabled", false );
