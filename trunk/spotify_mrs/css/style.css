@@ -181,7 +181,6 @@ float:right;
 .playlistContainer{
 	height:442px;
 	width:645px;
-	overflow-y:auto;
 }
 
 .playlistContainer .playlistinfo{
@@ -194,11 +193,14 @@ float:right;
 		
 }
 
-.playlistContainer p{
+.playlistContainer #info{
 	float:left;
-	 display:inline-block;
-	 	margin-left: 30px;
-	 	margin-top: 0px;
+	display:inline-block;
+	margin-left: 10px;
+	margin-top: 0px;
+	overflow-y:auto;
+	width: 580px;
+	
 	 	
 
 }

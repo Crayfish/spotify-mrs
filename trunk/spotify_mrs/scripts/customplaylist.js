@@ -83,8 +83,8 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 				var tracksarray = models1.Track.fromURIs(idsArray);
 				console.log("Tracks loaded from URI: "+tracksarray.length);
 				
-				playlist1.tracks.add(tracksarray).done(function(){
-					console.log("all tracks added to the playlist");
+				playlist1.tracks.add(tracksarray).done(function(addedManyTracks){
+					console.log("all tracks added to the playlist "+addedManyTracks.uri);
 					showPlaylist1(List);
 				});
 				
@@ -101,7 +101,6 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 //							
 //					});
 //				}
-				console.log("ADDING TRACKS END LOOP: tracks added = "+processed);
 				
 			});
 		});

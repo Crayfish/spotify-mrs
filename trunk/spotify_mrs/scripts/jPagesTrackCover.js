@@ -8,7 +8,7 @@
  
  var trackIdsforPlaylist = new Array();
  
- var searchstring = "The playlist information could not be established.";
+ var searchstring = null;
 
 require([
   '$api/models',
@@ -106,6 +106,7 @@ require([
             			   //reset track ID array
             			   trackIdsforPlaylist = new Array(); 
             			   searchstring = null;
+            			   yearSlider.reset();
             		   }
             		   
             	   });//end load artist
@@ -160,7 +161,7 @@ require([
   }
   
   var getYearRange = function(){
-	  return (yearSlider.getMinValue()+" - "+ yearSlider.getMaxValue())
+	  return (yearSlider.getMinValue()+" and "+ yearSlider.getMaxValue())
   }
 
   exports.setLoopContinueToTrue=setLoopContinueToTrue;  
