@@ -12,7 +12,7 @@ require([
   
 
   var newCoverPage = function(){
-	  newCoverPage1();
+	  newCoverPage1(customplaylist);
   };
 
 
@@ -39,7 +39,7 @@ function setupFlipButton1(customplaylist){
 		 
 			console.log("playlist is front");
 			
-			customplaylist.showPlaylist();
+			//customplaylist.showPlaylist();
 			  
 			 
 			  
@@ -110,7 +110,7 @@ function setupFlipButton1(customplaylist){
 }
 
 
-function newCoverPage1(){
+function newCoverPage1(customplaylist){
 	//show covers
 	$('#albumCoverContainer').show();
 	$('#playlistContainer').hide();
@@ -135,4 +135,6 @@ function newCoverPage1(){
 	//update pagination controls
 	$("#holder").jPages( pageCount );
 	pageCount= pageCount+1;
+	
+	//customplaylist.showPlaylist();
 }
