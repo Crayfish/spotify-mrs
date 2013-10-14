@@ -203,7 +203,7 @@ float:right;
 
 }
 
-#flipbutton, #newSeed, #nextSongsButton{
+#flipbutton, #newSeed, #nextSongsButton, #changeSeedArtist, #changeSeedSong{
 	background:#f5f5f5;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
