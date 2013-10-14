@@ -36,12 +36,15 @@ require([ '$api/models', 'scripts/echonestDynamic' ], function(models,
 		switch (this.value) {
 		case "song":
 			console.log('Song Similarity Radio Button was clicked');
+			
 
 			echonestDynamic.changeToSongSimilarity();
 
 			break;
 		case "artist":
 			console.log('Artist Similarity Radio Button was clicked');
+			$('#tags1').hide();
+			$('#playlistSelectLabel').hide();
 			echonestDynamic.changeToArtistSimilarity();
 
 			break;

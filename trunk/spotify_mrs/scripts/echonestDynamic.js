@@ -398,7 +398,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 
 function disableGUI(){
 	 guiDisabled = true;
-	 $(':input').prop('disabled', true);
+	// $(':input').prop('disabled', true);
 	 $( "#adventurousnessSlider" ).slider( "option", "disabled", true );
 	 $( "#artistVarietySlider" ).slider( "option", "disabled", true );
 	 $( "#slider-pop" ).slider( "option", "disabled", true );

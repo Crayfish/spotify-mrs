@@ -80,7 +80,13 @@ require([
                      
             		   //if there is enough covers to load
             		   if(playableCovers.length == numberOfSongs){
-            			  
+            			   
+            			   customplaylist.setSearchAttributes(searchstring);
+            			   
+            			   //create a temporary playlist 
+            			   customplaylist.createNewPlaylist(trackIdsforPlaylist);
+            			   
+            			   
             			   //add the covers to the container
             			   for(var i = 0; i < playableCovers.length; i++){
             				   covercontainer.appendChild(playableCovers[i]);
@@ -95,10 +101,6 @@ require([
             			   //add a new cover page to the pagination
             			   setupSwitchViewButton.newCoverPage();
                     	
-            			   customplaylist.setSearchAttributes(searchstring);
-            			   
-            			   //create a temporary playlist 
-            			   customplaylist.createNewPlaylist(trackIdsforPlaylist);
             			   
             			   
             			   //reset track ID array

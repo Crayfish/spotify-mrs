@@ -65,6 +65,7 @@ var pageCount = 1;
 function createNewPlaylist1(models1, List, yearSlider, idsArray){
 	
 	list = null;
+	var processed = 0;
 	
 	//create a temporary playlist and clear it, save it to the array
 	var playlist1 = models1.Playlist.createTemporary("MRS Playlist "+playlistcnt).done(function(playlist1){
@@ -77,18 +78,31 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 				
 			console.log("delete old songs from the playlist");
 			playlist1.tracks.clear().done(function(clearedtracks){
-						
 				console.log("adding new tracks");
-				for(var i=0; i<idsArray.length; i++){
-					var track = models1.Track.fromURI(idsArray[i]);
-					track.load(/*'playable', */'name').done(function(track) {
-						//if(track.playable){
-							playlist1.tracks.add(track);
-							console.log("CUSTOM PLAYLIST Track added to playlist: "+track.name);
-							
-						//}
-					});
-				}
+				
+				var tracksarray = models1.Track.fromURIs(idsArray);
+				console.log("Tracks loaded from URI: "+tracksarray.length);
+				
+				playlist1.tracks.add(tracksarray).done(function(){
+					console.log("allt tracks added to the playlist");
+					showPlaylist1(List);
+				});
+				
+//				for(var i=0; i<idsArray.length; i++){
+//					var track = models1.Track.fromURI(idsArray[i]);
+//					
+//					track.load('name').done(function(track) {
+//							playlist1.tracks.add(track);
+//							processed = processed+1;
+//							console.log(processed+". CUSTOM PLAYLIST Track added to playlist: "+track.name);
+//							if(processed == 12){
+//								showPlaylist1(List);
+//							}
+//							
+//					});
+//				}
+				console.log("ADDING TRACKS END LOOP: tracks added = "+processed);
+				
 			});
 		});
 
@@ -138,8 +152,9 @@ function addTrackToPLaylist1(List, models1, trackID){
  */
 function showPlaylist1(List){
 
+	console.log("adding list item to playlist view");
+	
 	playlist.done(function(playlist){
-		
 		if(list == null){//add playlist only once
 			
 			list = List.forPlaylist(playlist, {height:"dynamic",style:"rounded",fields: ["ordinal","star","share", "track","time", "artist", "album"]});
@@ -194,7 +209,7 @@ function setupSubscribeButton1(models1){
 	console.log("subscribe button setup");
 	
 	$("#subscribebutton").button().click(function(event) {
-		event.preventDefault();
+		//event.preventDefault();
 		console.log("Subscribe button clicked.");
 			 
 		//create new persistent playlist

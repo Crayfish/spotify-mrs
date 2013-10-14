@@ -2,47 +2,42 @@
 
 <div class="main-wrapper" id="main-wrapper">
 
+	<!-- APPLICATION LEFT SIDE -->
 	<div class="leftside">
-	
-				
-				<div id="display"> 
-					<div id="playlistHeader" class="playlistHeader">
-						<h2>Your custom playlist </h2>
-						<button id="subscribebutton">+ save playlist</button>
-					</div>
-					<div id="albumCoverContainer" class="albumCoverContainer"></div>
-					<div id="playlistContainer" class="playlistContainer"></div>
-					<div class="holder" id = "holder"></div>
-					<a href="#" id="flipbutton">switch view</a>
-					<div id="throbberContainer" class="throbberContainer"></div>
 
-				</div>
-				
-			
-	
-		<!--Artist Terms Information-->
+		<!-- COVER AND PLAYLIST VIEWS -->
+		<div id="display">
+			<div id="playlistHeader" class="playlistHeader">
+				<h2>Your custom playlist</h2>
+				<button id="subscribebutton">+ save playlist</button>
+			</div>
+			<div id="albumCoverContainer" class="albumCoverContainer"></div>
+			<div id="playlistContainer" class="playlistContainer"></div>
+			<div class="holder" id="holder"></div>
+			<a href="#" id="flipbutton">switch view</a>
+			<div id="throbberContainer" class="throbberContainer"></div>
+		</div>
+
+
+		<!--TAGCLOUD-->
 		<div id="tagcloud-wrapper" class="tagcloud-wrapper">
-
-			<p>
-			<div id="tagCloud" title="click to set filter">Artist Style
-				Terms Tag Cloud</div>
-			</p>
+			<div id="tagCloud" title="click to set filter">Artist Style Terms Tag Cloud</div>
 		</div>
 	</div>
 	<!-- end left side -->
 
 
 
-
-
+	<!-- APPLICATION RIGHT SIDE -->
 	<div id="rulerContainer" class="rulerContainer">
 
 		<div class="rulerContent">
 
+			<!-- SIMILARITY SECTION -->
 			<div class="simmilaritySection Section">
 				<p>
 					<label>Similarity based on:</label>
-					<form id = "radioButtonsform">
+					<form id="radioButtonsform">
 						<input type="radio" name="sim" id="artistRadiobtn" value="artist">Artist<br>
 						<input type="radio" name="sim" value="song">Song<br> 
 						<input type="radio" name="sim" value="genre">Genre<br> 
@@ -53,88 +48,68 @@
 					<div id="similarityInfo"></div>
 				</p>
 				<p>
-					
 					<button id="changeSeedArtist">Make playing artist new seed artist</button>
-				
 					<button id=changeSeedSong>Make playing song new seed song</button>
+				
 					<div class="ui-widget">
 						<label for="tags" id='genreSelectLabel'>Select a Genre: </label> 
 						<input id="tags" />
 					</div>
-				
+
 					<div class="ui-widget">
 						<label for="tags1" id='playlistSelectLabel'>Select a playlist: </label> 
 						<input id="tags1" />
 					</div>
 				</p>
 			</div>
+			
 
-
-
-
-
-
+   			<!-- POPULARITY SECTION -->
 			<div class="popularitySection Section">
+				
 				<!--Song Hotness Slider-->
-
 				<label for="slider-songHot">Song Trendiness:</label>
-				<!-- <input type="text" id="songHot" style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" /> -->
 				<div>Off</div>
 				<div class="sliderClass">
 					<div id="slider-songHot"></div>
 				</div>
 				<br>
 
-
 				<!--Artist Hotness Slider-->
-
 				<label for="slider-hot">Artist Trendiness:</label>
-				<!--  <input type="text" id="hot" style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" />-->
 				<div>Off</div>
 				<div class="sliderClass">
 					<div id="slider-hot"></div>
 				</div>
 				<br>
 
-
 				<!-- Popularity Slider -->
-
 				<label for="pop">Artist Popularity:</label>
-				<!-- <input type="text" id="pop" style="border: 0; color: #f6931f; font-weight: bold; width: 60px; float: right;" /> -->
 				<div>Off</div>
 				<div class="sliderClass">
 					<div id="slider-pop"></div>
 				</div>
 
-
 			</div>
 
-			<!-- Novelty Section -->
+			
+			<!-- NOVELTY SECTION -->
 			<div class="noveltySection Section">
 				<p>
 					<label>Novelty:</label>
 				</p>
 
-
-				<!-- <input type="checkbox" name="excludeSeedArtist" value=""
-				id='excludeSeedArtistCheckBox'>exclude seed artist<br> -->
-
 				<p>
-					<label id="excludeSeedArtistLabel"><input type="checkbox"
-						id='excludeSeedArtistCheckBox'>exclude seed artist</label><br>
-					<label id="excludeSpotifyPlaylistSongs"><input
-						type="checkbox" id="excludeSpotifyPlaylistSongsCheckBox">no
-						songs from my spotify Playlists</label>
+					<label id="excludeSeedArtistLabel">
+					<input type="checkbox" id='excludeSeedArtistCheckBox'>exclude seed artist</label><br>
+					<label id="excludeSpotifyPlaylistSongs">
+					<input type="checkbox" id="excludeSpotifyPlaylistSongsCheckBox">no songs from my spotify Playlists</label>
 				</p>
-
-
-				<!-- <input type="checkbox" name="noSpotifysongs" value=""
-				id='excludeSpotifyPlaylistSongs'>no songs from  my spotify
-			playlists<br> -->
-
 
 			</div>
 
+
+			<!-- DIVERSITY SECTION -->
 			<div class="diversitySection Section">
 				<p>
 					<label>Recommendation Diverstiy:</label>
@@ -157,98 +132,35 @@
 				</div>
 			</div>
 
-			<!-- Year Section -->
+			<!-- YEAR SECTION -->
 			<div class="yearSection Section">
 				<div class="wrapper">
-				
+
 					<label>start year before</label> 
 					<select name="yearpicker1" id="artist_start_year_before" class="yearpick"></select><br>
-					
-					<label >start year after</label> 
-					<select name="yearpicker2" id="artist_start_year_after" class="yearpick"></select><br>
+
+					<label>start year after</label> 
+					<select name="yearpicker2" id="artist_start_year_after" class="yearpick"></select><br> 
 					
 					<label>end year before</label> 
-					<select name="yearpicker3" id="artist_end_year_before  "class="yearpick"></select><br>
-					
+					<select name="yearpicker3" id="artist_end_year_before  " class="yearpick"></select><br>
+
 					<label>end year after</label> 
 					<select name="yearpicker4" id="artist_end_year_after" class="yearpick"></select>
-				
-				<!-- 	<p>Year range:</p>
+
+					<!-- 	<p>Year range:</p>
 					<p>
 					<div>
 						<label for="yearfrom" id="year_from">from</label> 
 						<input type="text" id="yearfrom" placeholder="0" title="songs appeared after this year" /> 
 						<label for="yearto" id="year_to">to</label> 
 						<input type="text" id="yearto" placeholder="0" title="songs appeared before this year" />
-					</div> -->
-<!-- 					</p> -->
+					</div> 
+					</p> -->
 				</div>
 			</div>
-			
+
 			<button id="nextSongsButton">Ok, get more songs now</button>
-			<!-- <img src="img/more.png" alt="load more songs"> -->
-		
-
-			<!-- Similarity Acordion -->
-			<!-- <p>Similarity based on:</p>
-		<div id="accordion">
-
-			<h3>Artist</h3>
-			<div>
-				<p>Now recommended songs are played by artists similar to:
-				<div id="artistSimilarityInfo"></div>
-				</p>
-				<button id="changeSeedArtist">Make playing artist new seed
-					artist</button>
-			</div>
-
-			<h3>Song</h3>
-			<div>
-				<p>
-				<p>Now Songs are recommended because they are similar to:</p>
-				<div id="songSimilarityInfo"></div>
-				</p>
-				<button id=changeSeedSong>Make playing song new seed song</button>
-			</div>
-
-			<h3>Genre</h3>
-			<div>
-				<p>
-					Genre Filter
-				<p>
-				<div id="genreSimilarityInfo">There is no genre selected.</div>
-				</p>
-				<div class="ui-widget">
-					<label for="tags">Select a Genre: </label> <input id="tags" />
-				</div>
-				</p>
-			</div>
-
-			<h3> Your Spotify Playlists</h3>
-			<div>
-					<div id="playlistSimilarityInfo">There is no playlist selected.</div>
-				</p>
-				<div class="ui-widget">
-					<label for="tags1">Select a playlist: </label> <input id="tags1" />
-				</div>
-				</p>
-				
-			</div>
-		</div> -->
-			<!-- end accordion -->
-			<!--Artist Terms Information-->
-			<!-- 		<p>
-					<label>Artist Terms Filter:</label>
-				</p>
-
-				<p>
-				<div id="tagCloud">Artist Style Terms Tag Cloud</div>
-				</p>
- -->
-			<!-- <p>  
-		<div id="cblist"></div>
-		</p>
-		</div> -->
 
 		</div>
 		<!-- end rulercontent -->
