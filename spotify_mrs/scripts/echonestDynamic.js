@@ -2700,6 +2700,7 @@ function getNextSong1() {
 	
 	if(trackCoverScript.isSearchStringSet){
 		trackCoverScript.setSearchString(getSearchString1());
+		console.log("------setting search string");
 	}
 	
 	
@@ -3886,7 +3887,7 @@ function checkResponse(data) {
 
 
 function getSearchString1(){
-	var returnstring = "<p>These recommendations are based upon ";
+	var returnstring = "<div id='info'>These recommendations are based upon ";
 	if (similarityModeIsGenre){
 		returnstring = returnstring+"<i>genre</i> "+"<b>"+selectedgenre+"</b>";
 		
@@ -3910,46 +3911,40 @@ function getSearchString1(){
 	if ($('#excludeSpotifyPlaylistSongsCheckBox').prop('checked')){
 		returnstring = returnstring+"<br/> Songs from my spotify playlists are excluded.";
 	}
-	var minyear = $("#yearfrom").val();
-	var maxyear = $("#yearto").val();
-	var min = $("#yearfrom").attr("placeholder");
-	var max = $("#yearto").attr("placeholder");
-	var minvalue = min;
-	var maxvalue = max;
-	if(minyear != 0) minvalue = minyear;
-	if(maxyear != 0) maxvalue = maxyear;
+	
+	returnstring = returnstring +"<br/>Tracks were released between "+trackCoverScript.getYearRange()+"<br/>";
 	
 	
-	returnstring = returnstring +"<br/>Year range : "+trackCoverScript.getYearRange()+"<br/>";
-	
-	
-		var value1;
+		var value1 = songTrendiness;
 		switch(songTrendiness){
 			case 0: value1 = "Off"; break;
-			case 1: value1 = "Low to Medium"; break;
-			case 2: value1 = "Medium"; break;
-			case 3: value1 = "Medium to High"; break;
+			case 1: value1 = "Lowest"; break;
+			case 2: value1 = "Low"; break;
+			case 3: value1 = "Medium"; break;
 			case 4: value1 = "High"; break;
+			case 5: value1 = "Highest"; break;
 		}
 		returnstring = returnstring+"Song Trendiness:<i>( "+value1+" )    </i>   ";
 	
 		var value2;
 		switch(artistTrendiness){
 			case 0: value2 = "Off"; break;
-			case 1: value2 = "Low to Medium"; break;
-			case 2: value2 = "Medium"; break;
-			case 3: value2 = "Medium to High"; break;
-			case 4: value2 = "Highest"; break;
+			case 1: value2 = "Lowest"; break;
+			case 2: value2 = "Low"; break;
+			case 3: value2 = "Medium"; break;
+			case 4: value2 = "High"; break;
+			case 5: value2 = "Highest"; break;
 		}
 		returnstring = returnstring+"Artist Trendiness:<i>( "+value2+" )    </i>   ";
 	
 		var value3;
 		switch(artistPopularity){
 			case 0: value3 = "Off"; break;
-			case 1: value3 = "Low to Medium"; break;
-			case 2: value3 = "Medium"; break;
-			case 3: value3 = "Medium to High"; break;
+			case 1: value3 = "Lowest"; break;
+			case 2: value3 = "Low"; break;
+			case 3: value3 = "Medium"; break;
 			case 4: value3 = "High"; break;
+			case 5: value3 = "Highest"; break;
 		}
 		returnstring = returnstring+"Artist Popularity:<i>( "+value3+" )    </i>   ";
 	
@@ -3957,7 +3952,19 @@ function getSearchString1(){
 		returnstring = returnstring+"Artist Variety:<i>( "+parseInt(artistVariety)+" ) </i>";
 	}
 	
-	returnstring = returnstring+"</p>"
+	if(currentlySetTagCloudTermsArray.length != 0){
+		returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
+		for(var i=0; i< currentlySetTagCloudTermsArray.length;i++){
+			
+			returnstring = returnstring+" " +currentlySetTagCloudTermsArray[i];
+			
+			if((i+1)!=currentlySetTagCloudTermsArray.length){
+				returnstring = returnstring+", "
+			}
+		}
+	}
+	
+	returnstring = returnstring+"</div>"
 	
 	
 	return returnstring;
