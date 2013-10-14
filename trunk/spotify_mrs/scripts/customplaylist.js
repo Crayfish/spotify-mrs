@@ -84,7 +84,7 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 				console.log("Tracks loaded from URI: "+tracksarray.length);
 				
 				playlist1.tracks.add(tracksarray).done(function(){
-					console.log("allt tracks added to the playlist");
+					console.log("all tracks added to the playlist");
 					showPlaylist1(List);
 				});
 				
