@@ -30,14 +30,16 @@ var apiKey = null;
 
 
 function setEchonestApiKey1(userName){
-	console.log('getEchonestApiKey1() was called ');
+	console.log('API KEY getEchonestApiKey1() was called ');
 	
-	//reading JSON Data from  file
+/*	//reading JSON Data from  file
 	
-	/* $.getJSON('sp://cover/APIKeyJSON/apiKeys.json', function(data)
+	 $.getJSON('sp://cover/APIKeyJSON/apiKey.jsnop', function(data)
            {
                console.log('READ FROM  API KEY JSON FILE: ' +JSON.stringify(data));
-              
+
+               console.log('API KEY READ FROM  API KEY JSON FILE: ' +JSON.stringify(data));
+              apiKey = data.key;
                
                
            });*/

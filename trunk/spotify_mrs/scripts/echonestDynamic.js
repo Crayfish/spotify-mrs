@@ -2487,6 +2487,7 @@ function changeToArtistSimilarity1() {
 	$('#excludeSeedArtistLabel').next('br').show();
 	
 	$("#artistVarietySlider").slider( "value", 50 );
+	$('.yearpick').val('off');
 
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
@@ -3597,7 +3598,7 @@ function resetSliders(){
 	$("#slider-pop").slider( "option", "disabled", true );
 	
 	$("#artistVarietySlider").slider( "value", 50 );
-
+	$('.yearpick').val('off');
 	
 
 	
