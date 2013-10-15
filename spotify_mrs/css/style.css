@@ -99,7 +99,7 @@ float:right;
 	
 	background:#dddddd;
 	width:200px;
-	min-height : 877px;
+	min-height : 850px;
 	max-height:100%;
 	spacing : 0px;
 	padding : 0px;
@@ -209,7 +209,7 @@ float:right;
 	background:#f5f5f5;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  padding: 4px;	
+  padding: 3px;	
 }
 
 
@@ -247,7 +247,7 @@ float:right;
 }
 
 .wrapper{
-	margin-top:15px;
+	margin-top:2px;
 }
 
 #flipbutton{
