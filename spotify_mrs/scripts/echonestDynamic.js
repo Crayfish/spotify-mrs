@@ -321,7 +321,8 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	
 	
 	currentlyUsedTasteProfileObject = tasteProfileIDandNameObject;
-	
+	selectedUserPlaylistName = tasteProfileIDandNameObject.name;
+	console.log('ECHONEST DYNAMIC changeToPlaylistSimilarit() selectedUserPlaylistName: '+selectedUserPlaylistName)
 	tagCloudResetDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = false;
@@ -376,7 +377,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 							+ '\" Spotify-playlist');
 			// $("#accordion" ).accordion( "refresh" );
 
-			info("");
+			//info("");
 			// $("#albumCoverContainer").empty();
 			styleTermNames = new Array();
 			styleTermObjects = new Array();

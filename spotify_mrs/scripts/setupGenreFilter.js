@@ -104,6 +104,7 @@ function getAllEchonestGenres(echonestDynamic){
 				//check if it is the genre array
 				if(jQuery.inArray( currentText, genreArray)!= -1){
 					console.log("SETUP GENERE FILTER  entered text matches genre name: "+ currentText)
+					 resetSliders();
 					echonestDynamic.changeToGenreSimilarity(currentText);
 					$( "#tags" ).val('');
 					$( "#tags" ).blur();
