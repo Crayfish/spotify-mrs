@@ -17,12 +17,13 @@ require([
   'scripts/setupNoveltyCheckBoxes',
   'scripts/playlistInformation',
   'scripts/yearSlider',
-  'scripts/setupSimilarityRadioButtons'
+  'scripts/setupSimilarityRadioButtons',
+  'scripts/setupRandomPlayButton'
   
 ], function( models, apiKey, generatePlaylistButton,setupSlider, 
 		echonestDynamic,setupSwitchViewButton, setupGenreFilter,yearPickerSetup,
 		/*setUpSimilarityAccordion,*/ echonestGenreData, customplaylist, 
-		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupSimilarityRadioButtons /*setupPlaylistFilter*/) {
+		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupSimilarityRadioButtons, setupRandomPlayButton) {
   'use strict';
  
   	  /**load a page when the app is started*/
@@ -62,6 +63,7 @@ require([
 						  $('#overlay-wrapper').load('pages/intro.html',function(){
 							  console.log("no tracks playing. showing intro.");
 							  models.player.addEventListener('change', removeoverlay);
+							  setupRandomPlayButton.setupPlayButton();
 						  });
 					  }
 					  
@@ -91,7 +93,7 @@ require([
 		 
 		  
 		//enter developer name here: Marc, Tom or Julius
-		apiKey.setEchonestApiKey('Julius'); 
+		apiKey.setEchonestApiKey('Marc'); 
 		  
 		playlistInformation.setUpPlaylistInformation();
 		
@@ -135,7 +137,7 @@ require([
 		customplaylist.setupSubscribeButton();
 		//customplaylist.createNewPlaylist();
 		
-		yearSlider.setupYearSlider();
+		//yearSlider.setupYearSlider();
 
 		//setupTagCloud.addTagCloudEventHandler(echonestDynamic);
 		// generatePlaylistButton.setUpNewSeedButton();
