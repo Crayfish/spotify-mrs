@@ -1,14 +1,13 @@
-require([ '$api/models', 'scripts/echonestDynamic' ], function(models,
-		echonestDynamic) {
+require([ 
+         '$api/models',
+         'scripts/echonestDynamic'
+], function(models,echonestDynamic) {
 	'use strict';
 
 	var setupSimilarityButtons = function() {
 		var artistRadiobtn = document.getElementById("artistRadiobtn");
 		artistRadiobtn.checked = true;
 
-		// var changeSeedSongSimilarityButton =
-		// document.getElementById("changeSeedSong");
-		// changeSeedSongSimilarityButton.style.display = 'none';
 		$('#changeSeedSong').hide();
 		$('#tags').hide();
 		$('#genreSelectLabel').hide();
@@ -78,8 +77,6 @@ require([ '$api/models', 'scripts/echonestDynamic' ], function(models,
 			$('#excludeSeedArtistLabel').hide();
 
 			$('#excludeSeedArtistLabel').next('br').hide();
-			//$("#adventurousnessSliderLabel").show();
-			//$("#adventurousnessSlider").show();
 			break;
 
 		}
@@ -94,8 +91,6 @@ function setupChangeSeedArtistButton(echonestDynamic) {
 
 	$("#changeSeedArtist").button().click(function(event) {
 		event.preventDefault();
-
-		// console.log('Change Seed Artist Button was clicked');
 
 		echonestDynamic.changeSeedArtistSimilarity();
 

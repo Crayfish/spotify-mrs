@@ -85,7 +85,7 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 				
 				playlist1.tracks.add(tracksarray).done(function(addedManyTracks){
 					console.log("all tracks added to the playlist "+addedManyTracks.uri);
-					showPlaylist1(List);
+					showPlaylist1(List, yearSlider);
 				});
 				
 //				for(var i=0; i<idsArray.length; i++){
@@ -149,7 +149,7 @@ function addTrackToPLaylist1(List, models1, trackID){
  * Adds the content of the playlist to the List.
  * @param List @see spotify views.List
  */
-function showPlaylist1(List){
+function showPlaylist1(List, yearSlider){
 
 	console.log("adding list item to playlist view");
 	
@@ -163,7 +163,7 @@ function showPlaylist1(List){
 			infodiv.className="playlistinfo";
 			infodiv.innerHTML = 
 				'<img id="infobutton" src="img/info.png" title="Recommendation made upon the following settings">'
-				+ searchstring;
+				+ yearSlider.getInfo();
 			document.getElementById('playlistContainer').appendChild(infodiv);
 				
 		}
