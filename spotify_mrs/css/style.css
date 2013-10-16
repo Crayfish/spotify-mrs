@@ -222,8 +222,8 @@ border-radius: 5px;
 	margin-top: 0px;
 	overflow-y:auto;
 	width: 580px;
+	max-height:100px;
 	
-	 	
 
 }
 

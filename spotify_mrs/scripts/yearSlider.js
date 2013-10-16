@@ -3,9 +3,6 @@ require([
 ], function(models) {
   'use strict';
   
-  var setupYearSlider = function setupYearSlider(){
-	  setupYearSlider1();
-  }
   
   var addYear = function addYear(track){
 	  addYear1(models, track);
@@ -15,25 +12,83 @@ require([
 	  reset1();
   }
   
-  var isInYearRange = function isInYearRange(track, callback){
-	  isInYearRange1(models, track, callback);
+  var getInfo = function getInfo(){
+	  return getInfo1();
   }
   
-  var getMinValue = function getMinValue(){
-	  return getMinValue1();
+  var setSimilarityMode = function setSimilarityMode(mode){
+	  setSimilarityMode1(mode);
   }
   
-  var getMaxValue = function getMaxValue(){
-	  return getMaxValue1();
+  var setSimilarityBase = function setSimilarityBase(base){
+	  setSimilarityBase1(base);
   }
   
+  var excludeSeedArtist = function excludeSeedArtist(exclude){
+	  excludeSeedArtist1(exclude);
+  }
+  
+  var excludePlaylistSongs = function excludePlaylistSongs(exclude){
+	  excludePlaylistSongs1(exclude);
+  }
+  
+  var setArtistFamilarityLevel = function setArtistFamilarityLevel(level){
+	  setArtistFamilarityLevel1(level);
+  }
+  
+  var setArtistHotnessLevel = function setArtistHotnessLevel(level){
+	  setArtistHotnessLevel1(level);
+  }
+  
+  var setSongHotnessLevel = function setSongHotnessLevel(level){
+	  setSongHotnessLevel1(level);
+  }
+  
+  var setAdventurousness = function setAdventurousness(value){
+	  setAdventurousness1(value);
+  }
+  
+  var setArtistVariety = function setArtistVariety(value){
+	  setArtistVariety1(value);
+  }
+  
+  var setArtistTermsArray = function setArtistTermsArray(termsarray){
+	  setArtistTermsArray1(termsarray);
+  }
+  
+  var setArtistStartYearBefore = function(year){
+	  setArtistStartYearBefore1(year);
+  };
+	 
+  var setArtistStartYearAfter = function(year){
+	  setArtistStartYearAfter1(year);
+  };
+	 
+  var setArtistEndYearBefore = function(year){
+	  setArtistEndYearBefore1(year);
+  };
+  
+  var setArtistEndYearAfter = function(year){
+	  setArtistEndYearAfter1(year);
+  };
     
   exports.addYear = addYear;
-  exports.setupYearSlider = setupYearSlider;
   exports.reset = reset;
-  exports.isInYearRange = isInYearRange;
-  exports.getMinValue = getMinValue;
-  exports.getMaxValue = getMaxValue;
+  exports.getInfo = getInfo;
+  exports.setSimilarityMode = setSimilarityMode;
+  exports.setSimilarityBase = setSimilarityBase;
+  exports.excludeSeedArtist = excludeSeedArtist;
+  exports.excludePlaylistSongs = excludePlaylistSongs;
+  exports.setArtistFamilarityLevel = setArtistFamilarityLevel;
+  exports.setArtistHotnessLevel = setArtistHotnessLevel;
+  exports.setSongHotnessLevel = setSongHotnessLevel;
+  exports.setAdventurousness = setAdventurousness;
+  exports.setArtistVariety = setArtistVariety;
+  exports.setArtistTermsArray = setArtistTermsArray;
+  exports.setArtistStartYearBefore = setArtistStartYearBefore;
+  exports.setArtistStartYearAfter = setArtistStartYearAfter;
+  exports.setArtistEndYearBefore = setArtistEndYearBefore;
+  exports.setArtistEndYearAfter = setArtistEndYearAfter;
   
 });//end require
 
@@ -41,39 +96,50 @@ require([
 	/**minimum and maximum years in the collection (temporary playlist)*/
 	var min = 2013;
 	var max = 1900;
-
-	/**selected minimum and maximum year values*/
-	var minvalue = 1300;
-	var maxvalue = 2050;
 	
 	/**
-	 * Set up year input fields. The value is checked on validity every time it changes.
+	 * Similarity mode:
+	 * 0=artist
+	 * 1=song
+	 * 2=genre
+	 * 3=playlist
 	 */
-	function setupYearSlider1(){
-		
-		$("#yearto").change( function (){
-			if(checkInput(this)){
-				maxvalue = this.value;
-			}
-			else{
-				
-				$("#yearto").val("");
-				maxvalue = 2050;
-			}
-		});
-		
-		$("#yearfrom").change( function (){
-			if(checkInput(this)){
-				minvalue = this.value;
-			}
-			else{
-				
-				$("#yearfrom").val("");
-				minvalue = 1300;
-			}
-		});
-		
-	}
+	var mode = 0;
+	
+	/**
+	 * similarity based on this (artist name, song name, genre name, playlist name)
+	 */
+	var similaritybase = "not specified";
+
+	/**true if artists songs are banned*/
+	var excludeArtist = false;
+	
+	/**true if playlist songs are banned*/
+	var excludePlaylist = false;
+	
+	/**value of the artist familarity slider*/
+	var artistFamilarityLevel = 0;
+	
+	/**value of the artist hotness slider*/
+	var artistHotnessLevel = 0;
+	
+	/**value of the song hotness slider*/
+	var songHotnessLevel = 0;
+	
+	/**value of the adventurousness slider*/
+	var adventurousness = 20;
+	
+	/**value of the artist variety slider*/
+	var artistVariety = 50;
+	
+	/**array of the selected artist terms*/
+	var artistterms = new Array();
+	
+	/**year picker values*/
+	var artistStartYearBefore 	= "off";
+	var artistStartYearAfter  	= "off";
+	var artistEndYearBefore 	= "off";
+	var artistEndYearAfter		= "off";
 
 	/**
 	 * Extract the release year of the track and update the min and max year values.
@@ -92,13 +158,7 @@ require([
 					max = Math.max(max,year);
 					min = Math.min(min,year);
 				}
-				
-				
-				$("#yearto").attr("placeholder", max);
-				$("#yearfrom").attr("placeholder", min);
-				
 			});
-			
 		});
 	}
 	
@@ -108,78 +168,173 @@ require([
 	function reset1(){
 		min = 2013;
 		max = 1900;
+		artistFamilarityLevel = 0;
+		artistHotnessLevel = 0;
+		songHotnessLevel = 0;
+		artistVariety = 50;
+		artistStartYearBefore 	= "off";
+		artistStartYearAfter  	= "off";
+		artistEndYearBefore 	= "off";
+		artistEndYearAfter		= "off";
 	}
 	
-	/**
-	 * Validate the input values on the GUI.
-	 * Input value has to be a number between 1300 and 2050. (regarding future use)
-	 * @param input input value
-	 * @returns {Boolean} true if input is valid
-	 */
-	function checkInput(input){
-		var value = input.value;
-		
-		if(isNaN(value)){
-			return false;
-		}
-		
-		else{
-			if(value < 2050 && value > 1300){
-				return true;
-			}
-			else return false;
-		} 
-		
-		return false;
+	function resetYear(){
+		min = 2013;
+		max = 1900;
 	}
 	
-	/**
-	 * Check if the track is in the given year range.
-	 * @param models spotify models to access data
-	 * @param track the current track to check
-	 * @returns {Boolean} true if the track is in the given year range 
-	 * or if there is no input in the year input boxes.
-	 */
-	function isInYearRange1(models, track, callback){
+	function getInfo1(){
+		var returnstring = "<div id='info'>These recommendations are based upon ";
 		
-		
-		if(minvalue == 1300 && maxvalue == 2050){
-			console.log("year range not specified");
-			callback(true);
+		switch(mode){
+		case 0: returnstring = returnstring+"<i>artist</i>"+" <b>"+similaritybase+"</b>"; 
+				if(excludeArtist) returnstring = returnstring+" (artist's songs excluded)";
+				break;
+		case 1: returnstring = returnstring+"<i>song</i> <b>"+similaritybase+"</b>"; 
+				if(excludeArtist) returnstring = returnstring+" (artist's songs excluded)";
+				break;
+		case 2: returnstring = returnstring+"<i>genre</i> "+"<b>"+similaritybase+"</b>"; break;
+		case 3: returnstring = returnstring+"<i>playlist</i> <b> "+similaritybase+"</b>"; break;
 		}
-		else{
-			
-			
-			var album = models.Album.fromURI(track.album);
-			
-			
-			track.load('album').done( function getAlbum(){
-				track.album.load('date').done(function(){
-					var year = track.album.date;
-					console.log("track release year: "+year);
-					
-					if (year > minvalue && year < maxvalue){
-						console.log("Track is IN the year range");
-						callback(true);
-					}
-					else{
-						console.log("Track is OUT the year range");
-						callback(true);
-					}
-					
-					
-				});
+		
+		if(excludePlaylist){
+			returnstring = returnstring + "<br/> Songs from my spotify playlists are excluded.";
+		}
+		
+		returnstring = returnstring +"<br/>Tracks were released between "+min+" and "+max;
+		
+		var value1;
+		switch(songHotnessLevel){
+			case 0: value1 = "Off"; break;
+			case 1: value1 = "Lowest"; break;
+			case 2: value1 = "Low"; break;
+			case 3: value1 = "Medium"; break;
+			case 4: value1 = "High"; break;
+			case 5: value1 = "Highest"; break;
+		}
+		returnstring = returnstring+"<br/>Song Trendiness:<i>( "+value1+" )    </i>   ";
+	
+		var value2;
+		switch(artistHotnessLevel){
+			case 0: value2 = "Off"; break;
+			case 1: value2 = "Lowest"; break;
+			case 2: value2 = "Low"; break;
+			case 3: value2 = "Medium"; break;
+			case 4: value2 = "High"; break;
+			case 5: value2 = "Highest"; break;
+		}
+		returnstring = returnstring+"<br/>Artist Trendiness:<i>( "+value2+" )    </i>   ";
+	
+		var value3;
+		switch(artistFamilarityLevel){
+			case 0: value3 = "Off"; break;
+			case 1: value3 = "Lowest"; break;
+			case 2: value3 = "Low"; break;
+			case 3: value3 = "Medium"; break;
+			case 4: value3 = "High"; break;
+			case 5: value3 = "Highest"; break;
+		}
+		returnstring = returnstring+"<br/>Artist Popularity:<i>( "+value3+" )    </i>   ";
+	
+		if (artistVariety != 50){
+			returnstring = returnstring+"<br/>Artist Variety:<i>( "+parseInt(artistVariety)+" )     </i>";
+		}
+		
+		if(adventurousness!=20){
+			returnstring = returnstring+"<br/>Adventurousness:<i>( "+parseInt(adventurousness)+" ) </i>";
+		}
+		
+		if(artistterms.length != 0){
+			returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
+			for(var i=0; i< artistterms.length;i++){
 				
-			});
-			
+				returnstring = returnstring+" " +artistterms[i];
+				
+				if((i+1)!=artistterms.length){
+					returnstring = returnstring+", "
+				}
+			}
 		}
+		
+		if(artistStartYearBefore!="off"){
+			returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>before</i> "+artistStartYearBefore;
+		}
+		
+		if(artistStartYearAfter!="off"){
+			returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>after</i> "+artistStartYearAfter;
+		}
+		
+		if(artistEndYearBefore!="off"){
+			returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>before</i> "+artistEndYearBefore;
+		}
+		
+		if(artistEndYearAfter!="off"){
+			returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>after</i> "+artistEndYearAfter;
+		}
+		
+		console.log(artistStartYearBefore+" "+artistStartYearAfter+" "+artistEndYearBefore+" "+artistEndYearAfter);
+		
+		returnstring = returnstring+"</div>"
+		
+		resetYear();
+		
+		return returnstring;
 	}
 	
-	function getMinValue1(){
-		return min;
+	function setSimilarityBase1(base1){
+		similaritybase = base1;
 	}
 	
-	function getMaxValue1(){
-		return max;
+	function setSimilarityMode1(mode1){
+		mode = mode1;
+	}
+	
+	function excludeSeedArtist1(exclude1){
+		excludeArtist = exclude1;
+	}
+	
+	function excludePlaylistSongs1(exclude1){
+		excludePlaylist = exclude1;
+	}
+	
+	function setArtistFamilarityLevel1(level1){
+		 artistFamilarityLevel = level1;
+	}
+	
+	function setArtistHotnessLevel1(level1){
+		artistHotnessLevel = level1;
+	}
+	
+	function setSongHotnessLevel1(level1){
+		songHotnessLevel = level1;
+	}
+	
+	function setAdventurousness1(value1){
+		adventurousness = value1;
+	}
+	
+	function setArtistVariety1(value1){
+		artistVariety = value1;
+	}
+	
+	function setArtistTermsArray1(termsarray1){
+		artistterms = termsarray1;
+	}
+	
+	function setArtistStartYearBefore1(year1){
+		artistStartYearBefore = year1;
+	}
+	
+	function setArtistStartYearAfter1(year1){
+		artistStartYearAfter = year1;
+	}
+	
+	function setArtistEndYearBefore1(year1){
+		artistEndYearBefore = year1;
+		console.log("yearslider edyearbefore "+artistEndYearBefore);
+	}
+	
+	function setArtistEndYearAfter1(year1){
+		artistEndYearAfter = year1;
 	}
 

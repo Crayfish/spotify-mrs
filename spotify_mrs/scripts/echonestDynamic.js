@@ -3,18 +3,18 @@ require(
 		[
 
 		'$api/models', '$views/throbber#Throbber', 'scripts/jPagesTrackCover',
-				'scripts/apiKey'
+				'scripts/apiKey', 'scripts/yearSlider'
 		
 
 		],
-		function(models, throbber, trackCover,apiKey) {
+		function(models, throbber, trackCover,apiKey, yearSlider) {
 
 			'use strict';
 
 			var startNewSession = function() {
 				// console.log("New session is started");
 				startNewSession1(models, throbber, trackCover, 
-						apiKey);
+						apiKey, yearSlider);
 
 			};
 
@@ -91,11 +91,6 @@ require(
 				setArrayOfAllSongs1(array1);
 			};
 			
-			var getSearchString = function(){
-				return getSearchString1();
-			};
-			
-
 			 var removeTermFromCurrentlySetTermsArray = function(tagToBeRemoved){
 				 removeTermFromCurrentlySetTermsArray1(tagToBeRemoved);
 			 };
@@ -142,7 +137,6 @@ require(
 			exports.setBanedArtistId = setBanedArtistId;
 			exports.setNoSpotifyPlaylistSongs = setNoSpotifyPlaylistSongs;
 			exports.setArrayOfAllSongs = setArrayOfAllSongs;
-			exports.getSearchString = getSearchString;
 			exports.removeTermFromCurrentlySetTermsArray = removeTermFromCurrentlySetTermsArray;
 			exports.setTagCloudResetDueToSimialrityChangeIsNeededToFalse = setTagCloudResetDueToSimialrityChangeIsNeededToFalse;
 			exports.setArtistStartYearBefore = setArtistStartYearBefore;
@@ -183,6 +177,8 @@ var throbberTagCloud = null;
 var trackCoverScript = null;
 
 var customPlaylistScript = null;
+
+var yearSliderScript = null;
 
 var models = null;
 
@@ -259,6 +255,7 @@ function returnGuiDisabled1(){
 function setArtistStartYearBefore1(year){
 	console.log('ECHONEST DYNAMIC  setArtistStartYearBefore1() was called with year: '+year);
 	currentArtistStartYearBefore = year;
+	yearSliderScript.setArtistStartYearBefore(year);
 	restartSessionWithCurrentGuiState();
 	}
 
@@ -266,19 +263,22 @@ function setArtistStartYearBefore1(year){
 function  setArtistStartYearAfter1(year){
 	console.log('ECHONEST DYNAMIC  setArtistStartYearAfter1() was called with year: '+year);
 	currentArtistStartYearAfter = year;
+	yearSliderScript.setArtistStartYearAfter(year);
 	restartSessionWithCurrentGuiState();
 }
 
 function setArtistEndYearBefore1(year){
 	console.log('ECHONEST DYNAMIC  setArtistEndYearBefore1() was called with year: '+year);
 	 currentArtistEndYearBefore = year;
+	 yearSliderScript.setArtistEndYearBefore(year);
 	 restartSessionWithCurrentGuiState();
 }
 
 
 function setArtistEndYearAfter1(year){
 	console.log('ECHONEST DYNAMIC  setArtistEndYearAfter1() was called with year: '+year);
-	currentArtistEndYearAfter;
+	currentArtistEndYearAfter = year;
+	yearSliderScript.setArtistEndYearAfter(year);
 	restartSessionWithCurrentGuiState();
 	
 }
@@ -306,6 +306,7 @@ function removeTermFromCurrentlySetTermsArray1(tagToBeRemoved){
 	
 	console.log('ECHONEST DYNAMIC removeTermFromCurrentlySetTermsArray() state of set Terms Array: '+currentlySetTagCloudTermsArray);
 	
+	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
 	restartSessionWithCurrentGuiState();
 }
 
@@ -329,8 +330,14 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	similarityModeIsSong = false;
 	similarityModeIsPlaylist = true;
 	
+	yearSliderScript.reset();
+	yearSliderScript.setSimilarityMode(3);
+	yearSliderScript.setSimilarityBase(selectedUserPlaylistName);
+	
 	songsAlreadyUsed = new Array();
 	currentlySetTagCloudTermsArray= new Array();
+	
+	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
 	
 	resetSliders();
 	$("#adventurousnessSlider").slider( "value", 20 );
@@ -339,8 +346,6 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	
 	//selectedUserPlaylistName = tasteProfileIDandNameObject.name;
 	
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
 
 	var randomNumber = Math.floor(Math.random() * 100);
 	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='
@@ -420,6 +425,7 @@ function enableGUI(){
 
 function setNoSpotifyPlaylistSongs1(setValue) {
 	noSpotifyPlaylistSongs = setValue;
+	yearSliderScript.excludePlaylistSongs(setValue);
 	console.log('echonestDynamic noSpotifyPlaylistSongs was set to: '
 			+ noSpotifyPlaylistSongs);
 }
@@ -429,11 +435,12 @@ function setBanedArtistId1(setValue) {
 	if (setValue) {
 		banedSeedArtistId = seedArtistSpotifyId;
 		trackCoverScript.setBannedSeedArtist(banedSeedArtistId);
-		
+		yearSliderScript.excludeSeedArtist(true);
 		console.log(' banedSeedArtistId was set to : ' + banedSeedArtistId);
 	} else {
 		banedSeedArtistId = null;
 		trackCoverScript.setBannedSeedArtist(null);
+		yearSliderScript.excludeSeedArtist(false);
 		console.log(' banedSeedArtistId was set to: ' + banedSeedArtistId);
 	}
 
@@ -481,6 +488,7 @@ function setTermFilter1(term) {
 
 	currentlySetTagCloudTermsArray.push(term);
 	
+	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
 	restartSessionWithCurrentGuiState();
 	
 	/*var randomNumber = Math.floor(Math.random() * 100);
@@ -530,6 +538,8 @@ function changeAdventurousness1() {
 
 	var adventurousnessSliderValue = $("#adventurousnessSlider")
 			.slider("value") / 100;
+	yearSliderScript.setAdventurousness(adventurousnessSliderValue*100);
+	
 	console.log('adventurousnessSliderValue:' + adventurousnessSliderValue);
 	var randomNumber = Math.floor(Math.random() * 100);
 
@@ -571,10 +581,10 @@ function changeArtistVariety1() {
 	// slider Value
 
 	var changeArtistVarietySliderValue = $("#artistVarietySlider").slider("value") / 100;
-	console.log('changeArtistVarietySliderValue:'
-			+ changeArtistVarietySliderValue);
+	console.log('changeArtistVarietySliderValue:'+ changeArtistVarietySliderValue);
+	yearSliderScript.setArtistVariety(changeArtistVarietySliderValue*100);
+	
 	var randomNumber = Math.floor(Math.random() * 100);
-	artistVariety = changeArtistVarietySliderValue*100;
 
 	// var artistIdsForPopularity = new Array();
 	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?session_id='
@@ -605,13 +615,10 @@ function changeArtistVariety1() {
 
 
 function changeArtistFamiliarity1(artistFamilarityLevel) {
-	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "
-					+ artistFamilarityLevel);
+	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "+ artistFamilarityLevel);
 	
 	artistPopularity = artistFamilarityLevel;
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
-
+	yearSliderScript.setArtistFamilarityLevel(artistFamilarityLevel);
 	//getConstraintsInfo();
 
 	//var minFamilarity = 0.0;
@@ -885,12 +892,10 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 }
 
 function changeArtistHotness1(artistHotnessLevel) {
-	console.log("changeArtistHotness() was called with artistHotnessLevel: "
-			+ artistHotnessLevel);
+	console.log("changeArtistHotness() was called with artistHotnessLevel: "+ artistHotnessLevel);
 	
 	artistTrendiness = artistHotnessLevel;
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
+	yearSliderScript.setArtistHotnessLevel(artistHotnessLevel);
 
 	getPlaylistInfo('constraints');
 
@@ -1193,13 +1198,10 @@ function changeArtistHotness1(artistHotnessLevel) {
  */
 
 function changeSongHotness1(songHotnessLevel) {
-	console.log("changeSongHotness() was called with songHotnessLevel: "
-			+ songHotnessLevel);
+	console.log("changeSongHotness() was called with songHotnessLevel: "+ songHotnessLevel);
 	
 	songTrendiness = songHotnessLevel;
-	
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
+	yearSliderScript.setSongHotnessLevel(songHotnessLevel);
 
 	//var minSongHotness = 0.0;
 	//var maxSongHotness = 1.0;
@@ -1452,6 +1454,11 @@ function changeToGenreSimilarity1(genreName) {
 	similarityModeIsSong = false;
 	similarityModeIsPlaylist = false;
 	
+	yearSliderScript.reset();
+	yearSliderScript.setSimilarityMode(2);
+	yearSliderScript.setSimilarityBase(selectedgenre);
+	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
+	
 	$("#tags1").blur(); 
 
 	// get the popularity range for a given genre
@@ -1460,8 +1467,6 @@ function changeToGenreSimilarity1(genreName) {
 	 * getArtistFamilarityRangeforGenre(genreName);
 	 * getSongHotnesRangeforGenre(genreName);
 	 */
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
 	
 	var randomNumber = Math.floor(Math.random() * 100);
 	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='
@@ -2046,7 +2051,7 @@ function getArtistFamilarityRangeforGenre(genreName) {
 }
 
 function startNewSession1(models1, throbber1, trackCover1,
-		apiKey/* , playlistInformation1 */) {
+		apiKey, yearSlider1/* , playlistInformation1 */) {
 	console.log("New session is started");
 
 	echonestApiKey = apiKey.getApiKey();
@@ -2057,7 +2062,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 
 
 	trackCoverScript = trackCover1;
-
+	yearSliderScript = yearSlider1;
 
 	songsAlreadyUsed = new Array();
 
@@ -2087,10 +2092,11 @@ function startNewSession1(models1, throbber1, trackCover1,
 	
 		artistName = models.player.track.artists[0].name;
 		
-		trackName = models.player.track.name;
+		yearSliderScript.reset();
+		yearSliderScript.setSimilarityMode(0);
+		yearSliderScript.setSimilarityBase(artistName);
 		
-		//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-		//customPlaylistScript.createNewPlaylist();// create new playlist
+		trackName = models.player.track.name;
 		
 		$("#artistSimilarityInfo").text(artistName);
 		$("#similarityInfo").text(
@@ -2188,6 +2194,10 @@ function changeSeedArtistSimilarity1() {
 		artistName = models.player.track.artists[0].name;
 
 		trackName = models.player.track.name;
+		
+		yearSliderScript.reset();
+		yearSliderScript.setSimilarityMode(0);
+		yearSliderScript.setSimilarityBase(artistName);
 
 		$("#artistSimilarityInfo").text(artistName);
 		$("#similarityInfo").text(
@@ -2217,17 +2227,17 @@ function changeSeedArtistSimilarity1() {
 		// Format: spotify-WW:track:3L7BcXHCG8uT92viO6Tikl
 		// replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
 		// console.log('Replaced ID: '+replacedSongID);
-		
-		//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-		//customPlaylistScript.createNewPlaylist();// create new playlist
+		console.log("-----checkbox: "+$('#excludeSeedArtistCheckBox').prop('checked'));
 
 		if ($('#excludeSeedArtistCheckBox').prop('checked')) {
 
+			console.log("-----EXCLUDE SEED ARTIST");
 			banedSeedArtistId = seedArtistSpotifyId;
 			trackCoverScript.setBannedSeedArtist(banedSeedArtistId);
+			yearSliderScript.excludeSeedArtist(true);
 
 		}
-		;
+		
 
 		/*
 		 * if( $('#excludeSeedArtistCheckBox').prop('checked')){
@@ -2330,6 +2340,10 @@ function changeSeedSongSimilarity1() {
 		artistName = models.player.track.artists[0].name;
 
 		trackName = models.player.track.name;
+		
+		yearSliderScript.reset();
+		yearSliderScript.setSimilarityBase(1);
+		yearSliderScript.setSimilarityBase(trackName + '" by ' + artistName);
 
 		$("#songSimilarityInfo").text('"' + trackName + '" by ' + artistName);
 		$("#similarityInfo").text(
@@ -2360,16 +2374,16 @@ function changeSeedSongSimilarity1() {
 		// replacedSongID = 'spotify-WW:track:3L7BcXHCG8uT92viO6Tikl';
 		// console.log('Replaced ID: '+replacedSongID);
 
-		//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-		//customPlaylistScript.createNewPlaylist();// create new playlist
-		
+		console.log("-----checkbox: "+$('#excludeSeedArtistCheckBox').prop('checked'));
 		if ($('#excludeSeedArtistCheckBox').prop('checked')) {
 
+			console.log("-----EXCLUDE SEED ARTIST");
 			banedSeedArtistId = seedArtistSpotifyId;
 			trackCoverScript.setBannedSeedArtist(banedSeedArtistId);
+			yearSliderScript.excludeSeedArtist(true);
 
 		}
-		;
+		
 
 		var randomNumber = Math.floor(Math.random() * 100);
 
@@ -2441,9 +2455,14 @@ function changeToArtistSimilarity1() {
 	similarityModeIsArtist = true;
 	similarityModeIsSong = false;
 	similarityModeIsPlaylist = false;
-
+	
 	songsAlreadyUsed = new Array();
 	currentlySetTagCloudTermsArray= new Array();
+	
+	yearSlider.reset();
+	yearSliderScript.setSimilarityMode(0);
+	yearSliderScript.setSimilarityBase(artistName);
+	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
 	/*
 	 * var track = models1.player.load('track'); console.log('TRACK= '+track);
 	 * var artist = models1.player.track.artists[0]; console.log('ARTIST:
@@ -2494,9 +2513,6 @@ function changeToArtistSimilarity1() {
 	
 	resetSliders();
 	
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
-
 	// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
 	// var artist_id= models1.player.track.artists[0].toString();
@@ -2586,9 +2602,15 @@ function changeToSongSimilarity1() {
 	similarityModeIsArtist = false;
 	similarityModeIsSong = true;
 	similarityModeIsPlaylist = false;
-
+	
 	songsAlreadyUsed = new Array();
 	currentlySetTagCloudTermsArray= new Array();
+	
+	yearSlider.reset();
+	yearSliderScript.setSimilarityMode(1);
+	yearSliderScript.setSimilarityBase(trackName + '" by ' + artistName);
+	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
+
 	
 	var cover = document.getElementById('albumCoverContainer');
 
@@ -2620,9 +2642,6 @@ function changeToSongSimilarity1() {
 	
 	resetSliders();
 	
-	//customPlaylistScript.setSearchAttributes(getSearchString());//set search hint
-	//customPlaylistScript.createNewPlaylist();// create new playlist
-
 	var replacedSongID = song_id.replace('spotify', 'spotify-WW');
 
 	var randomNumber = Math.floor(Math.random() * 100);
@@ -2699,11 +2718,6 @@ function getNextSong1() {
 	var id = null;
 	var echonestArtistId = null;
 	var replacedTrackId  = null;
-	
-	if(trackCoverScript.isSearchStringSet){
-		trackCoverScript.setSearchString(getSearchString1());
-		console.log("------setting search string");
-	}
 	
 	
 	if(!guiDisabled){
@@ -3884,90 +3898,3 @@ function checkResponse(data) {
 	return false;
 }
 
-
-
-
-
-function getSearchString1(){
-	var returnstring = "<div id='info'>These recommendations are based upon ";
-	if (similarityModeIsGenre){
-		returnstring = returnstring+"<i>genre</i> "+"<b>"+selectedgenre+"</b>";
-		
-	}
-	else if (similarityModeIsArtist){
-		returnstring = returnstring+"<i>artist</i>"+" <b>"+artistName+"</b>";
-		if ($('#excludeSeedArtistCheckBox').prop('checked')){
-			returnstring = returnstring+" (artist's songs excluded)";
-		}
-	
-	}
-	else if (similarityModeIsSong){
-		returnstring = returnstring+"<i>song</i> <b>"+trackName+"</b> by <b> "+artistName+"</b>";
-		if ($('#excludeSeedArtistCheckBox').prop('checked')){
-			returnstring = returnstring+" (artist's songs excluded)";
-		}
-	}
-	else if (similarityModeIsPlaylist){
-		returnstring = returnstring+"<i>playlist</i> <b> "+selectedUserPlaylistName+"</b>";
-	}
-	if ($('#excludeSpotifyPlaylistSongsCheckBox').prop('checked')){
-		returnstring = returnstring+"<br/> Songs from my spotify playlists are excluded.";
-	}
-	
-	returnstring = returnstring +"<br/>Tracks were released between "+trackCoverScript.getYearRange()+"<br/>";
-	
-	
-		var value1 = songTrendiness;
-		switch(songTrendiness){
-			case 0: value1 = "Off"; break;
-			case 1: value1 = "Lowest"; break;
-			case 2: value1 = "Low"; break;
-			case 3: value1 = "Medium"; break;
-			case 4: value1 = "High"; break;
-			case 5: value1 = "Highest"; break;
-		}
-		returnstring = returnstring+"Song Trendiness:<i>( "+value1+" )    </i>   ";
-	
-		var value2;
-		switch(artistTrendiness){
-			case 0: value2 = "Off"; break;
-			case 1: value2 = "Lowest"; break;
-			case 2: value2 = "Low"; break;
-			case 3: value2 = "Medium"; break;
-			case 4: value2 = "High"; break;
-			case 5: value2 = "Highest"; break;
-		}
-		returnstring = returnstring+"Artist Trendiness:<i>( "+value2+" )    </i>   ";
-	
-		var value3;
-		switch(artistPopularity){
-			case 0: value3 = "Off"; break;
-			case 1: value3 = "Lowest"; break;
-			case 2: value3 = "Low"; break;
-			case 3: value3 = "Medium"; break;
-			case 4: value3 = "High"; break;
-			case 5: value3 = "Highest"; break;
-		}
-		returnstring = returnstring+"Artist Popularity:<i>( "+value3+" )    </i>   ";
-	
-	if (artistVariety != 50){
-		returnstring = returnstring+"Artist Variety:<i>( "+parseInt(artistVariety)+" ) </i>";
-	}
-	
-	if(currentlySetTagCloudTermsArray.length != 0){
-		returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
-		for(var i=0; i< currentlySetTagCloudTermsArray.length;i++){
-			
-			returnstring = returnstring+" " +currentlySetTagCloudTermsArray[i];
-			
-			if((i+1)!=currentlySetTagCloudTermsArray.length){
-				returnstring = returnstring+", "
-			}
-		}
-	}
-	
-	returnstring = returnstring+"</div>"
-	
-	
-	return returnstring;
-}

@@ -8,7 +8,6 @@
  
  var trackIdsforPlaylist = new Array();
  
- var searchstring = null;
 
 require([
   '$api/models',
@@ -73,15 +72,13 @@ require([
                        //save the div to list
             		   playableCovers.push(target1);  
             		   
-            		   //add year
+            		   //add year to info
             		   yearSlider.addYear(track);
             		   
             		   console.log('size of playableCovers: '+playableCovers.length);
                      
             		   //if there is enough covers to load
             		   if(playableCovers.length == numberOfSongs){
-            			   
-            			   customplaylist.setSearchAttributes(searchstring);
             			   
             			   //create a temporary playlist 
             			   customplaylist.createNewPlaylist(trackIdsforPlaylist);
@@ -101,12 +98,8 @@ require([
             			   //add a new cover page to the pagination
             			   setupSwitchViewButton.newCoverPage();
                     	
-            			   
-            			   
             			   //reset track ID array
             			   trackIdsforPlaylist = new Array(); 
-            			   searchstring = null;
-            			   yearSlider.reset();
             		   }
             		   
             	   });//end load artist
@@ -146,31 +139,11 @@ require([
 				 
   };  
   
-  /**
-   * Set the search string for playlist view
-   */
-  var setSearchString = function(searchString){
-	  searchstring = searchString;
-  }
-  
-  /**
-   * if the search string has been already set
-   */
-  var isSearchStringSet = function(){
-	  return (searchstring != null);
-  }
-  
-  var getYearRange = function(){
-	  return (yearSlider.getMinValue()+" and "+ yearSlider.getMaxValue())
-  }
 
   exports.setLoopContinueToTrue=setLoopContinueToTrue;  
   exports.checkLoopContinue = checkLoopContinue;  
   exports.getTrackCover = getTrackCover;
   exports.setBannedSeedArtist = setBannedSeedArtist;
-  exports.setSearchString = setSearchString;
-  exports.isSearchStringSet = isSearchStringSet;
-  exports.getYearRange = getYearRange;
   
 });
 
