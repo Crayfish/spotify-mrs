@@ -2606,7 +2606,7 @@ function changeToSongSimilarity1() {
 	songsAlreadyUsed = new Array();
 	currentlySetTagCloudTermsArray= new Array();
 	
-	yearSlider.reset();
+	yearSliderScript.reset();
 	yearSliderScript.setSimilarityMode(1);
 	yearSliderScript.setSimilarityBase(trackName + '" by ' + artistName);
 	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
