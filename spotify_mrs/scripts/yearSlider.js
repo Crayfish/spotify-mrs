@@ -1,3 +1,8 @@
+/**
+ * Information collector.
+ * collects the user settings and information for the currently generated playlist.
+ */
+
 require([
   '$api/models'
 ], function(models) {
@@ -163,7 +168,7 @@ require([
 	}
 	
 	/**
-	 * Reset min and max year values.
+	 * Reset all values but the checkboxes.
 	 */
 	function reset1(){
 		min = 2013;
@@ -178,11 +183,18 @@ require([
 		artistEndYearAfter		= "off";
 	}
 	
+	/**
+	 * reset only year values
+	 */
 	function resetYear(){
 		min = 2013;
 		max = 1900;
 	}
 	
+	/**
+	 * Get the collected playlist information as formatted string
+	 * @returns {String}
+	 */
 	function getInfo1(){
 		var returnstring = "<div id='info'>These recommendations are based upon ";
 		
@@ -331,7 +343,6 @@ require([
 	
 	function setArtistEndYearBefore1(year1){
 		artistEndYearBefore = year1;
-		console.log("yearslider edyearbefore "+artistEndYearBefore);
 	}
 	
 	function setArtistEndYearAfter1(year1){
