@@ -10,7 +10,6 @@ require([
   'scripts/setupSwitchViewButton',
   'scripts/setupGenreFilter',
   'scripts/yearPickerSetup',
-  //'scripts/setUpSimilarityAccordion',
   'scripts/echonestGenreData', 
   'scripts/customplaylist',
   'scripts/jPagesSetup',
@@ -22,85 +21,76 @@ require([
   
 ], function( models, apiKey, generatePlaylistButton,setupSlider, 
 		echonestDynamic,setupSwitchViewButton, setupGenreFilter,yearPickerSetup,
-		/*setUpSimilarityAccordion,*/ echonestGenreData, customplaylist, 
-		jPagesSetup, setupNoveltyCheckBoxes, playlistInformation, yearSlider, setupSimilarityRadioButtons, setupRandomPlayButton) {
-  'use strict';
+		echonestGenreData, customplaylist,jPagesSetup, setupNoveltyCheckBoxes, 
+		playlistInformation, yearSlider, setupSimilarityRadioButtons, setupRandomPlayButton) {
+	'use strict';
  
-  	  /**load a page when the app is started*/
-  	  $(document).ready(loadpage()); 
+	/**load a page when the app is started*/
+	$(document).ready(loadpage()); 
   	  
-  	  /**detect when app goes offline*/
-	  models.session.addEventListener('change', loadpage);
+	/**detect when app goes offline*/
+	models.session.addEventListener('change', loadpage);
 	  
 	 
-	  /**
-	   * Check if connected to the internet and if a track is currently playing.
-	   * Load a page according to the state: 
-	   * 	- online : 			pages/main.html
-	   * 	- offline: 			pages/offline.html
-	   * 	- nothing playing: 	pages/intro.html
-	   */
-	  function loadpage(){
-		  models.session.load('online').done(function(session){
-			  var online = models.session.online;
-			  
-			  if(online){
-				  console.log("app is online");
-				  
-				  var playing;
-				  models.player.load('track').done(function(player){
-					  playing = models.player.track;
-					  console.log("currently playling: "+playing);
+	/**
+	 * Check if connected to the internet and if a track is currently playing.
+	 * Load a page according to the state: 
+	 * 	- online : 			pages/main.html
+	 * 	- offline: 			pages/offline.html
+	 * 	- nothing playing: 	pages/intro.html
+	 */
+	function loadpage(){
+		models.session.load('online').done(function(session){
+			var online = models.session.online;
+			
+			if(online){
+				console.log("app is online");
+				
+				var playing;
+				models.player.load('track').done(function(player){
+					playing = models.player.track;
+					console.log("currently playling: "+playing);
+					
+					
+					$('#main').load('pages/main.html',function(){
+						console.log("main loaded");
+						init();
+					});
 					  
-					  
-					  $('#main').load('pages/main.html',function(){
-						  console.log("main loaded");
-						  init();
-					  });
-					  
-					  if(!playing){
+					if(!playing){
 						  
-						  $('#overlay-wrapper').load('pages/intro.html',function(){
-							  console.log("no tracks playing. showing intro.");
-							  models.player.addEventListener('change', removeoverlay);
-							  setupRandomPlayButton.setupPlayButton();
-						  });
-					  }
+						$('#overlay-wrapper').load('pages/intro.html',function(){
+							console.log("no tracks playing. showing intro.");
+							models.player.addEventListener('change', removeoverlay);
+							setupRandomPlayButton.setupPlayButton();
+						});
+					}
 					  
-				  });
+				});
 				  
-				  
-			  }
-			  else if(!online){
-				  console.log("app is offline");
-				  $('#main').load('pages/offline.html',function(){
-					  console.log("no internet connection. offline page showing.");
-				  });
-			  }
-		  });
-	  }
+			}
+			else if(!online){
+				console.log("app is offline");
+				$('#main').load('pages/offline.html',function(){
+					console.log("no internet connection. offline page showing.");
+				});
+			}
+		});
+	}
   
-	  /**
-	   * Init the scripts.
-	   */
-	  function init(){
+	/**
+	 * Init the scripts.
+	 */
+	function init(){
 		  
-		  console.log("init scripts");
-		// heading.writeHeading();
-		  
-		  
-		//echonestGenreData.getGenreData();
-		 
+		console.log("init scripts");
 		  
 		//enter developer name here: Marc, Tom or Julius
 		apiKey.setEchonestApiKey('Marc'); 
 		  
+		
 		playlistInformation.setUpPlaylistInformation();
-		
-		//echonestTasteProfile.initialCreateOfAllTasteProfile();
-		//echonestTasteProfile.deleteAllTasteProfiles();
-		//echonestTasteProfile.getBasicInformationOfAllTasteProfiles();
-		
+
 		setupGenreFilter.setupGenreFilter(echonestDynamic);
 
 		yearPickerSetup.setUpYearPicker();
@@ -108,7 +98,6 @@ require([
 		setupNoveltyCheckBoxes.setUpExcludeSeedArtistCheckBox();
 		setupNoveltyCheckBoxes.setUpNoSongsFromSpotifyCollectionCheckBox();
 
-		//generatePlaylistButton.setUpNewSeedButton();
 		generatePlaylistButton.setUpNextSongsButton();
 
 		setupSimilarityRadioButtons.setupSimilarityButtons();
@@ -124,55 +113,33 @@ require([
 
 		echonestDynamic.startNewSession();
 
-		//setupGenreFilter.setupGenreFilter(echonestDynamic);
-		//setupPlaylistFilter.setupPlaylistFilter(echonestDynamic);
-		
-		
-		//setUpSimilarityAccordion.setupAccordion();
-
-		//setUpSimilarityAccordion.setupChangeSeedArtistButton();
-
-		//setUpSimilarityAccordion.setupChangeSeedSongButton();
-
 		customplaylist.setupSubscribeButton();
-		//customplaylist.createNewPlaylist();
 		
-		//yearSlider.setupYearSlider();
-
-		//setupTagCloud.addTagCloudEventHandler(echonestDynamic);
-		// generatePlaylistButton.setUpNewSeedButton();
-		//generatePlaylistButton.setUpNextSongsButton();
-		// setupSimilarityRadioButtons.setupSimilarityButtons();
-		//setupSlider.setUpPopSlider(echonest);
-		// setupSlider.setUpHotSlider(echonest);
-		 
-		
-		 $(document).tooltip({
-			 content: function() {
-		 
-             var element = $( this );
-             if ( element.is( "[title]" ) ) {
-                 return element.attr( "title" );
-             }
-			 }
-         });
-	  }
+		//setup tooltip function
+		$(document).tooltip({
+			content: function() {
+				var element = $( this );
+				if ( element.is( "[title]" ) ) {
+					return element.attr( "title" );
+				}
+			}
+		});
+	}
 	  
-	  function removeoverlay(){
-		  var playing;
-		  models.player.load('track').done(function(player){
-			  playing = models.player.track;
-		  });
-		  if(playing){
-			  $('#intro').remove();
-			  $('#main').load('pages/main.html',function(){
-				  console.log("main loaded");
-				  init();
-				  models.player.removeEventListener('change', removeoverlay);
-			  });
-		  }
+	function removeoverlay(){
+		var playing;
+		models.player.load('track').done(function(player){
+			playing = models.player.track;
+		});
+		if(playing){
+			$('#intro').remove();
+			$('#main').load('pages/main.html',function(){
+				console.log("main loaded");
+				init();
+				models.player.removeEventListener('change', removeoverlay);
+			});
+		}
 		  
-	  }
-	
+	}
 	
 });
