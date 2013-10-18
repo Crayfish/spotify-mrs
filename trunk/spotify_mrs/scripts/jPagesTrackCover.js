@@ -1,11 +1,7 @@
  var playableCovers = new Array();
-
  var numberOfSongs = 12;
- 
  var loopContinue = true;
- 
  var bannedSeedArtist = null;
- 
  var trackIdsforPlaylist = new Array();
  
 
