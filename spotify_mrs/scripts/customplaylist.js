@@ -22,10 +22,6 @@ require([
 	  showPlaylist1(List);
   };
   
-  var setSearchAttributes = function(searchattributes){
-	  setSearchAttributes1(searchattributes);
-  };
-  
   var setActivePage = function(pagenr){
 	  setActivePage1(pagenr);
   };
@@ -34,7 +30,6 @@ require([
   exports.createNewPlaylist = createNewPlaylist;
   exports.setupSubscribeButton = setupSubscribeButton;
   exports.showPlaylist = showPlaylist;
-  exports.setSearchAttributes = setSearchAttributes;
   exports.setActivePage = setActivePage;
   
 });//end require
@@ -87,20 +82,6 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 					console.log("all tracks added to the playlist "+addedManyTracks.uri);
 					showPlaylist1(List, yearSlider);
 				});
-				
-//				for(var i=0; i<idsArray.length; i++){
-//					var track = models1.Track.fromURI(idsArray[i]);
-//					
-//					track.load('name').done(function(track) {
-//							playlist1.tracks.add(track);
-//							processed = processed+1;
-//							console.log(processed+". CUSTOM PLAYLIST Track added to playlist: "+track.name);
-//							if(processed == 12){
-//								showPlaylist1(List);
-//							}
-//							
-//					});
-//				}
 				
 			});
 		});
@@ -193,9 +174,6 @@ function clearPlaylist(models1){
 	}
 	
 	
-	
-	
-
 }
 
 
@@ -233,14 +211,6 @@ function setupSubscribeButton1(models1){
 	
 }
 
-
-/**
- * Set the search string for the current search. Used as hint in the playlist view.
- * @param searchattributes collection of string literals
- */
-function setSearchAttributes1(searchattributes){
-	searchstring = searchattributes;
-}
 
 
 /**
