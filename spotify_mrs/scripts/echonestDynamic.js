@@ -380,9 +380,21 @@ function enableGUI(){
 	$('.rulerContent').find(':input').prop('disabled',false);
 	$( "#adventurousnessSlider" ).slider( "option", "disabled", false );
 	$( "#artistVarietySlider" ).slider( "option", "disabled", false );
+	
+	
+	//enable only if not in Off Position
+	if( $("#slider-songHot").slider( "option", "value" ) != 0){
+		$( "#slider-songHot" ).slider( "option", "disabled", false );
+	};
+	
+	if( $("#slider-hot").slider( "option", "value" ) != 0){
+		$( "#slider-hot" ).slider( "option", "disabled", false );
+	};
+	
+	if( $("#slider-pop").slider( "option", "value" ) != 0){
 	$( "#slider-pop" ).slider( "option", "disabled", false );
-	$( "#slider-hot" ).slider( "option", "disabled", false );
-	$( "#slider-songHot" ).slider( "option", "disabled", false );
+	}
+	
 }
 
 

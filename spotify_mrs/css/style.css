@@ -38,6 +38,14 @@ h2 {
 
 
 
+ .ui-autocomplete {
+width: 170px;
+max-height: 400px;
+overflow-y: auto;
+/* prevent horizontal scrollbar */
+overflow-x: hidden;
+}
+
 .albumCoverContainer{
 	overflow: hidden;
 	/*border: 1px solid #a1a1a1;*/
