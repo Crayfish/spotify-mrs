@@ -51,7 +51,7 @@ require([
 						$( "#tags" ).autocomplete({
 							minLength: 0,
 							source: genreArray,
-	           		
+							
 							select: function( event, ui){
 	           			
 								console.log('EventHandler Genre List sent event');
