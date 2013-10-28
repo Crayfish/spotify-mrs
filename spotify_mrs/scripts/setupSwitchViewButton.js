@@ -92,7 +92,7 @@ function setupFlipButton1(customplaylist){
 			//rebuild pagination
 			$("#holder").jPages("destroy").jPages({
 				containerID   : "albumCoverContainer",
-				perPage       :12,
+				perPage       :13,
 				first       : "first",
 				previous    : "previous",
 				next        : "next",
@@ -131,7 +131,7 @@ function newCoverPage1(){
 	//update cover pagination
 	$("#holder").jPages("destroy").jPages({
 		containerID   : "albumCoverContainer",
-		perPage       :12,
+		perPage       :13,
 		first       : "first",
 		previous    : "previous",
 		next        : "next",

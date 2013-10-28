@@ -22,7 +22,7 @@ require([
    
 	  //get the container for the covers and set width
 	  var covercontainer = document.getElementById('albumCoverContainer');
-	  covercontainer.setAttribute('style', 'width: 645px;');
+	 // covercontainer.setAttribute('style', 'width: 645px;');
     
 	  //load track from id
 	 // var id = trackID.replace('-WW','');
@@ -78,6 +78,22 @@ require([
             			   
             			   //create a temporary playlist 
             			   customplaylist.createNewPlaylist(trackIdsforPlaylist);
+            			   
+            			   //add info to the coverview
+            			   var infodiv = document.createElement('div');
+            				infodiv.className="playlistinfo";
+            				infodiv.innerHTML = 
+            					'<img id="infobutton" src="img/info.png" title="Recommendation made upon the following settings">'
+            					+ yearSlider.getInfo();
+            				$('#albumCoverContainer').append(infodiv);
+            				
+            				//add Info to the playlistview
+            				var infodiv = document.createElement('div');
+            				infodiv.className="playlistinfo";
+            				infodiv.innerHTML = 
+            					'<img id="infobutton" src="img/info.png" title="Recommendation made upon the following settings">'
+            					+ yearSlider.getInfo();
+            				$('#playlistContainer').append(infodiv);
             			   
             			   
             			   //add the covers to the container
