@@ -200,6 +200,9 @@ function setUpSongHotSlider1(echonestDynamic){
 	  //disable for app start
 	  $("#slider-songHot").slider( "value", 0 );
 	  $("#slider-songHot").slider( "option", "disabled", true );
+	  
+	  
+	  
 }
 
 

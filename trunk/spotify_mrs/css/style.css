@@ -50,13 +50,13 @@ overflow-x: hidden;
 	overflow: hidden;
 	/*border: 1px solid #a1a1a1;*/
 	/*float:left;*/
-	width:645px;
-	/*height:645px;*/
+	width:1000px;
+	height:300px;
 	
 }
 
 
-
+/* 
 .rulerContainer{
 	display: inline-block;
 	float:right;
@@ -72,7 +72,7 @@ overflow-x: hidden;
 	padding : 0px;
 	
 	
-}
+} */
 
 input  
 { 
@@ -124,10 +124,11 @@ border-radius: 5px;
 .main{
 	overflow: hidden;
 	
+	
 }
 
 .main .leftside{
-	width:645px;
+	width:1000px;
 	float:left;
 	
 }
@@ -142,18 +143,18 @@ border-radius: 5px;
 .holder{
 	margin-left:auto;
 	margin-right:auto;	
-	position:relative;
+	position:center;
 	width:100%;
 	text-align:center;
 }
 
-.p_holder{
+/* .p_holder{
 	margin-left:auto;
 	margin-right:auto;	
 	position:relative;
 	width:100%;
 	text-align:center;
-}
+} */
 
 .playlistHeader{
 	height:30px;
@@ -199,7 +200,7 @@ border-radius: 5px;
 
 
 .main-wrapper{
-	width:860px;
+	width:1000px;
 	height:100%;
 	margin-left:auto;
 	margin-right:auto;
@@ -237,8 +238,9 @@ border-radius: 5px;
 
 #flipbutton{
 	color:red;
-	margin-left:300px;
+	margin-left:auto;
 	margin-right:auto;
+	position: relative
 	
 	margin-bottom:20px;
 	z-index:11111;

@@ -51,6 +51,8 @@ var searchstring = "hello world<br>thisis a new line";
 
 var pageCount = 1;
 
+var infoStringArray = new Array();
+
 /**
  * Create a new empty playlist, and a new list in the playlist accordion.
  * The different playlists are saved in an array.
@@ -140,12 +142,16 @@ function showPlaylist1(List, yearSlider){
 			list = List.forPlaylist(playlist, {height:"dynamic",style:"rounded",fields: ["ordinal","star","share", "track","time", "artist", "album"]});
 			document.getElementById('playlistContainer').appendChild(list.node);
 			list.init();
-			var infodiv = document.createElement('div');
+			
+			
+			
+			
+		/*	var infodiv = document.createElement('div');
 			infodiv.className="playlistinfo";
 			infodiv.innerHTML = 
 				'<img id="infobutton" src="img/info.png" title="Recommendation made upon the following settings">'
 				+ yearSlider.getInfo();
-			document.getElementById('playlistContainer').appendChild(infodiv);
+			$('#playlistContainer').prepend(infodiv);*/
 				
 		}
 		else{
