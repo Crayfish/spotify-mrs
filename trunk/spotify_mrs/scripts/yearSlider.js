@@ -210,10 +210,10 @@ require([
 		}
 		
 		if(excludePlaylist){
-			returnstring = returnstring + "<br/> Songs from my spotify playlists are excluded.";
+			returnstring = returnstring + ". Songs from my spotify playlists are excluded.";
 		}
 		
-		returnstring = returnstring +"<br/>Tracks were released between "+min+" and "+max;
+		returnstring = returnstring +". Tracks were released between "+min+" and "+max;
 		
 		var value1;
 		switch(songHotnessLevel){
@@ -224,7 +224,7 @@ require([
 			case 4: value1 = "High"; break;
 			case 5: value1 = "Highest"; break;
 		}
-		returnstring = returnstring+"<br/>Song Trendiness:<i>( "+value1+" )    </i>   ";
+		returnstring = returnstring+". Song Trendiness:<i>( "+value1+" )    </i>   ";
 	
 		var value2;
 		switch(artistHotnessLevel){
@@ -235,7 +235,7 @@ require([
 			case 4: value2 = "High"; break;
 			case 5: value2 = "Highest"; break;
 		}
-		returnstring = returnstring+"<br/>Artist Trendiness:<i>( "+value2+" )    </i>   ";
+		returnstring = returnstring+". Artist Trendiness:<i>( "+value2+" )    </i>   ";
 	
 		var value3;
 		switch(artistFamilarityLevel){
@@ -246,18 +246,18 @@ require([
 			case 4: value3 = "High"; break;
 			case 5: value3 = "Highest"; break;
 		}
-		returnstring = returnstring+"<br/>Artist Popularity:<i>( "+value3+" )    </i>   ";
+		returnstring = returnstring+". Artist Popularity:<i>( "+value3+" )    </i>   ";
 	
 		if (artistVariety != 50){
-			returnstring = returnstring+"<br/>Artist Variety:<i>( "+parseInt(artistVariety)+" )     </i>";
+			returnstring = returnstring+". Artist Variety:<i>( "+parseInt(artistVariety)+" )     </i>";
 		}
 		
 		if(adventurousness!=20){
-			returnstring = returnstring+"<br/>Adventurousness:<i>( "+parseInt(adventurousness)+" ) </i>";
+			returnstring = returnstring+". Adventurousness:<i>( "+parseInt(adventurousness)+" ) </i>";
 		}
 		
 		if(artistterms.length != 0){
-			returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
+			returnstring = returnstring+ ". Songs are played by artists matching the following descriptions: ";
 			for(var i=0; i< artistterms.length;i++){
 				
 				returnstring = returnstring+" " +artistterms[i];
@@ -269,19 +269,19 @@ require([
 		}
 		
 		if(artistStartYearBefore!="off"){
-			returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>before</i> "+artistStartYearBefore;
+			returnstring = returnstring + ". Artists of these tracks <i>started</i> recording music <i>before</i> "+artistStartYearBefore;
 		}
 		
 		if(artistStartYearAfter!="off"){
-			returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>after</i> "+artistStartYearAfter;
+			returnstring = returnstring + ". Artists of these tracks <i>started</i> recording music <i>after</i> "+artistStartYearAfter;
 		}
 		
 		if(artistEndYearBefore!="off"){
-			returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>before</i> "+artistEndYearBefore;
+			returnstring = returnstring + ". Artists of these tracks <i>ended</i> recording music <i>before</i> "+artistEndYearBefore;
 		}
 		
 		if(artistEndYearAfter!="off"){
-			returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>after</i> "+artistEndYearAfter;
+			returnstring = returnstring + ". Artists of these tracks <i>ended</i> recording music <i>after</i> "+artistEndYearAfter;
 		}
 		
 		console.log(artistStartYearBefore+" "+artistStartYearAfter+" "+artistEndYearBefore+" "+artistEndYearAfter);
