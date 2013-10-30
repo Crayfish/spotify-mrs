@@ -240,14 +240,20 @@ border-radius: 5px;
 	color:red;
 	margin-left:auto;
 	margin-right:auto;
-	position: relative
-	
+	position: relative;
 	margin-bottom:20px;
 	z-index:11111;
 	text-decoration:none;
 	height:30px;
 	background-color: inherit;
 }
+
+#flipbuttonwrapper{
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+	text-align: center;
+	}
 
 .ui-slider-tick-mark{
     display:inline-block;
