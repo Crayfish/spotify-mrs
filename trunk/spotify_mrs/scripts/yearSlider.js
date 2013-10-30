@@ -76,6 +76,10 @@ require([
   var setArtistEndYearAfter = function(year){
 	  setArtistEndYearAfter1(year);
   };
+  
+  var setInfo = function(info){
+	  setInfo1(info);
+  }
     
   exports.addYear = addYear;
   exports.reset = reset;
@@ -94,6 +98,7 @@ require([
   exports.setArtistStartYearAfter = setArtistStartYearAfter;
   exports.setArtistEndYearBefore = setArtistEndYearBefore;
   exports.setArtistEndYearAfter = setArtistEndYearAfter;
+  exports.setInfo = setInfo;
   
 });//end require
 
@@ -145,6 +150,11 @@ require([
 	var artistStartYearAfter  	= "off";
 	var artistEndYearBefore 	= "off";
 	var artistEndYearAfter		= "off";
+	
+	/**save settings per page*/
+	var settings = new Array();
+	
+	var currentpage = 0;
 
 	/**
 	 * Extract the release year of the track and update the min and max year values.
@@ -347,5 +357,10 @@ require([
 	
 	function setArtistEndYearAfter1(year1){
 		artistEndYearAfter = year1;
+	}
+	
+	function setInfo1(info1){
+		settings[currentpage] = info1;
+		console.info("current settings: "+info1.track);
 	}
 

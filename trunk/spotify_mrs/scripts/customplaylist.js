@@ -10,9 +10,6 @@ require([
 	  createNewPlaylist1(models, List, yearSlider, idsArray);
   };
   
-  var addTrackToPlaylist = function(trackID){
-	  addTrackToPLaylist1(List, models, trackID);
-  };
   
   var setupSubscribeButton = function(){
 	  setupSubscribeButton1(models);
@@ -25,12 +22,26 @@ require([
   var setActivePage = function(pagenr){
 	  setActivePage1(pagenr);
   };
+  
+  var setInfo = function(info){
+	  setInfo1(info);
+  };
+  
+  var getInfoString = function(){
+	  return getInfoString1();
+  };
+  
+  var getInfoTitle = function(){
+	  return getInfoTitle1();
+  };
 
-  exports.addTrackToPlaylist = addTrackToPlaylist; 
   exports.createNewPlaylist = createNewPlaylist;
   exports.setupSubscribeButton = setupSubscribeButton;
   exports.showPlaylist = showPlaylist;
   exports.setActivePage = setActivePage;
+  exports.setInfo = setInfo;
+  exports.getInfoString = getInfoString;
+  exports.getInfoTitle = getInfoTitle;
   
 });//end require
 
@@ -42,14 +53,16 @@ var playlist = null;
 var list = null;
 /**array of all created playlists*/
 var playlists = new Array();
+/**array of all settings*/
+var infos = new Array();
 /**playlist counter*/
 var playlistcnt = 0;
 /**the number of the currently shown playlist in the accordion, for saving purposes*/
 var activeplaylist = 0;
 /**the collection of string literals used for the current search. showed as hint*/
 var searchstring = "hello world<br>thisis a new line";
+var pageCnt = 0;
 
-var pageCount = 1;
 
 var infoStringArray = new Array();
 
@@ -98,33 +111,6 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 
 }
 
-/**
- * Add a new track to the playlist. Tracks are provided by the echonestDynamic.js script.
- * @param List @see spotify views.List
- * @param models1 @see spotify api.models
- * @param trackID echonest ID of the track to be added
- */
-function addTrackToPLaylist1(List, models1, trackID){
-	
-	//convert track ID
-	var id = trackID.replace('-WW','');
-	
-	playlist.done(function(playlist){
-		playlist.load("tracks").done(function(loadedPlaylist){
-			var track = models1.Track.fromURI(id);
-			track.load('playable', 'name').done(function(track) {
-				if(track.playable){
-					loadedPlaylist.tracks.add(track);
-					console.log("Track added to playlist: "+track.name);
-					list.refresh();
-				}
-			});
-			
-		});
-	});
-	
-	
-}
 
 /**
  * Make the playlist visible for the user.
@@ -226,5 +212,130 @@ function setupSubscribeButton1(models1){
  */
 function setActivePage1(pagenr){
 	activeplaylist = pagenr -1;
+}
+
+/**
+ * Set settings information for the currrent search
+ */
+function setInfo1(info){
+	infos[pageCnt] = info;
+	console.log("-----Informaion set for page "+pageCnt+": "+infos[pageCnt].artist);
+	pageCnt++;
+	
+	
+}
+
+function getInfoString1(){
+	var info = infos[pageCnt-1];
+	var returnstring = "<div id='info'>Recommendations are based upon the following settings: <br/>";
+	
+	if(info.artistmode){
+		returnstring = returnstring+"<i>artist</i>"+" <b>"+info.artist+"</b>"; 
+		if(info.excludeartist) returnstring = returnstring+" (artist's songs excluded)";
+	}
+	else if(info.songmode){
+		returnstring = returnstring+"<i>song</i> <b>"+info.track+"</b>"; 
+		if(info.excludeartist) returnstring = returnstring+" (artist's songs excluded)";
+	}
+	else if(info.genremode){
+		returnstring = returnstring+"<i>genre</i> "+"<b>"+info.genre+"</b>";
+	}
+	else if(info.playlistmode){
+		returnstring+"<i>playlist</i> <b> "+info.playlist+"</b>";
+	}
+	
+	if(info.excludeplaylist){
+		returnstring = returnstring + "<br/> Songs from my spotify playlists are excluded.";
+	}
+	
+	//returnstring = returnstring +"<br/>Tracks were released between "+min+" and "+max;
+	
+	var value1;
+	switch(info.songtrendiness){
+		case 0: value1 = "Off"; break;
+		case 1: value1 = "Lowest"; break;
+		case 2: value1 = "Low"; break;
+		case 3: value1 = "Medium"; break;
+		case 4: value1 = "High"; break;
+		case 5: value1 = "Highest"; break;
+	}
+	returnstring = returnstring+"<br/>Song Trendiness:<i>( "+value1+" )    </i>   ";
+
+	var value2;
+	switch(info.artisttrendiness){
+		case 0: value2 = "Off"; break;
+		case 1: value2 = "Lowest"; break;
+		case 2: value2 = "Low"; break;
+		case 3: value2 = "Medium"; break;
+		case 4: value2 = "High"; break;
+		case 5: value2 = "Highest"; break;
+	}
+	returnstring = returnstring+"<br/>Artist Trendiness:<i>( "+value2+" )    </i>   ";
+
+	var value3;
+	switch(info.artistpopularity){
+		case 0: value3 = "Off"; break;
+		case 1: value3 = "Lowest"; break;
+		case 2: value3 = "Low"; break;
+		case 3: value3 = "Medium"; break;
+		case 4: value3 = "High"; break;
+		case 5: value3 = "Highest"; break;
+	}
+	returnstring = returnstring+"<br/>Artist Popularity:<i>( "+value3+" )    </i>   ";
+
+	if (info.artistvariety != 50){
+		returnstring = returnstring+"<br/>Artist Variety:<i>( "+parseInt(info.artistvariety)+" )     </i>";
+	}
+	
+	if(info.adventurousness!=20){
+		returnstring = returnstring+"<br/>Adventurousness:<i>( "+parseInt(info.adventurousness)+" ) </i>";
+	}
+	
+//	if(artistterms.length != 0){
+//		returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
+//		for(var i=0; i< artistterms.length;i++){
+//			
+//			returnstring = returnstring+" " +artistterms[i];
+//			
+//			if((i+1)!=artistterms.length){
+//				returnstring = returnstring+", "
+//			}
+//		}
+//	}
+	
+	if(info.artiststartyearbefore!="off"){
+		returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>before</i> "+artistStartYearBefore;
+	}
+	
+	if(info.artiststartyearafter!="off"){
+		returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>after</i> "+artistStartYearAfter;
+	}
+	
+	if(info.artistendyearbefore!="off"){
+		returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>before</i> "+artistEndYearBefore;
+	}
+	
+	if(info.artistendyearafter!="off"){
+		returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>after</i> "+artistEndYearAfter;
+	}
+	
+	//console.log(artistStartYearBefore+" "+artistStartYearAfter+" "+artistEndYearBefore+" "+artistEndYearAfter);
+	
+	returnstring = returnstring+"</div>"
+	
+	//resetYear();
+	
+	return returnstring;
+}
+
+function getInfoTitle1(){
+	var info = infos[pageCnt-1];
+	var infotitle;
+	if(info.artistmode) infotitle = "Recommendations for "+info.artist;
+	else if(info.songmode) infotitle = "Recommendations for "+info.track;
+	else if(info.genremode) infotitle = "Recommendations for "+info.genre;
+	else if(info.artistmode) infotitle = "Recommendations for your playlist "+info.playlist;
+	
+	return infotitle;
 }
 

@@ -80,22 +80,29 @@ require([
             			   customplaylist.createNewPlaylist(trackIdsforPlaylist);
             			   
             			   //add info to the coverview
-            			   var infodiv = document.createElement('div');
+            			   var infodiv = document.createElement('h2');
             				infodiv.className="playlistinfo";
-            				infodiv.innerHTML = 
-            					'<img id="infobutton" src="img/info.png" title="Recommendation made upon the following settings">'
-            					+ yearSlider.getInfo();
+//            				var img = document.createElement('img');
+//            				img.setAttribute('id','infobutton');
+//            				img.setAttribute('src','img/info.png');
+//            				img.setAttribute('title', customplaylist.getInfoString());
+            				infodiv.innerHTML = customplaylist.getInfoTitle();
+            				infodiv.setAttribute('title', customplaylist.getInfoString());
+            				//$('#albumCoverContainer').append(img);
             				$('#albumCoverContainer').append(infodiv);
             				
             				//add Info to the playlistview
-            				var infodiv = document.createElement('div');
+            				 var infodiv = document.createElement('h2');
             				infodiv.className="playlistinfo";
-            				infodiv.innerHTML = 
-            					'<img id="infobutton" src="img/info.png" title="Recommendation made upon the following settings">'
-            					+ yearSlider.getInfo();
+            				var img = document.createElement('img');
+            				img.setAttribute('id','infobutton');
+            				img.setAttribute('src','img/info.png');
+            				img.setAttribute('title', customplaylist.getInfoString());
+            				infodiv.innerHTML = customplaylist.getInfoTitle();
+            				infodiv.setAttribute('title', customplaylist.getInfoString());
+//            				
             				$('#playlistContainer').append(infodiv);
-            			   
-            			   
+            				//$('#playlistContainer').append(img);
             			   //add the covers to the container
             			   for(var i = 0; i < playableCovers.length; i++){
             				   covercontainer.appendChild(playableCovers[i]);
@@ -151,12 +158,15 @@ require([
 				 
   };  
   
+  var setInfo = function(info){
+	  customplaylist.setInfo(info);
+  };
 
   exports.setLoopContinueToTrue=setLoopContinueToTrue;  
   exports.checkLoopContinue = checkLoopContinue;  
   exports.getTrackCover = getTrackCover;
   exports.setBannedSeedArtist = setBannedSeedArtist;
-  
+  exports.setInfo = setInfo;
 });
 
 
