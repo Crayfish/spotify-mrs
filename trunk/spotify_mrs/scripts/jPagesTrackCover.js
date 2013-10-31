@@ -12,8 +12,8 @@ require([
   '$views/popup#Popup',
   'scripts/customplaylist',
   'scripts/setupSwitchViewButton',
-  'scripts/yearSlider',
-], function(models,search, Image, Popup, customplaylist, setupSwitchViewButton, yearSlider) {
+
+], function(models,search, Image, Popup, customplaylist, setupSwitchViewButton) {
   'use strict';
 
   
@@ -69,7 +69,7 @@ require([
             		   playableCovers.push(target1);  
             		   
             		   //add year to info
-            		   yearSlider.addYear(track);
+            		   customplaylist.addYear(track);
             		   
             		   console.log('size of playableCovers: '+playableCovers.length);
                      

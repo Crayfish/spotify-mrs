@@ -34,6 +34,11 @@ require([
   var getInfoTitle = function(){
 	  return getInfoTitle1();
   };
+  
+  
+  var addYear = function addYear(track){
+	  addYear1(models, track);
+  }
 
   exports.createNewPlaylist = createNewPlaylist;
   exports.setupSubscribeButton = setupSubscribeButton;
@@ -42,6 +47,8 @@ require([
   exports.setInfo = setInfo;
   exports.getInfoString = getInfoString;
   exports.getInfoTitle = getInfoTitle;
+  exports.addYear = addYear;
+
   
 });//end require
 
@@ -62,6 +69,9 @@ var activeplaylist = 0;
 /**the collection of string literals used for the current search. showed as hint*/
 var searchstring = "hello world<br>thisis a new line";
 var pageCnt = 0;
+/**minimum and maximum years in the collection (temporary playlist)*/
+var min = 2013;
+var max = 1900;
 
 
 var infoStringArray = new Array();
@@ -219,8 +229,12 @@ function setActivePage1(pagenr){
 	$("#slider-pop").slider( "value", parseInt(info.artistpopularity));
 	$("#artistVarietySlider").slider( "value", parseInt(info.artistvariety));
 	if(!isNaN(info.adventurousness)) $("#adventurousnessSlider").slider( "value", parseInt(info.adventurousness));
-	
-	
+	$('#excludeSpotifyPlaylistSongsCheckBox').prop('checked',info.excludeplaylist);
+	$('#excludeSeedArtistCheckBox').prop('checked', info.excludeartist);
+	$('#artist_start_year_before').val(info.artiststartyearbefore);
+	$('#artist_start_year_after').val(info.artiststartyearafter);
+	$('#artist_end_year_before').val(info.artistendyearbefore);
+	$('#artist_end_year_after').val(info.artistendyearafter);
 }
 
 /**
@@ -257,7 +271,7 @@ function getInfoString1(){
 		returnstring = returnstring + "<br/> Songs from my spotify playlists are excluded.";
 	}
 	
-	//returnstring = returnstring +"<br/>Tracks were released between "+min+" and "+max;
+	returnstring = returnstring +"<br/>Tracks were released between "+min+" and "+max;
 	
 	var value1;
 	switch(info.songtrendiness){
@@ -296,36 +310,37 @@ function getInfoString1(){
 		returnstring = returnstring+"<br/>Artist Variety:<i>( "+parseInt(info.artistvariety)+" )     </i>";
 	}
 	
-	if(info.adventurousness!=20 || !isNaN(info.adventurousness)){
+	if(info.adventurousness!=20 ){
 		returnstring = returnstring+"<br/>Adventurousness:<i>( "+parseInt(info.adventurousness)+" ) </i>";
 	}
 	
-//	if(artistterms.length != 0){
-//		returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
-//		for(var i=0; i< artistterms.length;i++){
-//			
-//			returnstring = returnstring+" " +artistterms[i];
-//			
-//			if((i+1)!=artistterms.length){
-//				returnstring = returnstring+", "
-//			}
-//		}
-//	}
+	if(info.artistterms.length != 0){
+		var artistterms = info.artistterms;
+		returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
+		for(var i=0; i< artistterms.length;i++){
+			
+			returnstring = returnstring+" " +artistterms[i];
+			
+			if((i+1)!=artistterms.length){
+				returnstring = returnstring+", "
+			}
+		}
+	}
 	
 	if(info.artiststartyearbefore!="off"){
-		returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>before</i> "+artistStartYearBefore;
+		returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>before</i> "+info.artiststartyearbefore;
 	}
 	
 	if(info.artiststartyearafter!="off"){
-		returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>after</i> "+artistStartYearAfter;
+		returnstring = returnstring + "<br>Artists of these tracks <i>started</i> recording music <i>after</i> "+info.artiststartyearafter;
 	}
 	
 	if(info.artistendyearbefore!="off"){
-		returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>before</i> "+artistEndYearBefore;
+		returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>before</i> "+info.artistendyearbefore;
 	}
 	
 	if(info.artistendyearafter!="off"){
-		returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>after</i> "+artistEndYearAfter;
+		returnstring = returnstring + "<br>Artists of these tracks <i>ended</i> recording music <i>after</i> "+info.artistendyearafter;
 	}
 	
 	//console.log(artistStartYearBefore+" "+artistStartYearAfter+" "+artistEndYearBefore+" "+artistEndYearAfter);
@@ -346,5 +361,26 @@ function getInfoTitle1(){
 	else if(info.playlistmode) infotitle = "Recommendations for your playlist "+info.playlist;
 	
 	return infotitle;
+}
+
+/**
+ * Extract the release year of the track and update the min and max year values.
+ * @param models spotify models api
+ * @param track the current track
+ */
+function addYear1(models, track){
+	
+	track.load('album').done(function(){
+		track.album.load('date').done(function(){
+			
+			var year = track.album.date;
+			
+			if(year > 0){
+				console.log("track release year: "+year);
+				max = Math.max(max,year);
+				min = Math.min(min,year);
+			}
+		});
+	});
 }
 
