@@ -221,7 +221,7 @@ var currentArtistEndYearAfter = 'off';
 var currentSongHotnesValue = 0;
 var currentArtistHotnesValue = 0;
 var currentArtistPopularityValue = 0;
-var currentAdventurousnessValue;
+var currentAdventurousnessValue = 20;
 var currentlySetTagCloudTermsArray= new Array();
 
 var guiDisabled = false;
@@ -3127,7 +3127,8 @@ function getInfo(){
 		"artiststartyearbefore": currentArtistStartYearBefore,
 		"artiststartyearafter": currentArtistStartYearAfter,
 		"artistendyearbefore": currentArtistEndYearBefore,
-		"artistendyearafter": currentArtistEndYearAfter
+		"artistendyearafter": currentArtistEndYearAfter, 
+		"artistterms": currentlySetTagCloudTermsArray
 	};
 	return info;
 }
