@@ -339,15 +339,15 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 			console.log('Changed to Similarity Radio: '
 					+ tasteProfileIDandNameObject.tasteProfileID);
 
-			$('#playlistSimilarityInfo').text(
+		/*	$('#playlistSimilarityInfo').text(
 					'Now songs are recommended because they are simliar to your \"'
 							+ tasteProfileIDandNameObject.name
-							+ '\" Spotify-playlist');
-			$("#similarityInfo").text(
-					'Now songs are recommended because they are simliar to your \"'
+							+ '\" Spotify-playlist');*/
+			$("#throbberInfo").text(
+					'Downlaoding songs that are simliar to your \"'
 							+ tasteProfileIDandNameObject.name
 							+ '\" Spotify-playlist');
-
+			//$("#throbberInfo").show();
 			styleTermNames = new Array();
 			styleTermObjects = new Array();
 			$("#tagCloud").tagCloud(styleTermObjects);
@@ -1288,14 +1288,14 @@ function changeToGenreSimilarity1(genreName) {
 
 			console.log('Changed to Genre Radio: ' + genreName);
 
-			$('#genreSimilarityInfo').text(
+			/*$('#genreSimilarityInfo').text(
 					'Now songs are recommended because the represent the genre: '
+							+ genreName);*/
+			$("#throbberInfo").text(
+					'Downloading songs that represent the genre '
 							+ genreName);
-			$("#similarityInfo").text(
-					'Now songs are recommended because the represent the genre '
-							+ genreName);
-
-			info("");
+			//$("#throbberInfo").show();
+			//info("");
 			styleTermNames = new Array();
 			styleTermObjects = new Array();
 			$("#tagCloud").tagCloud(styleTermObjects);
@@ -1879,7 +1879,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 	} else {
 
 		
-		$("#albumCoverContainer").hide();
+		//$("#albumCoverContainer").hide();
 	
 
 		var throbberContainer = document.getElementById('display');
@@ -1900,9 +1900,9 @@ function startNewSession1(models1, throbber1, trackCover1,
 		
 		trackName = models.player.track.name;
 		
-		$("#artistSimilarityInfo").text(artistName);
-		$("#similarityInfo").text(
-				'Now Songs are recommended because they are played by artists similar to '
+		//$("#artistSimilarityInfo").text(artistName);
+		$("#throbberInfo").text(
+				'Downloading Songs that are played by artists similar to '
 						+ artistName);
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
@@ -2292,12 +2292,12 @@ function changeToArtistSimilarity1() {
 	$('#changeSeedArtist').show();
 	$('#changeSeedSong').hide();
 
-	$("#artistSimilarityInfo").text(artistName);
+	//$("#artistSimilarityInfo").text(artistName);
 
-	$("#similarityInfo").text(
-			'Now Songs are recommended because they are played by artists  similar to '
+	$("#throbberInfo").text(
+			'Downloading Songs that are played by artists  similar to '
 					+ artistName);
-
+	//$("#throbberInfo").show();
 	$('#tags').hide();
 	$('#genreSelectLabel').hide();
 
@@ -2416,10 +2416,11 @@ function changeToSongSimilarity1() {
 	
 	var cover = document.getElementById('albumCoverContainer');
 
-	$("#songSimilarityInfo").text('"' + trackName + '" by ' + artistName);
-	$("#similarityInfo").text(
-			'Now Songs are recommended because they are similar to ' + '"'
+	//$("#songSimilarityInfo").text('"' + trackName + '" by ' + artistName);
+	$("#throbberInfo").text(
+			'Downloading songs that are similar to ' + '"'
 					+ trackName + '" by ' + artistName);
+	//$("#throbberInfo").show();
 	// var changeSeedArtistButton = document.getElementById("changeSeedArtist");
 	// changeSeedArtistButton.style.display = 'none';
 	// var changeSeedSongButton = document.getElementById("changeSeedSong");
@@ -2513,6 +2514,7 @@ function getNextSong1() {
 
 	throbber.show();
 	throbberTagCloud.show();
+	$('#throbberInfo').show();
 	
 	var echonestTrackId = null;
 	var id = null;
@@ -2767,7 +2769,9 @@ function banSongFeedBack(echnonestTrackId) {
 					if (!continueLoop) {
 						isInfoSet = false;
 						enableGUI();
+						$('#throbberInfo').hide();
 						throbber.hide();
+						
 						throbberTagCloud.hide();
 						console.log('ECHONEST DYNAMIC SIZE OF ARRAY OF USED SONGS AT THE END OF THE LOOP: '
 												+ songsAlreadyUsed.length);
