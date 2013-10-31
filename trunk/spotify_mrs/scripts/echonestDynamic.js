@@ -5,10 +5,10 @@ require([
 	'$api/models', 
 	'$views/throbber#Throbber', 
 	'scripts/jPagesTrackCover',
-	'scripts/apiKey' 
-	//'scripts/yearSlider'
+	'scripts/apiKey',
+	'scripts/customplaylist'
 
-],function(models, throbber, trackCover,apiKey/*, yearSlider*/) {
+],function(models, throbber, trackCover,apiKey,customplaylist) {
 	'use strict';
 
 	var startNewSession = function() {
@@ -479,7 +479,7 @@ function changeArtistVariety1() {
 	// slider Value
 	var changeArtistVarietySliderValue = $("#artistVarietySlider").slider("value") / 100;
 	console.log('changeArtistVarietySliderValue:'+ changeArtistVarietySliderValue);
-//	yearSliderScript.setArtistVariety(changeArtistVarietySliderValue*100);
+	artistVariety = changeArtistVarietySliderValue*100;
 	
 	var randomNumber = Math.floor(Math.random() * 100);
 
@@ -3112,7 +3112,7 @@ function getInfo(){
 		"artist": artistName,
 		"track" : trackName, 
 		"genre" : selectedgenre, 
-//		"playlist": selectedUserPlaylist, 
+		"playlist": selectedUserPlaylistName, 
 		"artistmode": similarityModeIsArtist, 
 		"songmode": similarityModeIsSong,
 		"genremode": similarityModeIsGenre,

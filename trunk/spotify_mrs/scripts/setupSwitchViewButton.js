@@ -6,8 +6,7 @@
 
 require([
   '$api/models',
-  'scripts/customplaylist',
-  
+  'scripts/customplaylist'
 ], function(models, customplaylist) {
   'use strict';
   
@@ -18,7 +17,7 @@ require([
   
 
   var newCoverPage = function(){
-	  newCoverPage1();
+	  newCoverPage1(customplaylist);
   };
 
 
@@ -103,6 +102,8 @@ function setupFlipButton1(customplaylist){
 				callback    : function( pages,items ){
 					console.log("covers on page: "+pages.current);
 					currentpageCover = pages.current;
+					console.log("current cover page: "+currentpageCover);
+					customplaylist.setActivePage(currentpageCover);
 				}
   		   	
 			});
@@ -121,7 +122,7 @@ function setupFlipButton1(customplaylist){
  * add a new cover page when covers are added.
  * called by jPagesTrackCover script.
  */
-function newCoverPage1(){
+function newCoverPage1(customplaylist){
 	//show covers
 	$('#albumCoverContainer').show();
 	$('#playlistContainer').hide();
@@ -140,6 +141,7 @@ function newCoverPage1(){
 		callback    : function( pages,items ){
 			console.log("covers on page: "+pages.current);
 			currentpageCover = pages.current;
+			customplaylist.setActivePage(currentpageCover);
 		}
 	});
   

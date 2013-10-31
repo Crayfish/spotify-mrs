@@ -212,6 +212,15 @@ function setupSubscribeButton1(models1){
  */
 function setActivePage1(pagenr){
 	activeplaylist = pagenr -1;
+	var info = infos[pagenr-1];
+	
+	$("#slider-songHot").slider( "value", parseInt(info.songtrendiness) );
+	$("#slider-hot").slider( "value", parseInt(info.artisttrendiness));
+	$("#slider-pop").slider( "value", parseInt(info.artistpopularity));
+	$("#artistVarietySlider").slider( "value", parseInt(info.artistvariety));
+	if(!isNaN(info.adventurousness)) $("#adventurousnessSlider").slider( "value", parseInt(info.adventurousness));
+	
+	
 }
 
 /**
@@ -287,7 +296,7 @@ function getInfoString1(){
 		returnstring = returnstring+"<br/>Artist Variety:<i>( "+parseInt(info.artistvariety)+" )     </i>";
 	}
 	
-	if(info.adventurousness!=20){
+	if(info.adventurousness!=20 || !isNaN(info.adventurousness)){
 		returnstring = returnstring+"<br/>Adventurousness:<i>( "+parseInt(info.adventurousness)+" ) </i>";
 	}
 	
@@ -334,7 +343,7 @@ function getInfoTitle1(){
 	if(info.artistmode) infotitle = "Recommendations for "+info.artist;
 	else if(info.songmode) infotitle = "Recommendations for "+info.track;
 	else if(info.genremode) infotitle = "Recommendations for "+info.genre;
-	else if(info.artistmode) infotitle = "Recommendations for your playlist "+info.playlist;
+	else if(info.playlistmode) infotitle = "Recommendations for your playlist "+info.playlist;
 	
 	return infotitle;
 }
