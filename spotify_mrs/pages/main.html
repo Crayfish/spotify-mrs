@@ -1,0 +1,212 @@
+<!-- MAIN APPLICATION CONTENT -->
+
+<div class="main-wrapper" id="main-wrapper">
+
+	<!-- COVER AND PLAYLIST VIEWS -->
+	<div class="coverAndPlaylistArea" id = "coverAndPlaylistArea">
+
+
+		<div id="display">
+
+
+			<button id="subscribebutton">+ save playlist</button>
+
+			<div id="albumCoverContainer" class="albumCoverContainer"></div>
+			<div id="playlistContainer" class="playlistContainer"></div>
+
+			<div class="holder" id="holder"></div>
+			
+			<div id="flipbuttonwrapper">
+				<a href="#" id="flipbutton">switch view</a>
+			</div>
+			
+			<div id="throbberContainer" class="throbberContainer"></div>
+			
+		</div>
+			<div id="throbberInfo"></div>
+
+
+	</div>
+	<!-- end cover and playlist views -->
+
+
+
+	<!-- GUI -->
+
+	<!--     	SIMILARITY SECTION -->
+
+
+
+
+
+
+
+	<div class="simmilaritySection">
+		<label>Similarity based on:</label>
+		<form>
+			<input type="radio" class='radio' name="sim" id="artistRadiobtn"
+				value="artist" /> <label for="artistRadiobtn">Artist</label> <input
+				type="radio" class='radio' name="sim" id="songRadiobtn" value="song">
+			<label for="songRadiobtn">Song</label> <input type="radio"
+				class='radio' name="sim" id="genreRadiobtn" value="genre"> <label
+				for="genreRadiobtn">Genre</label> <input type="radio" class='radio'
+				name="sim" id="playlistRadiobtn" value="spotifyPLaylist"> <label
+				for="playlistRadiobtn">Spotify Playlist</label>
+		</form>
+
+
+		<button id="changeSeedArtist">Make playing artist new seed
+			artist</button>
+		<button id=changeSeedSong>Make playing song new seed song</button>
+
+		<div class="ui-widget">
+			<label for="tags" id='genreSelectLabel'>Select a Genre: </label> <input
+				id="tags" />
+		</div>
+
+		<div class="ui-widget">
+			<label for="tags1" id='playlistSelectLabel'>Select a
+				playlist: </label> <input id="tags1" />
+		</div>
+
+		
+
+
+
+	</div>
+
+<!--     	 end of similarity section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class='guiContainer2'>
+
+
+		<!-- POPULARITY SECTION -->
+		<div class="popularitySection Section">
+
+			<!--Song Hotness Slider-->
+			<label for="slider-songHot">Song Trendiness:</label>
+			<div>Off</div>
+			<div class="sliderClass">
+				<div id="slider-songHot"></div>
+			</div>
+			<br>
+
+			<!--Artist Hotness Slider-->
+			<label for="slider-hot">Artist Trendiness:</label>
+			<div>Off</div>
+			<div class="sliderClass">
+				<div id="slider-hot"></div>
+			</div>
+			<br>
+
+			<!-- Popularity Slider -->
+			<label for="pop">Artist Popularity:</label>
+			<div>Off</div>
+			<div class="sliderClass">
+				<div id="slider-pop"></div>
+			</div>
+
+		</div>
+
+		<!-- NOVELTY SECTION -->
+		<div class="noveltySection Section">
+
+			<label>Novelty:</label>
+
+
+			<p>
+				<label id="excludeSeedArtistLabel"> <input type="checkbox"
+					id='excludeSeedArtistCheckBox'>exclude seed artist
+				</label><br> <label id="excludeSpotifyPlaylistSongs"> <input
+					type="checkbox" id="excludeSpotifyPlaylistSongsCheckBox">no
+					songs from my spotify Playlists
+				</label>
+		</div>
+
+
+
+		<!-- DIVERSITY SECTION -->
+		<div class="diversitySection Section">
+
+			<label>Recommendation Diversity:</label>
+			</p>
+			<div class="wrapper">
+				<p>
+					<label for="artistVarietySlider">Artist Variety:</label>
+				</p>
+				<div class="sliderClass">
+					<div id="artistVarietySlider"></div>
+				</div>
+			</div>
+			<div class="wrapper">
+				<p>
+					<label id="adventurousnessSliderLabel" for="adventurousnessSlider">Adventurousness:</label>
+				</p>
+				<div class="sliderClass">
+					<div id="adventurousnessSlider"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- YEAR SECTION -->
+		<div class="yearSection Section">
+			<div class="wrapper">
+				<label>Artists started recording</label><br> <label
+					class='beforeLable'>Before</label> <select name="yearpicker1"
+					id="artist_start_year_before" class="yearpick"></select><br> <label
+					class='afterLabel'>After</label> <select name="yearpicker2"
+					id="artist_start_year_after" class="yearpick"></select><br> <label>Artists
+					stoped recording</label><br> <label class='beforeLable'>Before</label>
+				<select name="yearpicker3" id="artist_end_year_before"
+					class="yearpick"></select><br> <label class='afterLabel'>After</label>
+				<select name="yearpicker4" id="artist_end_year_after"
+					class="yearpick"></select>
+
+
+			</div>
+		</div>
+
+
+
+
+		<!--TAGCLOUD-->
+		<div id="tagcloud-wrapper" class="tagcloud-wrapper">
+			<div id="tagCloud" title="click to filter by artist description">Artist
+				Style Terms Tag Cloud</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+		<div>
+			<p>
+				<button id="nextSongsButton">Ok, get more songs now</button>
+		</div>
+
+
+	</div>
+<!-- end of gui container2 -->
+
+</div>
+<!-- end main wrapper -->
