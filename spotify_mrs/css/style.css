@@ -183,7 +183,7 @@ border-radius: 5px;
 
 
 .simmilaritySection  { 
-	display: box;
+	display: inline-box;
 	float:left; 
 	clear:none; 
 	width:940px;
@@ -191,12 +191,18 @@ border-radius: 5px;
 	border: 1px solid #a1a1a1;
 	border-radius:5px;
 	background:#dddddd;
-	margin-bottom:10px;
+	
 	margin-left: 5px;
-
+	margin-bottom:10px;
 	padding: 5px;
 
 }
+
+#formSimliaritySection{
+	margin-top: 15px;
+}
+
+
 
 
 .guiContainer2{

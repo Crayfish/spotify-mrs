@@ -355,7 +355,7 @@ function getInfoString1(){
 function getInfoTitle1(){
 	var info = infos[pageCnt-1];
 	var infotitle;
-	if(info.artistmode) infotitle = "Songs simliar to "+info.artist;
+	if(info.artistmode) infotitle = "Songs played by artists simliar to "+info.artist;
 	else if(info.songmode) infotitle = "Songs similar to \""+info.track+"\" by "+info.artist;
 	else if(info.genremode) infotitle = "Songs for genre "+info.genre;
 	else if(info.playlistmode) infotitle = "Songs similar to your spotify "+info.playlist+" playlist";
