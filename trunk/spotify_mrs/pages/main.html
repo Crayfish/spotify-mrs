@@ -41,25 +41,26 @@
 
 
 
-	<div class="simmilaritySection">
-		
-		<form id='formSimliaritySection'>
-		<label>Similarity based on:</label>
-			<input type="radio" class='radio' name="sim" id="artistRadiobtn"
-				value="artist" /> <label for="artistRadiobtn">Artist</label> <input
-				type="radio" class='radio' name="sim" id="songRadiobtn" value="song">
-			<label for="songRadiobtn">Song</label> <input type="radio"
-				class='radio' name="sim" id="genreRadiobtn" value="genre"> <label
-				for="genreRadiobtn">Genre</label> <input type="radio" class='radio'
-				name="sim" id="playlistRadiobtn" value="spotifyPLaylist"> <label
-				for="playlistRadiobtn">Spotify Playlist</label>
+	<div class="similaritySection">
+		<table>
+		<tr><td>
+		<form id='formSimilaritySection'>
+			<div id = 'similarityLabel' >Similarity based on:</div>
+			<input type="radio" class='radio' name="sim" id="artistRadiobtn"value="artist" /> 
+			<label id = 'similarityLabel' for="artistRadiobtn">Artist</label> 
+			<input type="radio" class='radio' name="sim" id="songRadiobtn" value="song">
+			<label id = 'similarityLabel' for="songRadiobtn">Song</label> 
+			<input type="radio" class='radio' name="sim" id="genreRadiobtn" value="genre">
+			<label id = 'similarityLabel' for="genreRadiobtn">Genre</label>
+			<input type="radio" class='radio'name="sim" id="playlistRadiobtn" value="spotifyPLaylist">
+			<label id = 'similarityLabel' for="playlistRadiobtn">Spotify Playlist</label>
 		</form>
-
+		<td>
 
 		
-		<button id="changeSeedArtist">Make playing artist new seed
+		<button id="changeSeedArtist" class = 'simButton' >Make playing artist new seed
 			artist</button>
-		<button id=changeSeedSong>Make playing song new seed song</button>
+		<button id=changeSeedSong class = 'simButton'>Make playing song new seed song</button>
 
 		<div class="ui-widget">
 			<label for="tags" id='genreSelectLabel'>Select a Genre: </label> <input
@@ -71,8 +72,9 @@
 				playlist: </label> <input id="tags1" />
 		</div>
 
-		
-
+		</td>
+		</tr>
+	</table>
 
 
 	</div>
@@ -95,14 +97,15 @@
 
 
 	<div class='guiContainer2'>
-
-
+	<table width = 100%>
+	<tr> <td rowspan ='2' width = 225px>
 		<!-- POPULARITY SECTION -->
 		<div class="popularitySection Section">
 
 			<!--Song Hotness Slider-->
-			<label for="slider-songHot">Song Trendiness:</label>
-			<div>Off</div>
+			<label>Song Trendiness:</label>
+			<br>
+			<div id = 'offLabel'>Off</div>
 			<div class="sliderClass">
 				<div id="slider-songHot"></div>
 			</div>
@@ -110,7 +113,8 @@
 
 			<!--Artist Hotness Slider-->
 			<label for="slider-hot">Artist Trendiness:</label>
-			<div>Off</div>
+			<br>
+			<div id = 'offLabel'>Off</div>
 			<div class="sliderClass">
 				<div id="slider-hot"></div>
 			</div>
@@ -118,7 +122,8 @@
 
 			<!-- Popularity Slider -->
 			<label for="pop">Artist Popularity:</label>
-			<div>Off</div>
+			<br>
+			<div id = 'offLabel'>Off</div>
 			<div class="sliderClass">
 				<div id="slider-pop"></div>
 			</div>
@@ -126,44 +131,56 @@
 		</div>
 
 		<!-- NOVELTY SECTION -->
+		</td>
+	
+		
+		<td >
 		<div class="noveltySection Section">
 
 			<label>Novelty:</label>
-
-
-			<p>
+		<br>
+		<p>
 				<label id="excludeSeedArtistLabel"> <input type="checkbox"
 					id='excludeSeedArtistCheckBox'>exclude seed artist
-				</label><br> <label id="excludeSpotifyPlaylistSongs"> <input
+				</label><br> 
+				<label id="excludeSpotifyPlaylistSongs"> <input
 					type="checkbox" id="excludeSpotifyPlaylistSongsCheckBox">no
 					songs from my spotify Playlists
 				</label>
 		</div>
+	
+	
+</td>
 
 
+<td>
 
 		<!-- DIVERSITY SECTION -->
 		<div class="diversitySection Section">
 
 			<label>Recommendation Diversity:</label>
-			</p>
-			<div class="wrapper">
-				<p>
-					<label for="artistVarietySlider">Artist Variety:</label>
-				</p>
+			
+			
+				<br>
+					<label>Artist Variety:</label>
+			
 				<div class="sliderClass">
 					<div id="artistVarietySlider"></div>
 				</div>
-			</div>
-			<div class="wrapper">
-				<p>
-					<label id="adventurousnessSliderLabel" for="adventurousnessSlider">Adventurousness:</label>
-				</p>
+		
+			
+				<br>
+				<label id="adventurousnessSliderLabel" for="adventurousnessSlider">Adventurousness:</label>
+			
 				<div class="sliderClass">
 					<div id="adventurousnessSlider"></div>
 				</div>
-			</div>
+		
 		</div>
+	</td>	
+		
+		
+<td rowspan ='2'>
 
 		<!-- YEAR SECTION -->
 		<div class="yearSection Section">
@@ -172,8 +189,13 @@
 					class='beforeLable'>Before</label> <select name="yearpicker1"
 					id="artist_start_year_before" class="yearpick"></select><br> <label
 					class='afterLabel'>After</label> <select name="yearpicker2"
-					id="artist_start_year_after" class="yearpick"></select><br> <label>Artists
-					stoped recording</label><br> <label class='beforeLable'>Before</label>
+					id="artist_start_year_after" class="yearpick"></select>
+					
+					 <p>&nbsp;</p>
+					
+					
+					<label>Artists
+					stopped recording</label><br> <label class='beforeLable'>Before</label>
 				<select name="yearpicker3" id="artist_end_year_before"
 					class="yearpick"></select><br> <label class='afterLabel'>After</label>
 				<select name="yearpicker4" id="artist_end_year_after"
@@ -182,9 +204,20 @@
 
 			</div>
 		</div>
+		
+		
+		
+		</td></tr>
+<tr ><td colspan = '2'>
+<div>
+			<p>
+				<button id="nextSongsButton">Ok, get more songs now</button>
+		</div>
+</td></tr>
 
-
-
+	<tr><td colspan ='4'>		
+		
+	
 
 		<!--TAGCLOUD-->
 		<div id="tagcloud-wrapper" class="tagcloud-wrapper">
@@ -192,19 +225,16 @@
 				Style Terms Tag Cloud</div>
 		</div>
 
+</td> </tr>
+
+</table>
 
 
 
 
 
 
-
-
-
-		<div>
-			<p>
-				<button id="nextSongsButton">Ok, get more songs now</button>
-		</div>
+		
 
 
 	</div>

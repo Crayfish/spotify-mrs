@@ -1,14 +1,16 @@
 @charset "utf-8";
 /* CSS Document */
 #tagCloud {
-/* 	margin-left:8px;
-	margin-top:30px; */
-	width: 600px;
-	min-height: 277px;
+/* 	margin-left:8px;*/
+	margin-top:5px;
+
+	min-height: 215px;
 	max-height:100%;
+	width: 910px;
 	background:#dddddd;
 	border: 1px solid #a1a1a1;
 	border-radius: 5px;
+	
 	/*border-bottom: 1px solid #a1a1a1;
 	border-left: 1px solid #a1a1a1;
 	border-top-left-radius: 5px;
