@@ -86,7 +86,7 @@ require([
 		console.log("init scripts");
 		  
 		//enter developer name here: Marc, Tom or Julius
-		apiKey.setEchonestApiKey('Julius'); 
+		apiKey.setEchonestApiKey('Marc'); 
 		  
 		
 		playlistInformation.setUpPlaylistInformation();
@@ -123,6 +123,13 @@ require([
 					return element.attr( "title" );
 				}
 			}
+		});
+		
+		$("#tagcloud-wrapper").tooltip({
+			  position: {
+			    my: "center bottom",
+			    at: "center bottom"
+			  }
 		});
 	}
 	  
