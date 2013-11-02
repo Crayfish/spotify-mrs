@@ -2009,9 +2009,9 @@ function changeSeedArtistSimilarity1() {
 //		yearSliderScript.setSimilarityMode(0);
 //		yearSliderScript.setSimilarityBase(artistName);
 
-		$("#artistSimilarityInfo").text(artistName);
-		$("#similarityInfo").text(
-				'Now Songs are recommended because they are played by artists  similar to '
+		//$("#artistSimilarityInfo").text(artistName);
+		$("#throbberInfo").text(
+				'Downloading Songs that are played by artists  similar to '
 						+ artistName);
 		// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
@@ -2155,9 +2155,9 @@ function changeSeedSongSimilarity1() {
 //		yearSliderScript.setSimilarityBase(1);
 //		yearSliderScript.setSimilarityBase(trackName + '" by ' + artistName);
 
-		$("#songSimilarityInfo").text('"' + trackName + '" by ' + artistName);
-		$("#similarityInfo").text(
-				'Now Songs are recommended because they are similar to ' + '"'
+		//$("#songSimilarityInfo").text('"' + trackName + '" by ' + artistName);
+		$("#throbberInfo").text(
+				'Downloading Songs that are similar to ' + '"'
 						+ trackName + '" by ' + artistName);
 		// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
