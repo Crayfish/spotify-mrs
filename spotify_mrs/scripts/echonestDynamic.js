@@ -344,7 +344,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 							+ tasteProfileIDandNameObject.name
 							+ '\" Spotify-playlist');*/
 			$("#throbberInfo").text(
-					'Downlaoding songs that are simliar to your \"'
+					'Downloading songs that are simliar to your \"'
 							+ tasteProfileIDandNameObject.name
 							+ '\" Spotify-playlist');
 			//$("#throbberInfo").show();
