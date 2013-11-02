@@ -368,7 +368,11 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 
 function disableGUI(){
 	 guiDisabled = true;
-	 $('.rulerContent').find(':input').prop('disabled', true);
+	 $('.similaritySection').find(':input').prop('disabled', true);
+	 $('.noveltySection').find(':input').prop('disabled', true);
+	 $('#yearSection').find(':input').prop('disabled', true);
+	 $('.similaritySection').find(':button').prop('disabled', true);
+	 $('#nextSongsButton').prop('disabled', true);
 	 $( "#adventurousnessSlider" ).slider( "option", "disabled", true );
 	 $( "#artistVarietySlider" ).slider( "option", "disabled", true );
 	 $( "#slider-pop" ).slider( "option", "disabled", true );
@@ -378,7 +382,11 @@ function disableGUI(){
 
 function enableGUI(){
 	guiDisabled = false;
-	$('.rulerContent').find(':input').prop('disabled',false);
+	$('.similaritySection').find(':input').prop('disabled',false);
+	 $('.noveltySection').find(':input').prop('disabled', false);
+	 $('#yearSection').find(':input').prop('disabled', false);
+	 $('.similaritySection').find(':button').prop('disabled', false);
+	 $('#nextSongsButton').prop('disabled', false);
 	$( "#adventurousnessSlider" ).slider( "option", "disabled", false );
 	$( "#artistVarietySlider" ).slider( "option", "disabled", false );
 	
