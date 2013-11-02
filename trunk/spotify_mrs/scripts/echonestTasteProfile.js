@@ -519,6 +519,8 @@ require([
 		$( "#tags1" ).autocomplete({
 			source: autocompletePlaylistNamesArray,
 			minLength: 0,
+			appendTo: '.similaritySection',  
+		    open: function() { $('.similaritySection .ui-menu').width(166)},
 			
 			select: function( event, ui){
 	    			

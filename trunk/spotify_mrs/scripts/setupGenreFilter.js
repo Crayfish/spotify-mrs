@@ -50,6 +50,8 @@ require([
 	                
 						$( "#tags" ).autocomplete({
 							minLength: 0,
+							appendTo: '.similaritySection',  
+						    open: function() { $('.similaritySection .ui-menu').width(166)},
 							source: genreArray,
 							
 							select: function( event, ui){
