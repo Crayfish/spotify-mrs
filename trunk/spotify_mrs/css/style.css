@@ -78,7 +78,9 @@ overflow-x: hidden;
 
 
 
-
+.yearInput{
+	width: 60px !important;
+}
 
 
 input  
@@ -103,8 +105,9 @@ border-radius: 5px;
 -webkit-border-radius: 5px;
 }
 
-.afterLabel{
-	padding-right : 8px;
+.afterLable{
+	margin-right : 8px;
+	
 }
 
 .Section{
