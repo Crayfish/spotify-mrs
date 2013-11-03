@@ -356,7 +356,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 			session_id = data.response.session_id;
 
 			console.log("New session ID  is used: " + session_id);
-
+			restartSessionWithCurrentGuiState();
 			//getNextSong1();
 
 		} else {
@@ -1313,7 +1313,7 @@ function changeToGenreSimilarity1(genreName) {
 			session_id = data.response.session_id;
 
 			console.log("New session ID  is used: " + session_id);
-
+			restartSessionWithCurrentGuiState();
 			//getNextSong1();
 
 		} else {
@@ -2302,7 +2302,11 @@ function changeToArtistSimilarity1() {
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
 	
+<<<<<<< .mine
+	//resetSliders();
+=======
 //	resetSliders();
+>>>>>>> .r189
 	
 	// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
@@ -2365,7 +2369,7 @@ function changeToArtistSimilarity1() {
 
 			console.log("New session ID  is used: " + session_id);
 
-		
+			restartSessionWithCurrentGuiState();
 			//getNextSong1();
 		
 		} else {
@@ -2432,7 +2436,11 @@ function changeToSongSimilarity1() {
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
 	
+<<<<<<< .mine
+	//resetSliders();
+=======
 //	resetSliders();
+>>>>>>> .r189
 	
 	var replacedSongID = song_id.replace('spotify', 'spotify-WW');
 
@@ -2468,7 +2476,7 @@ function changeToSongSimilarity1() {
 			session_id = data.response.session_id;
 
 			console.log("New session ID  is used: " + session_id);
-
+			restartSessionWithCurrentGuiState();
 			
 			//getNextSong1();
 			
