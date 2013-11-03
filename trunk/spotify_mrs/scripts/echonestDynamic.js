@@ -542,7 +542,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			console.log("ECHONEST DYNAMIC artist popularity slider was moved to Off Position");
 			
 			//disable the slider
-			$("#slider-pop").slider( "value", 0 );
+			//$("#slider-pop").slider( "value", 0 );
 			$("#slider-pop").slider( "option", "disabled", true );
 			currentArtistPopularityValue = 0.0;
 			restartSessionWithCurrentGuiState();
@@ -665,7 +665,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			console.log("ECHONEST DYNAMIC artist popularity slider was moved to Off Position");
 			
 			//disable the slider
-			$("#slider-pop").slider( "value", 0 );
+			//$("#slider-pop").slider( "value", 0 );
 			$("#slider-pop").slider( "option", "disabled", true );
 			currentArtistPopularityValue = 0;
 			restartSessionWithCurrentGuiState();
@@ -793,7 +793,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 		
 		if(artistHotnessLevel==0){
 			//disable the slider
-			$("#slider-hot").slider( "value", 0 );
+			//$("#slider-hot").slider( "value", 0 );
 			$("#slider-hot").slider( "option", "disabled", true );
 			currentArtistHotnesValue = 0.0;
 			restartSessionWithCurrentGuiState();
@@ -882,7 +882,7 @@ function changeArtistHotness1(artistHotnessLevel) {
 
 		if(artistHotnessLevel==0){
 			//disable the slider
-			$("#slider-hot").slider( "value", 0 );
+			//$("#slider-hot").slider( "value", 0 );
 			$("#slider-hot").slider( "option", "disabled", true );
 			currentArtistHotnesValue = 0.0;
 			restartSessionWithCurrentGuiState();
@@ -1034,7 +1034,7 @@ function changeSongHotness1(songHotnessLevel) {
 			|| similarityModeIsPlaylist) {
 		
 		if(songHotnessLevel==0){
-			$("#slider-songHot").slider( "value", 0 );
+			//$("#slider-songHot").slider( "value", 0 );
 			$("#slider-songHot").slider( "option", "disabled", true );
 			currentSongHotnesValue = 0.0;
 			restartSessionWithCurrentGuiState();
@@ -1153,7 +1153,7 @@ function changeSongHotness1(songHotnessLevel) {
 	if (similarityModeIsGenre) {
 		
 		if(songHotnessLevel==0){
-			$("#slider-songHot").slider( "value", 0 );
+			//$("#slider-songHot").slider( "value", 0 );
 			$("#slider-songHot").slider( "option", "disabled", true );
 			currentSongHotnesValue = 0.0;
 			restartSessionWithCurrentGuiState();

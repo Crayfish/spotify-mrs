@@ -46,12 +46,16 @@ function setUpAdventurousnessSlider1(echonestDynamic){
     	min: 0,
     	max: 100,
     	value: 20 ,
+    	animate: true,
        
         slide: function( event, ui ) { },
        
         stop: function ( event, ui ) {
         	echonestDynamic.changeAdventurousness();
         },
+        change: function ( event, ui ) {
+        	echonestDynamic.changeAdventurousness();
+        }
     });
 }
 
@@ -64,12 +68,16 @@ function setUpArtistVarietySlider1(echonestDynamic){
 		 min: 0,
 		 max: 100,
 		 value: 50 ,
+		 animate: true,
 
 		 slide: function( event, ui ) { },
 	       
 		 stop: function ( event, ui ) {
 			 echonestDynamic.changeArtistVariety();
 		 },
+		 change: function ( event, ui ) {
+			 echonestDynamic.changeArtistVariety();
+		 }
 	       
 	 });
 	
@@ -110,7 +118,12 @@ function setUpPopSlider1(echonestDynamic){
 	        	 
     	},
 	         
-    	change: function( event, ui ) {}
+    	change: function ( event, ui ) {
+    		
+    		var artistFamilarityLevel = ui.value;
+    		echonestDynamic.changeArtistFamiliarity(artistFamilarityLevel);
+	        	 
+    	},
 	         
     });
     
@@ -154,7 +167,11 @@ function setUpHotSlider1(echonestDynamic){
             echonestDynamic.changeArtistHotness(artistHotnessLevel);
     	},
     	
-    
+    	change: function (event, ui){
+    		console.log("Song hottness slider change event! value: "+ui.value);
+    		var artistHotnessLevel = ui.value;// $( ".selector" ).slider( "option", "value" );
+            echonestDynamic.changeArtistHotness(artistHotnessLevel);
+    	}
    
     });	
    
@@ -195,7 +212,14 @@ function setUpSongHotSlider1(echonestDynamic){
 			  console.log('SongHot slider Stop');
 			  var songHotnesLevel =  ui.value
 			  echonestDynamic.changeSongHotness(songHotnesLevel);
+		  },
+		  
+		  change: function ( event, ui ) {
+			  console.log('SongHot slider change');
+			  var songHotnesLevel =  ui.value
+			  echonestDynamic.changeSongHotness(songHotnesLevel);
 		  }
+		  
 	    
 	  });
 	   
