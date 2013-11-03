@@ -2571,6 +2571,7 @@ function getNextSong1() {
 								if(!isInfoSet){
 									trackCoverScript.setInfo(getInfo());
 									isInfoSet = true;
+									console.log("---informations pulled");
 								}
 								trackCoverScript.getTrackCover(replacedTrackId);
 									
@@ -2908,8 +2909,12 @@ function getPlaylistInfo(infoString) {
  * Reset the sliders and GUI elements to the initial state
  */
 function resetSliders(){
+	
+	console.log("---resetting sliders!");
+	
 	$("#slider-songHot").slider( "value", 0 );
 	$("#slider-songHot").slider( "option", "disabled", true );
+	
 	$("#slider-hot").slider( "value", 0 );
 	$("#slider-hot").slider( "option", "disabled", true );
 	$("#slider-pop").slider( "value", 0 );
@@ -2921,7 +2926,10 @@ function resetSliders(){
 	
 	$("#excludeSeedArtistCheckBox").prop('checked', false);
 	$("#excludeSpotifyPlaylistSongsCheckBox").prop('checked', false);
+	
 
+
+	console.log("---sliders resetted!");
 }
 
 /**

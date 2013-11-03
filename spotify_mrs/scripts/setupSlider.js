@@ -152,7 +152,9 @@ function setUpHotSlider1(echonestDynamic){
     		console.log('Hot slider Stop');
             var artistHotnessLevel = ui.value;// $( ".selector" ).slider( "option", "value" );
             echonestDynamic.changeArtistHotness(artistHotnessLevel);
-    	}      
+    	},
+    	
+    
    
     });	
    
