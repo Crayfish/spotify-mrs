@@ -1262,7 +1262,7 @@ function changeToGenreSimilarity1(genreName) {
 	selectedgenre = genreName;
 	currentlySetTagCloudTermsArray= new Array();
 	songsAlreadyUsed = new Array();
-	tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = true;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = false;
@@ -1273,7 +1273,7 @@ function changeToGenreSimilarity1(genreName) {
 //	yearSliderScript.setSimilarityBase(selectedgenre);
 //	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
 	
-	$("#tags1").blur(); 
+	//$("#tags1").blur(); 
 
 	// get the popularity range for a given genre
 	/*
@@ -2239,7 +2239,7 @@ function changeSeedSongSimilarity1() {
 function changeToArtistSimilarity1() {
 	// console.log("New session is started");
 
-	tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
 
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = true;
@@ -2278,6 +2278,7 @@ function changeToArtistSimilarity1() {
 
 	// var trackName = models1.player.track.name;
 	$('#changeSeedArtist').show();
+	//$('#similarityInfo').css('padding-left', '125px');
 	$('#similarityInfo').text('Current Seed Artist: '+artistName);
 	$('#changeSeedSong').hide();
 
@@ -2390,7 +2391,7 @@ function changeToArtistSimilarity1() {
 
 function changeToSongSimilarity1() {
 	console.log(" echonest changeToSongSimilarity1() was called");
-	tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = true;
@@ -2412,7 +2413,9 @@ function changeToSongSimilarity1() {
 			'Downloading songs that are similar to ' + '"'
 					+ trackName + '" by ' + artistName);
 	
+	//$('#similarityInfo').css('padding-left' , '185px');
 	$('#similarityInfo').text('Current Seed Song: '+'\"'+trackName+'\" '+'by '+ artistName );
+
 	//$("#throbberInfo").show();
 	// var changeSeedArtistButton = document.getElementById("changeSeedArtist");
 	// changeSeedArtistButton.style.display = 'none';
