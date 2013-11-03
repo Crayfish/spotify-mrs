@@ -106,7 +106,9 @@ require([
 		$("#slider-pop").slider( "value", 0 );
 		$("#slider-pop").slider( "option", "disabled", true );
 		$("#artistVarietySlider").slider( "value", 50 );
-		$('.yearpick').val('off');
+		$('.yearInput').val('off');
+		$("#excludeSeedArtistCheckBox").prop('checked', false);
+		$("#excludeSpotifyPlaylistSongsCheckBox").prop('checked', false);
 	
 	}
 
