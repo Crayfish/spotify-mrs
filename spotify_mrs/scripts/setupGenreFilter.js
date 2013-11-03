@@ -57,7 +57,7 @@ require([
 							select: function( event, ui){
 	           			
 								console.log('EventHandler Genre List sent event');
-								resetSliders();
+								//resetSliders();
 								echonestDynamic.changeToGenreSimilarity( ui.item.label);
 	           			 
 								$(this).blur(); 
