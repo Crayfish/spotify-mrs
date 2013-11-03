@@ -360,3 +360,14 @@ margin-right:10px;
 #infobutton{
 	display:inline-block;
 	}
+	
+	.ui-tooltip
+{
+    /* tooltip container box */
+    max-width: 1000px !important;
+}
+.ui-tooltip-content
+{
+    /* tooltip content */
+    max-width: 1000px !important;
+}
