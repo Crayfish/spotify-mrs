@@ -356,7 +356,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 
 			console.log("New session ID  is used: " + session_id);
 
-			getNextSong1();
+			//getNextSong1();
 
 		} else {
 			info("trouble getting results");
@@ -1312,7 +1312,7 @@ function changeToGenreSimilarity1(genreName) {
 
 			console.log("New session ID  is used: " + session_id);
 
-			getNextSong1();
+			//getNextSong1();
 
 		} else {
 			info("trouble getting results");
@@ -2384,10 +2384,8 @@ function changeToArtistSimilarity1() {
 
 			console.log("New session ID  is used: " + session_id);
 
-			// for (var i = 0; i <20; i++){
-			// var i =0;
-			// while(i<20){
-			getNextSong1();
+		
+			//getNextSong1();
 		
 		} else {
 			info("trouble getting results");
@@ -2488,21 +2486,9 @@ function changeToSongSimilarity1() {
 
 			console.log("New session ID  is used: " + session_id);
 
-			// for (var i = 0; i <20; i++){
-			// var i =0;
-			// while(i<20){
-			getNextSong1();
-			// setTimeout(function() {info("Timeout");},1000);
-			// i++;
-			// console.log("Timeout ended");
-			// }
-			// getSongsSchleife(trackCover1);
-
-			// getPlaylistSongSimilarity(models1, size, throbber1, trackCover1,
-			// sliderUpdate1);
-
-			// getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
-			// getArtistHotness(artistIdsForPopularity, sliderUpdate1);
+			
+			//getNextSong1();
+			
 
 		} else {
 			info("trouble getting results");
