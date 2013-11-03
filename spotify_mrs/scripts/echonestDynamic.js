@@ -311,7 +311,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	
 //	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
 	
-	resetSliders();
+	//resetSliders();
 	$("#adventurousnessSlider").slider( "value", 20 );
 	$("#adventurousnessSliderLabel").show();
 	$("#adventurousnessSlider").show();
@@ -1982,7 +1982,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 function changeSeedArtistSimilarity1() {
 	console.log('echonestDynamic changeSeedArtistSimilarity1() was called');
 
-	resetSliders();
+//	resetSliders();
 	songsAlreadyUsed = new Array();
 
 	var track = models.player.load('track');
@@ -2118,7 +2118,7 @@ function changeSeedSongSimilarity1() {
 
 	// numberOfSongs=10;
 	 songsAlreadyUsed = new Array();
-	 resetSliders();
+//	 resetSliders();
 	
 	var track = models.player.load('track');
 	console.log('TRACK= ' + track);
@@ -2302,7 +2302,7 @@ function changeToArtistSimilarity1() {
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
 	
-	resetSliders();
+//	resetSliders();
 	
 	// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
@@ -2432,7 +2432,7 @@ function changeToSongSimilarity1() {
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
 	
-	resetSliders();
+//	resetSliders();
 	
 	var replacedSongID = song_id.replace('spotify', 'spotify-WW');
 

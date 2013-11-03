@@ -229,8 +229,20 @@ function setActivePage1(pagenr){
 	$("#slider-pop").slider( "value", parseInt(info.artistpopularity));
 	$("#artistVarietySlider").slider( "value", parseInt(info.artistvariety));
 	if(!isNaN(info.adventurousness)) $("#adventurousnessSlider").slider( "value", parseInt(info.adventurousness));
-	$('#excludeSpotifyPlaylistSongsCheckBox').prop('checked',info.excludeplaylist);
-	$('#excludeSeedArtistCheckBox').prop('checked', info.excludeartist);
+	if(info.excludeplaylist){
+		if(!$('#excludeSpotifyPlaylistSongsCheckBox').is(":checked")) $('#excludeSpotifyPlaylistSongsCheckBox').click();
+	}
+	else if(!info.excludeplaylist){
+		if($('#excludeSpotifyPlaylistSongsCheckBox').is(":checked")) $('#excludeSpotifyPlaylistSongsCheckBox').click();
+	}
+	
+	if(info.excludeartist){
+		if(!$('#excludeSeedArtistCheckBox').is(":checked")) $('#excludeSeedArtistCheckBox').click();
+	}
+	else if(!info.excludeplaylist){
+		if($('#excludeSeedArtistCheckBox').is(":checked")) $('#excludeSeedArtistCheckBox').click();
+	}
+	
 	$('#artist_start_year_before_input').val(info.artiststartyearbefore);
 	$('#artist_start_year_after_input').val(info.artiststartyearafter);
 	$('#artist_end_year_before_input').val(info.artistendyearbefore);
