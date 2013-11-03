@@ -58,13 +58,15 @@ require([
 	           			
 								console.log('EventHandler Genre List sent event');
 								//resetSliders();
+								document.getElementById('tags').value=ui.item.label; 
 								echonestDynamic.changeToGenreSimilarity( ui.item.label);
 	           			 
 								$(this).blur(); 
-								$(this).val(''); return false;
+								 return false;
 							}
 	           		
-	           		 	}).focus(function(){     
+	           		 	}).focus(function(){
+	           		 		document.getElementById('tags').value=''; 
 	           		 		$(this).autocomplete('search', $(this).val());
 	           		 	});
 	                
@@ -84,10 +86,11 @@ require([
 			  //check if it is the genre array
 			  if(jQuery.inArray( currentText, genreArray)!= -1){
 				  console.log("SETUP GENERE FILTER  entered text matches genre name: "+ currentText)
-				  resetSliders();
+				  //resetSliders();
+				   $( "#tags" ).val(currentText);
 				  echonestDynamic.changeToGenreSimilarity(currentText);
-				  $( "#tags" ).val('');
-				  $( "#tags" ).blur();
+				 
+				  //$( "#tags" ).blur();
 			  }
 				
 		  }

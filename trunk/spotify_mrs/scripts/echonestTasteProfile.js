@@ -530,6 +530,8 @@ require([
 	    				 
 					if(ui.item.label == autocompleTasteProfileIDsAndNamesArray[i].name){
 						console.log('TRYING TO CHANGE TO PLAYLIST SIMILARITY WITH ID: '+autocompleTasteProfileIDsAndNamesArray[i].tasteProfileID);
+						
+						document.getElementById('tags1').value=ui.item.label; 
 						$(this).blur(); 
 	    					echonestDynamicScript.changeToPlaylistSimilarity(autocompleTasteProfileIDsAndNamesArray[i]);
 	    					break;
@@ -537,13 +539,14 @@ require([
 	    		};
 	    			 
 	    			 
-	    		$(this).val(''); return false;
+	    		 return false;
 	    			 
 			}
 	         
 	        
 	    		
-		}).focus(function(){     
+		}).focus(function(){
+			document.getElementById('tags1').value='';
 			$(this).autocomplete('search', $(this).val());
 		});
 		 
