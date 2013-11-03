@@ -347,6 +347,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 					'Downloading songs that are simliar to your \"'
 							+ tasteProfileIDandNameObject.name
 							+ '\" Spotify-playlist');
+			$('#similarityInfo').text('Current Seed playlist: '+tasteProfileIDandNameObject.name );
 			//$("#throbberInfo").show();
 			styleTermNames = new Array();
 			styleTermObjects = new Array();
@@ -1302,6 +1303,7 @@ function changeToGenreSimilarity1(genreName) {
 			$("#throbberInfo").text(
 					'Downloading songs that represent the genre '
 							+ genreName);
+			$('#similarityInfo').text('Current Seed Genre: '+genreName );
 			//$("#throbberInfo").show();
 			//info("");
 			styleTermNames = new Array();
@@ -1912,6 +1914,8 @@ function startNewSession1(models1, throbber1, trackCover1,
 		$("#throbberInfo").text(
 				'Downloading Songs that are played by artists similar to '
 						+ artistName);
+		
+		$('#similarityInfo').text('Current Seed Artist: '+artistName );
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
 		// console.log('artist_id: '+artist_id);
@@ -2013,6 +2017,7 @@ function changeSeedArtistSimilarity1() {
 		$("#throbberInfo").text(
 				'Downloading Songs that are played by artists  similar to '
 						+ artistName);
+		$('#similarityInfo').text("Current Seed Artist: "+artistName);
 		// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
@@ -2089,21 +2094,9 @@ function changeSeedArtistSimilarity1() {
 				session_id = data.response.session_id;
 				// console.log('session_id: '+session_id);
 				console.log("New session ID  is used: " + session_id);
-				// for (var i = 0; i <20; i++){
-				// var i =0;
-				// while(i<20){
-				getNextSong1();
-				// setTimeout(function() {info("Timeout");},1000);
-				// i++;
-				// console.log("Timeout ended");
-				// }
-				// getSongsSchleife(trackCover1);
-
-				// getPlaylistSongSimilarity(models1, size, throbber1,
-				// trackCover1, sliderUpdate1);
-
-				// getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
-				// getArtistHotness(artistIdsForPopularity, sliderUpdate1);
+				
+				//getNextSong1();
+				
 
 			} else {
 				info("trouble getting results");
@@ -2159,6 +2152,7 @@ function changeSeedSongSimilarity1() {
 		$("#throbberInfo").text(
 				'Downloading Songs that are similar to ' + '"'
 						+ trackName + '" by ' + artistName);
+		$('#similarityInfo').text('Current Seed Song: '+'\"'+trackName+'\" '+'by '+ artistName );
 		// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
@@ -2224,23 +2218,9 @@ function changeSeedSongSimilarity1() {
 				$("#tagCloud").tagCloud(styleTermObjects);
 
 				session_id = data.response.session_id;
-				// console.log('session_id: '+session_id);
-				// console.log("New session ID is used: "+session_id);
-				// for (var i = 0; i <20; i++){
-				// var i =0;
-				// while(i<20){
-				getNextSong1();
-				// setTimeout(function() {info("Timeout");},1000);
-				// i++;
-				// console.log("Timeout ended");
-				// }
-				// getSongsSchleife(trackCover1);
-
-				// getPlaylistSongSimilarity(models1, size, throbber1,
-				// trackCover1, sliderUpdate1);
-
-				// getArtistPopularity(artistIdsForPopularity, sliderUpdate1 );
-				// getArtistHotness(artistIdsForPopularity, sliderUpdate1);
+			
+				//getNextSong1();
+			
 
 			} else {
 				info("trouble getting results");
@@ -2298,6 +2278,7 @@ function changeToArtistSimilarity1() {
 
 	// var trackName = models1.player.track.name;
 	$('#changeSeedArtist').show();
+	$('#similarityInfo').text('Current Seed Artist: '+artistName);
 	$('#changeSeedSong').hide();
 
 	//$("#artistSimilarityInfo").text(artistName);
@@ -2426,6 +2407,8 @@ function changeToSongSimilarity1() {
 	$("#throbberInfo").text(
 			'Downloading songs that are similar to ' + '"'
 					+ trackName + '" by ' + artistName);
+	
+	$('#similarityInfo').text('Current Seed Song: '+'\"'+trackName+'\" '+'by '+ artistName );
 	//$("#throbberInfo").show();
 	// var changeSeedArtistButton = document.getElementById("changeSeedArtist");
 	// changeSeedArtistButton.style.display = 'none';
