@@ -201,12 +201,16 @@ border-radius: 5px;
 }
 
 
+#similarityInfo{
+	padding-left: 125px;
+}
+
 .similaritySection  { 
 	display: inline-box;
 	float:left; 
 	clear:none; 
 	width:922px;
-	height: 40px;
+	height: 50px;
 	border: 1px solid #a1a1a1;
 	border-radius:5px;
 	background:#dddddd;
