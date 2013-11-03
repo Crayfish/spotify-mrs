@@ -2302,11 +2302,11 @@ function changeToArtistSimilarity1() {
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
 	
-<<<<<<< .mine
+
 	//resetSliders();
-=======
+
 //	resetSliders();
->>>>>>> .r189
+
 	
 	// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
@@ -2436,11 +2436,10 @@ function changeToSongSimilarity1() {
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
 	
-<<<<<<< .mine
-	//resetSliders();
-=======
+
+
 //	resetSliders();
->>>>>>> .r189
+
 	
 	var replacedSongID = song_id.replace('spotify', 'spotify-WW');
 
