@@ -16,8 +16,10 @@ require([
 			event.preventDefault();
 
 			console.log('Get Next Songs Button was clicked');
+			
+		
 
-			echonestDynamic.getNextSong();
+			echonestDynamic.restartSessionWithCurrentGuiState();
 
 		});
 
