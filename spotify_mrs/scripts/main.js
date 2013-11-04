@@ -86,7 +86,7 @@ require([
 		console.log("init scripts");
 		  
 		//enter developer name here: Marc, Tom or Julius
-		apiKey.setEchonestApiKey('Marc'); 
+		apiKey.setEchonestApiKey('Julius'); 
 		  
 		
 		playlistInformation.setUpPlaylistInformation();
