@@ -1262,7 +1262,7 @@ function changeToGenreSimilarity1(genreName) {
 	selectedgenre = genreName;
 	currentlySetTagCloudTermsArray= new Array();
 	songsAlreadyUsed = new Array();
-	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	tagCloudResetDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = true;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = false;
