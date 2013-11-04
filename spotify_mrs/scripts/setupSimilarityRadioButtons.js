@@ -52,11 +52,13 @@ require([
 			
 		case "genre":
 			console.log('Genre Similarity Radio Button was clicked');
+			//document.getElementById('tags').value=''; 
+			echonestDynamic.changeToGenreSimlarityOverloadMethod();
 			$('#tags').show();
 			$('#genreSelectLabel').show();
 			$('#changeSeedSong').hide();
 			$('#changeSeedArtist').hide();
-			$("#similarityInfo").text('');
+			//$("#similarityInfo").text('');
 			$('#tags1').hide();
 			$('#playlistSelectLabel').hide();
 			$('#excludeSeedArtistCheckBox').hide();
@@ -66,13 +68,15 @@ require([
 			$("#adventurousnessSliderLabel").hide();
 			break;
 			
-		case "spotifyPLaylist":
+		case "spotifyPlaylist":
 			console.log('Playlist Similarity Radio Button was clicked');
+			//document.getElementById('tags1').value='';
+			echonestDynamic.changeToPlaylistSimlarityOverloadMethod();
 			$('#tags1').show();
 			$('#playlistSelectLabel').show();
 			$('#changeSeedSong').hide();
 			$('#changeSeedArtist').hide();
-			$("#similarityInfo").text('');
+			//$("#similarityInfo").text('');
 			$('#tags').hide();
 			$('#genreSelectLabel').hide();
 			$('#excludeSeedArtistCheckBox').hide();
