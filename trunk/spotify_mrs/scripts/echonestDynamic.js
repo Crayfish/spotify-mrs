@@ -234,6 +234,9 @@ var currentArtistEndYearBefore = 'off';
 var currentArtistEndYearAfter = 'off';
 
 
+var currentSimilarityInfoString = '';
+
+
 /** current steering values */
 var currentSongHotnesValue = 0;
 var currentArtistHotnesValue = 0;
@@ -365,6 +368,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 					+ tasteProfileIDandNameObject.name
 					+ '\" Spotify-playlist');
 	$('#similarityInfo').text('Current Seed playlist: '+tasteProfileIDandNameObject.name );
+	currentSimilarityInfoString = 'Current Seed playlist: '+tasteProfileIDandNameObject.name
 
 	/*var randomNumber = Math.floor(Math.random() * 100);
 	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='
@@ -1327,6 +1331,7 @@ function changeToGenreSimilarity1(genreName) {
 			'Downloading songs that represent the genre '
 					+ genreName);
 	$('#similarityInfo').text('Current Seed Genre: '+genreName );
+	currentSimilarityInfoString = 'Current Seed Genre: '+genreName ;
 	
 /*	var randomNumber = Math.floor(Math.random() * 100);
 	var genreUrl = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?api_key='
@@ -1959,7 +1964,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 						+ artistName);
 		
 		$('#similarityInfo').text('Current Seed Artist: '+artistName );
-
+		currentSimilarityInfoString = 'Current Seed Artist: '+artistName 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
 		// console.log('artist_id: '+artist_id);
 
@@ -2035,6 +2040,7 @@ function changeSeedArtistSimilarity1() {
 
 	if (track == null) {
 		info('Start playing something and I ll make a playlist of good songs based on that song');
+		console.log('ECHONEST DYNAMIC changeSeedArtistSimilarity1() TRACK =NULL!!! ');
 
 	} else {
 
@@ -2061,6 +2067,7 @@ function changeSeedArtistSimilarity1() {
 				'Downloading Songs that are played by artists  similar to '
 						+ artistName);
 		$('#similarityInfo').text("Current Seed Artist: "+artistName);
+		currentSimilarityInfoString="Current Seed Artist: "+artistName;
 		// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
@@ -2101,7 +2108,7 @@ function changeSeedArtistSimilarity1() {
 		 * if( $('#excludeSeedArtistCheckBox').prop('checked')){
 		 * banArtistFeedback1(); }
 		 */
-
+/*
 		var randomNumber = Math.floor(Math.random() * 100);
 
 		// var artistIdsForPopularity = new Array();
@@ -2149,7 +2156,7 @@ function changeSeedArtistSimilarity1() {
 			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
 			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
 			
-			});
+			});*/
 
 	}
 
@@ -2174,28 +2181,20 @@ function changeSeedSongSimilarity1() {
 	} else {
 
 		var cover = document.getElementById('albumCoverContainer');
-		// var cover = $(".albumCoverContainer") ;
-		// var pictureThrobber = throbber1.forElement(cover);
-		// pictureThrobber.setSize('normal');
-
-		// getAllEchonestGenres();
-
-		// var artist_id =
-		// models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+		
 
 		artistName = models.player.track.artists[0].name;
 
 		trackName = models.player.track.name;
 		
-//		yearSliderScript.reset();
-//		yearSliderScript.setSimilarityBase(1);
-//		yearSliderScript.setSimilarityBase(trackName + '" by ' + artistName);
+
 
 		//$("#songSimilarityInfo").text('"' + trackName + '" by ' + artistName);
 		$("#throbberInfo").text(
 				'Downloading Songs that are similar to ' + '"'
 						+ trackName + '" by ' + artistName);
 		$('#similarityInfo').text('Current Seed Song: '+'\"'+trackName+'\" '+'by '+ artistName );
+		currentSimilarityInfoString = 'Current Seed Song: '+'\"'+trackName+'\" '+'by '+ artistName;
 		// info('Getting Songs like "'+trackName+'" by '+ artistName);
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
@@ -2232,7 +2231,7 @@ function changeSeedSongSimilarity1() {
 		}
 		
 
-		var randomNumber = Math.floor(Math.random() * 100);
+		/*var randomNumber = Math.floor(Math.random() * 100);
 
 		var artistIdsForPopularity = new Array();
 		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?&_=' + randomNumber;
@@ -2273,7 +2272,7 @@ function changeSeedSongSimilarity1() {
 			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
 			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
 			
-			});
+			});*/
 
 	}
 
@@ -2292,12 +2291,15 @@ function changeToArtistSimilarity1() {
 	songsAlreadyUsed = new Array();
 	currentlySetTagCloudTermsArray= new Array();
 	
+	
+	
 
 	//var cover = document.getElementById('albumCoverContainer');
 	
 	$('#changeSeedArtist').show();
 	//$('#similarityInfo').css('padding-left', '125px');
 	$('#similarityInfo').text('Current Seed Artist: '+artistName);
+	currentSimilarityInfoString = 'Current Seed Artist: '+artistName;
 	$('#changeSeedSong').hide();
 
 	//$("#artistSimilarityInfo").text(artistName);
@@ -2397,7 +2399,7 @@ function changeToSongSimilarity1() {
 	
 	//$('#similarityInfo').css('padding-left' , '185px');
 	$('#similarityInfo').text('Current Seed Song: '+'\"'+trackName+'\" '+'by '+ artistName );
-
+	currentSimilarityInfoString = 'Current Seed Song: '+'\"'+trackName+'\" '+'by '+ artistName ;
 	//$("#throbberInfo").show();
 	// var changeSeedArtistButton = document.getElementById("changeSeedArtist");
 	// changeSeedArtistButton.style.display = 'none';
@@ -3138,7 +3140,8 @@ function getInfo(){
 		"artiststartyearafter": currentArtistStartYearAfter,
 		"artistendyearbefore": currentArtistEndYearBefore,
 		"artistendyearafter": currentArtistEndYearAfter, 
-		"artistterms": currentlySetTagCloudTermsArray
+		"artistterms": currentlySetTagCloudTermsArray,
+		"similarityInfoString": currentSimilarityInfoString,
 	};
 	return info;
 }
