@@ -225,18 +225,24 @@ function setActivePage1(pagenr){
 	activeplaylist = pagenr -1;
 	var info = infos[pagenr-1];
 	
+	
+	console.log('SET ACTIVE PAGE simlarityInfoString: '+info.similarityInfoString);
+	$('#similarityInfo').text(info.similarityInfoString);
+	
 	$("#slider-songHot").slider( "value", parseInt(info.songtrendiness) );
 	if(parseInt(info.songtrendiness)==0){
 		 $( "#slider-songHot" ).slider( "option", "disabled", true );
 	}else{
 		 $( "#slider-songHot" ).slider( "option", "disabled", false );
 	}
+	
 	$("#slider-hot").slider( "value", parseInt(info.artisttrendiness));
 	if(parseInt(info.artisttrendiness)==0){
 		 $( "#slider-hot" ).slider( "option", "disabled", true );
 	}else{
 		 $( "#slider-hot" ).slider( "option", "disabled", false );
 	}
+	
 	$("#slider-pop").slider( "value", parseInt(info.artistpopularity));
 	if( parseInt(info.artistpopularity)==0){
 		 $( "#slider-pop" ).slider( "option", "disabled", true );
@@ -244,6 +250,7 @@ function setActivePage1(pagenr){
 	}else{
 		 $( "#slider-pop" ).slider( "option", "disabled", false );
 	}
+	
 	$("#artistVarietySlider").slider( "value", parseInt(info.artistvariety));
 	if(!isNaN(info.adventurousness)) $("#adventurousnessSlider").slider( "value", parseInt(info.adventurousness));
 	if(info.excludeplaylist){
@@ -265,14 +272,14 @@ function setActivePage1(pagenr){
 	$('#artist_end_year_before_input').val(info.artistendyearbefore);
 	$('#artist_end_year_after_input').val(info.artistendyearafter);
 	
-	if(info.artistmode) document.forms["formSimilaritySection"]["artistRadiobtn"].click();
-	else if(info.songmode) document.forms["formSimilaritySection"]["songRadiobtn"].click();
+	if(info.artistmode) /*document.forms["formSimilaritySection"]["artistRadiobtn"].click();*/$('#artistRadiobtn').prop('checked',true);
+	else if(info.songmode) /*document.forms["formSimilaritySection"]["songRadiobtn"].click();*/$('#songRadiobtn').prop('checked',true);
 	else if(info.genremode) {
-		document.forms["formSimilaritySection"]["genreRadiobtn"].click();
+		/*document.forms["formSimilaritySection"]["genreRadiobtn"].click();*/$('#genreRadiobtn').prop('checked',true);
 		$('#tags').val(info.genre);
 	}
 	else if(info.playlistmode) {
-		document.forms["formSimilaritySection"]["playlistRadiobtn"].click();
+		/*document.forms["formSimilaritySection"]["playlistRadiobtn"].click();*/$('#playlistRadiobtn').prop('checked',true);
 		$('#tags1').val(info.playlist);
 	}
 	
