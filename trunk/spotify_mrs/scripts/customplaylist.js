@@ -2,6 +2,7 @@ require([
   '$api/models',
   '$views/list#List',
   'scripts/yearSlider'
+ 
 ], function(models, List, yearSlider) {
   'use strict';
   
@@ -225,8 +226,24 @@ function setActivePage1(pagenr){
 	var info = infos[pagenr-1];
 	
 	$("#slider-songHot").slider( "value", parseInt(info.songtrendiness) );
+	if(parseInt(info.songtrendiness)==0){
+		 $( "#slider-songHot" ).slider( "option", "disabled", true );
+	}else{
+		 $( "#slider-songHot" ).slider( "option", "disabled", false );
+	}
 	$("#slider-hot").slider( "value", parseInt(info.artisttrendiness));
+	if(parseInt(info.artisttrendiness)==0){
+		 $( "#slider-hot" ).slider( "option", "disabled", true );
+	}else{
+		 $( "#slider-hot" ).slider( "option", "disabled", false );
+	}
 	$("#slider-pop").slider( "value", parseInt(info.artistpopularity));
+	if( parseInt(info.artistpopularity)==0){
+		 $( "#slider-pop" ).slider( "option", "disabled", true );
+		
+	}else{
+		 $( "#slider-pop" ).slider( "option", "disabled", false );
+	}
 	$("#artistVarietySlider").slider( "value", parseInt(info.artistvariety));
 	if(!isNaN(info.adventurousness)) $("#adventurousnessSlider").slider( "value", parseInt(info.adventurousness));
 	if(info.excludeplaylist){
