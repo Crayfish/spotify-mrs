@@ -5,9 +5,9 @@
 require([
   '$api/models',
   '$views/buttons',
-  'scripts/echonestDynamic',
-  'scripts/setupSimilarityRadioButtons'
-], function(models, buttons, echonestDynamic, setupSimilarityRadioButtons ) {
+  'scripts/echonestDynamic'
+  //'scripts/setupSimilarityRadioButtons'
+], function(models, buttons, echonestDynamic ) {
   'use strict';
 
   var setUpNextSongsButton = function(){

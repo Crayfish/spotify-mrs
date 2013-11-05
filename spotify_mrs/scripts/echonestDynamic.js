@@ -6,9 +6,9 @@ require([
 	'$views/throbber#Throbber', 
 	'scripts/jPagesTrackCover',
 	'scripts/apiKey',
-	'scripts/customplaylist'
+	//'scripts/customplaylist'
 
-],function(models, throbber, trackCover,apiKey,customplaylist) {
+],function(models, throbber, trackCover,apiKey/*,customplaylist*/) {
 	'use strict';
 
 	var startNewSession = function() {
@@ -179,7 +179,7 @@ var throbberTagCloud = null;
 
 /**included scipts*/
 var trackCoverScript = null;
-var customPlaylistScript = null;
+//var customPlaylistScript = null;
 //var yearSliderScript = null;
 var models = null;
 
