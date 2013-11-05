@@ -83,10 +83,10 @@ require([
 		removeTermFromCurrentlySetTermsArray1(tagToBeRemoved);
 	};
 			 
-	var setTagCloudResetDueToSimialrityChangeIsNeededToFalse= function(){
+/*	var setTagCloudResetDueToSimialrityChangeIsNeededToFalse= function(){
 		setTagCloudResetDueToSimialrityChangeIsNeededToFalse1();
 	};
-			 
+		*/	 
 	var setArtistStartYearBefore = function(year){
 		setArtistStartYearBefore1(year);
 	};
@@ -138,7 +138,7 @@ require([
 	exports.setNoSpotifyPlaylistSongs = setNoSpotifyPlaylistSongs;
 	exports.setArrayOfAllSongs = setArrayOfAllSongs;
 	exports.removeTermFromCurrentlySetTermsArray = removeTermFromCurrentlySetTermsArray;
-	exports.setTagCloudResetDueToSimialrityChangeIsNeededToFalse = setTagCloudResetDueToSimialrityChangeIsNeededToFalse;
+	//exports.setTagCloudResetDueToSimialrityChangeIsNeededToFalse = setTagCloudResetDueToSimialrityChangeIsNeededToFalse;
 	exports.setArtistStartYearBefore = setArtistStartYearBefore;
 	exports.setArtistStartYearAfter = setArtistStartYearAfter;
 	exports.setArtistEndYearBefore = setArtistEndYearBefore;
@@ -246,7 +246,7 @@ var currentlySetTagCloudTermsArray= new Array();
 
 var guiDisabled = false;
 
-var tagCloudResetDueToSimialrityChangeIsNeeded = false;
+//var tagCloudResetDueToSimialrityChangeIsNeeded = false;
 var isInfoSet = false;
 
 function returnGuiDisabled1(){
@@ -344,7 +344,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	currentlyUsedTasteProfileObject = tasteProfileIDandNameObject;
 	selectedUserPlaylistName = tasteProfileIDandNameObject.name;
 	console.log('ECHONEST DYNAMIC changeToPlaylistSimilarit() selectedUserPlaylistName: '+selectedUserPlaylistName)
-	tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = false;
@@ -1321,7 +1321,7 @@ function changeToGenreSimilarity1(genreName) {
 	selectedgenre = genreName;
 	currentlySetTagCloudTermsArray= new Array();
 	songsAlreadyUsed = new Array();
-	tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = true;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = false;
@@ -2375,7 +2375,7 @@ function changeToArtistSimilarity1() {
 
 function changeToSongSimilarity1() {
 	console.log(" echonest changeToSongSimilarity1() was called");
-	tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = true;
@@ -2582,9 +2582,9 @@ function getNextSong1() {
 }
 
 
-function setTagCloudResetDueToSimialrityChangeIsNeededToFalse1(){
+/*function setTagCloudResetDueToSimialrityChangeIsNeededToFalse1(){
 	tagCloudResetDueToSimialrityChangeIsNeeded = false;
-}
+}*/
 
 /**
  * Get the Artist terms for the current artists
@@ -2672,7 +2672,7 @@ function getArtistsTerms() {
 							console.log('ECHONESST DYNAMIC STYLE TERM OBJET ARRAY FOR TAGCLOUD: '
 									+ JSON.stringify(styleTermObjectsForTagCloud));
 
-							$("#tagCloud").tagCloud(styleTermObjectsForTagCloud, tagCloudResetDueToSimialrityChangeIsNeeded);
+							$("#tagCloud").tagCloud(styleTermObjectsForTagCloud);
 							
 							arrayArtistIdsForTermsQuery = new Array();
 						

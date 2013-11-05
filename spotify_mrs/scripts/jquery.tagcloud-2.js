@@ -75,9 +75,9 @@ require(
 				if (!cl || !cl.length)
 					return this;
 
-				var tagCloudResetDueToSimialrityChangeIsNeeded = givenOptions;
+				//var tagCloudResetDueToSimialrityChangeIsNeeded = givenOptions;
 				
-				console.log('TAG CLOUD tagCloudResetDueToSimialrityChangeIsNeeded='+tagCloudResetDueToSimialrityChangeIsNeeded);
+				//console.log('TAG CLOUD tagCloudResetDueToSimialrityChangeIsNeeded='+tagCloudResetDueToSimialrityChangeIsNeeded);
 				
 		
 				
@@ -86,13 +86,13 @@ require(
 				currentlySetTagCloudObjects = new Array();
 				// store the terms that were alreadySet
 				
-				if(!tagCloudResetDueToSimialrityChangeIsNeeded){
+				//if(!tagCloudResetDueToSimialrityChangeIsNeeded){
 				for ( var g = 0; g < tagCloudObjects.length; g++) {
 					if (tagCloudObjects[g].currentlySet) {
 						currentlySetTagCloudObjects.push(tagCloudObjects[g]);
 					}
 				}
-				}
+				//}
 				
 				
 				console.log('TAG CLOUD currentlySetTagCloudObjects Array:'
@@ -117,7 +117,7 @@ require(
 				// check if the alreadyset Objects are in the tagCloudObjects
 				// Array, this array contains the same tags as the cl Array by
 				// now
-				if(!tagCloudResetDueToSimialrityChangeIsNeeded){
+				//if(!tagCloudResetDueToSimialrityChangeIsNeeded){
 				for ( var e = 0; e < currentlySetTagCloudObjects.length; e++) {
 					var hasToBeAddedToTagCloudObjectsArray = true;
 					for ( var r = 0; r < tagCloudObjects.length; r++) {
@@ -143,11 +143,11 @@ require(
 					}
 
 				}
-				}
+				//}
 				
 				
 				
-				echonestDynamic.setTagCloudResetDueToSimialrityChangeIsNeededToFalse();
+				//echonestDynamic.setTagCloudResetDueToSimialrityChangeIsNeededToFalse();
 				
 				jQuery.extend(options, defaults, givenOptions);
 
