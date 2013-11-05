@@ -1,14 +1,15 @@
 require([
   '$api/models',
-  '$views/list#List',
-  'scripts/yearSlider'
+  '$views/list#List'
+  //'scripts/yearSlider',
+  
  
-], function(models, List, yearSlider) {
+], function(models, List) {
   'use strict';
   
   
   var createNewPlaylist = function(idsArray) {
-	  createNewPlaylist1(models, List, yearSlider, idsArray);
+	  createNewPlaylist1(models, List, idsArray);
   };
   
   
@@ -83,7 +84,7 @@ var infoStringArray = new Array();
  * @param models1 @see spotify api.models
  * @param List @see spotify views.List
  */
-function createNewPlaylist1(models1, List, yearSlider, idsArray){
+function createNewPlaylist1(models1, List, idsArray){
 	
 	list = null;
 	var processed = 0;
@@ -106,7 +107,7 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
 				
 				playlist1.tracks.add(tracksarray).done(function(addedManyTracks){
 					console.log("all tracks added to the playlist "+addedManyTracks.uri);
-					showPlaylist1(List, yearSlider);
+					showPlaylist1(List);
 				});
 				
 			});
@@ -129,7 +130,7 @@ function createNewPlaylist1(models1, List, yearSlider, idsArray){
  * Adds the content of the playlist to the List.
  * @param List @see spotify views.List
  */
-function showPlaylist1(List, yearSlider){
+function showPlaylist1(List){
 
 	console.log("adding list item to playlist view");
 	

@@ -7,6 +7,7 @@
 require([
   '$api/models',
   'scripts/customplaylist'
+
 ], function(models, customplaylist) {
   'use strict';
   

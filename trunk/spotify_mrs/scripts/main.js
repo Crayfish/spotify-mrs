@@ -15,14 +15,14 @@ require([
   'scripts/jPagesSetup',
   'scripts/setupNoveltyCheckBoxes',
   'scripts/playlistInformation',
-  'scripts/yearSlider',
+  //'scripts/yearSlider',
   'scripts/setupSimilarityRadioButtons',
   'scripts/setupRandomPlayButton'
   
 ], function( models, apiKey, generatePlaylistButton,setupSlider, 
 		echonestDynamic,setupSwitchViewButton, setupGenreFilter,yearPickerSetup,
 		echonestGenreData, customplaylist,jPagesSetup, setupNoveltyCheckBoxes, 
-		playlistInformation, yearSlider, setupSimilarityRadioButtons, setupRandomPlayButton) {
+		playlistInformation,/* yearSlider,*/ setupSimilarityRadioButtons, setupRandomPlayButton) {
 	'use strict';
  
 	/**load a page when the app is started*/
