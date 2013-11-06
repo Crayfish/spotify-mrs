@@ -257,35 +257,29 @@ function setArtistStartYearBefore1(year){
 	console.log('ECHONEST DYNAMIC  setArtistStartYearBefore1() was called with year: '+year);
 	currentArtistStartYearBefore = year;
 //	yearSliderScript.setArtistStartYearBefore(year);
-	restartSessionWithCurrentGuiState();
+	//restartSessionWithCurrentGuiState();
 }
 
 
-function sendGUIParamtersAndGetNextSong1(){
-	console.log('ECHONEST DYNAMIC sendGUIParamtersAndGetNextSong() was called');
-	
-	if(similarityModeIsArtist){
-		
-	}// end of similarityModeIsGenre
+
 	
 	
 	
 	
-	
-}
+
 
 function  setArtistStartYearAfter1(year){
 	console.log('ECHONEST DYNAMIC  setArtistStartYearAfter1() was called with year: '+year);
 	currentArtistStartYearAfter = year;
 //	yearSliderScript.setArtistStartYearAfter(year);
-	restartSessionWithCurrentGuiState();
+	//restartSessionWithCurrentGuiState();
 }
 
 function setArtistEndYearBefore1(year){
 	console.log('ECHONEST DYNAMIC  setArtistEndYearBefore1() was called with year: '+year);
 	 currentArtistEndYearBefore = year;
 //	 yearSliderScript.setArtistEndYearBefore(year);
-	 restartSessionWithCurrentGuiState();
+	// restartSessionWithCurrentGuiState();
 }
 
 
@@ -293,7 +287,7 @@ function setArtistEndYearAfter1(year){
 	console.log('ECHONEST DYNAMIC  setArtistEndYearAfter1() was called with year: '+year);
 	currentArtistEndYearAfter = year;
 //	yearSliderScript.setArtistEndYearAfter(year);
-	restartSessionWithCurrentGuiState();
+	//restartSessionWithCurrentGuiState();
 	
 }
 
