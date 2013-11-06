@@ -1946,7 +1946,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 		throbber = throbber1.forElement(throbberContainer);
 		throbber.setPosition('center', 'center');
 
-		var throbberContainerTagCloud = document.getElementById("tagCloud");
+		var throbberContainerTagCloud = document.getElementById("tagcloud-wrapper");
 		throbberTagCloud = throbber1.forElement(throbberContainerTagCloud);
 		throbberTagCloud.setPosition('center', 'center');
 

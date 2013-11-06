@@ -140,7 +140,7 @@ function newCoverPage1(customplaylist){
 		last        : "last", 
 		animation   : "fadeIn",
 		callback    : function( pages,items ){
-			console.log("covers on page: "+pages.current);
+			console.log("new covers on page: "+pages.current);
 			currentpageCover = pages.current;
 			customplaylist.setActivePage(currentpageCover);
 		}
