@@ -36,7 +36,13 @@ h2 {
    margin-top:0;
 }
 
+#seedArtistID{
+	display:none;
+}
 
+#seedsongID{
+	display:none;
+}
 
  .ui-autocomplete {
 width: 170px;
