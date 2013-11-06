@@ -161,12 +161,17 @@ require([
   var setInfo = function(info){
 	  customplaylist.setInfo(info);
   };
+  
+  var setArtistTerms = function(artisttermsarray){
+	  customplaylist.setArtistTerms(artisttermsarray);
+  };
 
   exports.setLoopContinueToTrue=setLoopContinueToTrue;  
   exports.checkLoopContinue = checkLoopContinue;  
   exports.getTrackCover = getTrackCover;
   exports.setBannedSeedArtist = setBannedSeedArtist;
   exports.setInfo = setInfo;
+  exports.setArtistTerms = setArtistTerms;
 });
 
 

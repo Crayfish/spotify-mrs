@@ -2622,8 +2622,8 @@ function getArtistsTerms() {
 
 						artistTermsObjectArray.push(artistTermsObject);
 
-						console.log('ECHONEST DYNAMIC getArtistsTerms() ARTIST TERMS OBJECT:  '
-								+ JSON.stringify(artistTermsObject));
+//						console.log('ECHONEST DYNAMIC getArtistsTerms() ARTIST TERMS OBJECT:  '
+//								+ JSON.stringify(artistTermsObject));
 						
 						if (counter == 0) {
 							readyToSetTagCloudArray = true
@@ -2660,6 +2660,10 @@ function getArtistsTerms() {
 									+ JSON.stringify(styleTermObjectsForTagCloud));
 
 							$("#tagCloud").tagCloud(styleTermObjectsForTagCloud);
+							
+							
+							trackCoverScript.setArtistTerms(styleTermObjectsForTagCloud);
+							
 							
 							arrayArtistIdsForTermsQuery = new Array();
 						
@@ -3131,7 +3135,7 @@ function getInfo(){
 		"artiststartyearafter": currentArtistStartYearAfter,
 		"artistendyearbefore": currentArtistEndYearBefore,
 		"artistendyearafter": currentArtistEndYearAfter, 
-		"artistterms": currentlySetTagCloudTermsArray,
+		"selectedartistterms": currentlySetTagCloudTermsArray,
 		"similarityInfoString": currentSimilarityInfoString,
 		
 	};
