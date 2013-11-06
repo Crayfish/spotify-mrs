@@ -249,6 +249,14 @@ var guiDisabled = false;
 //var tagCloudResetDueToSimialrityChangeIsNeeded = false;
 var isInfoSet = false;
 
+
+
+
+
+
+
+
+
 function returnGuiDisabled1(){
 	return  guiDisabled;
 }
@@ -1916,7 +1924,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 
 
 	trackCoverScript = trackCover1;
-//	yearSliderScript = yearSlider1;
+
 
 	songsAlreadyUsed = new Array();
 
@@ -1931,7 +1939,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 	} else {
 
 		
-		//$("#albumCoverContainer").hide();
+	
 	
 
 		var throbberContainer = document.getElementById('display');
@@ -1946,13 +1954,9 @@ function startNewSession1(models1, throbber1, trackCover1,
 	
 		artistName = models.player.track.artists[0].name;
 		
-//		yearSliderScript.reset();
-//		yearSliderScript.setSimilarityMode(0);
-//		yearSliderScript.setSimilarityBase(artistName);
-		
+
 		trackName = models.player.track.name;
-		
-		//$("#artistSimilarityInfo").text(artistName);
+	
 		$("#throbberInfo").text(
 				'Downloading Songs that are played by artists similar to '
 						+ artistName);
@@ -1964,14 +1968,19 @@ function startNewSession1(models1, throbber1, trackCover1,
 
 		seedArtistIdforEchonestCalls = seedArtistSpotifyId.replace('spotify',
 				'spotify-WW');
+		
+		$('#seedArtistID').text(seedArtistIdforEchonestCalls);
 		// console.log('Replaced Artist ID: '+replacedArtistID);
-
+		
 		
 		//song_id = spotify Song ID for GUI Changes 
 		song_id = models.player.track.uri.toString();
 		//code to use the spotify song Id for echnonest calls
-		//var replacedSongID= song_id.replace('spotify', 'spotify-WW');
+		var replacedSongID= song_id.replace('spotify', 'spotify-WW');
 		// console.log('Replaced ID: '+replacedSongID);
+		$('#seedsongID').text(replacedSongID);
+		
+	
 
 		var randomNumber = Math.floor(Math.random() * 100);
 
@@ -2024,7 +2033,7 @@ function startNewSession1(models1, throbber1, trackCover1,
 function changeSeedArtistSimilarity1() {
 	console.log('echonestDynamic changeSeedArtistSimilarity1() was called');
 
-//	resetSliders();
+
 	songsAlreadyUsed = new Array();
 
 	var track = models.player.load('track');
@@ -2039,36 +2048,27 @@ function changeSeedArtistSimilarity1() {
 	} else {
 
 		var cover = document.getElementById('albumCoverContainer');
-		// var cover = $(".albumCoverContainer") ;
-		// var pictureThrobber = throbber1.forElement(cover);
-		// pictureThrobber.setSize('normal');
-
-		// getAllEchonestGenres();
-
-		// var artist_id =
-		// models1.player.track.artists[0].uri.replace('spotify', 'spotify-WW');
+	
 
 		artistName = models.player.track.artists[0].name;
 
 		trackName = models.player.track.name;
 		
-//		yearSliderScript.reset();
-//		yearSliderScript.setSimilarityMode(0);
-//		yearSliderScript.setSimilarityBase(artistName);
-
-		//$("#artistSimilarityInfo").text(artistName);
+//		
 		$("#throbberInfo").text(
 				'Downloading Songs that are played by artists  similar to '
 						+ artistName);
 		$('#similarityInfo').text("Current Seed Artist: "+artistName);
 		currentSimilarityInfoString="Current Seed Artist: "+artistName;
-		// info('Getting Songs like "'+trackName+'" by '+ artistName);
+		
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
 		// console.log('artist_id: '+artist_id);
 
 		seedArtistIdforEchonestCalls = seedArtistSpotifyId.replace('spotify',
 				'spotify-WW');
+		$('#seedArtistID').text(seedArtistIdforEchonestCalls);
+		
 		// console.log('Replaced Artist ID: '+replacedArtistID);
 
 		// replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
@@ -2201,12 +2201,9 @@ function changeSeedSongSimilarity1() {
 		// replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
 
 		song_id = models.player.track.uri.toString();
-		// .decodeForText();
-		// console.log('Spotify Song ID: '+song_id);
-		// var replacedSongID=
-		// models1.player.track.uri.decodeForText().replace('spotify',
-		// 'spotify-WW');
+	
 		var replacedSongID = song_id.replace('spotify', 'spotify-WW');
+		$('#seedsongID').text(replacedSongID);
 		// console.log('Replaced ID: '+replacedSongID);
 		// replacedSongID = '"'+replacedSongID+'"';
 		// console.log('Replaced ID mit " "': '+replacedSongID);
@@ -2291,17 +2288,17 @@ function changeToArtistSimilarity1() {
 	//var cover = document.getElementById('albumCoverContainer');
 	
 	$('#changeSeedArtist').show();
-	//$('#similarityInfo').css('padding-left', '125px');
+	
 	$('#similarityInfo').text('Current Seed Artist: '+artistName);
 	currentSimilarityInfoString = 'Current Seed Artist: '+artistName;
 	$('#changeSeedSong').hide();
 
-	//$("#artistSimilarityInfo").text(artistName);
+	
 
 	$("#throbberInfo").text(
 			'Downloading Songs that are played by artists  similar to '
 					+ artistName);
-	//$("#throbberInfo").show();
+	
 	$('#tags').hide();
 	$('#genreSelectLabel').hide();
 
@@ -2378,10 +2375,6 @@ function changeToSongSimilarity1() {
 	songsAlreadyUsed = new Array();
 	currentlySetTagCloudTermsArray= new Array();
 	
-//	yearSliderScript.reset();
-//	yearSliderScript.setSimilarityMode(1);
-//	yearSliderScript.setSimilarityBase(trackName + '" by ' + artistName);
-//	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
 
 	
 	var cover = document.getElementById('albumCoverContainer');
@@ -2412,7 +2405,7 @@ function changeToSongSimilarity1() {
 
 	$('#excludeSeedArtistLabel').next('br').show();
 	
-	$("#artistVarietySlider").slider( "value", 50 );
+	//$("#artistVarietySlider").slider( "value", 50 );
 
 	$("#adventurousnessSlider").hide();
 	$("#adventurousnessSliderLabel").hide();
@@ -2931,7 +2924,8 @@ function restartSessionWithCurrentGuiState1(){
     //check which similiarity mode is shown on the GUI
     if( $('#artistRadiobtn').prop('checked')){
           args.type ='artist-radio';
-          args.artist_id = seedArtistIdforEchonestCalls;
+          //args.artist_id = seedArtistIdforEchonestCalls;
+          args.artist_id = $('#seedArtistID').text();
 
       	$("#throbberInfo").text(
       			'Downloading Songs that are played by artists  similar to '
@@ -2941,7 +2935,8 @@ function restartSessionWithCurrentGuiState1(){
     if( $('#songRadiobtn').prop('checked')){
    		var replacedSongID= song_id.replace('spotify', 'spotify-WW');
     	 args.type ='song-radio';
-    	 args.song_id =replacedSongID;
+    	 //args.song_id =replacedSongID;
+    	 args.song_id = $('#seedsongID').text();
     		$("#throbberInfo").text(
     				'Downloading songs that are similar to ' + '"'
     						+ trackName + '" by ' + artistName);
@@ -3116,7 +3111,9 @@ function checkResponse(data) {
 function getInfo(){
 	var info={
 		"artist": artistName,
+		"artistIDForEchonestCalls": $('#seedArtistID').text(),
 		"track" : trackName, 
+		"trackIdForEchonestCalls": $('#seedsongID').text(),
 		"genre" : selectedgenre, 
 		"playlist": selectedUserPlaylistName, 
 		"artistmode": similarityModeIsArtist, 
@@ -3136,6 +3133,7 @@ function getInfo(){
 		"artistendyearafter": currentArtistEndYearAfter, 
 		"artistterms": currentlySetTagCloudTermsArray,
 		"similarityInfoString": currentSimilarityInfoString,
+		
 	};
 	return info;
 }

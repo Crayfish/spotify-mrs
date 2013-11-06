@@ -100,7 +100,7 @@ require([
 	}
 
 
-	function resetSliders(){
+/*	function resetSliders(){
 		
 		$("#slider-songHot").slider( "value", 0 );
 		$("#slider-songHot").slider( "option", "disabled", true );
@@ -113,7 +113,7 @@ require([
 		$("#excludeSeedArtistCheckBox").prop('checked', false);
 		$("#excludeSpotifyPlaylistSongsCheckBox").prop('checked', false);
 	
-	}
+	}*/
 
 
 	function checkResponse(data) {

@@ -227,8 +227,9 @@ function setActivePage1(pagenr){
 	var info = infos[pagenr-1];
 	
 	
-	console.log('SET ACTIVE PAGE simlarityInfoString: '+info.similarityInfoString);
+	//console.log('SET ACTIVE PAGE simlarityInfoString: '+info.similarityInfoString);
 	$('#similarityInfo').text(info.similarityInfoString);
+	
 	
 	$("#slider-songHot").slider( "value", parseInt(info.songtrendiness) );
 	if(parseInt(info.songtrendiness)==0){
@@ -273,15 +274,102 @@ function setActivePage1(pagenr){
 	$('#artist_end_year_before_input').val(info.artistendyearbefore);
 	$('#artist_end_year_after_input').val(info.artistendyearafter);
 	
-	if(info.artistmode) /*document.forms["formSimilaritySection"]["artistRadiobtn"].click();*/$('#artistRadiobtn').prop('checked',true);
-	else if(info.songmode) /*document.forms["formSimilaritySection"]["songRadiobtn"].click();*/$('#songRadiobtn').prop('checked',true);
+	if(info.artistmode){
+		/*document.forms["formSimilaritySection"]["artistRadiobtn"].click();*/
+		$('#artistRadiobtn').prop('checked',true);
+		//set the hidden <div> that new echonest calls are using for the query
+		$('#seedArtistID').text(info.artistIDForEchonestCalls);
+		$("#throbberInfo").text('Downloading Songs that are played by artists  similar to '+ info.artist);
+		//hide playlist select GUI Items
+		$('#tags1').hide();
+		$('#playlistSelectLabel').hide();
+		//show change seed artist Gui Items
+		$('#changeSeedArtist').show();
+		$('#changeSeedSong').hide();
+		//hide genre select GUI Itmes
+		$('#tags').hide();
+		$('#genreSelectLabel').hide();
+		//show excludeSeedArtistCheckBox
+		$('#excludeSeedArtistCheckBox').show();
+		$('#excludeSeedArtistLabel').show();
+		$('#excludeSeedArtistLabel').next('br').show();
+		//hide the adventurousness Slider
+		$("#adventurousnessSlider").hide();
+		$("#adventurousnessSliderLabel").hide();
+		
+		
+		
+	}
+	else if(info.songmode){
+		/*document.forms["formSimilaritySection"]["songRadiobtn"].click();*/
+		
+		//show somng similarity GUI Items
+		$('#songRadiobtn').prop('checked',true);
+		$('#seedsongID').text(info.trackIdForEchonestCalls);
+		$("#throbberInfo").text('Downloading songs that are similar to ' + '"'+ info.track + '" by ' + info.artist);
+		$('#excludeSeedArtistCheckBox').show();
+		$('#excludeSeedArtistLabel').show();
+		$('#excludeSeedArtistLabel').next('br').show();
+		//hide change Seed artist and Seed Song Buttons
+		$('#changeSeedArtist').hide();
+		$("#changeSeedSong").show();
+		//hide genre and Playlist GUI Items
+		$('#tags').hide();
+		$('#genreSelectLabel').hide();
+		$('#tags1').hide();
+		$('#playlistSelectLabel').hide();
+		//hide adventurousness Slider
+		$("#adventurousnessSlider").hide();
+		$("#adventurousnessSliderLabel").hide();
+		
+		
+	}
 	else if(info.genremode) {
-		/*document.forms["formSimilaritySection"]["genreRadiobtn"].click();*/$('#genreRadiobtn').prop('checked',true);
+		/*document.forms["formSimilaritySection"]["genreRadiobtn"].click();*/
+		
+		//show genre GUI Items
+		$('#genreRadiobtn').prop('checked',true);
 		$('#tags').val(info.genre);
+		$('#tags').show();
+		$("#throbberInfo").text('Downloading songs that represent the genre '+ info.genre);
+		$('#genreSelectLabel').show();
+		//hide change Seed Song and Seed Artist
+		$('#changeSeedSong').hide();
+		$('#changeSeedArtist').hide();
+		//playlist select GUI Items
+		$('#tags1').hide();
+		$('#playlistSelectLabel').hide();
+		//hide  exclude seed artist
+		$('#excludeSeedArtistCheckBox').hide();
+		$('#excludeSeedArtistLabel').hide();
+		$('#excludeSeedArtistLabel').next('br').hide();
+		//hide adventurousness Slider
+		$("#adventurousnessSlider").hide();
+		$("#adventurousnessSliderLabel").hide();
 	}
 	else if(info.playlistmode) {
-		/*document.forms["formSimilaritySection"]["playlistRadiobtn"].click();*/$('#playlistRadiobtn').prop('checked',true);
+		/*document.forms["formSimilaritySection"]["playlistRadiobtn"].click();*/
+		
+		//show playlist GUI Items
+		$('#playlistRadiobtn').prop('checked',true);
 		$('#tags1').val(info.playlist);
+		$('#tags1').show();
+		$('#playlistSelectLabel').show();
+		$("#throbberInfo").text('Downloading songs that are simliar to your \"'+ info.playlist+ '\" Spotify-playlist');
+		//show adventurousness Slider
+		$("#adventurousnessSliderLabel").show();
+		$("#adventurousnessSlider").show();
+		//hide change Seed Song and Seed Artist
+		$('#changeSeedSong').hide();
+		$('#changeSeedArtist').hide();
+		// hide genre select Gui Items
+		$('#tags').hide();
+		$('#genreSelectLabel').hide();
+		//hide exclude seed artist
+		$('#excludeSeedArtistCheckBox').hide();
+		$('#excludeSeedArtistLabel').hide();
+		$('#excludeSeedArtistLabel').next('br').hide();
+		
 	}
 	
 }
