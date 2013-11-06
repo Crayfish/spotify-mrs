@@ -310,7 +310,7 @@ function removeTermFromCurrentlySetTermsArray1(tagToBeRemoved){
 	console.log('ECHONEST DYNAMIC removeTermFromCurrentlySetTermsArray() state of set Terms Array: '+currentlySetTagCloudTermsArray);
 	
 //	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
-	restartSessionWithCurrentGuiState();
+	//restartSessionWithCurrentGuiState();
 }
 
 
@@ -483,7 +483,7 @@ function setTermFilter1(term) {
 	currentlySetTagCloudTermsArray.push(term);
 	
 //	yearSliderScript.setArtistTermsArray(currentlySetTagCloudTermsArray);
-	restartSessionWithCurrentGuiState();
+	//restartSessionWithCurrentGuiState();
 	
 }
 
