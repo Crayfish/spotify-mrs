@@ -41,7 +41,15 @@ require([
   var addYear = function addYear(track){
 	  addYear1(models, track);
   }
+  
+  var setArtistTerms = function(artisttermsarray){
+	  setArtistTerms1(artisttermsarray);
+  }
 
+  var setActivePageForNewPage = function(pagenr){
+	  setActivePageForNewPage1(pagenr);
+  }
+  
   exports.createNewPlaylist = createNewPlaylist;
   exports.setupSubscribeButton = setupSubscribeButton;
   exports.showPlaylist = showPlaylist;
@@ -50,6 +58,8 @@ require([
   exports.getInfoString = getInfoString;
   exports.getInfoTitle = getInfoTitle;
   exports.addYear = addYear;
+  exports.setArtistTerms = setArtistTerms;
+  exports.setActivePageForNewPage = setActivePageForNewPage;
 
   
 });//end require
@@ -215,7 +225,9 @@ function setupSubscribeButton1(models1){
 	
 }
 
-
+function setActivePageForNewPage1(pagenr){
+	activeplaylist = pagenr -1;
+}
 
 /**
  * Set the active page in the pagination, for playlist saving purposes.
@@ -224,6 +236,8 @@ function setupSubscribeButton1(models1){
  */
 function setActivePage1(pagenr){
 	activeplaylist = pagenr -1;
+	
+	
 	var info = infos[pagenr-1];
 	
 	
@@ -372,6 +386,9 @@ function setActivePage1(pagenr){
 		
 	}
 	
+	console.log("Set Active page done.");
+	console.log("Artsits TERMS: "+JSON.stringify(info.artisttermsarray));
+
 }
 
 /**
@@ -382,6 +399,11 @@ function setInfo1(info){
 	console.log("-----Informaion set for page "+pageCnt+": "+infos[pageCnt].artist);
 	pageCnt++;
 	
+}
+
+function setArtistTerms1(artisttermsarray){
+	infos[pageCnt-1].artisttermsarray = artisttermsarray;
+	console.log("-----Artist terms set: "+JSON.stringify(artisttermsarray));
 	
 }
 
@@ -451,14 +473,14 @@ function getInfoString1(){
 		returnstring = returnstring+"<br/>Adventurousness:<i>( "+parseInt(info.adventurousness)+" ) </i>";
 	}
 	
-	if(info.artistterms.length != 0){
-		var artistterms = info.artistterms;
+	if(info.selectedartistterms.length != 0){
+		var artistterms = info.selectedartistterms;
 		returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
-		for(var i=0; i< artistterms.length;i++){
+		for(var i=0; i< selectedartistterms.length;i++){
 			
-			returnstring = returnstring+" " +artistterms[i];
+			returnstring = returnstring+" " +selectedartistterms[i];
 			
-			if((i+1)!=artistterms.length){
+			if((i+1)!=selectedartistterms.length){
 				returnstring = returnstring+", "
 			}
 		}
@@ -484,7 +506,9 @@ function getInfoString1(){
 	
 	returnstring = returnstring+"</div>"
 	
+	
 	//resetYear();
+	
 	
 	return returnstring;
 }
