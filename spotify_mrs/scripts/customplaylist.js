@@ -388,15 +388,18 @@ function setActivePage1(pagenr){
 	
 //	$("#tagCloud").tagCloud(new Array());
 //	$("#tagCloud").empty();
+	console.log("************info: "+JSON.stringify(info));
 	console.log("===SETTING TAG CLOUD ARTIST TERMS: "+JSON.stringify(info.artisttermsarray));
 	if (info.artisttermsarray instanceof Array){
 		console.log("SETTING TAGCLOUD TAGS!!!!!!!!!!!!!!!!!");
 		$("#tagCloud").tagCloud(new Array());
 		$("#tagCloud").empty();
 		$("#tagCloud").tagCloud(info.artisttermsarray);
-		
 	}
-	
+	if(info.selectedartistterms instanceof Array){
+		console.log("_____selected artist terms");
+		$("#tagCloud").setTerms(info.selectedartistterms);
+	}
 	
 	console.log("Set Active page done.");
 
@@ -489,11 +492,11 @@ function getInfoString1(){
 	if(info.selectedartistterms.length != 0){
 		var artistterms = info.selectedartistterms;
 		returnstring = returnstring+ "<br/> Songs are played by artists matching the following descriptions: ";
-		for(var i=0; i< selectedartistterms.length;i++){
+		for(var i=0; i< info.selectedartistterms.length;i++){
 			
-			returnstring = returnstring+" " +selectedartistterms[i];
+			returnstring = returnstring+" " +info.selectedartistterms[i];
 			
-			if((i+1)!=selectedartistterms.length){
+			if((i+1)!=info.selectedartistterms.length){
 				returnstring = returnstring+", "
 			}
 		}
