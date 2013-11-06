@@ -386,8 +386,19 @@ function setActivePage1(pagenr){
 		
 	}
 	
+//	$("#tagCloud").tagCloud(new Array());
+//	$("#tagCloud").empty();
+	console.log("===SETTING TAG CLOUD ARTIST TERMS: "+JSON.stringify(info.artisttermsarray));
+	if (info.artisttermsarray instanceof Array){
+		console.log("SETTING TAGCLOUD TAGS!!!!!!!!!!!!!!!!!");
+		$("#tagCloud").tagCloud(new Array());
+		$("#tagCloud").empty();
+		$("#tagCloud").tagCloud(info.artisttermsarray);
+		
+	}
+	
+	
 	console.log("Set Active page done.");
-	console.log("Artsits TERMS: "+JSON.stringify(info.artisttermsarray));
 
 }
 
@@ -401,10 +412,12 @@ function setInfo1(info){
 	
 }
 
-function setArtistTerms1(artisttermsarray){
-	infos[pageCnt-1].artisttermsarray = artisttermsarray;
-	console.log("-----Artist terms set: "+JSON.stringify(artisttermsarray));
+function setArtistTerms1(artisttermsarray1){
+	//console.log("---INFO to insert artist terms: "+JSON.stringify(infos[pageCnt-1]));
 	
+	//console.log("-----Artist terms array set for page "+(pageCnt-1)+": "+JSON.stringify(artisttermsarray1));
+	infos[pageCnt-1].artisttermsarray= artisttermsarray1;
+	//$("#tagCloud").tagCloud(artisttermsarray);
 }
 
 function getInfoString1(){
