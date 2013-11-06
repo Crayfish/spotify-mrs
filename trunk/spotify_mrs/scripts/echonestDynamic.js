@@ -3135,7 +3135,7 @@ function getInfo(){
 		"artiststartyearafter": currentArtistStartYearAfter,
 		"artistendyearbefore": currentArtistEndYearBefore,
 		"artistendyearafter": currentArtistEndYearAfter, 
-		"selectedartistterms": currentlySetTagCloudTermsArray,
+		"selectedartistterms": currentlySetTagCloudTermsArray.slice(0),
 		"similarityInfoString": currentSimilarityInfoString,
 		
 	};

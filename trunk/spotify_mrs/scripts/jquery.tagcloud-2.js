@@ -182,6 +182,37 @@ require([
 				return this;
 
 			}
+	$.fn.setTerms = function(terms){
+		console.log("TAGCLOUD SETTING TERMS:"+JSON.stringify(terms));
+		
+		//remove all selections
+		for ( var k = 0; k < tagCloudObjects.length; k++) {
+			if (tagCloudObjects[k].currentlySet) {
+				tagCloudObjects[k].currentlySet = false;
+
+				$('.tagcloudlink').filter(function() {
+					return $(this).text() === tagCloudObjects[k].tag;
+				}).css("color", '#666667');
+
+				echonestDynamic.removeTermFromCurrentlySetTermsArray(tagCloudObjects[k].tag);
+			}
+		}
+		
+		//select the given terms
+		for ( var k = 0; k < tagCloudObjects.length; k++) {
+			if($.inArray(tagCloudObjects[k].tag, terms)>-1){
+				tagCloudObjects[k].currentlySet = true;
+				
+				$('.tagcloudlink').filter(function() {
+					return $(this).text() === tagCloudObjects[k].tag;
+				}).css("color", "red");
+
+				echonestDynamic.setTermFilter(tagCloudObjects[k].tag);
+			}
+			
+		}
+		
+	}
 
 		});// end of require()
 
