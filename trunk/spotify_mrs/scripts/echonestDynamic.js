@@ -740,6 +740,7 @@ function changeToGenreSimlarityOverloadMethod1(){
 		$('#similarityInfo').text('Current Seed Genre: '+selectedgenre );
 	}
 	
+	
 }
 
 /**
