@@ -355,7 +355,7 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 
 	
 	songsAlreadyUsed = new Array();
-	currentlySetTagCloudTermsArray= new Array();
+	//currentlySetTagCloudTermsArray= new Array();
 	
 
 	
@@ -752,7 +752,7 @@ function changeToGenreSimilarity1(genreName) {
 			+ genreName);
 
 	selectedgenre = genreName;
-	currentlySetTagCloudTermsArray= new Array();
+	//currentlySetTagCloudTermsArray= new Array();
 	songsAlreadyUsed = new Array();
 	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = true;
@@ -1711,7 +1711,7 @@ function changeToArtistSimilarity1() {
 	similarityModeIsPlaylist = false;
 	
 	songsAlreadyUsed = new Array();
-	currentlySetTagCloudTermsArray= new Array();
+	//currentlySetTagCloudTermsArray= new Array();
 	
 	
 	
@@ -1804,7 +1804,7 @@ function changeToSongSimilarity1() {
 	similarityModeIsPlaylist = false;
 	
 	songsAlreadyUsed = new Array();
-	currentlySetTagCloudTermsArray= new Array();
+	//currentlySetTagCloudTermsArray= new Array();
 	
 
 	
