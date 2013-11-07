@@ -401,3 +401,11 @@ margin-right:10px;
     /* tooltip content */
     max-width: 1000px !important;
 }
+
+
+#slider-songHot .ui-slider-handle { border: 2px solid #a1a1a1;}
+#slider-hot .ui-slider-handle { border: 2px solid #a1a1a1;}
+#slider-pop .ui-slider-handle { border: 2px solid #a1a1a1;}
+#adventurousnessSlider .ui-slider-handle { border: 2px solid #a1a1a1;}
+#artistVarietySlider .ui-slider-handle { border: 2px solid #a1a1a1;}
+
