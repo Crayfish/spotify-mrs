@@ -503,7 +503,7 @@ function changeAdventurousness1() {
 //	yearSliderScript.setAdventurousness(adventurousnessSliderValue*100);
 	
 	console.log('adventurousnessSliderValue:' + adventurousnessSliderValue);
-	var randomNumber = Math.floor(Math.random() * 100);
+	/*var randomNumber = Math.floor(Math.random() * 100);
 
 	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?session_id='
 			+ session_id + '&_=' + randomNumber;
@@ -531,7 +531,7 @@ function changeAdventurousness1() {
 		errorHandlingforEchonestCalls(jqxhr, textStatus, error);
 		
 	});
-
+*/
 }
 
 function changeArtistVariety1() {
@@ -542,7 +542,7 @@ function changeArtistVariety1() {
 	console.log('changeArtistVarietySliderValue:'+ changeArtistVarietySliderValue);
 	artistVariety = changeArtistVarietySliderValue*100;
 	
-	var randomNumber = Math.floor(Math.random() * 100);
+	/*var randomNumber = Math.floor(Math.random() * 100);
 
 	var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?session_id='
 			+ session_id + '&_=' + randomNumber;
@@ -564,7 +564,7 @@ function changeArtistVariety1() {
 		} else {
 			info("trouble getting results");
 		}
-	});
+	});*/
 }
 
 
@@ -2406,7 +2406,7 @@ function restartSessionWithCurrentGuiState1(){
     
     
 
-    
+    //year section paramters
     if($('#artist_start_year_before_input').val() != 'off'){
     	args.artist_start_year_before = $('#artist_start_year_before_input').val();	
     };
@@ -2636,6 +2636,8 @@ function steeringAfterReset(){
 	
 	
 	//steering for style terms
+	//if no page change set the style string the normal way
+	if($('#pageChangeFlag').text() !='pageWasChanged'){
 	var styleString = '';
 	if(currentlySetTagCloudTermsArray.length != 0 ){
 	for(var i = 0; i< currentlySetTagCloudTermsArray.length; i++){
@@ -2649,7 +2651,14 @@ function steeringAfterReset(){
 	console.log('ECHONEST DYNAMIC setTermFilter1()  styleString to set: '+styleString);
 	args.style = styleString;	
 	}
-
+	}else{
+		//there was a page change, so set the style String from the styleTerm <div>
+		var styleStringFromStyleTermDiv = $('#styleTerm').text();
+		args.style = styleStringFromStyleTermDiv;	
+	}
+	
+	
+	
 	$.getJSON(url, args,
 
 		function(data) {
