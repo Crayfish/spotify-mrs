@@ -221,6 +221,8 @@ border-radius: 5px;
 
 #similarityInfo{
 	padding-left: 125px;
+	font-weight: bold;
+	font-size: 1.1em;
 }
 
 .similaritySection  { 
@@ -358,12 +360,17 @@ margin-right:10px;
 
 .simButton{
 	margin: 0px !important;
+	border: 2px solid #a1a1a1 !important;
+	border-radius: 5px;
+	
 }
 
 #nextSongsButton{
 	width: 476px;
 	height: 55px;
 	margin-left: 5px !important;
+	border: 2px solid #a1a1a1;
+	border-radius: 5px;
 }
 
 /* #offLabel{
@@ -376,6 +383,8 @@ margin-right:10px;
 
 #subscribebutton{
 	float:right;
+	border: 2px solid #a1a1a1;
+	border-radius: 5px;
 }
 
 #infobutton{
