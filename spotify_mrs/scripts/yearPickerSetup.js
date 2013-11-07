@@ -30,7 +30,7 @@ function setUpYearPicker1(echonestDynamic){
 	
 	var yearPickerArray = new Array();
 	yearPickerArray.push('off');
-	yearPickerArray.push('present');
+	//yearPickerArray.push('present');
 	
 	 //$('.yearpick').append($('<option />').val('off').html('off'));
 	 //$('.yearpick').append($('<option />').val('present').html('present'));
