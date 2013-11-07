@@ -2460,26 +2460,6 @@ function steeringAfterReset(){
 		
 	};
 	
-	
-	
-	//if no page change do steering the normal way
-	if($('#pageChangeFlag').text() !='pageWasChanged'){  
-	//Steetering for Trendiness and Popularity Values
-	 //0.0 value means slider is set to off position
-	if(currentArtistPopularityValue != 0.0){
-		
-		//args.target_artist_familiarity = currentArtistPopularityValue;
-		args.target_artist_familiarity = currentArtistPopularityValue;
-	}
-	
-	if(currentArtistHotnesValue != 0.0){
-		args.target_artist_hotttnesss = currentArtistHotnesValue;
-	}
-	
-	if(currentSongHotnesValue != 0.0){
-		args.target_song_hotttnesss = currentSongHotnesValue;
-	}
-	
 	//steering for artist variety
 	var currentArtistVarietyValue = $("#artistVarietySlider").slider(
 	"value") / 100;
@@ -2491,12 +2471,161 @@ function steeringAfterReset(){
 		args.adventurousness =currentAdventurousnessValue / 100;
 	}
 	
+	//if no page change do steering the normal way
+	if($('#pageChangeFlag').text() !='pageWasChanged'){  
+	//Steetering for Trendiness and Popularity Values
+	 //0.0 value means slider is set to off position
+	if(currentArtistPopularityValue != 0.0){
+		
+		
+		args.target_artist_familiarity = currentArtistPopularityValue;
+	}
+	
+	if(currentArtistHotnesValue != 0.0){
+		args.target_artist_hotttnesss = currentArtistHotnesValue;
+	}
+	
+	if(currentSongHotnesValue != 0.0){
+		args.target_song_hotttnesss = currentSongHotnesValue;
+	}
+	
+
+	
 	//if there was a page change get the steering values from the sliders
 	}else{
+		//steering for artist_familiarity
+		var artistFamiliarityLevelForSteering = $('#slider-pop').val();
 		
+		var targetValueArtist_familiarity = null;
+
+			if(artistFamiliarityLevelForSteering==0){
+				//disable the slider
+				
+				$("#slider-pop").slider( "option", "disabled", true );
+				
+				
+			}else{
+
+			
 		
+				switch ( artistFamiliarityLevelForSteering) {
+			
+				case 1:
+					targetValueArtist_familiarity = 0.0;
+					args.target_artist_familiarity  =targetValueArtist_familiarity;
+					break;
+				case 2:
+					targetValueArtist_familiarity = 0.25;
+					args.target_artist_familiarity  = targetValueArtist_familiarity;
+					break;
+				case 3:
+					targetValueArtist_familiarity = 0.5;
+					args.target_artist_familiarity  = targetValueArtist_familiarity;
+					break;
+				case 4:
+					targetValueArtist_familiarity = 0.75;
+					args.target_artist_familiarity  = targetValueArtist_familiarity;
+					break;
+				case 5:
+					targetValueArtist_familiarity = 1;
+					args.target_artist_familiarity  = targetValueArtist_familiarity;
+					break;
+
+			}
+
 		
+
+			}
 		
+		//steering for artist_hotttnesss
+			var artistHotnessLevelForSteering = $('#slider-hot').val();
+			
+			var targetValueArtist_hotttnesss = null;
+
+				if(artistHotnessLevelForSteering==0){
+					//disable the slider
+					
+					$("#slider-hot").slider( "option", "disabled", true );
+					
+					
+				}else{
+
+				
+			
+					switch ( artistHotnessLevelForSteering) {
+				
+					case 1:
+						targetValueArtist_hotttnesss = 0.0;
+						args.target_artist_hotttnesss  =targetValueArtist_hotttnesss;
+						break;
+					case 2:
+						targetValueArtist_hotttnesss = 0.25;
+						args.target_artist_hotttnesss  = targetValueArtist_hotttnesss;
+						break;
+					case 3:
+						targetValueArtist_hotttnesss = 0.5;
+						args.target_artist_hotttnesss  = targetValueArtist_hotttnesss;
+						break;
+					case 4:
+						targetValueArtist_hotttnesss = 0.75;
+						args.target_artist_hotttnesss  = targetValueArtist_hotttnesss;
+						break;
+					case 5:
+						targetValueArtist_hotttnesss = 1;
+						args.target_artist_hotttnesss  = targetValueArtist_hotttnesss;
+						break;
+
+				}
+
+			
+
+				}
+			
+		//steering for song_hotttnesss
+				var songHotnessLevelForSteering = $('#slider-songHot').val();
+				
+				var targetValueSong_hotttnesss = null;
+
+					if(songHotnessLevelForSteering==0){
+						//disable the slider
+						
+						$("#slider-songHot").slider( "option", "disabled", true );
+						
+						
+					}else{
+
+					
+				
+						switch ( songHotnessLevelForSteering) {
+					
+						case 1:
+							targetValueSong_hotttnesss = 0.0;
+							args.target_song_hotttnesss  =targetValueSong_hotttnesss;
+							break;
+						case 2:
+							targetValueSong_hotttnesss = 0.25;
+							args.target_song_hotttnesss  = targetValueSong_hotttnesss;
+							break;
+						case 3:
+							targetValueSong_hotttnesss = 0.5;
+							args.target_song_hotttnesss  = targetValueSong_hotttnesss;
+							break;
+						case 4:
+							targetValueSong_hotttnesss = 0.75;
+							args.target_song_hotttnesss  = targetValueSong_hotttnesss;
+							break;
+						case 5:
+							targetValueSong_hotttnesss = 1;
+							args.target_song_hotttnesss  = targetValueSong_hotttnesss;
+							break;
+
+					}
+
+				
+
+					}	
+				
+		//Finally set the page change flag
 		$('#pageChangeFlag').text('');
 		
 		
