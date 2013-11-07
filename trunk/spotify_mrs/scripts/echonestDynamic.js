@@ -2931,9 +2931,10 @@ function restartSessionWithCurrentGuiState1(){
           //args.artist_id = seedArtistIdforEchonestCalls;
           args.artist_id = $('#seedArtistID').text();
 
-      	$("#throbberInfo").text(
-      			'Downloading Songs that are played by artists  similar to '
-      					+ artistName);
+        if($('#pageChangeFlag').text() !='pageWasChanged'){  
+      	$("#throbberInfo").text('Downloading Songs that are played by artists  similar to '+ artistName);
+      	$('#pageChangeFlag').text('');
+        }
     };
     
     if( $('#songRadiobtn').prop('checked')){
@@ -2941,47 +2942,58 @@ function restartSessionWithCurrentGuiState1(){
     	 args.type ='song-radio';
     	 //args.song_id =replacedSongID;
     	 args.song_id = $('#seedsongID').text();
-    		$("#throbberInfo").text(
-    				'Downloading songs that are similar to ' + '"'
-    						+ trackName + '" by ' + artistName);
+    	  if($('#pageChangeFlag').text() !='pageWasChanged'){  
+    		$("#throbberInfo").text('Downloading songs that are similar to ' + '"'+ trackName + '" by ' + artistName);
+    		$('#pageChangeFlag').text('');
+    	  }
     };
     
     if($('#genreRadiobtn').prop('checked')){
 	   args.type ='genre-radio';
-	   args.genre = selectedgenre;
-		$("#throbberInfo").text(
-				'Downloading songs that represent the genre '
-						+ selectedgenre);
+	   args.genre = $('#tags').val();
+	   if($('#pageChangeFlag').text() !='pageWasChanged'){  
+		$("#throbberInfo").text('Downloading songs that represent the genre '+ $('#tags').val());
+		$('#pageChangeFlag').text('');
+ 	  }
     };
     
     if($('#playlistRadiobtn').prop('checked')){
     	args.type='catalog-radio';
-    	args.seed_catalog = currentlyUsedTasteProfileObject.tasteProfileID
     	
-    	$("#throbberInfo").text(
-    			'Downloading songs that are simliar to your \"'
-    					+ currentlyUsedTasteProfileObject.name
-    					+ '\" Spotify-playlist');
+    	if($('#pageChangeFlag').text() !='pageWasChanged'){  
+    	args.seed_catalog = currentlyUsedTasteProfileObject.tasteProfileID	
+    	$("#throbberInfo").text('Downloading songs that are simliar to your \"'+ currentlyUsedTasteProfileObject.name+ '\" Spotify-playlist');
+    	$('#pageChangeFlag').text('');
+   	  }else{
+   		  //there was a page change
+   		  
+   		args.seed_catalog = $('#seedCatalogID').text(); 
+   		$('#pageChangeFlag').text('');
+   	  }
+    	
     };
     
     
+
     
-    
-    if(currentArtistStartYearBefore != 'off'){
-    	args.artist_start_year_before = currentArtistStartYearBefore;	
+    if($('#artist_start_year_before_input').val() != 'off'){
+    	args.artist_start_year_before = $('#artist_start_year_before_input').val();	
     };
     
-    if(currentArtistStartYearAfter != 'off'){
-    	args.artist_start_year_after = currentArtistStartYearAfter;
+    if(    $('#artist_start_year_after_input').val() != 'off'){
+    	args.artist_start_year_after = $('#artist_start_year_after_input').val();
+    	//console.log('ECHONEST DYNAMIC args.artist_start_year_after: '+args.artist_start_year_after);
     };
     
-    if(currentArtistEndYearBefore != 'off'){
-    	args.artist_end_year_before =  currentArtistEndYearBefore;
+    if($('#artist_end_year_before_input').val() != 'off'){
+    	args.artist_end_year_before =  $('#artist_end_year_before_input').val();
     };
     
-    if(currentArtistEndYearAfter != 'off'){
-    	args.artist_end_year_after = currentArtistEndYearAfter;
+    if($('#artist_end_year_after_input').val() != 'off'){
+    	args.artist_end_year_after = $('#artist_end_year_after_input').val();
     };
+    
+    
     
     $.getJSON(url, args, function(data) {
           if (checkResponse(data)) {
@@ -2992,7 +3004,12 @@ function restartSessionWithCurrentGuiState1(){
           } else {
                 info("trouble getting results");
           }
-    });
+    }).fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "ECHONEST DYNAMIC restartSessionWithCurrentGuiState1() Request Failed: " + err );
+		errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+				
+	});
 }
 
 
@@ -3016,6 +3033,8 @@ function steeringAfterReset(){
 	//Steetering for Trendiness and Popularity Values
 	 //0.0 value means slider is set to off position
 	if(currentArtistPopularityValue != 0.0){
+		
+		//args.target_artist_familiarity = currentArtistPopularityValue;
 		args.target_artist_familiarity = currentArtistPopularityValue;
 	}
 	
@@ -3065,6 +3084,11 @@ function steeringAfterReset(){
 			} else {
 				info("trouble getting results");
 			}
+		}).fail(function( jqxhr, textStatus, error ) {
+			var err = textStatus + ", " + error;
+			console.log( "ECHONEST DYNAMIC getNextSong1() Request Failed: " + err );
+			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
+					
 		});
 	
 	
@@ -3113,13 +3137,20 @@ function checkResponse(data) {
  * Collects the current settings and returns them in a map
  */
 function getInfo(){
+	var tasteProfileIdForInfo = '';
+	if(currentlyUsedTasteProfileObject !=null){
+		tasteProfileIdForInfo = currentlyUsedTasteProfileObject.tasteProfileID
+	}
+	
+	
 	var info={
 		"artist": artistName,
 		"artistIDForEchonestCalls": $('#seedArtistID').text(),
 		"track" : trackName, 
 		"trackIdForEchonestCalls": $('#seedsongID').text(),
 		"genre" : selectedgenre, 
-		"playlist": selectedUserPlaylistName, 
+		"playlist": selectedUserPlaylistName,
+		"seedCatalogID" :tasteProfileIdForInfo ,
 		"artistmode": similarityModeIsArtist, 
 		"songmode": similarityModeIsSong,
 		"genremode": similarityModeIsGenre,

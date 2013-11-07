@@ -66,6 +66,7 @@ function setupFlipButton1(customplaylist){
 				callback    : function( pages,items ){
 					console.log("playlist on page: "+pages.current);
 					currentpagePlaylist = pages.current;
+					$('#pageChangeFlag').text('pageWasChanged');
 					//tell the playlist handler which playlist is shown in case of saving
 					customplaylist.setActivePage(currentpagePlaylist);
 				}
@@ -104,6 +105,7 @@ function setupFlipButton1(customplaylist){
 					console.log("covers on page: "+pages.current);
 					currentpageCover = pages.current;
 					console.log("current cover page: "+currentpageCover);
+					$('#pageChangeFlag').text('pageWasChanged');
 					customplaylist.setActivePage(currentpageCover);
 				}
   		   	
