@@ -245,6 +245,8 @@ function setActivePage1(pagenr){
 	$('#similarityInfo').text(info.similarityInfoString);
 	
 	
+	
+	
 	$("#slider-songHot").slider( "value", parseInt(info.songtrendiness) );
 	if(parseInt(info.songtrendiness)==0){
 		 $( "#slider-songHot" ).slider( "option", "disabled", true );
@@ -363,6 +365,8 @@ function setActivePage1(pagenr){
 	}
 	else if(info.playlistmode) {
 		/*document.forms["formSimilaritySection"]["playlistRadiobtn"].click();*/
+		
+		$('#seedCatalogID').text(info.seedCatalogID);
 		
 		//show playlist GUI Items
 		$('#playlistRadiobtn').prop('checked',true);
