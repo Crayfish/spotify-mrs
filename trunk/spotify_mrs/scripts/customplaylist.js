@@ -241,7 +241,12 @@ function setActivePage1(pagenr){
 	var info = infos[pagenr-1];
 	
 	
-	//console.log('SET ACTIVE PAGE simlarityInfoString: '+info.similarityInfoString);
+	console.log('SET ACTIVE PAGE simlarity Mode Song: '+info.songmode);
+	console.log('SET ACTIVE PAGE simlarity Mode Genre: '+info.genremode);
+	console.log('SET ACTIVE PAGE simlarity Mode Playlist: '+info.playlistmode);
+	console.log('SET ACTIVE PAGE simlarity Mode Artist: '+info.artistmode);
+	
+	
 	$('#similarityInfo').text(info.similarityInfoString);
 	
 	
@@ -291,8 +296,8 @@ function setActivePage1(pagenr){
 	$('#artist_end_year_after_input').val(info.artistendyearafter);
 	
 	if(info.artistmode){
-		/*document.forms["formSimilaritySection"]["artistRadiobtn"].click();*/
-		$('#artistRadiobtn').prop('checked',true);
+		document.forms["formSimilaritySection"]["artistRadiobtn"].click();
+		//$('#artistRadiobtn').prop('checked',true);
 		//set the hidden <div> that new echonest calls are using for the query
 		$('#seedArtistID').text(info.artistIDForEchonestCalls);
 		$("#throbberInfo").text('Downloading Songs that are played by artists  similar to '+ info.artist);
@@ -317,10 +322,10 @@ function setActivePage1(pagenr){
 		
 	}
 	else if(info.songmode){
-		/*document.forms["formSimilaritySection"]["songRadiobtn"].click();*/
+		document.forms["formSimilaritySection"]["songRadiobtn"].click();
 		
 		//show somng similarity GUI Items
-		$('#songRadiobtn').prop('checked',true);
+		//$('#songRadiobtn').prop('checked',true);
 		$('#seedsongID').text(info.trackIdForEchonestCalls);
 		$("#throbberInfo").text('Downloading songs that are similar to ' + '"'+ info.track + '" by ' + info.artist);
 		$('#excludeSeedArtistCheckBox').show();
@@ -341,10 +346,10 @@ function setActivePage1(pagenr){
 		
 	}
 	else if(info.genremode) {
-		/*document.forms["formSimilaritySection"]["genreRadiobtn"].click();*/
+		document.forms["formSimilaritySection"]["genreRadiobtn"].click();
 		
 		//show genre GUI Items
-		$('#genreRadiobtn').prop('checked',true);
+		//$('#genreRadiobtn').prop('checked',true);
 		$('#tags').val(info.genre);
 		$('#tags').show();
 		$("#throbberInfo").text('Downloading songs that represent the genre '+ info.genre);
@@ -364,12 +369,12 @@ function setActivePage1(pagenr){
 		$("#adventurousnessSliderLabel").hide();
 	}
 	else if(info.playlistmode) {
-		/*document.forms["formSimilaritySection"]["playlistRadiobtn"].click();*/
+		document.forms["formSimilaritySection"]["playlistRadiobtn"].click();
 		
 		$('#seedCatalogID').text(info.seedCatalogID);
 		
 		//show playlist GUI Items
-		$('#playlistRadiobtn').prop('checked',true);
+		//$('#playlistRadiobtn').prop('checked',true);
 		$('#tags1').val(info.playlist);
 		$('#tags1').show();
 		$('#playlistSelectLabel').show();
