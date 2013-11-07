@@ -2655,6 +2655,7 @@ function steeringAfterReset(){
 		//there was a page change, so set the style String from the styleTerm <div>
 		var styleStringFromStyleTermDiv = $('#styleTerm').text();
 		args.style = styleStringFromStyleTermDiv;	
+		$('#pageChangeFlag').text('');
 	}
 	
 	
