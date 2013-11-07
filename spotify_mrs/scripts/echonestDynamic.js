@@ -573,20 +573,10 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 	console.log("changeArtistFamiliarity() was called with artistPopularityLevel: "+ artistFamilarityLevel);
 	
 	artistPopularity = artistFamilarityLevel;
-//	yearSliderScript.setArtistFamilarityLevel(artistFamilarityLevel);
 
-	if (similarityModeIsArtist || similarityModeIsSong
-			|| similarityModeIsPlaylist) {
-		/*
-		 * switch (artistFamilarityLevel) { case 0: minFamilarity = 0.0;
-		 * maxFamilarity = 0.3; break; case 1: minFamilarity = 0.3;
-		 * maxFamilarity = 0.4; break; case 2: minFamilarity = 0.4;
-		 * maxFamilarity = 0.5; break; case 3: minFamilarity = 0.5;
-		 * maxFamilarity = 0.6; break; case 4: minFamilarity = 0.6;
-		 * maxFamilarity =0.8; break; case 5: minFamilarity = 0.8; maxFamilarity =
-		 * 1; break;
-		 *  }
-		 */
+
+
+	
 
 		var targetValue = null;
 		
@@ -597,7 +587,7 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 			//$("#slider-pop").slider( "value", 0 );
 			$("#slider-pop").slider( "option", "disabled", true );
 			currentArtistPopularityValue = 0.0;
-			restartSessionWithCurrentGuiState();
+			//restartSessionWithCurrentGuiState();
 
 			
 		}else{
@@ -626,200 +616,14 @@ function changeArtistFamiliarity1(artistFamilarityLevel) {
 
 		}
 		
-		var args = {
-				session_id : session_id,
-				api_key : echonestApiKey,
-				format : 'json',
-				target_artist_familiarity : targetValue
-			// max_artist_hotttnesss :maxHotness,
-			// min_artist_hotttnesss :minHotness,
-			// max_artist_familiarity: 0.0,
-			// min_artist_familiarity: 0.0
-			};
-		
-		var randomNumber = Math.floor(Math.random() * 100);
 
-		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
-				+ randomNumber;
-		
-		$.getJSON(url, args, function(data) {
-			if (checkResponse(data)) {
-
-				getPlaylistInfo('constraints');
-
-			} else {
-				info("trouble getting results");
-			}
-		}).fail(function( jqxhr, textStatus, error ) {
-			var err = textStatus + ", " + error;
-			console.log( "ECHONEST DYNAMIC Request Failed: " + err );
-			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
-			
-		});
 		
 		
 		}
 
-	}
-
-	/*
-	 * if(similarityModeIsSong){ switch (artistFamilarityLevel) { case 0:
-	 * minFamilarity = 0.0; maxFamilarity = 0.3; break; case 1: minFamilarity =
-	 * 0.3; maxFamilarity = 0.4; break; case 2: minFamilarity = 0.4;
-	 * maxFamilarity = 0.5; break; case 3: minFamilarity = 0.5; maxFamilarity =
-	 * 0.6; break; case 4: minFamilarity = 0.6; maxFamilarity =0.8; break; case
-	 * 5: minFamilarity = 0.8; maxFamilarity = 1; break;
-	 *  } }
-	 */
-
-	/*
-	 * if(similarityModeIsPlaylist){ switch (artistFamilarityLevel) { case 0:
-	 * minFamilarity = 0.0; maxFamilarity = 0.3; break; case 1: minFamilarity =
-	 * 0.3; maxFamilarity = 0.4; break; case 2: minFamilarity = 0.4;
-	 * maxFamilarity = 0.5; break; case 3: minFamilarity = 0.5; maxFamilarity =
-	 * 0.6; break; case 4: minFamilarity = 0.6; maxFamilarity =0.8; break; case
-	 * 5: minFamilarity = 0.8; maxFamilarity = 1; break;
-	 *  } }
-	 */
-	// Variante mit fixen Bereichen
-	/*
-	 * if(similarityModeIsGenre){ minFamilarity =
-	 * lowerArtistFamilarityBorderForGenreSimilarity; maxFamilarity =
-	 * upperArtistFamilarityBorderForGenreSimilarity; var range =
-	 * upperArtistFamilarityBorderForGenreSimilarity -
-	 * lowerArtistFamilarityBorderForGenreSimilarity; var rangeStep = range/5;
-	 * 
-	 * switch (artistFamilarityLevel) { case 0: minFamilarity = 0.0;
-	 * 
-	 * break; case 1: minFamilarity =
-	 * lowerArtistFamilarityBorderForGenreSimilarity;
-	 * 
-	 * break; case 2: minFamilarity =
-	 * lowerArtistFamilarityBorderForGenreSimilarity + rangeStep;
-	 * 
-	 * break; case 3: minFamilarity =
-	 * lowerArtistFamilarityBorderForGenreSimilarity + 2*rangeStep;
-	 * 
-	 * break; case 4: minFamilarity =
-	 * lowerArtistFamilarityBorderForGenreSimilarity + 3*rangeStep;
-	 * 
-	 * break; case 5: minFamilarity =
-	 * upperArtistFamilarityBorderForGenreSimilarity-rangeStep;
-	 * 
-	 * break;
-	 *  } }
-	 */
-
-
-	if (similarityModeIsGenre) {
-		
-		if(artistFamilarityLevel  == 0){
-			console.log("ECHONEST DYNAMIC artist popularity slider was moved to Off Position");
-			
-			//disable the slider
-			//$("#slider-pop").slider( "value", 0 );
-			$("#slider-pop").slider( "option", "disabled", true );
-			currentArtistPopularityValue = 0;
-			restartSessionWithCurrentGuiState();
-			
-		}else{
-
-			var targetValue = null;
 	
-			switch (artistFamilarityLevel) {
-		
-			case 1:
-				targetValue = 0.0;
-				currentArtistPopularityValue = targetValue;
-				break;
-			case 2:
-				targetValue = 0.25;
-				currentArtistPopularityValue = targetValue;
-				break;
-			case 3:
-				targetValue = 0.5;
-				currentArtistPopularityValue = targetValue;
-				break;
-			case 4:
-				targetValue = 0.75;
-				currentArtistPopularityValue = targetValue;
-				break;
-			case 5:
-				targetValue = 1.0;
-				currentArtistPopularityValue = targetValue;
-				break;
 
-		}
 
-		// Variante mit Varianzberechnung
-		/*
-		 * minFamilarity = 0;// lowerArtistHotnessBorderForGenreSimilarity;
-		 * maxFamilarity = upperArtistFamilarityBorderForGenreSimilarity;
-		 * 
-		 * switch (artistFamilarityLevel) { case 0: minFamilarity = 0.0;
-		 * maxFamilarity =
-		 * mittelwertArtistFamiliarityGenreSimliarity-varianzArtistFamiliarityGenreSimliarity;
-		 * break; case 1: minFamilarity =
-		 * mittelwertArtistFamiliarityGenreSimliarity-varianzArtistFamiliarityGenreSimliarity;
-		 * maxFamilarity =
-		 * mittelwertArtistFamiliarityGenreSimliarity-1/2*varianzArtistFamiliarityGenreSimliarity;
-		 * break; case 2: minFamilarity =
-		 * mittelwertArtistFamiliarityGenreSimliarity-1/2*varianzArtistFamiliarityGenreSimliarity;
-		 * maxFamilarity = mittelwertArtistFamiliarityGenreSimliarity; break;
-		 * case 3: minFamilarity = mittelwertArtistFamiliarityGenreSimliarity;
-		 * maxFamilarity =
-		 * mittelwertArtistFamiliarityGenreSimliarity+1/2*varianzArtistFamiliarityGenreSimliarity;
-		 * break; case 4: minFamilarity =
-		 * mittelwertArtistFamiliarityGenreSimliarity+1/2*varianzArtistFamiliarityGenreSimliarity;
-		 * maxFamilarity =
-		 * mittelwertArtistFamiliarityGenreSimliarity+varianzArtistFamiliarityGenreSimliarity;
-		 * break; case 5: minFamilarity =
-		 * mittelwertArtistFamiliarityGenreSimliarity+varianzArtistFamiliarityGenreSimliarity
-		 * maxFamilarity =upperArtistFamilarityBorderForGenreSimilarity break;
-		 *  }
-		 * 
-		 * 
-		 * 
-		 * console.log('maxArtistFamilarity changeArtistFamilarity1(): '+
-		 * maxFamilarity); console.log('minArtistFamilarity
-		 * changeArtistFamilarity1(): '+minFamilarity);
-		 */
-
-		var randomNumber = Math.floor(Math.random() * 100);
-
-		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
-				+ randomNumber;
-
-		var args = {
-			session_id : session_id,
-			api_key : echonestApiKey,
-			format : 'json',
-			target_artist_familiarity : targetValue
-
-		};
-
-		// getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String
-		// der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
-		// erfolgreicher Anfrage ausgeführt wird)
-		$.getJSON(url, args,
-
-		function(data) {
-			if (checkResponse(data)) {
-
-				getPlaylistInfo('constraints');
-
-			} else {
-				info("trouble getting results");
-			}
-		}).fail(function( jqxhr, textStatus, error ) {
-			var err = textStatus + ", " + error;
-			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
-			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
-			
-			});
-
-	}
-	}
 
 }
 
@@ -827,31 +631,18 @@ function changeArtistHotness1(artistHotnessLevel) {
 	console.log("changeArtistHotness() was called with artistHotnessLevel: "+ artistHotnessLevel);
 	
 	artistTrendiness = artistHotnessLevel;
-//	yearSliderScript.setArtistHotnessLevel(artistHotnessLevel);
+	
+	var targetValue = null;
 
-	getPlaylistInfo('constraints');
-
-	if (similarityModeIsArtist || similarityModeIsSong
-			|| similarityModeIsPlaylist) {
-
-		/*
-		 * switch (artistHotnessLevel) { case 0: minHotness = 0.0; maxHotness =
-		 * 0.3; break; case 1: minHotness = 0.3; maxHotness = 0.4; break; case
-		 * 2: minHotness = 0.4; maxHotness = 0.5; break; case 3: minHotness =
-		 * 0.5; maxHotness = 0.6; break; case 4: minHotness = 0.6; maxHotness
-		 * =0.8; break; case 5: minHotness = 0.8; maxHotness = 1; break;
-		 *  }
-		 */
-		
 		if(artistHotnessLevel==0){
 			//disable the slider
 			//$("#slider-hot").slider( "value", 0 );
 			$("#slider-hot").slider( "option", "disabled", true );
 			currentArtistHotnesValue = 0.0;
-			restartSessionWithCurrentGuiState();
+			//restartSessionWithCurrentGuiState();
 		}else{
 
-			var targetValue = null;
+		
 	
 			switch (artistHotnessLevel) {
 		
@@ -878,199 +669,14 @@ function changeArtistHotness1(artistHotnessLevel) {
 
 		}
 
-		var randomNumber = Math.floor(Math.random() * 100);
-
-		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
-				+ randomNumber;
-		var args = {
-			session_id : session_id,
-			api_key : echonestApiKey,
-			format : 'json',
-			target_artist_hotttnesss : targetValue,
-		};
-
-		// getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String
-		// der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
-		// erfolgreicher Anfrage ausgeführt wird)
-		$.getJSON(url, args, function(data) {
-			if (checkResponse(data)) {
-
-				getPlaylistInfo('constraints');
-
-			} else {
-				info("trouble getting results");
-			}
-		}).fail(function( jqxhr, textStatus, error ) {
-			var err = textStatus + ", " + error;
-			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
-			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
-			
-		});
-
-		}
-	}
-
-	/*
-	 * if(similarityModeIsSong){ switch (artistHotnessLevel) { case 0:
-	 * minHotness = 0.0; maxHotness = 0.3; break; case 1: minHotness = 0.3;
-	 * maxHotness = 0.4; break; case 2: minHotness = 0.4; maxHotness = 0.5;
-	 * break; case 3: minHotness = 0.5; maxHotness = 0.6; break; case 4:
-	 * minHotness = 0.6; maxHotness =0.8; break; case 5: minHotness = 0.8;
-	 * maxHotness = 1; break;
-	 *  } }
-	 */
-
-	/*
-	 * if(similarityModeIsPlaylist){ switch (artistHotnessLevel) { case 0:
-	 * minHotness = 0.0; maxHotness = 0.3; break; case 1: minHotness = 0.3;
-	 * maxHotness = 0.4; break; case 2: minHotness = 0.4; maxHotness = 0.5;
-	 * break; case 3: minHotness = 0.5; maxHotness = 0.6; break; case 4:
-	 * minHotness = 0.6; maxHotness =0.8; break; case 5: minHotness = 0.8;
-	 * maxHotness = 1; break;
-	 *  } }
-	 */
-
-	if (similarityModeIsGenre) {
-
-		if(artistHotnessLevel==0){
-			//disable the slider
-			//$("#slider-hot").slider( "value", 0 );
-			$("#slider-hot").slider( "option", "disabled", true );
-			currentArtistHotnesValue = 0.0;
-			restartSessionWithCurrentGuiState();
-		}else{
-		
-			var targetValue = null;
 	
-			switch (artistHotnessLevel) {
-		
-			case 1:
-				targetValue = 0.0;
-				currentArtistHotnesValue = targetValue;
-				break;
-			case 2:
-				targetValue = 0.25;
-				currentArtistHotnesValue = targetValue;
-				break;
-			case 3:
-				targetValue = 0.5;
-				currentArtistHotnesValue = targetValue;
-				break;
-			case 4:
-				targetValue = 0.75;
-				currentArtistHotnesValue = targetValue;
-				break;
-			case 5:
-				targetValue = 1.0;
-				currentArtistHotnesValue = targetValue;
-				break;
 
 		}
 
-		var randomNumber = Math.floor(Math.random() * 100);
 
-		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
-				+ randomNumber;
-		var args = {
-			session_id : session_id,
-			api_key : echonestApiKey,
-			format : 'json',
-			target_artist_hotttnesss : targetValue
 
-		};
 
-		// getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String
-		// der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
-		// erfolgreicher Anfrage ausgeführt wird)
-		$.getJSON(url, args, function(data) {
-			if (checkResponse(data)) {
-
-				getPlaylistInfo('constraints');
-
-			} else {
-				info("trouble getting results");
-			}
-		});
-
-	}
-	}
-
-	// Variante mit Varianz Berechung
-	/*
-	 * if(similarityModeIsGenre){ minHotness = 0;//
-	 * lowerArtistHotnessBorderForGenreSimilarity; maxHotness =
-	 * upperArtistHotnessBorderForGenreSimilarity;
-	 * 
-	 * 
-	 * //Variante mit fixen Bereichen //var range =
-	 * upperArtistHotnessBorderForGenreSimilarity -
-	 * lowerArtistHotnessBorderForGenreSimilarity; //var rangeStep = range/5;
-	 * 
-	 * switch (artistHotnessLevel) { case 0: minHotness = 0.0;
-	 * 
-	 * break; case 1: //minHotness = lowerArtistHotnessBorderForGenreSimilarity;
-	 * minHotness =
-	 * mittelwertArtistHotnesGenreSimliarity-varianzArtistHotnesGenreSimliarity
-	 * break; case 2: //minHotness = lowerArtistHotnessBorderForGenreSimilarity +
-	 * rangeStep; minHotness =
-	 * mittelwertArtistHotnesGenreSimliarity-1/2*varianzArtistHotnesGenreSimliarity
-	 * break; case 3: //minHotness = lowerArtistHotnessBorderForGenreSimilarity +
-	 * 2*rangeStep; minHotness = mittelwertArtistHotnesGenreSimliarity break;
-	 * case 4: //minHotness = lowerArtistHotnessBorderForGenreSimilarity +
-	 * 3*rangeStep; minHotness =
-	 * mittelwertArtistHotnesGenreSimliarity+1/2*varianzArtistHotnesGenreSimliarity
-	 * break; case 5: //minHotness =
-	 * upperArtistHotnessBorderForGenreSimilarity-rangeStep; minHotness =
-	 * mittelwertArtistHotnesGenreSimliarity+varianzArtistHotnesGenreSimliarity
-	 * break;
-	 *  }
-	 * 
-	 * switch (artistHotnessLevel) { case 0: minHotness = 0.0; maxHotness =
-	 * mittelwertArtistHotnesGenreSimliarity-varianzArtistHotnesGenreSimliarity;
-	 * break; case 1: minHotness =
-	 * mittelwertArtistHotnesGenreSimliarity-varianzArtistHotnesGenreSimliarity;
-	 * maxHotness =
-	 * mittelwertArtistHotnesGenreSimliarity-1/2*varianzArtistHotnesGenreSimliarity;
-	 * break; case 2: minHotness =
-	 * mittelwertArtistHotnesGenreSimliarity-1/2*varianzArtistHotnesGenreSimliarity;
-	 * maxHotness = mittelwertArtistHotnesGenreSimliarity; break; case 3:
-	 * minHotness = mittelwertArtistHotnesGenreSimliarity; maxHotness =
-	 * mittelwertArtistHotnesGenreSimliarity+1/2*varianzArtistHotnesGenreSimliarity;
-	 * break; case 4: minHotness =
-	 * mittelwertArtistHotnesGenreSimliarity+1/2*varianzArtistHotnesGenreSimliarity;
-	 * maxHotness =
-	 * mittelwertArtistHotnesGenreSimliarity+varianzArtistHotnesGenreSimliarity;
-	 * break; case 5: minHotness =
-	 * mittelwertArtistHotnesGenreSimliarity+varianzArtistHotnesGenreSimliarity
-	 * maxHotness = upperArtistHotnessBorderForGenreSimilarity; break;
-	 *  }
-	 * 
-	 * console.log('maxArtistHotness changeArtistHotness1(): '+maxHotness);
-	 * console.log('minArtistHotness changeArtistHotness1(): '+minHotness);
-	 * 
-	 * 
-	 * var randomNumber = Math.floor(Math.random()*100);
-	 * 
-	 * 
-	 * 
-	 * var url =
-	 * 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='+randomNumber;
-	 * var args = { session_id: session_id, api_key: echonestApiKey,
-	 * format:'json', max_artist_hotttnesss :maxHotness, min_artist_hotttnesss
-	 * :minHotness, // max_artist_familiarity: 0.0, //min_artist_familiarity:
-	 * 0.0 };
-	 * 
-	 * //getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String
-	 * der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
-	 * erfolgreicher Anfrage ausgeführt wird) $.getJSON(url, args,
-	 * function(data) { if (checkResponse(data)) {
-	 * 
-	 * //console.log('Changed Hotness Values'); getConstraintsInfo();
-	 * getNextSong1();
-	 * 
-	 *  } else { info("trouble getting results"); } });
-	 *  }
-	 */
+	
 
 }
 
@@ -1080,20 +686,19 @@ function changeSongHotness1(songHotnessLevel) {
 	console.log("changeSongHotness() was called with songHotnessLevel: "+ songHotnessLevel);
 	
 	songTrendiness = songHotnessLevel;
-//	yearSliderScript.setSongHotnessLevel(songHotnessLevel);
 
-	if (similarityModeIsArtist || similarityModeIsSong
-			|| similarityModeIsPlaylist) {
+	var targetValue = 0;
+
 		
 		if(songHotnessLevel==0){
 			//$("#slider-songHot").slider( "value", 0 );
 			$("#slider-songHot").slider( "option", "disabled", true );
 			currentSongHotnesValue = 0.0;
-			restartSessionWithCurrentGuiState();
+			//restartSessionWithCurrentGuiState();
 			
 		}else{
 
-			var targetValue = 0;
+			
 	
 			switch (songHotnessLevel) {
 			
@@ -1120,184 +725,10 @@ function changeSongHotness1(songHotnessLevel) {
 
 		}
 
-		var randomNumber = Math.floor(Math.random() * 100);
-
-		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
-				+ randomNumber;
-		var args = {
-			session_id : session_id,
-			api_key : echonestApiKey,
-			format : 'json',
-			target_song_hotttnesss : targetValue
-	
-		};
-
-		// getJSON Syntax: URL(wohin geht die Anfrage), DATA (Objekt oder String
-		// der mit der anfrage geschickt wird), CALLBACK (Funktion, die bei
-		// erfolgreicher Anfrage ausgeführt wird)
-		$.getJSON(url, args, function(data) {
-			if (checkResponse(data)) {
-
-				console.log('ECHONEST DYNAMIC Changed Hotness Values');
-				getPlaylistInfo('constraints');
-
-			} else {
-				info("trouble getting results");
-			}
-		}).fail(function( jqxhr, textStatus, error ) {
-			var err = textStatus + ", " + error;
-			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
-			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
-			
-			});
-
-	}
-	}
-
-	/*
-	 * if(similarityModeIsSong){ switch (songHotnessLevel) { case 0:
-	 * minSongHotness = 0.0; maxSongHotness = 0.3; break; case 1: minSongHotness =
-	 * 0.3; maxSongHotness = 0.4; break; case 2: minSongHotness = 0.4;
-	 * maxSongHotness = 0.5; break; case 3: minSongHotness = 0.5; maxSongHotness =
-	 * 0.6; break; case 4: minSongHotness = 0.6; maxSongHotness =0.8; break;
-	 * case 5: minSongHotness = 0.8; maxSongHotness = 1; break;
-	 *  } }
-	 * 
-	 * if(similarityModeIsPlaylist){ switch (songHotnessLevel) { case 0:
-	 * minSongHotness = 0.0; maxSongHotness = 0.3; break; case 1: minSongHotness =
-	 * 0.3; maxSongHotness = 0.4; break; case 2: minSongHotness = 0.4;
-	 * maxSongHotness = 0.5; break; case 3: minSongHotness = 0.5; maxSongHotness =
-	 * 0.6; break; case 4: minSongHotness = 0.6; maxSongHotness =0.8; break;
-	 * case 5: minSongHotness = 0.8; maxSongHotness = 1; break;
-	 *  } }
-	 */
-
-	// Variante mit fixen Bereichen
-	/*
-	 * if(similarityModeIsGenre){
-	 * 
-	 * minSongHotness = lowerSongHotnessBorderForGenreSimilarity; maxSongHotness =
-	 * upperSongHotnessBorderForGenreSimilarity; var range =
-	 * upperSongHotnessBorderForGenreSimilarity -
-	 * lowerSongHotnessBorderForGenreSimilarity; var rangeStep = range/5;
-	 * 
-	 * switch (songHotnessLevel) { case 0: minSongHotness = 0.0;
-	 * 
-	 * break; case 1: minSongHotness = lowerSongHotnessBorderForGenreSimilarity;
-	 * 
-	 * break; case 2: minSongHotness = lowerSongHotnessBorderForGenreSimilarity +
-	 * rangeStep;
-	 * 
-	 * break; case 3: minSongHotness = lowerSongHotnessBorderForGenreSimilarity +
-	 * 2*rangeStep;
-	 * 
-	 * break; case 4: minSongHotness = lowerSongHotnessBorderForGenreSimilarity +
-	 * 3*rangeStep;
-	 * 
-	 * break; case 5: minSongHotness =
-	 * upperSongHotnessBorderForGenreSimilarity-rangeStep;
-	 * 
-	 * break;
-	 *  } }
-	 */
-
-
-	if (similarityModeIsGenre) {
 		
-		if(songHotnessLevel==0){
-			//$("#slider-songHot").slider( "value", 0 );
-			$("#slider-songHot").slider( "option", "disabled", true );
-			currentSongHotnesValue = 0.0;
-			restartSessionWithCurrentGuiState();
-			
-		}else{
 
-			var targetValue = 0;
+	}
 	
-			switch (songHotnessLevel) {
-			
-			case 1:
-				targetValue = 0.0;
-				currentSongHotnesValue = targetValue;
-				break;
-			case 2:
-				targetValue = 0.25;
-				currentSongHotnesValue = targetValue;
-				break;
-			case 3:
-				targetValue = 0.5;
-				currentSongHotnesValue = targetValue;
-				break;
-			case 4:
-				targetValue = 0.75;
-				currentSongHotnesValue = targetValue;
-				break;
-			case 5:
-				targetValue =1;
-				currentSongHotnesValue = targetValue;
-				break;
-
-		}
-
-		// Variante mit Varianzberechung
-		/*
-		 * minSongHotness = 0;// lowerArtistHotnessBorderForGenreSimilarity;
-		 * maxSongHotness = upperSongHotnessBorderForGenreSimilarity;
-		 * 
-		 * switch (songHotnessLevel) { case 0: minSongHotness = 0.0;
-		 * maxSongHotness
-		 * =mittelwertSongHotnesGenreSimliarity-varianzSongHotnesGenreSimliarity ;
-		 * break; case 1: minSongHotness =
-		 * mittelwertSongHotnesGenreSimliarity-varianzSongHotnesGenreSimliarity ;
-		 * maxSongHotness =
-		 * mittelwertSongHotnesGenreSimliarity-1/2*varianzSongHotnesGenreSimliarity ;
-		 * break; case 2: minSongHotness =
-		 * mittelwertSongHotnesGenreSimliarity-1/2*varianzSongHotnesGenreSimliarity ;
-		 * maxSongHotness = mittelwertSongHotnesGenreSimliarity; break; case 3:
-		 * minSongHotness = mittelwertSongHotnesGenreSimliarity; maxSongHotness =
-		 * mittelwertSongHotnesGenreSimliarity+1/2*varianzSongHotnesGenreSimliarity ;
-		 * break; case 4: minSongHotness =
-		 * mittelwertSongHotnesGenreSimliarity+1/2*varianzSongHotnesGenreSimliarity ;
-		 * maxSongHotness
-		 * =mittelwertSongHotnesGenreSimliarity+varianzSongHotnesGenreSimliarity ;
-		 * break; case 5: minSongHotness =
-		 * mittelwertSongHotnesGenreSimliarity+varianzSongHotnesGenreSimliarity;
-		 * maxSongHotness = upperSongHotnessBorderForGenreSimilarity; break;
-		 *  }
-		 * 
-		 * console.log('maxSongHotness changeSongHotness1(): '+maxSongHotness);
-		 * console.log('minSongHotness changesongHotness1(): '+minSongHotness);
-		 */
-		var randomNumber = Math.floor(Math.random() * 100);
-
-		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/steer?&_='
-				+ randomNumber;
-		var args = {
-			session_id : session_id,
-			api_key : echonestApiKey,
-			format : 'json',
-			target_song_hotttnesss : targetValue,
-		};
-
-		$.getJSON(url, args,
-
-		function(data) {
-			if (checkResponse(data)) {
-
-				getPlaylistInfo('constraints');
-
-			} else {
-				info("trouble getting results");
-			}
-		}).fail(function( jqxhr, textStatus, error ) {
-			var err = textStatus + ", " + error;
-			console.log( "ECHONEST DYNAMIC  Request Failed: " + err );
-			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
-			
-		});
-
-	}
-	}
 
 }
 
@@ -3030,6 +2461,9 @@ function steeringAfterReset(){
 	};
 	
 	
+	
+	//if no page change do steering the normal way
+	if($('#pageChangeFlag').text() !='pageWasChanged'){  
 	//Steetering for Trendiness and Popularity Values
 	 //0.0 value means slider is set to off position
 	if(currentArtistPopularityValue != 0.0){
@@ -3056,6 +2490,21 @@ function steeringAfterReset(){
 		currentAdventurousnessValue= $("#adventurousnessSlider").slider("value");
 		args.adventurousness =currentAdventurousnessValue / 100;
 	}
+	
+	//if there was a page change get the steering values from the sliders
+	}else{
+		
+		
+		
+		
+		$('#pageChangeFlag').text('');
+		
+		
+	}
+	
+	
+	
+	
 	
 	//steering for style terms
 	var styleString = '';
@@ -3086,7 +2535,7 @@ function steeringAfterReset(){
 			}
 		}).fail(function( jqxhr, textStatus, error ) {
 			var err = textStatus + ", " + error;
-			console.log( "ECHONEST DYNAMIC getNextSong1() Request Failed: " + err );
+			console.log( "ECHONEST DYNAMIC steeringAfterReset() Request Failed: " + err );
 			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
 					
 		});
