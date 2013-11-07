@@ -52,6 +52,10 @@ h2 {
 	display:none;
 }
 
+#styleTerm{
+	display:none;
+}
+
  .ui-autocomplete {
 width: 170px;
 max-height: 400px;
