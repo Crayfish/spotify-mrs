@@ -1740,7 +1740,7 @@ function changeToArtistSimilarity1() {
 
 	$('#excludeSeedArtistLabel').next('br').show();
 	
-	$("#artistVarietySlider").slider( "value", 50 );
+	//$("#artistVarietySlider").slider( "value", 50 );
 	$('.yearpick').val('off');
 
 	$("#adventurousnessSlider").hide();
@@ -2320,7 +2320,7 @@ function resetSliders(){
 	$("#slider-pop").slider( "value", 0 );
 	$("#slider-pop").slider( "option", "disabled", true );
 	
-	$("#artistVarietySlider").slider( "value", 50 );
+	//$("#artistVarietySlider").slider( "value", 50 );
 	
 	$('.yearInput').val('off');
 	
