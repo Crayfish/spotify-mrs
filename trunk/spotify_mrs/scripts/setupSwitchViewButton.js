@@ -40,11 +40,15 @@ function setupFlipButton1(customplaylist){
 	console.log("flip button setup");
 	
 	var flipbutton = document.getElementById('flipbutton');
+	$('#flipbutton').text("show playlist");
 	 
 	flipbutton.onclick=function(){
+		
 		  
 		if( $('#playlistContainer').is(':hidden') ) { // if covers are front switch to playlist view
 		 
+			$('#flipbutton').text("show covers");
+			
 			console.log("playlist is front");
 			
 			//show and hide appropriate views
@@ -81,6 +85,8 @@ function setupFlipButton1(customplaylist){
 			  
 		}
 		else{// if playlist view is front swith to covers view
+			
+			$('#flipbutton').text("show playlist");
 			
 			console.log("covers are front");
 			  
