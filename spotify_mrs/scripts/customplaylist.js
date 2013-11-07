@@ -405,6 +405,22 @@ function setActivePage1(pagenr){
 		$("#tagCloud").setTerms(info.selectedartistterms);
 	}
 	
+	//set the style term <div>
+	var styleString = '';
+	if(info.selectedartistterms instanceof Array && info.selectedartistterms.length != 0 ){
+	for(var i = 0; i< info.selectedartistterms.length; i++){
+		if(i==0){
+			styleString = info.selectedartistterms[i];
+		}else{
+		styleString = styleString + ', '+info.selectedartistterms[i];
+		}
+		
+	}
+	console.log('CUSTOMPLAYLIST setActivePage1()  styleString to set: '+styleString);
+	$('#styleTerm').text(styleString);	
+	}
+	
+	
 	console.log("Set Active page done.");
 
 }
