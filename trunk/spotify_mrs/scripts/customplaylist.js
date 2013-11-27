@@ -40,15 +40,15 @@ require([
   
   var addYear = function addYear(track){
 	  addYear1(models, track);
-  }
+  };
   
   var setArtistTerms = function(artisttermsarray){
 	  setArtistTerms1(artisttermsarray);
-  }
+  };
 
   var setActivePageForNewPage = function(pagenr){
 	  setActivePageForNewPage1(pagenr);
-  }
+  };
   
   exports.createNewPlaylist = createNewPlaylist;
   exports.setupSubscribeButton = setupSubscribeButton;
@@ -247,7 +247,7 @@ function setActivePage1(pagenr){
 	console.log('SET ACTIVE PAGE simlarity Mode Artist: '+info.artistmode);
 	
 	
-	$('#similarityInfo').text(info.similarityInfoString);
+	//$('#similarityInfo').text(info.similarityInfoString);
 	
 	
 	
