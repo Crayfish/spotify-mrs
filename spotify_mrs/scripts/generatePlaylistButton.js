@@ -19,7 +19,7 @@ require([
 			
 		
 
-			echonestDynamic.restartSessionWithCurrentGuiState();
+			echonestDynamic.checkIfNewSessionIdIsNeeded();
 
 		});
 

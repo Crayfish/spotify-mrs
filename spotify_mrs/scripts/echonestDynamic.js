@@ -112,6 +112,10 @@ require([
 		restartSessionWithCurrentGuiState1();
 	};
 	
+	var checkIfNewSessionIdIsNeeded = function(){
+		checkIfNewSessionIdIsNeeded1();
+	};
+	
 	var changeToGenreSimlarityOverloadMethod = function(){
 		changeToGenreSimlarityOverloadMethod1();
 	};
@@ -146,6 +150,7 @@ require([
 	exports.returnGuiDisabled = returnGuiDisabled;
 	
 	exports.restartSessionWithCurrentGuiState = restartSessionWithCurrentGuiState;
+	exports.checkIfNewSessionIdIsNeeded = checkIfNewSessionIdIsNeeded;
 	exports.changeToGenreSimlarityOverloadMethod = changeToGenreSimlarityOverloadMethod;
 	exports.changeToPlaylistSimlarityOverloadMethod = changeToPlaylistSimlarityOverloadMethod;
 
@@ -249,7 +254,7 @@ var guiDisabled = false;
 //var tagCloudResetDueToSimialrityChangeIsNeeded = false;
 var isInfoSet = false;
 
-
+var newSessionDueToSimialrityChangeIsNeeded = false;
 
 
 
@@ -326,13 +331,16 @@ function removeTermFromCurrentlySetTermsArray1(tagToBeRemoved){
 
 function changeToPlaylistSimlarityOverloadMethod1(){
 
-	
+	newSessionDueToSimialrityChangeIsNeeded = true;
 	if(currentlyUsedTasteProfileObject == null){
 		$('#similarityInfo').text('Current Seed Playlist: There is no playlist selected yet');
 	}else{
 		$('#similarityInfo').text('Current Seed Playlist: '+currentlyUsedTasteProfileObject.name );
 	}
-	
+	similarityModeIsGenre = false;
+	similarityModeIsArtist = false;
+	similarityModeIsSong = false;
+	similarityModeIsPlaylist = true;
 	
 }
 
@@ -345,8 +353,9 @@ function changeToPlaylistSimilarity1(tasteProfileIDandNameObject) {
 	
 	currentlyUsedTasteProfileObject = tasteProfileIDandNameObject;
 	selectedUserPlaylistName = tasteProfileIDandNameObject.name;
-	console.log('ECHONEST DYNAMIC changeToPlaylistSimilarit() selectedUserPlaylistName: '+selectedUserPlaylistName)
+	console.log('ECHONEST DYNAMIC changeToPlaylistSimilarit() selectedUserPlaylistName: '+selectedUserPlaylistName);
 	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	newSessionDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = false;
@@ -734,12 +743,19 @@ function changeSongHotness1(songHotnessLevel) {
 
 
 function changeToGenreSimlarityOverloadMethod1(){
+	
+	newSessionDueToSimialrityChangeIsNeeded = true;
 	if(selectedgenre == ""){
 		$('#similarityInfo').text('Current Seed Genre: There is no genre selected yet'+selectedgenre );
 	}else{
 		$('#similarityInfo').text('Current Seed Genre: '+selectedgenre );
 	}
 	
+	
+	similarityModeIsGenre = true;
+	similarityModeIsArtist = false;
+	similarityModeIsSong = false;
+	similarityModeIsPlaylist = false;
 	
 }
 
@@ -751,7 +767,7 @@ function changeToGenreSimlarityOverloadMethod1(){
 function changeToGenreSimilarity1(genreName) {
 	console.log('changeToGenreSimilarity1() was called with genre: '
 			+ genreName);
-
+	newSessionDueToSimialrityChangeIsNeeded = true;
 	selectedgenre = genreName;
 	//currentlySetTagCloudTermsArray= new Array();
 	songsAlreadyUsed = new Array();
@@ -1705,7 +1721,7 @@ function changeToArtistSimilarity1() {
 	// console.log("New session is started");
 
 	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
-
+	newSessionDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = true;
 	similarityModeIsSong = false;
@@ -1798,7 +1814,7 @@ function changeToArtistSimilarity1() {
 
 function changeToSongSimilarity1() {
 	console.log(" echonest changeToSongSimilarity1() was called");
-	//tagCloudResetDueToSimialrityChangeIsNeeded = true;
+	newSessionDueToSimialrityChangeIsNeeded = true;
 	similarityModeIsGenre = false;
 	similarityModeIsArtist = false;
 	similarityModeIsSong = true;
@@ -2332,15 +2348,153 @@ function resetSliders(){
 	console.log("---sliders resetted!");
 }
 
-/**
- * Restarts the session with the current settings to set the artist year settings.
- */
-function restartSessionWithCurrentGuiState1(){
-    
+
+
+
+function checkIfNewSessionIdIsNeeded1(){
+	
 	throbber.show();
 	throbberTagCloud.show();
 	$('#throbberInfo').show();
 	disableGUI();
+	
+	if(newSessionDueToSimialrityChangeIsNeeded ||$('#pageChangeFlag').text() =='pageWasChanged'){
+		
+		
+		//get a new session id
+		
+
+		var randomNumber = Math.floor(Math.random() * 100);
+
+	
+		var url = 'http://developer.echonest.com/api/v4/playlist/dynamic/create?&_='
+				+ randomNumber;
+		
+		var args = {
+			api_key : echonestApiKey,
+			format : 'json',
+			limit : true,
+			bucket : [ 'song_hotttnesss', 'artist_familiarity',
+					'artist_hotttnesss', 'tracks', 'id:spotify-WW' ]
+
+		};
+		
+		
+		   //check which similiarity mode is shown on the GUI
+	    if( $('#artistRadiobtn').prop('checked')){
+	          args.type ='artist-radio';
+	          //args.artist_id = seedArtistIdforEchonestCalls;
+	          args.artist_id = $('#seedArtistID').text();
+
+	        if($('#pageChangeFlag').text() !='pageWasChanged'){  
+	      	$("#throbberInfo").text('Downloading Songs that are played by artists  similar to '+ artistName);
+	      	$('#pageChangeFlag').text('');
+	        }
+	    };
+	    
+	    if( $('#songRadiobtn').prop('checked')){
+	   		var replacedSongID= song_id.replace('spotify', 'spotify-WW');
+	    	 args.type ='song-radio';
+	    	 //args.song_id =replacedSongID;
+	    	 args.song_id = $('#seedsongID').text();
+	    	  if($('#pageChangeFlag').text() !='pageWasChanged'){  
+	    		$("#throbberInfo").text('Downloading songs that are similar to ' + '"'+ trackName + '" by ' + artistName);
+	    		$('#pageChangeFlag').text('');
+	    	  }
+	    };
+	    
+	    if($('#genreRadiobtn').prop('checked')){
+		   args.type ='genre-radio';
+		   args.genre = $('#tags').val();
+		   if($('#pageChangeFlag').text() !='pageWasChanged'){  
+			$("#throbberInfo").text('Downloading songs that represent the genre '+ $('#tags').val());
+			$('#pageChangeFlag').text('');
+	 	  }
+	    };
+	    
+	    if($('#playlistRadiobtn').prop('checked')){
+	    	args.type='catalog-radio';
+	    	
+	    	if($('#pageChangeFlag').text() !='pageWasChanged'){  
+	    	args.seed_catalog = currentlyUsedTasteProfileObject.tasteProfileID	
+	    	$("#throbberInfo").text('Downloading songs that are simliar to your \"'+ currentlyUsedTasteProfileObject.name+ '\" Spotify-playlist');
+	    	$('#pageChangeFlag').text('');
+	   	  }else{
+	   		  //there was a page change
+	   		  
+	   		args.seed_catalog = $('#seedCatalogID').text(); 
+	   		$('#pageChangeFlag').text('');
+	   	  }
+	    	
+	    };
+
+		
+	    
+
+	    //year section paramters
+	    if($('#artist_start_year_before_input').val() != 'off'){
+	    	args.artist_start_year_before = $('#artist_start_year_before_input').val();	
+	    };
+	    
+	    if(    $('#artist_start_year_after_input').val() != 'off'){
+	    	args.artist_start_year_after = $('#artist_start_year_after_input').val();
+	    	//console.log('ECHONEST DYNAMIC args.artist_start_year_after: '+args.artist_start_year_after);
+	    };
+	    
+	    if($('#artist_end_year_before_input').val() != 'off'){
+	    	args.artist_end_year_before =  $('#artist_end_year_before_input').val();
+	    };
+	    
+	    if($('#artist_end_year_after_input').val() != 'off'){
+	    	args.artist_end_year_after = $('#artist_end_year_after_input').val();
+	    };
+	    
+	    
+	    
+		$.getJSON(url, args,
+
+		function(data) {
+			if (checkResponse(data)) {
+				info("");
+			
+				
+
+				session_id = data.response.session_id;
+
+				console.log("ECHONEST DYNAMIC New session ID  is used: "
+						+ session_id);
+				
+				//reset of newSessionDueToSimialrityChangeIsNeeded
+				newSessionDueToSimialrityChangeIsNeeded = false;
+				steeringAfterReset();
+				
+			}
+		});
+		
+		
+		
+		
+		
+		
+	}else{
+		restartSessionWithCurrentGuiState1();
+	}
+}
+
+
+/**
+ * Restarts the session with the current settings .
+ */
+function restartSessionWithCurrentGuiState1(){
+    
+/*	throbber.show();
+	throbberTagCloud.show();
+	$('#throbberInfo').show();
+	disableGUI();
+	*/
+
+	
+	
 	
     var randomNumber = Math.floor(Math.random() * 100);
 
@@ -2356,6 +2510,8 @@ function restartSessionWithCurrentGuiState1(){
     					'artist_hotttnesss', 'tracks', 'id:spotify-WW' ]
                 
     };
+    
+ 
     
     //check which similiarity mode is shown on the GUI
     if( $('#artistRadiobtn').prop('checked')){
@@ -2404,6 +2560,7 @@ function restartSessionWithCurrentGuiState1(){
    	  }
     	
     };
+
     
     
 
@@ -2679,6 +2836,11 @@ function steeringAfterReset(){
 			errorHandlingforEchonestCalls(jqxhr, textStatus, error);
 					
 		});
+	
+	
+	
+	
+	
 	
 	
 }
