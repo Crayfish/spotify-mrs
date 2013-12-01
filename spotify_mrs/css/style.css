@@ -40,15 +40,24 @@ h2 {
 	display:none;
 }
 
-#seedsongID{
+#seedArtistName{
+	display : none;
+}
+
+#seedSongID{
 	display:none;
 }
 
-#pageChangeFlag{
-	display:none;
+
+#seedSongName{
+	display: none;
 }
 
 #seedCatalogID{
+	display:none;
+}
+
+#seedCatalogName{
 	display:none;
 }
 

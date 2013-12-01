@@ -17,7 +17,21 @@ require([
 
 			console.log('Get Next Songs Button was clicked');
 			
-		
+			//make sure if genre or playlist similarity is selected, the autocomplete widget is not empty
+			if($('#genreRadiobtn').prop('checked')){
+				if($('#tags').val()==''){
+				return;
+				}
+			}
+			
+			
+			
+			if($('#playlistRadiobtn').prop('checked')){
+				if($('#tags1').val()==''){
+				return;
+				}
+			}
+			
 
 			echonestDynamic.checkIfNewSessionIdIsNeeded();
 

@@ -30,6 +30,7 @@ require([
 var currentpageCover = 1;
 var currentpagePlaylist = 1;
 var pageCount = 1;
+//var wasPageChange = false;
 
 
 /**
@@ -67,10 +68,11 @@ function setupFlipButton1(customplaylist){
 				last        : "last",
 				
 				animation   : "fadeIn",
+				midRange	: 30,
 				callback    : function( pages,items ){
 					console.log("playlist on page: "+pages.current);
 					currentpagePlaylist = pages.current;
-					$('#pageChangeFlag').text('pageWasChanged');
+					//$('#pageChangeFlag').text('pageWasChanged');
 					//tell the playlist handler which playlist is shown in case of saving
 					customplaylist.setActivePage(currentpagePlaylist);
 				}
@@ -106,12 +108,12 @@ function setupFlipButton1(customplaylist){
 				last        : "last", 
                  
 				animation   : "fadeIn",
-                
+				midRange	: 30,
 				callback    : function( pages,items ){
 					console.log("covers on page: "+pages.current);
 					currentpageCover = pages.current;
 					console.log("current cover page: "+currentpageCover);
-					$('#pageChangeFlag').text('pageWasChanged');
+					//$('#pageChangeFlag').text('pageWasChanged');
 					customplaylist.setActivePage(currentpageCover);
 				}
   		   	
@@ -147,9 +149,11 @@ function newCoverPage1(customplaylist){
 		next        : "next",
 		last        : "last", 
 		animation   : "fadeIn",
+		midRange	: 30,
 		callback    : function( pages,items ){
 			console.log("new covers on page: "+pages.current);
 			currentpageCover = pages.current;
+			
 			customplaylist.setActivePage(currentpageCover);
 		}
 	});
