@@ -255,24 +255,62 @@ function setActivePage1(pagenr){
 	$("#slider-songHot").slider( "value", parseInt(info.songtrendiness) );
 	if(parseInt(info.songtrendiness)==0){
 		 $( "#slider-songHot" ).slider( "option", "disabled", true );
+		 
+		 $('#songHotOffLabel').css('color', '#343434');
+		 $('.songHotSliderLabel').css('color', '#A9A9A9');
+		 $('#slider-songHot .ui-slider-handle').css('border' , '2px solid #a1a1a1');
+		 $('#slider-songHot').css('border','1px solid #A9A9A9' );
+		 $('#slider-songHot').find(".ui-slider-tick-mark").css('background','#A9A9A9' );
+		 
 	}else{
 		 $( "#slider-songHot" ).slider( "option", "disabled", false );
+		 $('#songHotOffLabel').css('color', '#A9A9A9');
+		 $('.songHotSliderLabel').css('color', '#343434');
+		 $('#slider-songHot .ui-slider-handle').css('border' , '2px solid #FF4242');
+		 $('#slider-songHot').css('border','1px solid #FF4242' );
+		 $('#slider-songHot').find(".ui-slider-tick-mark").css('background','#FF4242' );
 	}
+	
+	
 	
 	$("#slider-hot").slider( "value", parseInt(info.artisttrendiness));
 	if(parseInt(info.artisttrendiness)==0){
 		 $( "#slider-hot" ).slider( "option", "disabled", true );
+		 $('.artistHotSliderLabel').css('color', '#A9A9A9');
+			$('#artistHotOffLabel').css('color', '#343434');
+			$('#slider-hot .ui-slider-handle').css('border' , '2px solid #a1a1a1');
+			$('#slider-hot').css('border','1px solid #A9A9A9' );
+			$('#slider-hot').find(".ui-slider-tick-mark").css('background','#A9A9A9' );
 	}else{
 		 $( "#slider-hot" ).slider( "option", "disabled", false );
+		 $('.artistHotSliderLabel').css('color', '#343434');
+			$('#artistHotOffLabel').css('color', '#A9A9A9');
+			$('#slider-hot .ui-slider-handle').css('border' , '2px solid #FF4242');
+			$('#slider-hot').css('border','1px solid #FF4242' );
+			$('#slider-hot').find(".ui-slider-tick-mark").css('background','#FF4242' );
 	}
+	
+	
 	
 	$("#slider-pop").slider( "value", parseInt(info.artistpopularity));
 	if( parseInt(info.artistpopularity)==0){
 		 $( "#slider-pop" ).slider( "option", "disabled", true );
+		 $('.artistPopSliderLabel').css('color', '#A9A9A9');
+			$('#artistPopOffLabel').css('color', '#343434');
+			$('#slider-pop .ui-slider-handle').css('border' , '2px solid #a1a1a1');
+			$('#slider-pop').css('border','1px solid #A9A9A9' );
+			$('#slider-pop').find(".ui-slider-tick-mark").css('background','#A9A9A9' );
 		
 	}else{
 		 $( "#slider-pop" ).slider( "option", "disabled", false );
+		 $('.artistPopSliderLabel').css('color', '#343434');
+			$('#artistPopOffLabel').css('color', '#A9A9A9');
+			$('#slider-pop .ui-slider-handle').css('border' , '2px solid #FF4242');
+			$('#slider-pop').css('border','1px solid #FF4242' );
+			$('#slider-pop').find(".ui-slider-tick-mark").css('background','#FF4242' );
 	}
+	
+	
 	
 	$("#artistVarietySlider").slider( "value", parseInt(info.artistvariety));
 	if(!isNaN(info.adventurousness)) $("#adventurousnessSlider").slider( "value", parseInt(info.adventurousness));
@@ -300,6 +338,7 @@ function setActivePage1(pagenr){
 		//$('#artistRadiobtn').prop('checked',true);
 		//set the hidden <div> that new echonest calls are using for the query
 		$('#seedArtistID').text(info.artistIDForEchonestCalls);
+		$('#seedArtistName').text(info.artist);
 		$("#throbberInfo").text('Downloading Songs that are played by artists  similar to '+ info.artist);
 		//hide playlist select GUI Items
 		$('#tags1').hide();
@@ -327,6 +366,7 @@ function setActivePage1(pagenr){
 		//show somng similarity GUI Items
 		//$('#songRadiobtn').prop('checked',true);
 		$('#seedsongID').text(info.trackIdForEchonestCalls);
+		$('#seedSongName').text(info.track);
 		$("#throbberInfo").text('Downloading songs that are similar to ' + '"'+ info.track + '" by ' + info.artist);
 		$('#excludeSeedArtistCheckBox').show();
 		$('#excludeSeedArtistLabel').show();
@@ -354,6 +394,7 @@ function setActivePage1(pagenr){
 		$('#tags').show();
 		$("#throbberInfo").text('Downloading songs that represent the genre '+ info.genre);
 		$('#genreSelectLabel').show();
+		$('#similarityInfo').text(info.genre);
 		//hide change Seed Song and Seed Artist
 		$('#changeSeedSong').hide();
 		$('#changeSeedArtist').hide();
@@ -378,7 +419,9 @@ function setActivePage1(pagenr){
 		$('#tags1').val(info.playlist);
 		$('#tags1').show();
 		$('#playlistSelectLabel').show();
+		$('#seedCatalogName').text(info.playlist);
 		$("#throbberInfo").text('Downloading songs that are simliar to your \"'+ info.playlist+ '\" Spotify-playlist');
+		$('#similarityInfo').text(info.playlist);
 		//show adventurousness Slider
 		$("#adventurousnessSliderLabel").show();
 		$("#adventurousnessSlider").show();
