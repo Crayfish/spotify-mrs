@@ -1543,29 +1543,27 @@ function changeSeedSongSimilarity1() {
 		
 
 
-		//$("#songSimilarityInfo").text('"' + trackName + '" by ' + artistName);
+	
 		$("#throbberInfo").text(
 				'Downloading Songs that are similar to ' + '"'
 						+ trackName + '" by ' + artistName);
 		$('#similarityInfo').text('\"'+trackName+'\" '+'by '+ artistName );
 		currentSimilarityInfoString = '\"'+trackName+'\" '+'by '+ artistName;
-		// info('Getting Songs like "'+trackName+'" by '+ artistName);
+	
 
 		seedArtistSpotifyId = models.player.track.artists[0].toString();
-		// console.log('artist_id: '+artist_id);
+	
 
 		var replacedArtistID = seedArtistSpotifyId.replace('spotify',
 				'spotify-WW');
-		// console.log('Replaced Artist ID: '+replacedArtistID);
-
-		// replacedArtistID = 'spotify-WW:artist:4Z8W4fKeB5YxbusRsdQVPb';
+		
 
 		song_id = models.player.track.uri.toString();
 	
 		var replacedSongID = song_id.replace('spotify', 'spotify-WW');
 		$('#seedSongID').text(replacedSongID);
 		$('#seedSongName').text(trackName);
-		$('#seedArtistID').text(seedArtistIdforEchonestCalls);
+		$('#seedArtistID').text(replacedArtistID);
 		$('#seedArtistName').text(artistName);
 		
 		
@@ -1670,6 +1668,8 @@ function changeToSongSimilarity1() {
 	$('#similarityInfo').text('\"'+$('#seedSongName').text()+'\" '+'by '+ $('#seedArtistName').text() );
 	
 	currentSimilarityInfoString = '\"'+$('#seedSongName').text()+'\" '+'by '+ $('#seedArtistName').text() ;
+	
+	
 	
 	
 	$('#changeSeedArtist').hide();
