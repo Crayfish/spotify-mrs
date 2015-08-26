@@ -1,0 +1,1 @@
+This spotify app allows users, in opposite to the existing apps, to specify their searching criterias by multiple aspects.
